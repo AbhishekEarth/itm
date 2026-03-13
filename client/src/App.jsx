@@ -8,11 +8,14 @@ import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import TapPage from './pages/TapPage';
 
+import ITMUSP from './components/ITMUSP';
+
 const Home = () => (
   <main className="flex-grow">
     <Hero />
-    <Awards />
+    <ITMUSP />
     <Events />
+    <Awards />
     <Testimonials />
   </main>
 );

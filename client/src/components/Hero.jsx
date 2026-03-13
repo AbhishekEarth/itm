@@ -27,8 +27,7 @@ const Hero = () => {
               Admissions Open 2026-27
             </span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
-              Empowering Minds, <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-orange-300">
+              <span className="inline-block pb-2 pt-1 lg:pb-1 lg:pt-0 text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-orange-300">
                 Transforming Futures.
               </span>
             </h1>
@@ -37,11 +36,11 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <button className="bg-accent-500 hover:bg-accent-600 text-white px-8 py-4 rounded-xl font-semibold flex items-center gap-2 transition-all transform hover:translate-y-[-2px] shadow-xl shadow-accent-500/30">
+              <button className="bg-accent-500 hover:bg-accent-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl text-sm md:text-base font-semibold flex items-center gap-2 transition-all transform hover:translate-y-[-2px] shadow-xl shadow-accent-500/30">
                 Explore Programs
                 <ArrowRight className="w-5 h-5" />
               </button>
-              <button className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-xl font-semibold transition-all transform hover:translate-y-[-2px]">
+              <button className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl text-sm md:text-base font-semibold transition-all transform hover:translate-y-[-2px]">
                 Virtual Campus Tour
               </button>
             </div>
@@ -54,13 +53,13 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 flex items-start gap-4 hover:bg-white/20 transition-colors cursor-default"
+            className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:p-6 flex items-start gap-4 hover:bg-white/20 transition-colors cursor-default"
           >
             <div className="bg-accent-500/20 p-3 rounded-lg text-accent-400">
               <BookOpen className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-3xl font-bold text-white mb-1">50+</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-1">50+</h3>
               <p className="text-gray-300 text-sm font-medium">Undergraduate & Postgrad Programs</p>
             </div>
           </motion.div>
@@ -69,13 +68,13 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 flex items-start gap-4 hover:bg-white/20 transition-colors cursor-default"
+            className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:p-6 flex items-start gap-4 hover:bg-white/20 transition-colors cursor-default"
           >
             <div className="bg-blue-500/20 p-3 rounded-lg text-blue-400">
               <Trophy className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-3xl font-bold text-white mb-1">Top 5</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-1">Top 5</h3>
               <p className="text-gray-300 text-sm font-medium">Engg Institutes in Central India</p>
             </div>
           </motion.div>
@@ -84,13 +83,13 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
-            className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 flex items-start gap-4 hover:bg-white/20 transition-colors cursor-default"
+            className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:p-6 flex items-start gap-4 hover:bg-white/20 transition-colors cursor-default"
           >
             <div className="bg-green-500/20 p-3 rounded-lg text-green-400">
               <Users className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-3xl font-bold text-white mb-1">98%</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-1">98%</h3>
               <p className="text-gray-300 text-sm font-medium">Placement Rate Across All Disciplines</p>
             </div>
           </motion.div>

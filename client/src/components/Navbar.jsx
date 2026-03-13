@@ -31,10 +31,10 @@ const Navbar = () => {
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 lg:gap-5 z-50 cursor-pointer py-1 transition-all duration-300">
-            <img src="/images/ITMGOILogo.png" alt="ITM GOI" className="h-[50px] md:h-[65px] object-contain" />
-            <img src="/images/29years.png" alt="29 Years" className="h-[40px] md:h-[55px] hidden sm:block object-contain" />
-            <img src="/images/NAACLogo.png" alt="NAAC" className="h-[40px] md:h-[55px] hidden xl:block object-contain" />
+          <Link to="/" className="flex items-center gap-1.5 sm:gap-3 lg:gap-5 z-50 cursor-pointer py-1 transition-all duration-300">
+            <img src="/images/ITMGOILogo.png" alt="ITM GOI" className="h-[30px] sm:h-[40px] md:h-[65px] object-contain" />
+            <img src="/images/29years.png" alt="29 Years" className="h-[26px] sm:h-[35px] md:h-[55px] block object-contain" />
+            <img src="/images/NAACLogo.png" alt="NAAC" className="h-[26px] sm:h-[35px] md:h-[55px] block object-contain" />
           </Link>
 
           {/* Desktop Nav */}

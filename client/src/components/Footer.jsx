@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Phone, Mail, Instagram, Facebook, Linkedin, Youtube } from 'lucide-react';
+import { MapPin, Phone, Mail, Instagram, Facebook, Linkedin, Youtube, Twitter } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -21,10 +21,11 @@ const Footer = () => {
               Empowering minds and transforming futures through excellence in education, research, and innovation. Ranked among the best engineering institutes in Central India.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all"><Facebook className="w-5 h-5"/></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all"><Instagram className="w-5 h-5"/></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all"><Linkedin className="w-5 h-5"/></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all"><Youtube className="w-5 h-5"/></a>
+              <a href="https://www.facebook.com/ITMGOIGWALIOR/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300 transform hover:-translate-y-2 hover:scale-110 hover:shadow-[0_0_15px_rgba(37,99,235,0.6)] shadow-md"><Facebook className="w-5 h-5"/></a>
+              <a href="https://www.instagram.com/itm_gwalior/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all duration-300 transform hover:-translate-y-2 hover:scale-110 hover:shadow-[0_0_15px_rgba(219,39,119,0.6)] shadow-md"><Instagram className="w-5 h-5"/></a>
+              <a href="https://www.linkedin.com/school/2284830/admin/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-700 hover:text-white transition-all duration-300 transform hover:-translate-y-2 hover:scale-110 hover:shadow-[0_0_15px_rgba(29,78,216,0.6)] shadow-md"><Linkedin className="w-5 h-5"/></a>
+              <a href="https://twitter.com/itm_gwalior" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-sky-500 hover:text-white transition-all duration-300 transform hover:-translate-y-2 hover:scale-110 hover:shadow-[0_0_15px_rgba(14,165,233,0.6)] shadow-md"><Twitter className="w-5 h-5"/></a>
+              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all duration-300 transform hover:-translate-y-2 hover:scale-110 hover:shadow-[0_0_15px_rgba(220,38,38,0.6)] shadow-md"><Youtube className="w-5 h-5"/></a>
             </div>
           </div>
 

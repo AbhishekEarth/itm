@@ -40,7 +40,7 @@ const Events = () => {
   return (
     <section className="py-24 bg-gray-50">
       <div className="container mx-auto px-4 md:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
           <div className="max-w-xl">
             <h2 className="text-accent-600 font-semibold tracking-wide uppercase text-sm mb-2">Campus Life</h2>
             <h3 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight">Recent & Upcoming Events</h3>
