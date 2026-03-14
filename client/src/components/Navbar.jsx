@@ -25,7 +25,7 @@ const Navbar = () => {
   ];
 
   return (
-    <header 
+    <header
       className="sticky top-0 w-full z-50 bg-white shadow-md py-2 transition-all duration-300"
     >
       <div className="container mx-auto px-4 md:px-8">
@@ -48,16 +48,16 @@ const Navbar = () => {
                   {link.hasDropdown && (
                     <ChevronDown className="w-4 h-4 text-gray-500 transition-transform group-hover:rotate-180" />
                   )}
-                  
+
                   {/* Simple underline indicator */}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-500 group-hover:w-full transition-all duration-300"></span>
                 </div>
               );
 
               return link.path ? (
-                <Link 
-                  key={idx} 
-                  to={link.path} 
+                <Link
+                  key={idx}
+                  to={link.path}
                   target={link.isExternalTab ? "_blank" : "_self"}
                   rel={link.isExternalTab ? "noopener noreferrer" : ""}
                 >
@@ -80,12 +80,12 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Toggle */}
-          <button 
+          <button
             className="lg:hidden p-2 z-50 relative rounded-md hover:bg-gray-100"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {isMobileMenuOpen 
-              ? <X className="w-6 h-6 text-gray-800" /> 
+            {isMobileMenuOpen
+              ? <X className="w-6 h-6 text-gray-800" />
               : <Menu className="w-6 h-6 text-gray-800" />
             }
           </button>
@@ -95,7 +95,7 @@ const Navbar = () => {
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -111,8 +111,8 @@ const Navbar = () => {
                 );
 
                 return link.path ? (
-                  <Link 
-                    key={idx} 
+                  <Link
+                    key={idx}
                     to={link.path}
                     onClick={() => setIsMobileMenuOpen(false)}
                     target={link.isExternalTab ? "_blank" : "_self"}
