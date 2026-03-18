@@ -15,9 +15,10 @@ export default function Hero() {
   }, [images.length]);
 
   return (
-    // Changed pt-20 to pt-32 to give the fixed header room to breathe
-    // Removed h-screen and used min-h-[90vh] to prevent content being cut off
-    <section className="relative min-h-[95vh] flex items-center overflow-hidden bg-white dark:bg-[#020617] pt-32 pb-20">
+    /* FIX: Changed pt-32 to pt-12. 
+       Changed min-h-[95vh] to min-h-[80vh] to keep the content above the fold.
+    */
+    <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-white dark:bg-[#020617] pt-12 pb-20">
       
       {/* --- BACKGROUND LAYER --- */}
       <div className="absolute inset-0 z-0 bg-black">
@@ -40,7 +41,7 @@ export default function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 w-full"> 
         <div className="max-w-3xl">
           
-          {/* Animated Badge - Removed absolute positioning to keep it in flow */}
+          {/* Animated Badge */}
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}

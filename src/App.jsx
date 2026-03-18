@@ -19,23 +19,29 @@ function App() {
         {/* Persistent Floating Sidebar */}
         <FloatingSidebar /> 
 
-        <Routes>
-          {/* HOME PAGE ROUTE - Groups all your sections together */}
-          <Route path="/" element={
-            <>
-              <section id="home"><Hero /></section>
-              <Stats />
-              <section id="schools"><Departments /></section>           
-              <Placements />
-              <CampusLife />
-              <Testimonials />
-              <section id="footer"><Footer /></section>
-            </>
-          } />
+        {/* FIX: Adjusted padding-top to match the height of the fixed header.
+            Desktop: pt-[160px] (Utility bar ~40px + Main Nav ~120px)
+            Mobile: pt-[120px] 
+        */}
+        <div className="pt-[120px] md:pt-[160px]">
+          <Routes>
+            {/* HOME PAGE ROUTE */}
+            <Route path="/" element={
+              <>
+                <Hero />
+                <Stats />
+                <section id="schools"><Departments /></section>           
+                <Placements />
+                <CampusLife />
+                <Testimonials />
+                <section id="footer"><Footer /></section>
+              </>
+            } />
 
-          {/* CS DEPARTMENT PAGE ROUTE - Separate Page */}
-          <Route path="/cs" element={<CSDepartment />} />
-        </Routes>
+            {/* CS DEPARTMENT PAGE ROUTE */}
+            <Route path="/cs" element={<CSDepartment />} />
+          </Routes>
+        </div>
       </div>
     </Router>
   );

@@ -44,27 +44,26 @@ export default function Header() {
       </div>
 
       {/* 2. MAIN NAVIGATION */}
-      <div className="max-w-[1500px] mx-auto px-10 py-5 flex items-center">
+      <div className={`max-w-[1500px] mx-auto px-10 flex items-center transition-all duration-500 ${isScrolled ? 'py-3' : 'py-5'}`}>
         
-        {/* LOGO GROUP - BIGGER & SPACED */}
+        {/* LOGO GROUP */}
         <div className="flex items-center gap-8 shrink-0">
           <Link to="/" className="group cursor-pointer">
             <img 
               src={logo} 
               alt="ITM Logo" 
-              className={`transition-all duration-500 group-hover:scale-105 object-contain ${isScrolled ? 'h-16' : 'h-24'}`} 
+              className={`transition-all duration-500 group-hover:scale-105 object-contain ${isScrolled ? 'h-12' : 'h-20'}`} 
             />
           </Link>
 
           <div className="h-12 w-[1px] bg-gray-300/40 dark:bg-gray-700/40 hidden lg:block"></div>
 
           <div className="flex items-center gap-5">
-            <img src={NAACLogo} alt="NAAC" className="h-12 md:h-14 w-auto object-contain" />
-            <img src={Years29Logo} alt="29 Years" className="h-12 md:h-14 w-auto object-contain" />
+            <img src={NAACLogo} alt="NAAC" className="h-10 md:h-12 w-auto object-contain" />
+            <img src={Years29Logo} alt="29 Years" className="h-10 md:h-12 w-auto object-contain" />
           </div>
         </div>
 
-        {/* SPACER */}
         <div className="flex-grow"></div>
 
         {/* NAVIGATION LINKS */}
