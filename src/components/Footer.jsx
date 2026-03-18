@@ -1,4 +1,7 @@
 import React from 'react';
+import { Link } from "react-router-dom";
+// Import the specific icons from react-icons
+import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from "react-icons/fa";
 import logo from "../assets/logo.png"; 
 
 export default function Footer() {
@@ -17,6 +20,14 @@ export default function Footer() {
     }
   ];
 
+  // Social Media Data Object
+  const socialLinks = [
+    { icon: <FaFacebookF />, url: "https://www.facebook.com/itmgoigwl/", label: "Facebook" },
+    { icon: <FaTwitter />, url: "https://x.com/itm_gwalior", label: "Twitter" },
+    { icon: <FaLinkedinIn />, url: "https://in.linkedin.com/school/itm-gwalior-cp/", label: "LinkedIn" },
+    { icon: <FaInstagram />, url: "https://www.instagram.com/itm_gwalior/", label: "Instagram" }
+  ];
+
   return (
     <footer className="bg-[#0a0a0a] text-white pt-24 pb-10 px-8 border-t border-white/5 relative overflow-hidden">
       {/* Subtle Maroon Glow */}
@@ -33,11 +44,20 @@ export default function Footer() {
               ITM Gwalior is the premier destination for industry-led education 
               in Madhya Pradesh, committed to nurturing innovators and global leaders.
             </p>
+            
+            {/* SOCIAL MEDIA LOGOS */}
             <div className="flex gap-4">
-              {['Facebook', 'Twitter', 'LinkedIn', 'Instagram'].map(social => (
-                <div key={social} className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-[#800000] hover:scale-110 transition-all duration-300 cursor-pointer border border-white/10 text-[11px] font-black uppercase tracking-tighter">
-                  {social[0]}
-                </div>
+              {socialLinks.map((social) => (
+                <a 
+                  key={social.label} 
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-[#800000] hover:scale-110 transition-all duration-300 cursor-pointer border border-white/10 text-lg text-gray-300 hover:text-white"
+                  aria-label={social.label}
+                >
+                  {social.icon}
+                </a>
               ))}
             </div>
           </div>
