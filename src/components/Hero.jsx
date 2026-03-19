@@ -15,9 +15,6 @@ export default function Hero() {
   }, [images.length]);
 
   return (
-    /* FIX: Changed pt-32 to pt-12. 
-       Changed min-h-[95vh] to min-h-[80vh] to keep the content above the fold.
-    */
     <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-white dark:bg-[#020617] pt-12 pb-20">
       
       {/* --- BACKGROUND LAYER --- */}
@@ -28,13 +25,15 @@ export default function Hero() {
             src={images[currentIndex]} 
             alt="ITM Campus" 
             initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 0.5, scale: 1 }} 
+            animate={{ opacity: 0.8, scale: 1 }} // Low transparency for high visibility
             exit={{ opacity: 0, scale: 1.05 }}
             transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-0 w-full h-full object-cover" 
           />
         </AnimatePresence>
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/60 to-transparent dark:from-[#020617] dark:via-[#020617]/80 dark:to-transparent z-[1]"></div>
+        
+        {/* Subtle Gradient to protect text legibility without hiding the photo */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/10 to-transparent dark:from-[#020617]/90 dark:via-[#020617]/20 dark:to-transparent z-[1]"></div>
       </div>
 
       {/* --- CONTENT CONTAINER --- */}
@@ -48,32 +47,34 @@ export default function Hero() {
             className="flex items-center gap-3 mb-6"
           >
             <span className="h-[2px] w-8 bg-[#800000]"></span>
-            <span className="text-[#800000] dark:text-red-400 text-[11px] font-black uppercase tracking-[0.3em]">
+            <span className="text-[#800000] dark:text-red-400 text-[11px] font-black uppercase tracking-[0.3em] drop-shadow-sm">
               NAAC A+ Accredited University
             </span>
           </motion.div>
           
-          {/* Main Title */}
+          {/* NEW MANTRA-BASED TITLE */}
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-6xl md:text-[85px] font-black text-[#3e0202] dark:text-white leading-[0.9] mb-8 tracking-tighter"
+            className="text-6xl md:text-[85px] font-black text-[#3e0202] dark:text-white leading-[0.9] mb-8 tracking-tighter drop-shadow-md"
           >
-            Build Your <br />
+            Think Big. <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#800000] to-red-600 dark:from-red-500 dark:to-rose-400">
-              Legacy.
+              Think Beyond.
             </span>
           </motion.h1>
           
+          {/* NEW MANTRA-BASED DESCRIPTION */}
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-10 max-w-lg leading-relaxed font-medium"
+            className="text-lg md:text-xl text-gray-800 dark:text-gray-100 mb-10 max-w-lg leading-relaxed font-bold drop-shadow-lg"
           >
-            Join a community of innovators at ITM Gwalior. India's premier destination 
-            for industry-led education and global research.
+            At ITM Gwalior, we don't just follow the future—we architect it. 
+            Empowering a new generation of leaders to transcend boundaries 
+            and redefine excellence.
           </motion.p>
           
           {/* INTERACTIVE BUTTONS */}
@@ -92,7 +93,7 @@ export default function Hero() {
             </motion.button>
             
             <motion.button 
-              className="group flex items-center gap-4 px-8 py-4 rounded-xl font-black text-[11px] tracking-widest uppercase border-2 border-[#800000]/20 dark:border-white/10 text-[#3e0202] dark:text-white transition-all cursor-pointer"
+              className="group flex items-center gap-4 px-8 py-4 rounded-xl font-black text-[11px] tracking-widest uppercase border-2 border-[#800000]/40 dark:border-white/20 bg-white/10 backdrop-blur-sm text-[#3e0202] dark:text-white transition-all cursor-pointer shadow-lg"
             >
               <div className="flex items-center justify-center w-8 h-8 bg-red-600 text-white rounded-full shadow-lg group-hover:rotate-[360deg] transition-transform duration-700">
                 <span className="ml-0.5 text-[10px]">▶</span>
@@ -106,7 +107,7 @@ export default function Hero() {
       {/* --- SLIDER PROGRESS INDICATOR --- */}
       <div className="absolute bottom-10 left-10 flex gap-3 z-20">
         {images.map((_, index) => (
-          <div key={index} className="h-1 w-12 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
+          <div key={index} className="h-1.5 w-12 bg-black/20 dark:bg-white/20 rounded-full overflow-hidden">
             {currentIndex === index && (
               <motion.div 
                 initial={{ width: 0 }}
