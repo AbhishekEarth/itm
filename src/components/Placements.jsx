@@ -1,101 +1,114 @@
-import React from "react";
-import { motion } from "framer-motion";
-import Reveal from "./Reveal";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Award, Briefcase, TrendingUp, Globe } from 'lucide-react';
 
-const companies = [
-  "Google", "Microsoft", "Amazon", "TCS", "Infosys", 
-  "Wipro", "Accenture", "Adobe", "IBM", "Oracle"
-];
+const PlacementSection = () => {
+  // Updated with highly stable, public CDN links for the "problem" logos
+  const recruiters = [
+    { name: "Google", logo: "https://www.vectorlogo.zone/logos/google/google-ar21.svg" },
+    { name: "Microsoft", logo: "https://www.vectorlogo.zone/logos/microsoft/microsoft-ar21.svg" },
+    { name: "Amazon", logo: "https://www.vectorlogo.zone/logos/amazon/amazon-ar21.svg" },
+    { name: "TCS", logo: "https://upload.wikimedia.org/wikipedia/commons/b/b1/Tata_Consultancy_Services_Logo.svg" },
+    { name: "Infosys", logo: "https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg" },
+    { name: "Wipro", logo: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Wipro_Primary_Logo_Color_RGB.svg" },
+    { name: "Accenture", logo: "https://www.vectorlogo.zone/logos/accenture/accenture-ar21.svg" },
+    { name: "IBM", logo: "https://www.vectorlogo.zone/logos/ibm/ibm-ar21.svg" },
+    { name: "Adobe", logo: "https://www.vectorlogo.zone/logos/adobe/adobe-ar21.svg" },
+    { name: "HCL", logo: "https://www.vectorlogo.zone/logos/hcltech/hcltech-ar21.svg" },
+    { name: "Cognizant", logo: "https://upload.wikimedia.org/wikipedia/commons/4/43/Cognizant_logo_2022.svg" },
+    { name: "Capgemini", logo: "https://upload.wikimedia.org/wikipedia/commons/9/9d/Capgemini_2017_logo.svg" },
+    { name: "Tech Mahindra", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Tech_Mahindra_New_Logo.svg/2560px-Tech_Mahindra_New_Logo.svg.png" },
+    { name: "Oracle", logo: "https://www.vectorlogo.zone/logos/oracle/oracle-ar21.svg" },
+    { name: "Deloitte", logo: "https://www.vectorlogo.zone/logos/deloitte/deloitte-ar21.svg" },
+    { name: "Samsung", logo: "https://www.vectorlogo.zone/logos/samsung/samsung-ar21.svg" },
+    { name: "Intel", logo: "https://www.vectorlogo.zone/logos/intel/intel-ar21.svg" },
+    { name: "Cisco", logo: "https://www.vectorlogo.zone/logos/cisco/cisco-ar21.svg" },
+    { name: "PWC", logo: "https://upload.wikimedia.org/wikipedia/commons/0/05/PricewaterhouseCoopers_Logo.svg" },
+    { name: "EY", logo: "https://www.vectorlogo.zone/logos/ey/ey-ar21.svg" }
+  ];
 
-export default function Placements() {
+  const stats = [
+    { icon: <Briefcase className="w-5 h-5" />, label: "Hiring Partners", value: "500+" },
+    { icon: <TrendingUp className="w-5 h-5" />, label: "Highest Package", value: "15 LPA" },
+    { icon: <Award className="w-5 h-5" />, label: "Average Package", value: "5.5 LPA" },
+    { icon: <Globe className="w-5 h-5" />, label: "Global Offers", value: "50+" },
+  ];
+
+  // Tripled for seamless infinite loop
+  const scrollingLogos = [...recruiters, ...recruiters, ...recruiters];
+
   return (
-    <section className="py-20 bg-white dark:bg-[#020617] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-        
-        {/* Header - Centered & Bold */}
-        <div className="text-center mb-16">
-          <Reveal>
-            <span className="text-[#800000] dark:text-red-400 font-black uppercase tracking-[0.4em] text-[10px]">
-              Career Outcomes
-            </span>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <h2 className="text-4xl md:text-6xl font-black text-[#3e0202] dark:text-white mt-2 tracking-tighter">
-              Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#800000] to-red-600">Alumni</span> Network
-            </h2>
-          </Reveal>
-        </div>
-
-        {/* Stats Grid - Balanced Weight */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          {/* Highest Package Card */}
-          <Reveal delay={0.2}>
-            <motion.div 
-              whileHover={{ y: -8 }}
-              className="p-10 rounded-[3rem] bg-gradient-to-br from-[#800000] to-[#5a0101] text-white shadow-[0_30px_60px_-15px_rgba(128,0,0,0.3)] relative overflow-hidden flex items-center justify-between group"
-            >
-              <div className="relative z-10">
-                <p className="text-[10px] uppercase font-black tracking-widest text-red-200/60 mb-2">Highest Package</p>
-                <div className="text-6xl font-black tracking-tighter">45.0 <span className="text-2xl text-red-300">LPA</span></div>
-              </div>
-              {/* Prestige Watermark */}
-              <div className="text-white/10 text-9xl font-black absolute right-8 group-hover:scale-110 group-hover:text-white/20 transition-all duration-700 select-none pointer-events-none">
-                ₹
-              </div>
-            </motion.div>
-          </Reveal>
-
-          {/* Placement Rate Card */}
-          <Reveal delay={0.4}>
-            <motion.div 
-              whileHover={{ y: -8 }}
-              className="p-10 rounded-[3rem] bg-gray-50 dark:bg-white/[0.03] border border-red-100/50 dark:border-white/10 flex items-center justify-between group"
-            >
-              <div>
-                <p className="text-[10px] uppercase font-black tracking-widest text-[#800000] dark:text-red-400 mb-2">Placement Rate</p>
-                <div className="text-6xl font-black text-[#3e0202] dark:text-white tracking-tighter">92%</div>
-              </div>
-              <div className="w-28 h-28 relative flex items-center justify-center">
-                 <svg className="w-full h-full transform -rotate-90">
-                    <circle cx="56" cy="56" r="44" stroke="currentColor" strokeWidth="10" fill="transparent" className="text-gray-200 dark:text-white/5" />
-                    <motion.circle 
-                        initial={{ strokeDasharray: "0 280" }}
-                        whileInView={{ strokeDasharray: "258 280" }}
-                        transition={{ duration: 2, ease: "easeOut" }}
-                        cx="56" cy="56" r="44" stroke="#800000" strokeWidth="10" fill="transparent" strokeLinecap="round"
-                    />
-                 </svg>
-                 <span className="absolute text-xs font-black text-[#800000] dark:text-red-500 group-hover:scale-125 transition-transform">ITM</span>
-              </div>
-            </motion.div>
-          </Reveal>
-        </div>
-
-        {/* --- ULTRA-BOLD BLACK MARQUEE --- */}
-        <div className="relative flex overflow-hidden py-14 border-y-2 border-black/5 dark:border-white/10 bg-gray-50/30 dark:bg-white/[0.01]">
-          <motion.div 
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ ease: "linear", duration: 20, repeat: Infinity }}
-            className="flex whitespace-nowrap gap-20 items-center"
+    <section className="relative py-8 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="flex flex-col items-center mb-6">
+          <motion.h2 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-2xl md:text-4xl font-black text-[#800000] text-center uppercase tracking-tight"
           >
-            {[...companies, ...companies].map((company, i) => (
-              <span 
-                key={i} 
-                className="text-3xl font-[1000] tracking-tighter uppercase 
-                           text-black dark:text-white 
-                           hover:text-[#800000] dark:hover:text-red-500
-                           transition-all duration-300 cursor-default hover:scale-110"
-              >
-                {company}
-              </span>
-            ))}
-          </motion.div>
+            Placement <span className="text-slate-900">Milestones</span>
+          </motion.h2>
+          <div className="w-12 h-1 bg-[#FFD700] mt-1 rounded-full" />
+        </div>
 
-          {/* Smooth Fades */}
-          <div className="absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-white dark:from-[#020617] via-white/90 dark:via-[#020617]/90 to-transparent z-10"></div>
-          <div className="absolute inset-y-0 right-0 w-48 bg-gradient-to-l from-white dark:from-[#020617] via-white/90 dark:via-[#020617]/90 to-transparent z-10"></div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mb-10">
+          <div className="flex justify-center">
+            <div className="relative w-48 h-48 md:w-64 md:h-64">
+              <div className="absolute inset-0 border-[8px] border-slate-100 rounded-full" />
+              <motion.div 
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
+                className="absolute inset-0 border-[8px] border-[#800000] rounded-full border-t-transparent"
+              />
+              <div className="absolute inset-2 bg-white rounded-full shadow-lg flex flex-col items-center justify-center text-center">
+                <span className="text-4xl md:text-5xl font-black text-[#800000]">92%</span>
+                <div className="h-0.5 w-8 bg-[#FFD700] my-1" />
+                <p className="text-[10px] md:text-xs font-bold text-slate-700 uppercase tracking-widest">Placements</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            {stats.map((stat, index) => (
+              <div key={index} className="p-3 bg-slate-50 rounded-lg border-b-2 border-[#800000] flex flex-col items-center text-center shadow-sm">
+                <div className="text-[#800000] mb-1">{stat.icon}</div>
+                <p className="text-lg md:text-xl font-black text-slate-900">{stat.value}</p>
+                <p className="text-[9px] font-bold text-slate-500 uppercase">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* LOGO MARQUEE: Using direct Wikipedia/CDN links for stability */}
+        <div className="py-8 bg-slate-50 border-y border-slate-100 relative">
+          <div className="flex overflow-hidden w-full">
+            <motion.div 
+              className="flex whitespace-nowrap"
+              animate={{ x: [0, "-100%"] }} 
+              transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
+              style={{ display: 'flex', width: 'fit-content' }}
+            >
+              {scrollingLogos.map((company, index) => (
+                <div key={index} className="inline-flex items-center justify-center px-10 md:px-14 shrink-0">
+                  <img 
+                    src={company.logo} 
+                    alt={company.name} 
+                    className="h-8 md:h-10 w-auto object-contain hover:scale-110 transition-transform duration-300"
+                    style={{ maxWidth: 'none' }}
+                    onError={(e) => {
+                      e.target.onerror = null; 
+                      // If image still fails, keep it simple with text but in a nice gray instead of bright red
+                      e.target.parentNode.innerHTML = `<span class="text-slate-400 font-bold text-sm tracking-tighter">${company.name}</span>`;
+                    }}
+                  />
+                </div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default PlacementSection;
