@@ -1,78 +1,82 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Quote } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
 
-const testimonials = [
-  {
-    name: "Mr. Abhinav Prakash",
-    role: "Executive Talent Search",
-    company: "Birla Soft Ltd.",
-    text: "Absolutely wonderful hospitality, heart warming. We are pleased to say that ITM Universe has done a fantastic job starting from arranging to hospitality. Special thanks to ITM. It has such a bright prospective and has a great vision to succeed."
-  },
-  {
-    name: "Priya Sharma",
-    role: "Alumna, Computer Science",
-    company: "Google",
-    text: "My journey at ITM was transformative. The faculty guided me not just academically but also helped in overall personality development. The rigorous curriculum combined with practical exposure made me industry-ready from day one."
-  },
-  {
-    name: "Rahul Verma",
-    role: "Current Student, B.Tech",
-    company: "ITM GOI",
-    text: "The infrastructure is top-notch, and the campus environment encourages innovation. The TAP cell here provides ample opportunities to discover your passions outside the curriculum."
-  }
-];
+export default function Testimonials() {
+  const testimonials = [
+    { 
+      name: "Rahul Sharma", 
+      role: "SDE @ Google", 
+      text: "ITM was the perfect launchpad. The faculty and industry exposure here is truly unmatched.",
+      initials: "RS"
+    },
+    { 
+      name: "Priya Verma", 
+      role: "Lead Architect", 
+      text: "The studio culture helped me find my design language and prepare for the global landscape.",
+      initials: "PV"
+    }
+  ];
 
-const Testimonials = () => {
   return (
-    <section className="py-24 bg-primary-900 relative overflow-hidden">
-      {/* Abstract Background pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-          <defs>
-            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="1"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-        </svg>
-      </div>
-
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-accent-400 font-semibold tracking-wide uppercase text-sm mb-2">Voices That Matter</h2>
-          <h3 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-6">Our Students Say!</h3>
+    <section className="py-20 bg-white dark:bg-[#020617] relative transition-colors overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6">
+        
+        {/* Header - Aligned with Maroon Theme */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div>
+            <span className="text-[#800000] dark:text-red-400 font-black uppercase tracking-[0.4em] text-[10px]">
+              Alumni Success
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black text-[#3e0202] dark:text-white mt-2 tracking-tighter">
+              The <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#800000] to-red-600">ITM</span> Experience
+            </h2>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((test, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {testimonials.map((item, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              className="bg-white rounded-3xl p-8 shadow-2xl relative"
+              transition={{ delay: i * 0.1 }}
+              whileHover={{ y: -8 }}
+              className="group relative p-10 rounded-[3rem] bg-gray-50/50 dark:bg-white/[0.02] backdrop-blur-xl border border-red-50 dark:border-white/5 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-red-900/5 transition-all duration-500"
             >
-              <Quote className="w-12 h-12 text-primary-100 absolute top-8 right-8 z-0" />
+              {/* Massive background quote watermark */}
+              <span className="absolute -top-10 -right-4 text-[180px] leading-none text-[#800000]/5 dark:text-red-500/10 font-serif pointer-events-none select-none">
+                “
+              </span>
+
               <div className="relative z-10">
-                <p className="text-gray-700 leading-relaxed mb-8 italic">"{test.text}"</p>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-accent-400 to-primary-500 flex items-center justify-center text-white font-bold text-lg shadow-md">
-                    {test.name.charAt(0)}
+                {/* Header of the card (Avatar + Name) */}
+                <div className="flex items-center gap-5 mb-8">
+                  <div className="w-14 h-14 bg-gradient-to-br from-[#800000] to-[#4a0101] rounded-[1.2rem] flex items-center justify-center text-white text-sm font-black shadow-lg shadow-red-900/20">
+                    {item.initials}
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-900">{test.name}</h4>
-                    <p className="text-sm font-medium text-primary-600">{test.role}, <span className="text-gray-500">{test.company}</span></p>
+                    <h4 className="text-xl font-black text-[#3e0202] dark:text-white leading-tight">
+                      {item.name}
+                    </h4>
+                    <p className="text-[10px] text-[#800000] dark:text-red-400 font-black uppercase tracking-widest mt-1">
+                      {item.role}
+                    </p>
                   </div>
                 </div>
+
+                {/* Quote Text */}
+                <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">
+                  "{item.text}"
+                </p>
               </div>
+
+              {/* Bottom accent bar that grows on hover */}
+              <div className="absolute bottom-0 left-0 h-1.5 w-0 bg-gradient-to-r from-[#800000] to-red-600 group-hover:w-full transition-all duration-700 ease-in-out" />
             </motion.div>
           ))}
         </div>
       </div>
     </section>
   );
-};
-
-export default Testimonials;
+}

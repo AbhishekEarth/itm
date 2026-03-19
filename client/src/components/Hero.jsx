@@ -1,102 +1,124 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Trophy, Users } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+const images = [
+  "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1200&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=1200&h=600&fit=crop"
+];
 
-const Hero = () => {
+export default function Hero() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background with overlay */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-900/90 via-primary-800/80 to-transparent z-10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-transparent to-transparent z-10" />
-        <img 
-          src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
-          alt="Campus life" 
-          className="w-full h-full object-cover"
-        />
+    /* FIX: Changed pt-32 to pt-12. 
+       Changed min-h-[95vh] to min-h-[80vh] to keep the content above the fold.
+    */
+    <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-white dark:bg-[#020617] pt-12 pb-20">
+      
+      {/* --- BACKGROUND LAYER --- */}
+      <div className="absolute inset-0 z-0 bg-white">
+        <AnimatePresence initial={false}>
+          <motion.img 
+            key={currentIndex}
+            src={images[currentIndex]} 
+            alt="ITM Campus" 
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 0.5, scale: 1 }} 
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0 w-full h-full object-cover" 
+          />
+        </AnimatePresence>
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/60 to-transparent dark:from-[#020617] dark:via-[#020617]/80 dark:to-transparent z-[1]"></div>
       </div>
 
-      <div className="container mx-auto px-4 md:px-8 relative z-20 pt-20">
+      {/* --- CONTENT CONTAINER --- */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full"> 
         <div className="max-w-3xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+          
+          {/* Animated Badge */}
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            className="flex items-center gap-3 mb-6"
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-accent-500/90 text-white text-sm font-medium tracking-wide mb-6 backdrop-blur-sm shadow-lg shadow-accent-500/20 border border-accent-400/50">
-              Admissions Open 2026-27
+            <span className="h-[2px] w-8 bg-[#800000]"></span>
+            <span className="text-[#800000] dark:text-red-400 text-[11px] font-black uppercase tracking-[0.3em]">
+              NAAC A+ Accredited University
             </span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
-              <span className="inline-block pb-2 pt-1 lg:pb-1 lg:pt-0 text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-orange-300">
-                Transforming Futures.
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl leading-relaxed">
-              Institute of Technology & Management, Gwalior is ranked among the top institutions, providing world-class education, unmatched industry exposure, and a vibrant campus life.
-            </p>
-
-            <div className="flex flex-wrap gap-4">
-              <button className="bg-accent-500 hover:bg-accent-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl text-sm md:text-base font-semibold flex items-center gap-2 transition-all transform hover:translate-y-[-2px] shadow-xl shadow-accent-500/30">
-                Explore Programs
-                <ArrowRight className="w-5 h-5" />
-              </button>
-              <button className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl text-sm md:text-base font-semibold transition-all transform hover:translate-y-[-2px]">
-                Virtual Campus Tour
-              </button>
-            </div>
           </motion.div>
-        </div>
-
-        {/* Floating Stat Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-20 relative z-30">
+          
+          {/* Main Title */}
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="text-6xl md:text-[85px] font-black text-[#3e0202] dark:text-white leading-[0.9] mb-8 tracking-tighter"
+          >
+            Build Your <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#800000] to-red-600 dark:from-red-500 dark:to-rose-400">
+              Legacy.
+            </span>
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-10 max-w-lg leading-relaxed font-medium"
+          >
+            Join a community of innovators at ITM Gwalior. India's premier destination 
+            for industry-led education and global research.
+          </motion.p>
+          
+          {/* INTERACTIVE BUTTONS */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:p-6 flex items-start gap-4 hover:bg-white/20 transition-colors cursor-default"
+            transition={{ delay: 0.6 }}
+            className="flex flex-wrap gap-6"
           >
-            <div className="bg-accent-500/20 p-3 rounded-lg text-accent-400">
-              <BookOpen className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-1">50+</h3>
-              <p className="text-gray-300 text-sm font-medium">Undergraduate & Postgrad Programs</p>
-            </div>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:p-6 flex items-start gap-4 hover:bg-white/20 transition-colors cursor-default"
-          >
-            <div className="bg-blue-500/20 p-3 rounded-lg text-blue-400">
-              <Trophy className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-1">Top 5</h3>
-              <p className="text-gray-300 text-sm font-medium">Engg Institutes in Central India</p>
-            </div>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:p-6 flex items-start gap-4 hover:bg-white/20 transition-colors cursor-default"
-          >
-            <div className="bg-green-500/20 p-3 rounded-lg text-green-400">
-              <Users className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-1">98%</h3>
-              <p className="text-gray-300 text-sm font-medium">Placement Rate Across All Disciplines</p>
-            </div>
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              className="bg-[#800000] text-white px-10 py-4 rounded-xl font-black text-[11px] tracking-widest uppercase shadow-xl transition-all cursor-pointer"
+            >
+              Apply Now 2026
+            </motion.button>
+            
+            <motion.button 
+              className="group flex items-center gap-4 px-8 py-4 rounded-xl font-black text-[11px] tracking-widest uppercase border-2 border-[#800000]/20 dark:border-white/10 text-[#3e0202] dark:text-white transition-all cursor-pointer"
+            >
+              <div className="flex items-center justify-center w-8 h-8 bg-red-600 text-white rounded-full shadow-lg group-hover:rotate-[360deg] transition-transform duration-700">
+                <span className="ml-0.5 text-[10px]">▶</span>
+              </div>
+              Watch Tour
+            </motion.button>
           </motion.div>
         </div>
       </div>
-    </div>
-  );
-};
 
-export default Hero;
+      {/* --- SLIDER PROGRESS INDICATOR --- */}
+      <div className="absolute bottom-10 left-10 flex gap-3 z-20">
+        {images.map((_, index) => (
+          <div key={index} className="h-1 w-12 bg-white/10 dark:bg-white/10 rounded-full overflow-hidden">
+            {currentIndex === index && (
+              <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 5, ease: "linear" }}
+                className="h-full bg-[#800000]"
+              />
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
