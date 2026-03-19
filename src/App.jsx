@@ -8,6 +8,10 @@ import Departments from "./components/Departments";
 import Testimonials from "./components/Testimonials";
 import Footer from "./components/Footer";
 import CSDepartment from './pages/CSDepartment';
+import CentralLibrary from './pages/CentralLibrary';
+import DepartmentPage from './pages/DepartmentPage';
+import ITDepartment from './pages/ITDepartment';
+import ECDepartment from './pages/ECDepartment';
 import FloatingSidebar from "./components/FloatingSidebar";
 
 function App() {
@@ -40,6 +44,17 @@ function App() {
 
             {/* CS DEPARTMENT PAGE ROUTE */}
             <Route path="/cs" element={<CSDepartment />} />
+
+            {/* CENTRAL LIBRARY PAGE ROUTE */}
+            <Route path="/central-library" element={<CentralLibrary />} />
+
+            {/* OTHER DEPARTMENT PAGE ROUTES */}
+            <Route path="/ece" element={<ECDepartment />} />
+            <Route path="/me"  element={<DepartmentPage deptKey="me"  />} />
+            <Route path="/ce"  element={<DepartmentPage deptKey="ce"  />} />
+            <Route path="/it"  element={<ITDepartment />} />
+            <Route path="/mba" element={<DepartmentPage deptKey="mba" />} />
+            <Route path="/esh" element={<DepartmentPage deptKey="esh" />} />
           </Routes>
         </div>
       </div>
