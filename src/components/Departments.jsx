@@ -43,11 +43,9 @@ const departments = [
 
 export default function Departments() {
   return (
-    /* Reduced py-24 to pt-12 to pull it up closer to the Stats above */
     <section id="departments" className="pt-12 pb-24 bg-white dark:bg-[#020617] transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-6">
-        
-        {/* Section Heading - Tighter margins */}
+      
         <div className="text-center mb-12"> 
           <Reveal>
             <span className="text-[#800000] dark:text-red-400 font-black uppercase tracking-[0.4em] text-[10px]">

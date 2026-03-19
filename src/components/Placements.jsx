@@ -29,7 +29,7 @@ const PlacementSection = () => {
 
   const stats = [
     { icon: <Briefcase className="w-5 h-5" />, label: "Hiring Partners", value: "500+" },
-    { icon: <TrendingUp className="w-5 h-5" />, label: "Highest Package", value: "15 LPA" },
+    { icon: <TrendingUp className="w-5 h-5" />, label: "Highest Package", value: "45 LPA" },
     { icon: <Award className="w-5 h-5" />, label: "Average Package", value: "5.5 LPA" },
     { icon: <Globe className="w-5 h-5" />, label: "Global Offers", value: "50+" },
   ];
@@ -97,7 +97,6 @@ const PlacementSection = () => {
                     style={{ maxWidth: 'none' }}
                     onError={(e) => {
                       e.target.onerror = null; 
-                      // If image still fails, keep it simple with text but in a nice gray instead of bright red
                       e.target.parentNode.innerHTML = `<span class="text-slate-400 font-bold text-sm tracking-tighter">${company.name}</span>`;
                     }}
                   />
