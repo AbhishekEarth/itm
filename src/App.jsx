@@ -12,6 +12,8 @@ import CentralLibrary from './pages/CentralLibrary';
 import DepartmentPage from './pages/DepartmentPage';
 import ITDepartment from './pages/ITDepartment';
 import ECDepartment from './pages/ECDepartment';
+import CEDepartment from './pages/CEDepartment';
+import EmergingBranches from './pages/EmergingBranches';
 import FloatingSidebar from "./components/FloatingSidebar";
 
 function App() {
@@ -51,10 +53,13 @@ function App() {
             {/* OTHER DEPARTMENT PAGE ROUTES */}
             <Route path="/ece" element={<ECDepartment />} />
             <Route path="/me"  element={<DepartmentPage deptKey="me"  />} />
-            <Route path="/ce"  element={<DepartmentPage deptKey="ce"  />} />
+            <Route path="/ce"  element={<CEDepartment />} />
             <Route path="/it"  element={<ITDepartment />} />
             <Route path="/mba" element={<DepartmentPage deptKey="mba" />} />
             <Route path="/esh" element={<DepartmentPage deptKey="esh" />} />
+
+            {/* EMERGING BRANCHES */}
+            <Route path="/emerging-branches" element={<EmergingBranches />} />
           </Routes>
         </div>
       </div>
