@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from './Card';
+import DepartmentSidebar from './DepartmentSidebar';
 
 export default function PageLayout({ 
   name, 
@@ -57,39 +58,21 @@ export default function PageLayout({
           Using a Grid layout for consistent sidebar/content spacing
       */}
       <div className="max-w-7xl mx-auto px-6 pt-12 pb-24">
-        <div className="grid lg:grid-cols-4 gap-8 items-start">
+        <div className={`grid ${menuItems.length > 0 ? 'lg:grid-cols-4' : 'grid-cols-1'} gap-8 items-start`}>
 
           {/* ── SIDEBAR ──────────────────────────────────────────── */}
-          <aside className="lg:col-span-1">
-            <div className="sticky top-32">
-              <Card className="overflow-hidden">
-                <div className="h-1 bg-gradient-to-r from-[#800000] via-red-500 to-[#800000]"></div>
-                <div className="p-5">
-                  <h3 className="font-black text-xs uppercase tracking-widest mb-4 text-[#800000]">
-                    {shortName || 'Department'} Menu
-                  </h3>
-                  <nav className="flex flex-col gap-1">
-                    {menuItems.map((item) => (
-                      <button
-                        key={item}
-                        onClick={() => setActiveTab(item)}
-                        className={`text-left py-2.5 px-4 rounded-xl text-xs font-bold transition-all duration-200 ${
-                          activeTab === item
-                            ? 'bg-[#800000] text-white shadow-md shadow-red-900/30'
-                            : 'text-gray-600 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-[#800000] dark:hover:text-red-400'
-                        }`}
-                      >
-                        {item}
-                      </button>
-                    ))}
-                  </nav>
-                </div>
-              </Card>
-            </div>
-          </aside>
+          {menuItems.length > 0 && (
+            <aside className="lg:col-span-1">
+              <DepartmentSidebar 
+                menuItems={menuItems} 
+                activeTab={activeTab} 
+                onTabChange={setActiveTab} 
+              />
+            </aside>
+          )}
 
           {/* ── MAIN CONTENT ─────────────────────────────────────── */}
-          <main className="lg:col-span-3 space-y-8">
+          <main className={`${menuItems.length > 0 ? 'lg:col-span-3' : ''} space-y-8`}>
             {children}
           </main>
 

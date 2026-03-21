@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import Reveal from './Reveal';
 
 const departments = [
@@ -39,6 +40,13 @@ const departments = [
     desc: "Unleashing creativity in fashion, interior, and visual arts within our state-of-the-art design studios and annual gallery showcases.",
     accent: "from-[#800000] to-red-400"
   }
+];
+
+const emergingBranches = [
+  { name: 'Data Science', icon: '📊' },
+  { name: 'Internet of Things', icon: '🌐' },
+  { name: 'AI & Machine Learning', icon: '🤖' },
+  { name: 'Cyber Security', icon: '🛡️' },
 ];
 
 export default function Departments() {
@@ -97,6 +105,57 @@ export default function Departments() {
               <div className="absolute bottom-0 left-0 h-2 w-0 bg-[#800000] group-hover:w-full transition-all duration-700 rounded-b-[3rem]" />
             </motion.div>
           ))}
+
+          {/* ── EMERGING BRANCHES SPECIAL CARD ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6 }}
+            whileHover={{ y: -10 }}
+            className="group relative p-10 bg-gradient-to-br from-[#800000]/5 to-red-50 dark:from-[#800000]/10 dark:to-red-950/20 rounded-[3rem] border-2 border-dashed border-[#800000]/30 hover:border-[#800000] hover:border-solid transition-all duration-500 shadow-sm"
+          >
+            <div className="relative z-10">
+              {/* NEW badge */}
+              <div className="absolute -top-2 -right-2 px-3 py-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[9px] font-black rounded-full uppercase tracking-widest shadow-lg shadow-amber-500/30">
+                New
+              </div>
+
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#800000] to-red-500 flex items-center justify-center text-3xl shadow-xl shadow-red-900/30 mb-8 group-hover:scale-110 transition-transform duration-500">
+                🚀
+              </div>
+              
+              <h3 className="text-2xl font-[1000] text-black dark:text-white mb-4 tracking-tighter uppercase group-hover:text-[#800000] transition-colors">
+                Emerging Branches
+              </h3>
+              
+              {/* Sub-branch pills */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {emergingBranches.map((branch) => (
+                  <span
+                    key={branch.name}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-gray-900/60 rounded-full text-[11px] font-bold text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 shadow-sm"
+                  >
+                    <span className="text-sm">{branch.icon}</span>
+                    {branch.name}
+                  </span>
+                ))}
+              </div>
+
+              <p className="text-black dark:text-white text-base leading-relaxed mb-8 font-bold">
+                Future-ready specializations in Data Science, IoT, AI & ML, and Cyber Security.
+              </p>
+
+              <Link
+                to="/emerging-branches"
+                className="flex items-center gap-2 text-[11px] font-[1000] uppercase tracking-[0.2em] text-[#800000] dark:text-red-400 group-hover:gap-4 transition-all"
+              >
+                Explore Branches <span className="text-xl">→</span>
+              </Link>
+            </div>
+
+            <div className="absolute bottom-0 left-0 h-2 w-0 bg-gradient-to-r from-[#800000] to-red-500 group-hover:w-full transition-all duration-700 rounded-b-[3rem]" />
+          </motion.div>
         </div>
       </div>
     </section>

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Stats from "./components/Stats";
@@ -7,11 +7,9 @@ import CampusLife from "./components/CampusLife";
 import Departments from "./components/Departments";
 import Testimonials from "./components/Testimonials";
 import Footer from "./components/Footer";
-import CSDepartment from './pages/CSDepartment';
+import DynamicDepartmentPage from './pages/DynamicDepartmentPage';
 import CentralLibrary from './pages/CentralLibrary';
-import DepartmentPage from './pages/DepartmentPage';
-import ITDepartment from './pages/ITDepartment';
-import ECDepartment from './pages/ECDepartment';
+import EmergingBranches from './pages/EmergingBranches';
 import FloatingSidebar from "./components/FloatingSidebar";
 
 function App() {
@@ -42,19 +40,22 @@ function App() {
               </>
             } />
 
-            {/* CS DEPARTMENT PAGE ROUTE */}
-            <Route path="/cs" element={<CSDepartment />} />
+            {/* DYNAMIC DEPARTMENT & BRANCH ROUTES */}
+            <Route path="/department/:deptId" element={<DynamicDepartmentPage />} />
+            <Route path="/department/:deptId/:branchId" element={<DynamicDepartmentPage />} />
 
-            {/* CENTRAL LIBRARY PAGE ROUTE */}
+            {/* LEGACY REDIRECTS for consistency */}
+            <Route path="/cs" element={<Navigate to="/department/cse" replace />} />
+            <Route path="/it" element={<Navigate to="/department/it" replace />} />
+            <Route path="/ece" element={<Navigate to="/department/ece" replace />} />
+            <Route path="/ce" element={<Navigate to="/department/civil" replace />} />
+            <Route path="/aiml" element={<Navigate to="/department/cse/aiml" replace />} />
+            <Route path="/cyber-security" element={<Navigate to="/department/cse/cyber-security" replace />} />
+            <Route path="/cloud-computing" element={<Navigate to="/department/cse/cloud-computing" replace />} />
+
+            {/* OTHER PAGES */}
             <Route path="/central-library" element={<CentralLibrary />} />
-
-            {/* OTHER DEPARTMENT PAGE ROUTES */}
-            <Route path="/ece" element={<ECDepartment />} />
-            <Route path="/me"  element={<DepartmentPage deptKey="me"  />} />
-            <Route path="/ce"  element={<DepartmentPage deptKey="ce"  />} />
-            <Route path="/it"  element={<ITDepartment />} />
-            <Route path="/mba" element={<DepartmentPage deptKey="mba" />} />
-            <Route path="/esh" element={<DepartmentPage deptKey="esh" />} />
+            <Route path="/emerging-branches" element={<EmergingBranches />} />
           </Routes>
         </div>
       </div>
