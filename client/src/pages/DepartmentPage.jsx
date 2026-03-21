@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD:client/src/pages/DepartmentPage.jsx
 const labCs1 = "/images/company_logos/Engineering_Computer_Applications/img1.png";
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -18,10 +19,12 @@ function Card({ children, className = '' }) {
     </div>
   );
 }
+=======
+import PageLayout from '../components/PageLayout';
+import Card from '../components/Card';
+>>>>>>> 015696f26eba7f0d0c6bae8152b71148f06a5e40:src/pages/DepartmentPage.jsx
 
 // ─── Department Config Map ────────────────────────────────────────────────────
-// Each route renders this component with a `deptKey` prop.
-// Add real content data here as needed.
 const DEPT_CONFIG = {
   ece: {
     name: 'Electronics & Communication Engineering',
@@ -75,6 +78,7 @@ export default function DepartmentPage({ deptKey }) {
   const dept = DEPT_CONFIG[deptKey] || DEPT_CONFIG['ece'];
 
   return (
+<<<<<<< HEAD:client/src/pages/DepartmentPage.jsx
     <div className="min-h-screen bg-gray-50 dark:bg-[#020617] transition-colors duration-500">
 
       {/* ── HERO BANNER ──────────────────────────────────────────── */}
@@ -168,5 +172,28 @@ export default function DepartmentPage({ deptKey }) {
         </div>
       </div>
     </div>
+=======
+    <PageLayout
+      name={dept.name.includes('&')
+        ? <>{dept.name.split('&')[0]}&amp;<br /><span className="text-red-200">{dept.name.split('&')[1]}</span></>
+        : <>{dept.name.split(' ').slice(0, -1).join(' ')}<br /><span className="text-red-200">{dept.name.split(' ').slice(-1)}</span></>
+      }
+      shortName={dept.shortName}
+      badge={dept.badge}
+      subtitle={dept.subtitle}
+      chips={dept.chips}
+      menuItems={MENU_ITEMS}
+      activeTab={activeTab}
+      setActiveTab={setActiveTab}
+    >
+      <Card className="p-16 text-center">
+        <div className="text-6xl mb-4">📋</div>
+        <h3 className="font-black text-xl text-[#0b2a4a] dark:text-white mb-2">{activeTab}</h3>
+        <p className="text-gray-500 dark:text-gray-400 text-sm">
+          Content for <strong className="text-[#800000] dark:text-red-400">{dept.shortName} — {activeTab}</strong> is being prepared.
+        </p>
+      </Card>
+    </PageLayout>
+>>>>>>> 015696f26eba7f0d0c6bae8152b71148f06a5e40:src/pages/DepartmentPage.jsx
   );
 }

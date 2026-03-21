@@ -9,6 +9,7 @@ export default function Header() {
   const [darkMode, setDarkMode] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
+  const [emergingOpen, setEmergingOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -137,14 +138,76 @@ export default function Header() {
                   {/* Top accent bar */}
                   <div className="h-1 w-full bg-gradient-to-r from-[#800000] via-red-500 to-[#800000]"></div>
                   <div className="p-2">
+                    {/* Computer Science & Engineering */}
+                    <div>
+                      <Link
+                        to="/department/cse"
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-[12.5px] font-semibold text-gray-700 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-[#800000] dark:hover:text-red-400 transition-all duration-200 group/dept"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-red-300 dark:bg-red-700 group-hover/dept:bg-[#800000] dark:group-hover/dept:bg-red-400 transition-colors shrink-0"></span>
+                        <span>Computer Science &amp; Engineering</span>
+                        <span className="ml-auto opacity-0 group-hover/dept:opacity-100 text-[#800000] dark:text-red-400 transition-opacity text-xs">→</span>
+                      </Link>
+                      <div className="mx-4 h-[1px] bg-gray-100 dark:bg-gray-800/60"></div>
+                    </div>
+
+                    {/* Emerging Branches - Right after CS&E */}
+                    <div
+                      onMouseEnter={() => setEmergingOpen(true)}
+                      onMouseLeave={() => setEmergingOpen(false)}
+                    >
+                      <Link
+                        to="/emerging-branches"
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-[12.5px] font-semibold text-gray-700 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-[#800000] dark:hover:text-red-400 transition-all duration-200 group/dept"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 dark:bg-amber-600 group-hover/dept:bg-[#800000] dark:group-hover/dept:bg-red-400 transition-colors shrink-0"></span>
+                        <span className="flex-1">Emerging Branches</span>
+                        <span className={`text-[10px] transition-transform duration-300 ${emergingOpen ? 'rotate-180' : ''}`}>▼</span>
+                      </Link>
+
+                      {/* Sub Branches */}
+                      <AnimatePresence>
+                        {emergingOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25, ease: 'easeInOut' }}
+                            className="overflow-hidden"
+                          >
+                            <div className="ml-5 pl-3 border-l-2 border-red-200 dark:border-red-900/50 space-y-0.5 pb-1">
+                              {[
+                                { name: 'Data Science', icon: '📊', path: '/department/cse/data-science' },
+                                { name: 'Internet of Things', icon: '🌐', path: '/department/cse/iot' },
+                                { name: 'AI & Machine Learning', icon: '🤖', path: '/department/cse/aiml' },
+                                { name: 'Cyber Security', icon: '🛡️', path: '/department/cse/cyber-security' },
+                                { name: 'Cloud Computing', icon: '☁️', path: '/department/cse/cloud-computing' },
+                              ].map((sub) => (
+                                <Link
+                                  key={sub.name}
+                                  to={sub.path}
+                                  className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[11.5px] font-semibold text-gray-600 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-[#800000] dark:hover:text-red-400 transition-all duration-200 group/sub"
+                                >
+                                  <span className="text-sm">{sub.icon}</span>
+                                  <span>{sub.name}</span>
+                                  <span className="ml-auto opacity-0 group-hover/sub:opacity-100 text-[#800000] dark:text-red-400 transition-opacity text-[10px]">→</span>
+                                </Link>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                      <div className="mx-4 h-[1px] bg-gray-100 dark:bg-gray-800/60"></div>
+                    </div>
+
+                    {/* Remaining departments */}
                     {[
-                      { name: 'Computer Science & Engineering', path: '/cs' },
-                      { name: 'Electronics & Comm. Engineering', path: '/ece' },
-                      { name: 'Mechanical Engineering', path: '/me' },
-                      { name: 'Civil Engineering', path: '/ce' },
-                      { name: 'Information Technology', path: '/it' },
-                      { name: 'Master of Business Administration', path: '/mba' },
-                      { name: 'Engineering Sciences & Humanities', path: '/esh' },
+                      { name: 'Electronics & Comm. Engineering', path: '/department/ece' },
+                      { name: 'Mechanical Engineering', path: '/department/me' },
+                      { name: 'Civil Engineering', path: '/department/civil' },
+                      { name: 'Information Technology', path: '/department/it' },
+                      { name: 'Master of Business Administration', path: '/department/mba' },
+                      { name: 'Engineering Sciences & Humanities', path: '/department/esh' },
                       { name: 'Central Library', path: '/central-library' },
                     ].map((dept, i, arr) => (
                       <div key={dept.name}>
