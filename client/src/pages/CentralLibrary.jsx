@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-const libPosterMaking = '/images/lib_poster_making.png';
-const libGroupPhoto = '/images/lib_group_photo.png';
-const labCs1 = "/images/company_logos/Engineering_Computer_Applications/img1.png";
+const libPosterMaking = '/public/images/lib_poster_making.png';
+const libGroupPhoto = '/public/images/lib_group_photo.png';
 // ─── Data ────────────────────────────────────────────────────────────────────
 const libraryStats = [
   { label: 'Total Print Books', value: '64,407' },
@@ -142,7 +141,7 @@ export default function CentralLibrary() {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-4 gap-6 lg:gap-8 items-start md:-mt-10">
+        <div className="grid lg:grid-cols-4 gap-6 lg:gap-8 items-start">
 
           {/* ── SIDEBAR ─────────────────────────────────────────── */}
           <aside className="hidden lg:block lg:col-span-1">
@@ -150,19 +149,19 @@ export default function CentralLibrary() {
               <Card className="overflow-hidden">
                 <div className="h-1 bg-gradient-to-r from-[#800000] via-red-500 to-[#800000]"></div>
                 <div className="p-5">
-                  <h3 className="font-black text-xs uppercase tracking-widest mb-4 text-[#800000]">Library Menu</h3>
+                  <h3 className="font-black text-xs uppercase tracking-widest mb-4 text-[#800000]">LIBRARY MENU</h3>
                   <nav className="flex flex-col gap-1">
                     {menuItems.map((item) => (
                       <button
                         key={item}
                         onClick={() => setActiveTab(item)}
-                        className={`text-left py-2.5 px-4 rounded-xl text-xs font-bold transition-all duration-200 ${
+                        className={`text-left py-2.5 px-5 transition-all duration-200 ${
                           activeTab === item
-                            ? 'bg-[#800000] text-white shadow-md shadow-red-900/30'
-                            : 'text-gray-600 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-[#800000] dark:hover:text-red-400'
+                            ? 'bg-[#800000] text-white shadow-md shadow-red-900/30 rounded-full'
+                            : 'text-gray-600 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-[#800000] dark:hover:text-red-400 rounded-full'
                         }`}
                       >
-                        {item}
+                        <span className="font-bold text-xs">{item}</span>
                       </button>
                     ))}
                   </nav>

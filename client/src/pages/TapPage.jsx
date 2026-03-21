@@ -147,7 +147,7 @@ const TapPage = () => {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-4 gap-6 lg:gap-8 items-start -mt-0 md:-mt-10">
+        <div className="grid lg:grid-cols-4 gap-6 lg:gap-8 items-start md:-mt-0">
 
           {/* ── SIDEBAR (desktop only) ───────────────────────────────────────── */}
           <aside className="hidden lg:block lg:col-span-1">
@@ -155,19 +155,19 @@ const TapPage = () => {
               <Card className="overflow-hidden">
                 <div className="h-1 bg-gradient-to-r from-[#800000] via-red-500 to-[#800000]"></div>
                 <div className="p-5">
-                  <h3 className="font-black text-xs uppercase tracking-widest mb-4 text-[#800000]">TAP Cell Menu</h3>
+                  <h3 className="font-black text-xs uppercase tracking-widest mb-4 text-[#800000]">TAP MENU</h3>
                   <nav className="flex flex-col gap-1">
                     {tabs.map((tab) => (
                       <button
                         key={tab.name}
                         onClick={() => setActiveTab(tab.name)}
-                        className={`text-left py-2.5 px-4 rounded-xl text-xs font-bold transition-all duration-200 ${
+                        className={`text-left py-2.5 px-5 transition-all duration-200 ${
                           activeTab === tab.name
-                            ? 'bg-[#800000] text-white shadow-md shadow-red-900/30'
-                            : 'text-gray-600 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-[#800000] dark:hover:text-red-400'
+                            ? 'bg-[#800000] text-white shadow-md shadow-red-900/30 rounded-full'
+                            : 'text-gray-600 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-[#800000] dark:hover:text-red-400 rounded-full'
                         }`}
                       >
-                        {tab.name}
+                        <span className="font-bold text-xs">{tab.name}</span>
                       </button>
                     ))}
                   </nav>

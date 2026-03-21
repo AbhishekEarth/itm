@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-const labCs1 = "/images/company_logos/Engineering_Computer_Applications/img1.png";
-
+const labCs1 = "/public/images/lab_cs1.png";
+const labCs2 = "/public/images/lab_cs2.jpg";
+const labCs3 = "/public/images/lab_cs3.png";
+const labCs4 = "/public/images/lab_cs4.png";
+const labCs5 = "/public/images/lab_cs5.jpg";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const missionPoints = [
@@ -72,7 +75,7 @@ export default function CSDepartment() {
           </span>
           <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-4 leading-tight">
             Computer Science &<br />
-            <span className="text-red-200">Engineering</span>
+            <span className="text-white">Engineering</span>
           </h1>
           <p className="text-red-100/80 max-w-xl text-sm leading-relaxed font-medium">
             Est. July 1997 · B.Tech & M.Tech Programmes · Cutting-Edge Research · State-of-the-Art Laboratories
@@ -107,7 +110,7 @@ export default function CSDepartment() {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-4 gap-6 lg:gap-8 items-start md:-mt-10">
+        <div className="grid lg:grid-cols-4 gap-6 lg:gap-8 items-start">
 
           {/* ── SIDEBAR ─────────────────────────────────────────── */}
           <aside className="hidden lg:block lg:col-span-1">
@@ -115,19 +118,19 @@ export default function CSDepartment() {
               <Card className="overflow-hidden">
                 <div className="h-1 bg-gradient-to-r from-[#800000] via-red-500 to-[#800000]"></div>
                 <div className="p-5">
-                  <h3 className="font-black text-xs uppercase tracking-widest mb-4 text-[#800000]">Department Menu</h3>
+                  <h3 className="font-black text-xs uppercase tracking-widest mb-4 text-[#800000]">CS MENU</h3>
                   <nav className="flex flex-col gap-1">
                     {menuItems.map((item) => (
                       <button
                         key={item}
                         onClick={() => setActiveTab(item)}
-                        className={`text-left py-2.5 px-4 rounded-xl text-xs font-bold transition-all duration-200 ${
+                        className={`text-left py-2.5 px-5 transition-all duration-200 ${
                           activeTab === item
-                            ? 'bg-[#800000] text-white shadow-md shadow-red-900/30'
-                            : 'text-gray-600 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-[#800000] dark:hover:text-red-400'
+                            ? 'bg-[#800000] text-white shadow-md shadow-red-900/30 rounded-full'
+                            : 'text-gray-600 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-[#800000] dark:hover:text-red-400 rounded-full'
                         }`}
                       >
-                        {item}
+                        <span className="font-bold text-xs">{item}</span>
                       </button>
                     ))}
                   </nav>

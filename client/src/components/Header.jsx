@@ -14,12 +14,20 @@ const DEPT_LINKS = [
   { label: 'Central Library', path: '/library' },
 ];
 
+const CLUB_LINKS = [
+  { label: 'Performing Arts Club (PAC)', path: '/pac' },
+];
+
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [deptOpen, setDeptOpen] = useState(false);
+  const [mobileDeptOpen, setMobileDeptOpen] = useState(false);
+  const [clubOpen, setClubOpen] = useState(false);
+  const [mobileClubOpen, setMobileClubOpen] = useState(false);
   const deptRef = useRef(null);
+  const clubRef = useRef(null);
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
@@ -117,6 +125,35 @@ export default function Header() {
                 )}
               </AnimatePresence>
             </div>
+
+            {/* Clubs & Cells Dropdown */}
+            <div className="relative" ref={clubRef} onMouseEnter={() => setClubOpen(true)} onMouseLeave={() => setClubOpen(false)}>
+              <button className="flex items-center gap-1 px-4 py-2 hover:text-[#800000] transition-colors">
+                Clubs / Cells <ChevronDown size={12} className={`transition-transform ${clubOpen ? 'rotate-180' : ''}`} />
+              </button>
+              <AnimatePresence>
+                {clubOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full left-0 mt-1 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50"
+                  >
+                    {CLUB_LINKS.map((d) => (
+                      <Link
+                        key={d.path}
+                        to={d.path}
+                        onClick={() => setClubOpen(false)}
+                        className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 hover:bg-red-50 hover:text-[#800000] transition-colors"
+                      >
+                        {d.label}
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
 
           <button className="bg-[#800000] text-white px-6 py-3 rounded-full font-black text-[10px] tracking-widest hover:shadow-lg transition-all ml-4">
@@ -148,12 +185,69 @@ export default function Header() {
               <Link to="/" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Home</Link>
               <Link to="#" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Admission</Link>
               <div>
-                <p className="text-[#800000] mb-3">Departments</p>
-                <div className="flex flex-col gap-3 pl-4 border-l-2 border-red-100 text-[11px]">
-                  {DEPT_LINKS.map((d) => (
-                    <Link key={d.path} to={d.path} onClick={() => setMobileMenuOpen(false)} className="text-gray-600 hover:text-[#800000]">{d.label}</Link>
-                  ))}
-                </div>
+                <button 
+                  onClick={() => setMobileDeptOpen(!mobileDeptOpen)}
+                  className="w-full flex items-center justify-between text-[#800000] mb-3 focus:outline-none"
+                >
+                  <span>Departments</span>
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${mobileDeptOpen ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence>
+                  {mobileDeptOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="flex flex-col gap-3 pl-4 border-l-2 border-red-100 text-[11px] mb-3">
+                        {DEPT_LINKS.map((d) => (
+                          <Link 
+                            key={d.path} 
+                            to={d.path} 
+                            onClick={() => { setMobileMenuOpen(false); setMobileDeptOpen(false); }} 
+                            className="text-gray-600 hover:text-[#800000] py-1"
+                          >
+                            {d.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <div>
+                <button 
+                  onClick={() => setMobileClubOpen(!mobileClubOpen)}
+                  className="w-full flex items-center justify-between text-[#800000] mb-3 focus:outline-none"
+                >
+                  <span>Clubs / Cells</span>
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${mobileClubOpen ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence>
+                  {mobileClubOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="flex flex-col gap-3 pl-4 border-l-2 border-red-100 text-[11px] mb-3">
+                        {CLUB_LINKS.map((d) => (
+                          <Link 
+                            key={d.path} 
+                            to={d.path} 
+                            onClick={() => { setMobileMenuOpen(false); setMobileClubOpen(false); }} 
+                            className="text-gray-600 hover:text-[#800000] py-1"
+                          >
+                            {d.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
               <Link to="/tap" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Training &amp; Placement</Link>
               <Link to="#" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Research</Link>

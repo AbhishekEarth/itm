@@ -13,7 +13,10 @@ import ITDepartment from './pages/ITDepartment';
 import TapPage from './pages/TapPage';
 import CentralLibrary from './pages/CentralLibrary';
 import DepartmentPage from './pages/DepartmentPage';
+import PACPage from './pages/PACPage';
 import FloatingSidebar from "./components/FloatingSidebar";
+import ClubsCells from "./components/ClubsCells";
+import AdminPACEventForm from "./components/AdminPACEventForm";
 
 function App() {
   return (
@@ -35,7 +38,8 @@ function App() {
               <>
                 <Hero />
                 <Stats />
-                <section id="schools"><Departments /></section>           
+                <section id="schools"><Departments /></section>
+                <section id="clubs"><ClubsCells /></section>           
                 <Placements />
                 <CampusLife />
                 <Testimonials />
@@ -49,9 +53,13 @@ function App() {
             <Route path="/it" element={<ITDepartment />} />
             <Route path="/department" element={<DepartmentPage />} />
 
+            {/* CLUBS ROUTES */}
+            <Route path="/pac" element={<PACPage />} />
+
             {/* OTHER PAGE ROUTES */}
             <Route path="/tap" element={<TapPage />} />
             <Route path="/library" element={<CentralLibrary />} />
+            <Route path="/admin/pac" element={<AdminPACEventForm />} />
           </Routes>
         </div>
       </div>
