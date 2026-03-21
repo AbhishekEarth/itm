@@ -1,3 +1,4 @@
+import labCs1 from "../assets/lab_cs1.png";
 const fs = require('fs');
 const path = require('path');
 

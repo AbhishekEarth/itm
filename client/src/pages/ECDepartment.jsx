@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import ec_event_1 from '../assets/ec_event_1.png';
-import ec_event_2 from '../assets/ec_event_2.png';
-import ec_achievement_1 from '../assets/ec_achievement_1.png';
-import ec_achievement_2 from '../assets/ec_achievement_2.png';
-import ec_hod from '../assets/ec_hod.png';
+const ec_event_1 = '/images/ec_event_1.png';
+const ec_event_2 = '/images/ec_event_2.png';
+const ec_achievement_1 = '/images/ec_achievement_1.png';
+const ec_achievement_2 = '/images/ec_achievement_2.png';
+const ec_hod = '/images/ec_hod.png';
+const labCs1 = "/images/company_logos/Engineering_Computer_Applications/img1.png";
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 function SectionHeading({ children }) {
@@ -60,10 +61,26 @@ export default function ECDepartment() {
       </div>
 
       {/* ── BODY ────────────────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-6 -mt-10 pb-24">
-        <div className="grid lg:grid-cols-4 gap-8 items-start">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 pb-16 md:pb-24">
+
+        {/* ── MOBILE TAB BAR ───────────────────────────────────── */}
+        <div className="lg:hidden bg-gray-50 py-3 -mx-3 px-3 sm:-mx-6 sm:px-6">
+          <div className="flex overflow-x-auto gap-2 pb-1 snap-x" style={{scrollbarWidth:'none',msOverflowStyle:'none'}}>
+            {menuItems.map((item) => (
+              <button
+                key={item}
+                onClick={() => setActiveTab(item)}
+                className={`shrink-0 snap-start px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-200 ${
+                  activeTab === item ? 'bg-[#800000] text-white shadow-md' : 'bg-white border border-gray-200 text-gray-600'
+                }`}
+              >{item}</button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-4 gap-6 lg:gap-8 items-start md:-mt-10">
           {/* ── SIDEBAR ─────────────────────────────────────────── */}
-          <aside className="lg:col-span-1">
+          <aside className="hidden lg:block lg:col-span-1">
             <div className="sticky top-32">
               <Card className="overflow-hidden">
                 <div className="h-1 bg-gradient-to-r from-[#800000] via-red-500 to-[#800000]"></div>

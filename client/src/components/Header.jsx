@@ -1,17 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom"; 
 import { motion, AnimatePresence } from "framer-motion";
-// Import icons for mobile menu
 import { Menu, X, ChevronDown } from "lucide-react"; 
 
 const logo = "/images/ITMGOILogo.png";
 const NAACLogo = "/images/NAACLogo.png";
 const Years29Logo = "/images/29years.png";
 
+const DEPT_LINKS = [
+  { label: 'CS Department', path: '/cs' },
+  { label: 'IT Department', path: '/it' },
+  { label: 'EC Department', path: '/ec' },
+  { label: 'Central Library', path: '/library' },
+];
+
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [deptOpen, setDeptOpen] = useState(false);
+  const deptRef = useRef(null);
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
@@ -25,7 +33,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled || mobileMenuOpen ? "bg-white/95 dark:bg-[#020617]/95 backdrop-blur-2xl shadow-xl" : "bg-transparent"}`}>
+    <header className={`absolute top-0 w-full z-50 transition-all duration-500 ${isScrolled || mobileMenuOpen ? "bg-white/95 dark:bg-[#020617]/95 shadow-xl" : "bg-transparent"}`}>
       
       {/* 1. UTILITY BAR (Hidden on Mobile) */}
       <div className="hidden md:block bg-gradient-to-r from-[#3e0202] via-[#600000] to-[#3e0202] dark:from-white dark:via-[#1a0202] dark:to-white text-[11px] text-white/90 py-2 border-b border-white/10">
@@ -70,7 +78,6 @@ export default function Header() {
             {[
               { label: 'Home', path: '/' },
               { label: 'Admission', path: '#' },
-              { label: 'Departments', path: '/cs' },
               { label: 'Training & Placement', path: '/tap' },
               { label: 'Research', path: '#' }
             ].map((item) => (
@@ -81,6 +88,35 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
+
+            {/* Departments Dropdown */}
+            <div className="relative" ref={deptRef} onMouseEnter={() => setDeptOpen(true)} onMouseLeave={() => setDeptOpen(false)}>
+              <button className="flex items-center gap-1 px-4 py-2 hover:text-[#800000] transition-colors">
+                Departments <ChevronDown size={12} className={`transition-transform ${deptOpen ? 'rotate-180' : ''}`} />
+              </button>
+              <AnimatePresence>
+                {deptOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full left-0 mt-1 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50"
+                  >
+                    {DEPT_LINKS.map((d) => (
+                      <Link
+                        key={d.path}
+                        to={d.path}
+                        onClick={() => setDeptOpen(false)}
+                        className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 hover:bg-red-50 hover:text-[#800000] transition-colors"
+                      >
+                        {d.label}
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
 
           <button className="bg-[#800000] text-white px-6 py-3 rounded-full font-black text-[10px] tracking-widest hover:shadow-lg transition-all ml-4">
@@ -111,8 +147,16 @@ export default function Header() {
             <div className="flex flex-col p-6 gap-6 font-black uppercase tracking-widest text-sm">
               <Link to="/" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Home</Link>
               <Link to="#" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Admission</Link>
-              <Link to="/cs" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Departments</Link>
-              <Link to="/tap" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Training & Placement</Link>
+              <div>
+                <p className="text-[#800000] mb-3">Departments</p>
+                <div className="flex flex-col gap-3 pl-4 border-l-2 border-red-100 text-[11px]">
+                  {DEPT_LINKS.map((d) => (
+                    <Link key={d.path} to={d.path} onClick={() => setMobileMenuOpen(false)} className="text-gray-600 hover:text-[#800000]">{d.label}</Link>
+                  ))}
+                </div>
+              </div>
+              <Link to="/tap" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Training &amp; Placement</Link>
+              <Link to="#" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Research</Link>
               <div className="h-[1px] bg-gray-100"></div>
               <div className="grid grid-cols-2 gap-4 text-[10px] opacity-70">
                  <a href="#">LMS Portal</a>
