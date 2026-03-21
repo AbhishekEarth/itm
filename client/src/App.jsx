@@ -8,7 +8,6 @@ import Departments from "./components/Departments";
 import Testimonials from "./components/Testimonials";
 import Footer from "./components/Footer";
 import CSDepartment from './pages/CSDepartment';
-import TapPage from './pages/TapPage';
 import FloatingSidebar from "./components/FloatingSidebar";
 
 function App() {
@@ -41,9 +40,6 @@ function App() {
 
             {/* CS DEPARTMENT PAGE ROUTE */}
             <Route path="/cs" element={<CSDepartment />} />
-
-            {/* TAP PAGE ROUTE */}
-            <Route path="/tap" element={<TapPage />} />
           </Routes>
         </div>
       </div>

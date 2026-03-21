@@ -19,3 +19,13 @@
     @apply bg-gray-900/80 backdrop-blur-lg border border-gray-700/50 shadow-xl;
   }
 }
+.animated-border-glow {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.animated-border-glow:hover {
+  outline: 2px solid #800000; /* Red Border */
+  outline-offset: -2px;
+  box-shadow: 0 0 15px rgba(128, 0, 0, 0.4); /* Red Glow */
+}

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Target, Flag, Info, Briefcase, Calendar as CalendarIcon, Award, Users, MessageSquare, Handshake, ChevronRight, X, Menu } from 'lucide-react';
+import PlacementData from "../components/PlacementData";
+import axios from 'axios';
 
 const industrySpeak = [
   { name: "Aditya Mahajan", role: "Recruiter Campus Hiring, TCS", text: "It was a wonderful and great experience for conducting interviews at ITM. Students were well prepared. College Management has invested a lot in grooming them. Good performance by students. Good professionalism." },
@@ -41,6 +43,42 @@ const TapPage = () => {
   { name: 'Placement Records', icon: Award },
   { name: 'TAP Events', icon: CalendarIcon }
 ];
+
+const [events, setEvents] = useState({ upcoming: [], past: [] });
+
+const fetchEvents = async () => {
+  try {
+    const response = await axios.get("http://localhost:8000/api/events/all");
+    console.log("Fetched Events:", response.data); // Console check karein
+    setEvents(response.data);
+  } catch (error) {
+    console.error("Fetch Error:", error);
+  }
+};
+
+useEffect(() => {
+  if (activeTab === 'TAP Events') {
+    fetchEvents();
+  }
+}, [activeTab]);
+
+// Jab bhi 'TAP Events' tab par click ho, data fetch karein
+useEffect(() => {
+  if (activeTab === 'TAP Events') {
+    fetchEvents();
+  }
+}, [activeTab]);
+const [currentEventIndex, setCurrentEventIndex] = useState(0);
+
+// Auto-swap logic: Har 5 second mein index change hoga
+useEffect(() => {
+  if (events.upcoming.length > 1) {
+    const timer = setInterval(() => {
+      setCurrentEventIndex((prev) => (prev + 1) % events.upcoming.length);
+    }, 5000); // 5 Seconds
+    return () => clearInterval(timer);
+  }
+}, [events.upcoming.length]);
 
   return (
     /* Changed outer bg to Gray */
@@ -247,7 +285,7 @@ const TapPage = () => {
         </h2>
       </div>
 
-      {/* Horizontal Flex Container - Centers both members in one row */}
+      {/* Main Container - Horizontal Flex to show side-by-side */}
       <div className="flex flex-col md:flex-row gap-12 lg:gap-24 justify-center items-start w-full">
         {[
           {
@@ -265,30 +303,30 @@ const TapPage = () => {
             image: "/public/images/Shikha_Sharma.jpg"
           }
         ].map((member, idx) => (
-          <div key={idx} className="flex flex-col items-start max-w-[256px]">
+          <div key={idx} className="flex flex-col items-start max-w-[192px]"> {/* Match the w-48 width of the image */}
             
-            {/* Photo with Black Border */}
-            <div className="w-64 h-80 border border-black mb-4 overflow-hidden bg-gray-50">
+            {/* COMPACT Photo Container with Black Border */}
+            <div className="w-48 h-60 border border-black mb-4 overflow-hidden bg-gray-50 flex items-center justify-center">
               <img 
                 src={member.image} 
                 alt={member.name} 
                 className="w-full h-full object-cover"
-                onError={(e) => { e.target.src = "https://via.placeholder.com/256x320?text=Photo"; }}
+                onError={(e) => { e.target.src = "https://via.placeholder.com/192x240?text=Photo"; }}
               />
             </div>
             
-            {/* Info matching your provided image style */}
-            <div className="space-y-1 text-left"> 
-              <h4 className="text-[16px] font-bold text-gray-900 dark:text-white leading-tight">
+            {/* Compact Info Section */}
+            <div className="space-y-1.5 text-left text-[13px] md:text-[14px]"> 
+              <h4 className="font-bold text-gray-900 dark:text-white leading-tight">
                 {member.name}
               </h4>
-              <p className="text-[14px] text-gray-700 dark:text-gray-300">
+              <p className="text-gray-700 dark:text-gray-300">
                 {member.position}
               </p>
-              <p className="text-[14px] text-gray-700 dark:text-gray-300 break-words">
+              <p className="text-gray-700 dark:text-gray-300 break-words">
                 Email id : <span className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer">{member.email}</span>
               </p>
-              <p className="text-[14px] text-gray-700 dark:text-gray-300">
+              <p className="text-gray-700 dark:text-gray-300">
                 Phone No : {member.phone}
               </p>
             </div>
@@ -377,42 +415,98 @@ const TapPage = () => {
     className="bg-white dark:bg-[#020617] p-8 border border-gray-200 dark:border-gray-800 rounded-sm shadow-sm space-y-8"
   >
     <section>
-      {/* Heading style matching 'About TAP' and 'TAP Team' */}
-      <div className="mb-6">
+      {/* Dynamic Header */}
+      <div className="mb-8">
         <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white uppercase tracking-wider inline-block border-b-2 border-[#800000] pb-2">
-          Placement Records
+          Placement Record
         </h2>
       </div>
 
-      {/* Content Area */}
-      <div className="p-6 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-sm">
-        <p className="text-gray-600 dark:text-gray-400 text-sm italic">
-          Detailed placement statistics and year-wise records are currently being updated for the latest academic session.
-        </p>
+      {/* BACKEND COMPONENT CALL: Yahan aapka real data load hoga */}
+      <div className="mt-4">
+        <PlacementData />
       </div>
+
+      {/* Optional: Agar aap purana message bhi rakhna chahte hain toh neeche rehne dein */}
+      <p className="text-[11px] text-gray-400 italic mt-10">
+        *Data is fetched live from the ITMGOI Placement Database.
+      </p>
     </section>
   </motion.div>
 )}
-              {activeTab === 'TAP Events' && (
-                <motion.div key="events" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="bg-white dark:bg-[#020617] p-8 border border-gray-200 dark:border-gray-800 rounded-sm shadow-sm space-y-8">
-                  <section>
-                    <div className="mb-6">
-                      <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white uppercase tracking-wider inline-block border-b-2 border-[#800000] pb-2">
-                        TAP Events & Activities
-                      </h2>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {tapEventsData.map((event, idx) => (
-                        <motion.div key={idx} whileHover={{ y: -4 }} className="p-6 bg-white dark:bg-gray-900 rounded-sm border border-gray-100 dark:border-gray-800 shadow-sm transition-all">
-                          <div className="text-3xl mb-4">{event.icon}</div>
-                          <h4 className="text-base font-bold text-gray-900 dark:text-white mb-2">{event.title}</h4>
-                          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{event.desc}</p>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </section>
-                </motion.div>
-              )}
+    {activeTab === 'TAP Events' && (
+  <div className="space-y-12">
+    
+    {/* UPCOMING EVENTS - Layout Shift Fix */}
+<div className="animated-border-glow p-4 md:p-6 bg-white dark:bg-[#020617] rounded-sm shadow-sm border border-gray-200 dark:border-gray-800">
+  <h2 className="text-xl font-bold mb-8 border-b-2 border-green-500 inline-block uppercase tracking-wider">
+    Upcoming Events
+  </h2>
+  
+  {/* Container with Min-Height to prevent jumping */}
+  <div className="relative w-full min-h-[250px] md:min-h-[400px] lg:min-h-[500px] overflow-hidden rounded-sm bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+    {events.upcoming.length > 0 ? (
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={events.upcoming[currentEventIndex].id}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="w-full h-full flex items-center justify-center"
+        >
+          <img 
+            src={`http://localhost:8000${events.upcoming[currentEventIndex].image_url}`} 
+            className="w-full h-auto max-h-[70vh] block object-contain shadow-sm" 
+            alt="Upcoming Event Banner"
+            // Jab tak image load na ho, UI jump na kare isliye loading attribute
+            loading="eager" 
+          />
+          
+          {/* Dot Indicators */}
+          {events.upcoming.length > 1 && (
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+              {events.upcoming.map((_, idx) => (
+                <div 
+                  key={idx}
+                  className={`h-1.5 transition-all duration-300 rounded-full ${
+                    idx === currentEventIndex ? "w-6 bg-[#800000]" : "w-2 bg-gray-400/50"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
+    ) : (
+      <div className="flex flex-col items-center justify-center py-20 text-gray-400">
+         <CalendarIcon size={40} className="mb-2 opacity-20" />
+         <p className="italic text-sm">No upcoming events scheduled.</p>
+      </div>
+    )}
+  </div>
+</div>
+
+    {/* Past Activities remains same (Vertical Stack) */}
+    <div className="animated-border p-4 md:p-6 bg-white dark:bg-[#020617] rounded-sm shadow-sm border border-gray-200 dark:border-gray-800">
+      <h2 className="text-xl font-bold mb-8 border-b-2 border-gray-400 inline-block uppercase tracking-wider text-gray-500">
+        Past Activities
+      </h2>
+      <div className="flex flex-col gap-10">
+        {events.past.map((event) => (
+          <div key={event.id} className="w-full overflow-hidden rounded-sm shadow-sm border border-gray-100 dark:border-gray-800">
+            <img 
+              src={`http://localhost:8000${event.image_url}`} 
+              className="w-full h-auto block" 
+              alt="Past Event Banner" 
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </div>
+)}
             </AnimatePresence>
 
           </div>
