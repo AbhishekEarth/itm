@@ -21,7 +21,6 @@ export default function Testimonials() {
     <section className="py-20 bg-white dark:bg-[#020617] relative transition-colors overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         
-        {/* Header - Aligned with Maroon Theme */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
             <span className="text-[#800000] dark:text-red-400 font-black uppercase tracking-[0.4em] text-[10px]">

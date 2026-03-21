@@ -1,26 +1,19 @@
 import React from 'react';
-import { Link } from "react-router-dom";
-// Import the specific icons from react-icons
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from "react-icons/fa";
 const logo = "/placeholder.svg";
 
 export default function Footer() {
   const footerSections = [
     {
-      title: "About University",
-      links: ["About ITM", "Leadership", "Governance", "Awards & Ranking", "Infrastructure", "NIRF"]
+      title: "Institute",
+      links: ["About ITM", "Leadership", "Infrastructure", "NIRF"]
     },
     {
       title: "Programmes",
-      links: ["Graduate", "Postgraduate", "Department of Engineering", "Department of Management"]
-    },
-    {
-      title: "Student Resources",
-      links: ["Notices", "Academic Calendar", "MIS Login", "LMS Login", "Anti Ragging"]
+      links: ["Engineering", "Management", "Graduate", "Postgraduate"]
     }
   ];
 
-  // Social Media Data Object
   const socialLinks = [
     { icon: <FaFacebookF />, url: "https://www.facebook.com/itmgoigwl/", label: "Facebook" },
     { icon: <FaTwitter />, url: "https://x.com/itm_gwalior", label: "Twitter" },
@@ -29,32 +22,26 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[#0a0a0a] text-white pt-24 pb-10 px-8 border-t border-white/5 relative overflow-hidden">
-      {/* Subtle Maroon Glow */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#800000]/5 blur-[120px] rounded-full pointer-events-none" />
+    <footer className="bg-[#0a0a0a] text-white pt-16 pb-10 px-8 border-t border-white/5 relative overflow-hidden">
+      {/* Background Glow */}
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#800000]/5 blur-[100px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
+        {/* MAIN GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 items-start mb-16">
           
-          {/* 1. BRAND & DESCRIPTION */}
-          <div className="space-y-8">
-            <img src={logo} alt="ITM Logo" className="h-20 w-auto brightness-200" />
-            <p className="text-gray-400 text-sm leading-relaxed max-w-sm font-medium">
-              ITM Gwalior is the premier destination for industry-led education 
-              in Madhya Pradesh, committed to nurturing innovators and global leaders.
+          {/* 1. BRAND & SOCIAL */}
+          <div className="space-y-6">
+            <img src={logo} alt="ITM Logo" className="h-14 w-auto brightness-200" />
+            <p className="text-gray-400 text-sm leading-relaxed font-medium">
+              Think Big. Think Beyond. <br />
+              Premier industry-led education in Madhya Pradesh.
             </p>
-            
-            {/* SOCIAL MEDIA LOGOS */}
             <div className="flex gap-4">
               {socialLinks.map((social) => (
-                <a 
-                  key={social.label} 
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-[#800000] hover:scale-110 transition-all duration-300 cursor-pointer border border-white/10 text-lg text-gray-300 hover:text-white"
-                  aria-label={social.label}
+                <a key={social.label} href={social.url} target="_blank" rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-[#800000] transition-all border border-white/10 text-gray-400 hover:text-white"
                 >
                   {social.icon}
                 </a>
@@ -62,54 +49,81 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* 2. DYNAMIC LINKS SECTIONS */}
+          {/* 2. QUICK LINKS */}
           {footerSections.map((section) => (
-            <div key={section.title}>
-              <h4 className="text-red-500 font-black uppercase tracking-[0.25em] text-[10px] mb-8">
-                {section.title}
-              </h4>
+            <div key={section.title} className="hidden lg:block">
+              <h4 className="text-red-500 font-black uppercase tracking-widest text-[10px] mb-8">{section.title}</h4>
               <ul className="space-y-4">
                 {section.links.map((link) => (
                   <li key={link}>
-                    <a href="#" className="text-gray-400 hover:text-white transition-all text-sm font-bold flex items-center group">
-                      <span className="w-0 group-hover:w-4 overflow-hidden transition-all duration-300 text-red-500 font-black">→</span>
-                      <span className="group-hover:translate-x-1 transition-transform">{link}</span>
+                    <a href="#" className="text-gray-400 hover:text-white transition-all text-sm font-bold">
+                      {link}
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
+
+          {/* 3. CONTACT & MAP (Integrated) */}
+          <div className="space-y-8">
+            {/* Admissions */}
+            <div>
+              <h4 className="text-red-500 font-black uppercase tracking-widest text-[10px] mb-4">Admissions</h4>
+              <div className="text-white font-black tracking-tight space-y-1.5">
+                <p className="text-lg">+91-7773005065</p>
+                <p className="text-base text-gray-200">+91-7773001624</p>
+                <p className="text-base text-gray-200">+91-7773001627</p>
+              </div>
+            </div>
+
+            {/* General & Map */}
+            <div className="space-y-4">
+              <div>
+                <h4 className="text-red-500 font-black uppercase tracking-widest text-[10px] mb-2">General Office</h4>
+                <p className="text-sm font-black text-white">0751-2440056 / 2432977</p>
+              </div>
+
+              {/* RESTORED MAP FEATURE */}
+              <div className="group">
+                <a 
+                  href="https://www.google.com/maps/search/?api=1&query=ITM+Gwalior+Sithouli+Campus" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="relative block w-full h-20 rounded-xl overflow-hidden border border-white/10 shadow-lg"
+                >
+                  <img 
+                    src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=500&auto=format&fit=crop" 
+                    alt="Location" 
+                    className="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-100 transition-all duration-500" 
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-transparent">
+                    <span className="text-[9px] font-black uppercase bg-[#800000] text-white px-3 py-1.5 rounded-lg shadow-xl tracking-tighter">Locate Campus</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* 3. BOTTOM CONTACT STRIP */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 py-10 border-t border-white/5 text-sm">
-          <div className="group cursor-default">
-            <p className="text-red-500 font-black uppercase text-[10px] tracking-widest mb-2 opacity-70 group-hover:opacity-100 transition-opacity">General Helpline</p>
-            <p className="font-black text-2xl tracking-tighter group-hover:text-red-400 transition-colors">+91-7987004308</p>
+        {/* REFINED BOTTOM SECTION */}
+        <div className="pt-10 border-t border-white/5 flex flex-col items-center text-center gap-6">
+          <div className="space-y-3">
+            <p className="text-gray-300 text-xs font-bold tracking-wide">
+              ITM Campus, Opp. Sithouli Railway Station, NH-75 Jhansi Road, Gwalior - 475001 (M.P.)
+            </p>
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-[10px] font-black uppercase tracking-widest text-gray-500">
+              <a href="#" className="hover:text-red-500 transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-red-500 transition-colors">Terms of Use</a>
+              <a href="#" className="hover:text-red-500 transition-colors">Sitemap</a>
+              <a href="mailto:admission@itmgoi.in" className="hover:text-red-500 transition-colors font-black">admission@itmgoi.in</a>
+            </div>
           </div>
-          <div className="group cursor-default">
-            <p className="text-red-500 font-black uppercase text-[10px] tracking-widest mb-2 opacity-70 group-hover:opacity-100 transition-opacity">Official Email</p>
-            <p className="font-black text-lg tracking-tight group-hover:text-red-400 transition-colors">info@itmgoi.ac.in</p>
-          </div>
-          <div className="group cursor-default">
-            <p className="text-red-500 font-black uppercase text-[10px] tracking-widest mb-2 opacity-70 group-hover:opacity-100 transition-opacity">Location</p>
-            <p className="text-gray-400 font-medium group-hover:text-gray-200 transition-colors">Sitholi, Gwalior</p>
-          </div>
-        </div>
-
-        {/* 4. FINAL DISCLAIMER */}
-        <div className="mt-12 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-          <p className="text-gray-500 text-[9px] max-w-2xl leading-relaxed uppercase tracking-widest font-bold">
-            Disclaimer: ITM Gwalior is an independent institution with no affiliation to any other university of a similar name in India. All rights reserved © 2026.
+          
+          <p className="text-gray-600 text-[9px] uppercase tracking-[0.4em] font-black border-t border-white/5 pt-6 w-full max-w-2xl">
+            © 2026 ITM Gwalior • Independent Excellence
           </p>
-          <div className="flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
-            <a href="#" className="hover:text-red-500 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-red-500 transition-colors">Terms</a>
-            <a href="#" className="hover:text-red-500 transition-colors">Sitemap</a>
-          </div>
         </div>
-        
       </div>
     </footer>
   );
