@@ -72,28 +72,135 @@ export default function Header() {
             className="flex items-center gap-1 text-[13px] font-black uppercase tracking-widest text-gray-800 dark:text-gray-200 relative"
             onMouseLeave={() => setHoveredItem(null)}
           >
-            {['Home', 'Admission', 'Departments', 'TAP', 'Research'].map((item) => (
-              <Link
-                key={item}
-                to={item === 'Departments' ? '/cs' : '/'}
-                onMouseEnter={() => setHoveredItem(item)}
-                className="relative px-5 py-2 transition-colors duration-300 z-10 hover:text-[#800000] dark:hover:text-red-400"
-              >
+            {/* Home */}
+            <Link
+              to="/"
+              onMouseEnter={() => setHoveredItem('Home')}
+              className="relative px-5 py-2 transition-colors duration-300 z-10 hover:text-[#800000] dark:hover:text-red-400"
+            >
+              <AnimatePresence>
+                {hoveredItem === 'Home' && (
+                  <motion.span
+                    layoutId="navbar-pill"
+                    className="absolute inset-0 z-0 bg-red-50/80 dark:bg-red-900/20 backdrop-blur-lg rounded-full border border-red-200/50 dark:border-red-800/30 shadow-sm"
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </AnimatePresence>
+              <span className="relative z-10">Home</span>
+            </Link>
+
+            {/* Admission */}
+            <Link
+              to="/"
+              onMouseEnter={() => setHoveredItem('Admission')}
+              className="relative px-5 py-2 transition-colors duration-300 z-10 hover:text-[#800000] dark:hover:text-red-400"
+            >
+              <AnimatePresence>
+                {hoveredItem === 'Admission' && (
+                  <motion.span
+                    layoutId="navbar-pill"
+                    className="absolute inset-0 z-0 bg-red-50/80 dark:bg-red-900/20 backdrop-blur-lg rounded-full border border-red-200/50 dark:border-red-800/30 shadow-sm"
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </AnimatePresence>
+              <span className="relative z-10">Admission</span>
+            </Link>
+
+            {/* DEPARTMENTS DROPDOWN */}
+            <div className="relative group" onMouseEnter={() => setHoveredItem('Departments')} onMouseLeave={() => setHoveredItem(null)}>
+              <button className="relative flex items-center gap-1.5 px-5 py-2 hover:text-[#800000] dark:hover:text-red-400 cursor-pointer uppercase z-10 transition-colors duration-300">
                 <AnimatePresence>
-                  {hoveredItem === item && (
+                  {hoveredItem === 'Departments' && (
                     <motion.span
                       layoutId="navbar-pill"
                       className="absolute inset-0 z-0 bg-red-50/80 dark:bg-red-900/20 backdrop-blur-lg rounded-full border border-red-200/50 dark:border-red-800/30 shadow-sm"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
+                      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
                 </AnimatePresence>
-                <span className="relative z-10">{item}</span>
-              </Link>
-            ))}
+                <span className="relative z-10 flex items-center gap-1.5">
+                  Department
+                  <span className="text-[10px] transition-transform duration-300 group-hover:rotate-180 inline-block">▼</span>
+                </span>
+              </button>
+
+              {/* Dropdown Panel */}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-72 opacity-0 invisible translate-y-3 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-out z-50">
+                {/* Arrow pointer */}
+                <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white dark:bg-[#0f0a0a] rotate-45 border-l border-t border-red-100/60 dark:border-red-900/40"></div>
+                <div className="relative bg-white/98 dark:bg-[#0f0a0a]/98 backdrop-blur-2xl rounded-2xl shadow-[0_25px_60px_rgba(128,0,0,0.15)] border border-red-100/60 dark:border-red-900/30 overflow-hidden">
+                  {/* Top accent bar */}
+                  <div className="h-1 w-full bg-gradient-to-r from-[#800000] via-red-500 to-[#800000]"></div>
+                  <div className="p-2">
+                    {[
+                      { name: 'Computer Science & Engineering', path: '/cs' },
+                      { name: 'Electronics & Comm. Engineering', path: '/ece' },
+                      { name: 'Mechanical Engineering', path: '/me' },
+                      { name: 'Civil Engineering', path: '/ce' },
+                      { name: 'Information Technology', path: '/it' },
+                      { name: 'Master of Business Administration', path: '/mba' },
+                      { name: 'Engineering Sciences & Humanities', path: '/esh' },
+                      { name: 'Central Library', path: '/central-library' },
+                    ].map((dept, i, arr) => (
+                      <div key={dept.name}>
+                        <Link
+                          to={dept.path}
+                          className="flex items-center gap-3 px-4 py-3 rounded-xl text-[12.5px] font-semibold text-gray-700 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-[#800000] dark:hover:text-red-400 transition-all duration-200 group/dept"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-red-300 dark:bg-red-700 group-hover/dept:bg-[#800000] dark:group-hover/dept:bg-red-400 transition-colors shrink-0"></span>
+                          <span>{dept.name}</span>
+                          <span className="ml-auto opacity-0 group-hover/dept:opacity-100 text-[#800000] dark:text-red-400 transition-opacity text-xs">→</span>
+                        </Link>
+                        {i < arr.length - 1 && <div className="mx-4 h-[1px] bg-gray-100 dark:bg-gray-800/60"></div>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* TAP */}
+            <Link
+              to="/"
+              onMouseEnter={() => setHoveredItem('TAP')}
+              className="relative px-5 py-2 transition-colors duration-300 z-10 hover:text-[#800000] dark:hover:text-red-400"
+            >
+              <AnimatePresence>
+                {hoveredItem === 'TAP' && (
+                  <motion.span
+                    layoutId="navbar-pill"
+                    className="absolute inset-0 z-0 bg-red-50/80 dark:bg-red-900/20 backdrop-blur-lg rounded-full border border-red-200/50 dark:border-red-800/30 shadow-sm"
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </AnimatePresence>
+              <span className="relative z-10">TAP</span>
+            </Link>
+
+            {/* Research */}
+            <Link
+              to="/"
+              onMouseEnter={() => setHoveredItem('Research')}
+              className="relative px-5 py-2 transition-colors duration-300 z-10 hover:text-[#800000] dark:hover:text-red-400"
+            >
+              <AnimatePresence>
+                {hoveredItem === 'Research' && (
+                  <motion.span
+                    layoutId="navbar-pill"
+                    className="absolute inset-0 z-0 bg-red-50/80 dark:bg-red-900/20 backdrop-blur-lg rounded-full border border-red-200/50 dark:border-red-800/30 shadow-sm"
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </AnimatePresence>
+              <span className="relative z-10">Research</span>
+            </Link>
             
             {/* MORE DROPDOWN */}
             <div className="relative group">
