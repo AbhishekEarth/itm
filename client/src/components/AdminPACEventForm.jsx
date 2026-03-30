@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Upload, X, Plus, ChevronLeft } from "lucide-react";
+import { Upload, X, ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
 function Card({ children, className = "" }) {
@@ -13,11 +13,11 @@ function Card({ children, className = "" }) {
 
 export default function AdminPACEventForm() {
   const [formData, setFormData] = useState({
-    title: "", 
-    director: "", 
-    event_date: ""
+    title: "",
+    director: "",
+    event_date: "",
+    description: "",   // plain text — user presses Enter to separate paragraphs
   });
-  const [descriptions, setDescriptions] = useState([""]); // Array of paragraphs
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previews, setPreviews] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -25,8 +25,6 @@ export default function AdminPACEventForm() {
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
     setSelectedFiles((prev) => [...prev, ...files]);
-
-    // Create previews
     const newPreviews = files.map(file => URL.createObjectURL(file));
     setPreviews((prev) => [...prev, ...newPreviews]);
   };
@@ -34,19 +32,6 @@ export default function AdminPACEventForm() {
   const removeFile = (index) => {
     setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
     setPreviews((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const addDescriptionField = () => setDescriptions([...descriptions, ""]);
-  const removeDescriptionField = (index) => {
-    if (descriptions.length > 1) {
-      setDescriptions(descriptions.filter((_, i) => i !== index));
-    }
-  };
-
-  const handleDescriptionChange = (index, value) => {
-    const newDescs = [...descriptions];
-    newDescs[index] = value;
-    setDescriptions(newDescs);
   };
 
   const handleSubmit = async (e) => {
@@ -61,11 +46,15 @@ export default function AdminPACEventForm() {
     data.append("title", formData.title);
     data.append("director", formData.director);
     data.append("event_date_str", formData.event_date);
-    
-    // Join descriptions into a single string to ensure no comma separation during transmission
-    const fullDesc = descriptions.filter(d => d.trim()).join("\n\n");
-    data.append("description", fullDesc);
-    
+
+    // Each non-empty line = one paragraph. Join with \n so display can split on \n.
+    const cleanDesc = formData.description
+      .split(/\r?\n/)
+      .map(p => p.trim())
+      .filter(p => p.length > 0)
+      .join("\n");
+    data.append("description", cleanDesc);
+
     selectedFiles.forEach((file) => {
       data.append("files", file);
     });
@@ -76,8 +65,7 @@ export default function AdminPACEventForm() {
       });
       if (response.data.status === "success") {
         alert("PAC Event Uploaded Successfully!");
-        setFormData({ title: "", director: "", event_date: "" });
-        setDescriptions([""]);
+        setFormData({ title: "", director: "", event_date: "", description: "" });
         setSelectedFiles([]);
         setPreviews([]);
       }
@@ -89,6 +77,12 @@ export default function AdminPACEventForm() {
     }
   };
 
+  // Live preview paragraphs
+  const previewParagraphs = formData.description
+    .split(/\r?\n/)
+    .map(p => p.trim())
+    .filter(p => p.length > 0);
+
   return (
     <div className="p-6 max-w-2xl mx-auto min-h-screen pt-24">
       <Link to="/pac" className="flex items-center gap-2 text-[#800000] font-black text-xs uppercase tracking-widest mb-6 hover:translate-x-[-4px] transition-transform">
@@ -97,93 +91,87 @@ export default function AdminPACEventForm() {
       </Link>
       <Card className="p-8 shadow-xl border-t-4 border-t-[#800000]">
         <div className="flex items-center gap-3 mb-8">
-          <div className="p-3 bg-red-100 rounded-2xl text-[#800000]">
-            <Plus size={24} />
-          </div>
+          <div className="p-3 bg-red-100 rounded-2xl text-[#800000] text-2xl">🎭</div>
           <h2 className="text-2xl font-black text-gray-900 uppercase tracking-tighter">Add New PAC Event</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+
+          {/* Title */}
           <div className="space-y-2">
             <label className="text-xs font-black uppercase tracking-widest text-gray-500">Event Title</label>
-            <input 
-              type="text" 
-              placeholder="e.g. MAHARATHI 2.0" 
-              className="w-full p-4 bg-gray-50 border-0 rounded-2xl focus:ring-2 focus:ring-[#800000] font-bold outline-none" 
+            <input
+              type="text"
+              placeholder="e.g. MAHARATHI 2.0"
+              className="w-full p-4 bg-gray-50 border-0 rounded-2xl focus:ring-2 focus:ring-[#800000] font-bold outline-none"
               value={formData.title}
-              onChange={(e) => setFormData({...formData, title: e.target.value})} 
-              required 
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              required
             />
           </div>
 
+          {/* Date & Director */}
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label className="text-xs font-black uppercase tracking-widest text-gray-500">Event Date</label>
-              <input 
-                type="date" 
-                className="w-full p-4 bg-gray-50 border-0 rounded-2xl focus:ring-2 focus:ring-[#800000] font-bold outline-none" 
+              <input
+                type="date"
+                className="w-full p-4 bg-gray-50 border-0 rounded-2xl focus:ring-2 focus:ring-[#800000] font-bold outline-none"
                 value={formData.event_date}
-                onChange={(e) => setFormData({...formData, event_date: e.target.value})} 
-                required 
+                onChange={(e) => setFormData({ ...formData, event_date: e.target.value })}
+                required
               />
             </div>
             <div className="space-y-2">
               <label className="text-xs font-black uppercase tracking-widest text-gray-500">Director / Choreographer</label>
-              <input 
-                type="text" 
-                placeholder="Name" 
-                className="w-full p-4 bg-gray-50 border-0 rounded-2xl focus:ring-2 focus:ring-[#800000] font-bold outline-none" 
+              <input
+                type="text"
+                placeholder="Name"
+                className="w-full p-4 bg-gray-50 border-0 rounded-2xl focus:ring-2 focus:ring-[#800000] font-bold outline-none"
                 value={formData.director}
-                onChange={(e) => setFormData({...formData, director: e.target.value})} 
+                onChange={(e) => setFormData({ ...formData, director: e.target.value })}
                 required
               />
             </div>
           </div>
 
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-black uppercase tracking-widest text-gray-500">Description Paragraphs</label>
-              <button 
-                type="button" 
-                onClick={addDescriptionField}
-                className="text-[10px] font-black uppercase tracking-widest text-[#800000] hover:underline flex items-center gap-1"
-              >
-                <Plus size={12} /> Add Paragraph
-              </button>
-            </div>
-            
-            {descriptions.map((desc, idx) => (
-              <div key={idx} className="relative group space-y-2">
-                <div className="flex items-center justify-between px-1">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-[#800000]/60">Paragraph {idx + 1}</span>
-                  {descriptions.length > 1 && (
-                    <button 
-                      type="button"
-                      onClick={() => removeDescriptionField(idx)}
-                      className="text-[10px] font-black uppercase text-gray-400 hover:text-red-600 transition-colors"
-                    >
-                      Remove
-                    </button>
-                  )}
-                </div>
-                <textarea 
-                  placeholder={`Write details for paragraph ${idx + 1}...`} 
-                  className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-[#800000] font-bold outline-none min-h-[120px] shadow-sm transition-all" 
-                  value={desc}
-                  onChange={(e) => handleDescriptionChange(idx, e.target.value)} 
-                  required 
-                />
+          {/* Description — single textarea */}
+          <div className="space-y-2">
+            <label className="text-xs font-black uppercase tracking-widest text-gray-500">
+              Description
+              <span className="ml-2 text-[10px] text-gray-400 normal-case tracking-normal font-medium">
+                (Press <kbd className="px-1 py-0.5 bg-gray-100 rounded text-gray-600 font-mono text-[9px]">Enter</kbd> to start a new paragraph)
+              </span>
+            </label>
+            <textarea
+              placeholder={"Write your first paragraph here.\n\nPress Enter and write the second paragraph.\n\nPress Enter again for a third paragraph…"}
+              className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-[#800000] font-medium outline-none min-h-[220px] shadow-sm transition-all text-sm leading-relaxed resize-y"
+              value={formData.description}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              required
+            />
+
+            {/* Live preview */}
+            {previewParagraphs.length > 0 && (
+              <div className="mt-2 p-4 bg-red-50 border border-red-100 rounded-2xl">
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#800000] mb-3">
+                  Preview ({previewParagraphs.length} paragraph{previewParagraphs.length > 1 ? 's' : ''})
+                </p>
+                {previewParagraphs.map((p, i) => (
+                  <p key={i} className={`text-xs text-gray-700 leading-relaxed ${i > 0 ? 'mt-3' : ''}`}>{p}</p>
+                ))}
               </div>
-            ))}
+            )}
           </div>
 
+          {/* Photos */}
           <div className="space-y-4">
             <label className="text-xs font-black uppercase tracking-widest text-gray-500 block">Photos (Upload Multiple)</label>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {previews.map((src, index) => (
                 <div key={index} className="relative group aspect-square rounded-2xl overflow-hidden border-2 border-gray-100 shadow-sm">
                   <img src={src} alt="Preview" className="w-full h-full object-cover" />
-                  <button 
+                  <button
                     type="button"
                     onClick={() => removeFile(index)}
                     className="absolute top-1 right-1 p-1.5 bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
@@ -200,8 +188,8 @@ export default function AdminPACEventForm() {
             </div>
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={loading}
             className="w-full bg-[#800000] text-white py-5 rounded-2xl font-black text-xs tracking-[0.2em] uppercase hover:shadow-2xl hover:bg-red-900 transition-all transform active:scale-[0.98] disabled:bg-gray-400"
           >

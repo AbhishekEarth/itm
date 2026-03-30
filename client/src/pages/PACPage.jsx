@@ -160,12 +160,36 @@ export default function PACPage() {
             {event.assistantDirector && <span>Asst. Director: <span className="text-[#800000]">{event.assistantDirector}</span></span>}
           </div>
 
-          <div className="prose max-w-none text-gray-700 dark:text-gray-300 text-sm leading-relaxed font-medium space-y-4">
-            {Array.isArray(event.description) 
-              ? event.description.map((p, i) => <p key={i}>{p}</p>)
-              : event.description.split("\n\n").map((p, i) => <p key={i}>{p}</p>)
-            }
+          <div className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed font-medium">
+            {(() => {
+              // Support: array (static), newline-separated string (new backend), or ".,"-separated (legacy backend)
+              let paragraphs;
+              if (Array.isArray(event.description)) {
+                paragraphs = event.description;
+              } else {
+                // Try splitting by newlines first
+                const byNewline = event.description
+                  .split(/\n+/)
+                  .map(p => p.trim())
+                  .filter(p => p.length > 0);
+
+                if (byNewline.length > 1) {
+                  paragraphs = byNewline;
+                } else {
+                  // Fall back: split on "., " or ".," (legacy comma-joined format)
+                  paragraphs = event.description
+                    .split(/\.,\s*/)
+                    .map(p => p.trim())
+                    .filter(p => p.length > 0);
+                }
+              }
+
+              return paragraphs.map((p, i) => (
+                <p key={i} className={i > 0 ? 'mt-3' : ''}>{p}</p>
+              ));
+            })()}
           </div>
+
 
           {/* Photo Gallery - Adjusted to 2 images per line as requested, with no cropping */}
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
@@ -402,7 +426,7 @@ export default function PACPage() {
                   <div className="space-y-8">
                     <Card className="p-8">
                       <SectionHeading>Events organized</SectionHeading>
-                      <div className="space-y-12">
+                      <div className="divide-y divide-gray-100 dark:divide-gray-800">
                         {/* Static Permanent Events */}
                         {staticEvents.map((event, idx) => (
                           <EventItem key={`static-${idx}`} event={event} />

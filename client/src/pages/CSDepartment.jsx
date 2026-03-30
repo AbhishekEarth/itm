@@ -1,11 +1,4 @@
 import React, { useState } from 'react';
-<<<<<<< HEAD:client/src/pages/CSDepartment.jsx
-const labCs1 = "/public/images/lab_cs1.png";
-const labCs2 = "/public/images/lab_cs2.jpg";
-const labCs3 = "/public/images/lab_cs3.png";
-const labCs4 = "/public/images/lab_cs4.png";
-const labCs5 = "/public/images/lab_cs5.jpg";
-=======
 import PageLayout from '../components/PageLayout';
 import SectionHeading from '../components/SectionHeading';
 import Card from '../components/Card';
@@ -15,7 +8,6 @@ import labCs2 from '../assets/lab_cs2.jpg';
 import labCs3 from '../assets/lab_cs3.png';
 import labCs4 from '../assets/lab_cs4.png';
 import labCs5 from '../assets/lab_cs5.jpg';
->>>>>>> 015696f26eba7f0d0c6bae8152b71148f06a5e40:src/pages/CSDepartment.jsx
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const missionPoints = [
@@ -164,25 +156,11 @@ export default function CSDepartment() {
         </div>
       )}
 
-<<<<<<< HEAD:client/src/pages/CSDepartment.jsx
-        <div className="max-w-7xl mx-auto px-6 relative">
-          <span className="inline-block text-red-200 font-bold tracking-widest text-xs uppercase mb-3 px-3 py-1 bg-white/10 rounded-full border border-white/20">
-            NBA Accredited 2022–2025
-          </span>
-          <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-4 leading-tight">
-            Computer Science &<br />
-            <span className="text-white">Engineering</span>
-          </h1>
-          <p className="text-red-100/80 max-w-xl text-sm leading-relaxed font-medium">
-            Est. July 1997 · B.Tech & M.Tech Programmes · Cutting-Edge Research · State-of-the-Art Laboratories
-          </p>
-=======
       {/* ══ HOD DESK ══════════════════════════════════════════ */}
       {activeTab === 'HoD Desk' && (
         <div className="space-y-6">
           <Card className="p-8">
             <SectionHeading>HoD Desk</SectionHeading>
->>>>>>> 015696f26eba7f0d0c6bae8152b71148f06a5e40:src/pages/CSDepartment.jsx
 
             {/* Quote banner */}
             <div className="mb-8 p-6 bg-gradient-to-r from-[#800000]/8 to-red-50 dark:from-red-900/20 dark:to-red-900/10 border-l-4 border-[#800000] rounded-r-2xl">
@@ -227,50 +205,6 @@ export default function CSDepartment() {
         </div>
       )}
 
-<<<<<<< HEAD:client/src/pages/CSDepartment.jsx
-      {/* ── BODY ────────────────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 pb-16 md:pb-24">
-
-        {/* ── MOBILE TAB BAR ───────────────────────────────────── */}
-        <div className="lg:hidden bg-gray-50 py-3 -mx-3 px-3 sm:-mx-6 sm:px-6">
-          <div className="flex overflow-x-auto gap-2 pb-1 snap-x" style={{scrollbarWidth:'none',msOverflowStyle:'none'}}>
-            {menuItems.map((item) => (
-              <button
-                key={item}
-                onClick={() => setActiveTab(item)}
-                className={`shrink-0 snap-start px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-200 ${
-                  activeTab === item ? 'bg-[#800000] text-white shadow-md' : 'bg-white border border-gray-200 text-gray-600'
-                }`}
-              >{item}</button>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid lg:grid-cols-4 gap-6 lg:gap-8 items-start">
-
-          {/* ── SIDEBAR ─────────────────────────────────────────── */}
-          <aside className="hidden lg:block lg:col-span-1">
-            <div className="sticky top-32">
-              <Card className="overflow-hidden">
-                <div className="h-1 bg-gradient-to-r from-[#800000] via-red-500 to-[#800000]"></div>
-                <div className="p-5">
-                  <h3 className="font-black text-xs uppercase tracking-widest mb-4 text-[#800000]">CS MENU</h3>
-                  <nav className="flex flex-col gap-1">
-                    {menuItems.map((item) => (
-                      <button
-                        key={item}
-                        onClick={() => setActiveTab(item)}
-                        className={`text-left py-2.5 px-5 transition-all duration-200 ${
-                          activeTab === item
-                            ? 'bg-[#800000] text-white shadow-md shadow-red-900/30 rounded-full'
-                            : 'text-gray-600 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-[#800000] dark:hover:text-red-400 rounded-full'
-                        }`}
-                      >
-                        <span className="font-bold text-xs">{item}</span>
-                      </button>
-                    ))}
-                  </nav>
-=======
       {/* ══ LABORATORIES ══════════════════════════════════════ */}
       {activeTab === 'Laboratories' && (
         <div className="space-y-8">
@@ -307,7 +241,6 @@ export default function CSDepartment() {
                     <h4 className="font-black text-sm text-[#0b2a4a] dark:text-white group-hover:text-[#800000] dark:group-hover:text-red-400 transition-colors">{name}</h4>
                     <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400 leading-relaxed">{desc}</p>
                   </div>
->>>>>>> 015696f26eba7f0d0c6bae8152b71148f06a5e40:src/pages/CSDepartment.jsx
                 </div>
               ))}
             </div>

@@ -10,7 +10,9 @@ const Years29Logo = "/images/29years.png";
 const DEPT_LINKS = [
   { label: 'CS Department', path: '/cs' },
   { label: 'IT Department', path: '/it' },
-  { label: 'EC Department', path: '/ec' },
+  { label: 'EC Department', path: '/ece' },
+  { label: 'Civil Engineering', path: '/ce' },
+  { label: 'Emerging Branches', path: '/emerging-branches' },
   { label: 'Central Library', path: '/library' },
 ];
 
