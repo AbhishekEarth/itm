@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans antialiased text-gray-800 bg-white;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/70 backdrop-blur-lg border border-white/20 shadow-xl;
+  }
+  
+  .glass-dark {
+    @apply bg-gray-900/80 backdrop-blur-lg border border-gray-700/50 shadow-xl;
+  }
+}
+.animated-border-glow {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.animated-border-glow:hover {
+  outline: 2px solid #800000; /* Red Border */
+  outline-offset: -2px;
+  box-shadow: 0 0 15px rgba(128, 0, 0, 0.4); /* Red Glow */
+}
