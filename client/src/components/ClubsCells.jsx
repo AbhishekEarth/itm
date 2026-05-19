@@ -1,90 +1,141 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import Reveal from './Reveal';
+import React from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { ArrowUpRight, Music, Camera, Code2, Users2 } from "lucide-react";
 
-const clubs = [
+const CLUBS = [
   {
     name: "Performing Arts Club",
-    icon: "🎭",
-    desc: "Provides a platform for students to showcase and hone their talents in music, dance, drama, and other performing arts.",
-    accent: "from-[#800000] to-orange-600",
-    path: "/pac"
+    short: "PAC",
+    icon: Music,
+    emoji: "🎭",
+    desc: "Music, dance, drama and stagecraft — the home of KRONOS, Maharathi and our biggest cultural productions.",
+    accent: "from-rose-500 to-[#800000]",
+    path: "/pac",
+    image: "https://images.unsplash.com/photo-1503095396549-807759245b35?w=900&q=80",
+    tags: ["50+ Members", "Annual Production", "₹5L Grant"],
   },
   {
     name: "Photography Club",
-    icon: "📸",
-    desc: "A community for visual artists and storytellers to capture moments, learn techniques, and exhibit their creative photography.",
-    accent: "from-[#800000] to-red-600",
-    path: "#"
+    short: "PIX",
+    icon: Camera,
+    emoji: "📸",
+    desc: "Visual storytellers capturing campus life, events and the streets of Gwalior. Regular exhibits and workshops.",
+    accent: "from-amber-500 to-orange-600",
+    path: "#",
+    image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=900&q=80",
+    tags: ["Weekly Walks", "Print Studio", "Exhibits"],
   },
   {
     name: "Coding Club",
-    icon: "💻",
-    desc: "Fostering a culture of competitive programming, hackathons, and collaborative software development among students.",
-    accent: "from-[#800000] to-red-700",
-    path: "#"
+    short: "DEV",
+    icon: Code2,
+    emoji: "💻",
+    desc: "Competitive programming, hackathons, open-source sprints and weekend project hacks across all years.",
+    accent: "from-indigo-500 to-violet-700",
+    path: "#",
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=900&q=80",
+    tags: ["Hackathons", "ICPC Prep", "Mentor Network"],
   },
 ];
 
 export default function ClubsCells() {
   return (
-    <section id="clubs" className="pt-12 pb-24 bg-gray-50 dark:bg-[#020617] transition-colors duration-500">
-      <div className="max-w-7xl mx-auto px-6">
-        
-        {/* Section Heading */}
-        <div className="text-center mb-12"> 
-          <Reveal>
-            <span className="text-[#800000] dark:text-red-400 font-black uppercase tracking-[0.4em] text-[10px]">
-              Student Life & Activities
-            </span>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <h2 className="text-4xl md:text-6xl font-[1000] text-black dark:text-white mt-2 tracking-tighter uppercase">
-              Explore our <span className="text-[#800000]">Clubs & Cells</span>
+    <section id="clubs" className="relative py-20 md:py-28 bg-white dark:bg-[#020617] overflow-hidden">
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div className="max-w-xl">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">
+                Student Life
+              </span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+              Find your{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
+                  tribe.
+                </span>
+                <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 -z-0 -skew-x-3"></span>
+              </span>
             </h2>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-bold mt-4 leading-relaxed">
-              Discover your passion, develop leadership skills, and build lifelong friendships through our vibrant campus organizations.
-            </p>
-          </Reveal>
+          </div>
+          <p className="text-sm text-gray-600 dark:text-gray-400 font-medium leading-relaxed max-w-md">
+            Curated communities for every passion — performing arts, photography, coding,
+            entrepreneurship and more. College is what you make of it.
+          </p>
         </div>
 
-        {/* Clubs Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {clubs.map((club, index) => (
-            <Link to={club.path} key={index}>
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
+        {/* Grid */}
+        <div className="grid md:grid-cols-3 gap-5">
+          {CLUBS.map((c, i) => (
+            <Link to={c.path} key={c.short}>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -10 }}
-                className="group relative p-10 bg-white dark:bg-white/[0.03] rounded-[3rem] border-2 border-transparent hover:border-[#800000] transition-all duration-500 shadow-sm cursor-pointer"
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: i * 0.08, duration: 0.5 }}
+                whileHover={{ y: -8 }}
+                className="group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow h-full"
               >
-                <div className="relative z-10">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${club.accent} flex items-center justify-center text-3xl shadow-xl shadow-red-900/30 mb-8 group-hover:scale-110 transition-transform duration-500 text-white`}>
-                    {club.icon}
-                  </div>
-                  
-                  <h3 className="text-2xl font-[1000] text-black dark:text-white mb-4 tracking-tighter uppercase group-hover:text-[#800000] transition-colors">
-                    {club.name}
-                  </h3>
-                  
-                  <p className="text-black dark:text-white text-base leading-relaxed mb-8 font-bold">
-                    {club.desc}
-                  </p>
+                {/* Image */}
+                <div className="relative h-52 overflow-hidden">
+                  <img
+                    src={c.image}
+                    alt={c.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className={`absolute inset-0 bg-gradient-to-br ${c.accent} mix-blend-multiply opacity-65`}></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
 
-                  <span className="flex items-center gap-2 text-[11px] font-[1000] uppercase tracking-[0.2em] text-[#800000] dark:text-red-400 group-hover:gap-4 transition-all">
-                    View Details <span className="text-xl">→</span>
-                  </span>
+                  <div className="absolute top-4 right-4 text-4xl drop-shadow-xl">{c.emoji}</div>
+
+                  <div className="absolute bottom-4 left-5 right-5 text-white">
+                    <div className="text-[9px] font-black uppercase tracking-[0.3em] text-white/70 mb-1">Club</div>
+                    <h3 className="text-2xl font-black tracking-[-0.03em] leading-none">{c.name}</h3>
+                  </div>
                 </div>
 
-                <div className="absolute bottom-0 left-0 h-2 w-0 bg-[#800000] group-hover:w-full transition-all duration-700 rounded-b-[3rem]" />
+                {/* Body */}
+                <div className="p-6">
+                  <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-4">
+                    {c.desc}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5 mb-5">
+                    {c.tags.map((t) => (
+                      <span
+                        key={t}
+                        className="text-[9px] uppercase tracking-widest font-black px-2 py-1 bg-rose-50 dark:bg-gray-800 text-[#800000] dark:text-rose-300 rounded"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center justify-between pt-4 border-t border-rose-50 dark:border-gray-800">
+                    <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#800000]">
+                      View Details
+                    </span>
+                    <div className="w-8 h-8 rounded-full bg-rose-50 dark:bg-gray-800 group-hover:bg-[#800000] flex items-center justify-center text-[#800000] group-hover:text-white transition-colors">
+                      <ArrowUpRight size={14} />
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             </Link>
           ))}
+        </div>
+
+        {/* Footnote band */}
+        <div className="mt-10 flex items-center justify-center gap-3 text-xs text-gray-500 font-medium">
+          <Users2 size={14} className="text-[#800000]" />
+          <span>15+ active clubs and cells · technical, cultural, sports, entrepreneurship</span>
         </div>
       </div>
     </section>

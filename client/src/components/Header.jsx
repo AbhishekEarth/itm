@@ -8,16 +8,37 @@ const NAACLogo = "/images/NAACLogo.png";
 const Years29Logo = "/images/29years.png";
 
 const DEPT_LINKS = [
-  { label: 'CS Department', path: '/cs' },
-  { label: 'IT Department', path: '/it' },
-  { label: 'EC Department', path: '/ece' },
+  { label: 'CS Engineering', path: '/cs' },
+  { label: 'Information Technology', path: '/it' },
+  { label: 'Electronics & Comm.', path: '/ece' },
+  { label: 'Mechanical Engineering', path: '/me' },
   { label: 'Civil Engineering', path: '/ce' },
+  { label: 'MBA · Management', path: '/mba' },
+  { label: 'Engineering Sciences & Humanities', path: '/esh' },
   { label: 'Emerging Branches', path: '/emerging-branches' },
   { label: 'Central Library', path: '/library' },
 ];
 
 const CLUB_LINKS = [
   { label: 'Performing Arts Club (PAC)', path: '/pac' },
+];
+
+const RESEARCH_LINKS = [
+  { label: 'Research Overview', path: '/research' },
+  { label: 'Research & Development Cell', path: '/research/rd-cell' },
+  { label: 'Innovation Ecosystem', path: '/research/innovation-ecosystem' },
+  { label: 'ITM International Journal', path: '/research/journal' },
+  { label: 'ITM International Conference', path: '/research/conference' },
+  { label: 'Faculty Development Program (FDP)', path: '/research/fdp' },
+];
+
+const ADMISSION_LINKS = [
+  { label: 'Admissions Overview', path: '/admissions' },
+  { label: 'UG Courses', path: '/admissions/ug' },
+  { label: 'PG Courses', path: '/admissions/pg' },
+  { label: 'How to Seek Admission', path: '/admissions/how-to-apply' },
+  { label: 'Online Apply', href: 'http://itmgoi.in/OnlineApply_ITMGOI', external: true },
+  { label: 'Online Pay', href: 'https://onlineapply.itmgoi.in/form_hdfc.php?ok=Apply+Now', external: true },
 ];
 
 export default function Header() {
@@ -28,8 +49,14 @@ export default function Header() {
   const [mobileDeptOpen, setMobileDeptOpen] = useState(false);
   const [clubOpen, setClubOpen] = useState(false);
   const [mobileClubOpen, setMobileClubOpen] = useState(false);
+  const [admOpen, setAdmOpen] = useState(false);
+  const [mobileAdmOpen, setMobileAdmOpen] = useState(false);
+  const [resOpen, setResOpen] = useState(false);
+  const [mobileResOpen, setMobileResOpen] = useState(false);
   const deptRef = useRef(null);
   const clubRef = useRef(null);
+  const admRef = useRef(null);
+  const resRef = useRef(null);
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
@@ -55,7 +82,7 @@ export default function Header() {
             <a href="#" className="hover:text-red-400">NAAC A+</a>
           </div>
           <div className="flex gap-4 lg:gap-6 items-center">
-            <a href="#" className="hover:text-red-300">Online Payment</a>
+            <a href="https://onlineapply.itmgoi.in/form_hdfc.php?ok=Apply+Now" target="_blank" rel="noreferrer" className="hover:text-red-300">Online Payment</a>
             <div className="h-3 w-[1px] bg-white/20"></div>
             <a href="https://lms.itmgoi.in/" target="_blank" className="px-3 py-1 bg-cyan-500/20 border border-cyan-400/50 rounded-full text-cyan-400 hover:bg-cyan-500 hover:text-white transition-all">LMS Portal</a>
             <a href="http://mis.itmgoi.in/" target="_blank" className="px-3 py-1 bg-amber-500/20 border border-amber-400/50 rounded-full text-amber-400 hover:bg-amber-500 hover:text-black transition-all">MIS Login</a>
@@ -87,9 +114,7 @@ export default function Header() {
           <div className="flex items-center gap-1 text-[12px] font-black uppercase tracking-widest text-gray-800" onMouseLeave={() => setHoveredItem(null)}>
             {[
               { label: 'Home', path: '/' },
-              { label: 'Admission', path: '#' },
               { label: 'Training & Placement', path: '/tap' },
-              { label: 'Research', path: '#' }
             ].map((item) => (
               <Link key={item.label} to={item.path} onMouseEnter={() => setHoveredItem(item.label)} className="relative px-4 py-2 hover:text-[#800000] transition-colors z-10">
                 {hoveredItem === item.label && (
@@ -98,6 +123,51 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
+
+            {/* Admissions Dropdown */}
+            <div className="relative" ref={admRef} onMouseEnter={() => setAdmOpen(true)} onMouseLeave={() => setAdmOpen(false)}>
+              <Link
+                to="/admissions"
+                className="flex items-center gap-1 px-4 py-2 hover:text-[#800000] transition-colors"
+              >
+                Admission <ChevronDown size={12} className={`transition-transform ${admOpen ? 'rotate-180' : ''}`} />
+              </Link>
+              <AnimatePresence>
+                {admOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full left-0 mt-1 w-60 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50"
+                  >
+                    {ADMISSION_LINKS.map((a) =>
+                      a.external ? (
+                        <a
+                          key={a.label}
+                          href={a.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={() => setAdmOpen(false)}
+                          className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 hover:bg-red-50 hover:text-[#800000] transition-colors"
+                        >
+                          {a.label} ↗
+                        </a>
+                      ) : (
+                        <Link
+                          key={a.label}
+                          to={a.path}
+                          onClick={() => setAdmOpen(false)}
+                          className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 hover:bg-red-50 hover:text-[#800000] transition-colors"
+                        >
+                          {a.label}
+                        </Link>
+                      )
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
             {/* Departments Dropdown */}
             <div className="relative" ref={deptRef} onMouseEnter={() => setDeptOpen(true)} onMouseLeave={() => setDeptOpen(false)}>
@@ -118,6 +188,35 @@ export default function Header() {
                         key={d.path}
                         to={d.path}
                         onClick={() => setDeptOpen(false)}
+                        className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 hover:bg-red-50 hover:text-[#800000] transition-colors"
+                      >
+                        {d.label}
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Research Dropdown */}
+            <div className="relative" ref={resRef} onMouseEnter={() => setResOpen(true)} onMouseLeave={() => setResOpen(false)}>
+              <Link to="/research" className="flex items-center gap-1 px-4 py-2 hover:text-[#800000] transition-colors">
+                Research <ChevronDown size={12} className={`transition-transform ${resOpen ? 'rotate-180' : ''}`} />
+              </Link>
+              <AnimatePresence>
+                {resOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full left-0 mt-1 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50"
+                  >
+                    {RESEARCH_LINKS.map((d) => (
+                      <Link
+                        key={d.path}
+                        to={d.path}
+                        onClick={() => setResOpen(false)}
                         className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 hover:bg-red-50 hover:text-[#800000] transition-colors"
                       >
                         {d.label}
@@ -158,16 +257,16 @@ export default function Header() {
             </div>
           </div>
 
-          <button className="bg-[#800000] text-white px-6 py-3 rounded-full font-black text-[10px] tracking-widest hover:shadow-lg transition-all ml-4">
+          <Link to="/admissions/how-to-apply" className="bg-[#800000] text-white px-6 py-3 rounded-full font-black text-[10px] tracking-widest hover:shadow-lg transition-all ml-4">
             APPLY NOW
-          </button>
+          </Link>
         </nav>
 
         {/* MOBILE MENU BUTTON (Shown on screens < XL) */}
         <div className="xl:hidden flex items-center gap-4">
-            <button className="bg-[#800000] text-white px-4 py-2 rounded-full font-black text-[10px] tracking-widest">
+            <Link to="/admissions/how-to-apply" className="bg-[#800000] text-white px-4 py-2 rounded-full font-black text-[10px] tracking-widest">
                 APPLY
-            </button>
+            </Link>
             <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-gray-800">
                 {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
@@ -185,7 +284,52 @@ export default function Header() {
           >
             <div className="flex flex-col p-6 gap-6 font-black uppercase tracking-widest text-sm">
               <Link to="/" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Home</Link>
-              <Link to="#" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Admission</Link>
+
+              <div>
+                <button
+                  onClick={() => setMobileAdmOpen(!mobileAdmOpen)}
+                  className="w-full flex items-center justify-between text-[#800000] mb-3 focus:outline-none"
+                >
+                  <span>Admission</span>
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${mobileAdmOpen ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence>
+                  {mobileAdmOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="flex flex-col gap-3 pl-4 border-l-2 border-red-100 text-[11px] mb-3">
+                        {ADMISSION_LINKS.map((a) =>
+                          a.external ? (
+                            <a
+                              key={a.label}
+                              href={a.href}
+                              target="_blank"
+                              rel="noreferrer"
+                              onClick={() => { setMobileMenuOpen(false); setMobileAdmOpen(false); }}
+                              className="text-gray-600 hover:text-[#800000] py-1"
+                            >
+                              {a.label} ↗
+                            </a>
+                          ) : (
+                            <Link
+                              key={a.label}
+                              to={a.path}
+                              onClick={() => { setMobileMenuOpen(false); setMobileAdmOpen(false); }}
+                              className="text-gray-600 hover:text-[#800000] py-1"
+                            >
+                              {a.label}
+                            </Link>
+                          )
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
               <div>
                 <button 
                   onClick={() => setMobileDeptOpen(!mobileDeptOpen)}
@@ -252,7 +396,39 @@ export default function Header() {
                 </AnimatePresence>
               </div>
               <Link to="/tap" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Training &amp; Placement</Link>
-              <Link to="#" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Research</Link>
+
+              <div>
+                <button
+                  onClick={() => setMobileResOpen(!mobileResOpen)}
+                  className="w-full flex items-center justify-between text-[#800000] mb-3 focus:outline-none"
+                >
+                  <span>Research</span>
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${mobileResOpen ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence>
+                  {mobileResOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="flex flex-col gap-3 pl-4 border-l-2 border-red-100 text-[11px] mb-3">
+                        {RESEARCH_LINKS.map((d) => (
+                          <Link
+                            key={d.path}
+                            to={d.path}
+                            onClick={() => { setMobileMenuOpen(false); setMobileResOpen(false); }}
+                            className="text-gray-600 hover:text-[#800000] py-1"
+                          >
+                            {d.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
               <div className="h-[1px] bg-gray-100"></div>
               <div className="grid grid-cols-2 gap-4 text-[10px] opacity-70">
                  <a href="#">LMS Portal</a>

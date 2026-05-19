@@ -1,79 +1,186 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Quote, ChevronLeft, ChevronRight, Star } from "lucide-react";
+
+const TESTIMONIALS = [
+  {
+    name: "Rahul Sharma",
+    role: "SDE @ Google",
+    batch: "B.Tech CSE · 2022",
+    text: "ITM was the perfect launchpad. The faculty, hackathons and industry exposure prepared me to crack the Google interview on the first attempt.",
+    initials: "RS",
+    accent: "from-rose-500 to-[#800000]",
+  },
+  {
+    name: "Priya Verma",
+    role: "Lead Architect, TCS",
+    batch: "B.Tech IT · 2018",
+    text: "The studio culture at ITM helped me find my design language. Mentor faculty, 565 terminals and a coding club that genuinely shipped — it shows in my work today.",
+    initials: "PV",
+    accent: "from-amber-500 to-orange-600",
+  },
+  {
+    name: "Ankit Joshi",
+    role: "Founder, FinTech Startup",
+    batch: "MBA · 2020",
+    text: "What I learnt about leadership and customer empathy at ITM Gwalior is the bedrock of my company. Worth every rupee of tuition.",
+    initials: "AJ",
+    accent: "from-emerald-500 to-teal-700",
+  },
+  {
+    name: "Neha Khanna",
+    role: "Data Scientist, Microsoft",
+    batch: "B.Tech CSE-AIML · 2024",
+    text: "The AI/ML labs gave me access to GPUs and datasets I'd otherwise only read about. My capstone became a published paper and a job offer.",
+    initials: "NK",
+    accent: "from-indigo-500 to-violet-700",
+  },
+  {
+    name: "Suyash Tomar",
+    role: "Site Engineer, L&T",
+    batch: "B.Tech Civil · 2021",
+    text: "Site visits, structural design labs and on-the-job training — I walked into L&T already knowing how things actually get built.",
+    initials: "ST",
+    accent: "from-yellow-600 to-amber-800",
+  },
+];
 
 export default function Testimonials() {
-  const testimonials = [
-    { 
-      name: "Rahul Sharma", 
-      role: "SDE @ Google", 
-      text: "ITM was the perfect launchpad. The faculty and industry exposure here is truly unmatched.",
-      initials: "RS"
-    },
-    { 
-      name: "Priya Verma", 
-      role: "Lead Architect", 
-      text: "The studio culture helped me find my design language and prepare for the global landscape.",
-      initials: "PV"
-    }
-  ];
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => setIdx((i) => (i + 1) % TESTIMONIALS.length), 6000);
+    return () => clearInterval(t);
+  }, []);
+
+  const next = () => setIdx((i) => (i + 1) % TESTIMONIALS.length);
+  const prev = () => setIdx((i) => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+
+  const t = TESTIMONIALS[idx];
 
   return (
-    <section className="py-20 bg-white dark:bg-[#020617] relative transition-colors overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-        
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-          <div>
-            <span className="text-[#800000] dark:text-red-400 font-black uppercase tracking-[0.4em] text-[10px]">
-              Alumni Success
-            </span>
-            <h2 className="text-4xl md:text-5xl font-black text-[#3e0202] dark:text-white mt-2 tracking-tighter">
-              The <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#800000] to-red-600">ITM</span> Experience
+    <section className="relative py-20 md:py-28 bg-gradient-to-br from-[#fbf7f2] via-rose-50/30 to-white dark:from-[#020617] dark:to-[#020617] overflow-hidden">
+
+      <div className="absolute top-0 right-0 w-[25vw] h-[25vw] rounded-full bg-gradient-to-bl from-rose-200/40 to-transparent blur-2xl pointer-events-none"></div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div className="max-w-xl">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">
+                Alumni Success
+              </span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+              The ITM{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
+                  Experience.
+                </span>
+                <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 -z-0 -skew-x-3"></span>
+              </span>
             </h2>
+          </div>
+
+          {/* Carousel nav */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={prev}
+              className="w-12 h-12 rounded-full border border-rose-200 bg-white hover:bg-[#800000] hover:text-white hover:border-[#800000] text-[#800000] flex items-center justify-center transition-all"
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <span className="text-[10px] font-black uppercase tracking-widest text-gray-500 px-2">
+              {String(idx + 1).padStart(2, "0")} <span className="text-gray-300">/</span> {String(TESTIMONIALS.length).padStart(2, "0")}
+            </span>
+            <button
+              onClick={next}
+              className="w-12 h-12 rounded-full border border-rose-200 bg-white hover:bg-[#800000] hover:text-white hover:border-[#800000] text-[#800000] flex items-center justify-center transition-all"
+            >
+              <ChevronRight size={18} />
+            </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {testimonials.map((item, i) => (
-            <motion.div 
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -8 }}
-              className="group relative p-10 rounded-[3rem] bg-gray-50/50 dark:bg-white/[0.02] backdrop-blur-xl border border-red-50 dark:border-white/5 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-red-900/5 transition-all duration-500"
-            >
-              {/* Massive background quote watermark */}
-              <span className="absolute -top-10 -right-4 text-[180px] leading-none text-[#800000]/5 dark:text-red-500/10 font-serif pointer-events-none select-none">
-                “
-              </span>
+        {/* Featured testimonial */}
+        <div className="grid lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 relative">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={t.name}
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -30 }}
+                transition={{ duration: 0.4 }}
+                className="relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-xl p-8 md:p-12"
+              >
+                <div className={`absolute -top-20 -right-20 w-72 h-72 rounded-full bg-gradient-to-br ${t.accent} opacity-10 blur-3xl pointer-events-none`}></div>
+                <Quote size={72} className="absolute top-6 right-6 text-rose-100 -scale-x-100" />
 
-              <div className="relative z-10">
-                {/* Header of the card (Avatar + Name) */}
-                <div className="flex items-center gap-5 mb-8">
-                  <div className="w-14 h-14 bg-gradient-to-br from-[#800000] to-[#4a0101] rounded-[1.2rem] flex items-center justify-center text-white text-sm font-black shadow-lg shadow-red-900/20">
-                    {item.initials}
+                <div className="relative">
+                  <div className="flex items-center gap-1 mb-6">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={14} fill="#F59E0B" className="text-amber-500" />
+                    ))}
                   </div>
-                  <div>
-                    <h4 className="text-xl font-black text-[#3e0202] dark:text-white leading-tight">
-                      {item.name}
-                    </h4>
-                    <p className="text-[10px] text-[#800000] dark:text-red-400 font-black uppercase tracking-widest mt-1">
-                      {item.role}
-                    </p>
+
+                  <p className="text-lg md:text-2xl text-gray-800 dark:text-gray-100 leading-relaxed font-medium mb-8 italic">
+                    &ldquo;{t.text}&rdquo;
+                  </p>
+
+                  <div className="flex items-center gap-4 pt-6 border-t border-rose-50 dark:border-gray-800">
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${t.accent} text-white flex items-center justify-center font-black tracking-tight shadow-lg`}>
+                      {t.initials}
+                    </div>
+                    <div>
+                      <h4 className="font-black text-base tracking-tight text-[#1a0606] dark:text-white">
+                        {t.name}
+                      </h4>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-[#800000] mt-0.5">
+                        {t.role}
+                      </p>
+                      <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mt-0.5">
+                        {t.batch}
+                      </p>
+                    </div>
                   </div>
                 </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-                {/* Quote Text */}
-                <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">
-                  "{item.text}"
-                </p>
-              </div>
-
-              {/* Bottom accent bar that grows on hover */}
-              <div className="absolute bottom-0 left-0 h-1.5 w-0 bg-gradient-to-r from-[#800000] to-red-600 group-hover:w-full transition-all duration-700 ease-in-out" />
-            </motion.div>
-          ))}
+          {/* Side list — clickable mini cards */}
+          <div className="space-y-3">
+            {TESTIMONIALS.map((tt, i) => (
+              <button
+                key={tt.name}
+                onClick={() => setIdx(i)}
+                className={`w-full text-left p-4 rounded-2xl border-2 transition-all flex items-center gap-3 ${
+                  i === idx
+                    ? "bg-white dark:bg-gray-900 border-[#800000] shadow-lg"
+                    : "bg-white/50 dark:bg-gray-900/50 border-transparent hover:border-rose-200"
+                }`}
+              >
+                <div className={`shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br ${tt.accent} text-white flex items-center justify-center text-xs font-black tracking-tight`}>
+                  {tt.initials}
+                </div>
+                <div className="min-w-0">
+                  <div className="text-sm font-black tracking-tight text-[#1a0606] dark:text-white truncate">
+                    {tt.name}
+                  </div>
+                  <div className="text-[10px] uppercase tracking-widest font-bold text-gray-500 truncate">
+                    {tt.role}
+                  </div>
+                </div>
+                {i === idx && (
+                  <motion.div layoutId="testi-dot" className="ml-auto w-2 h-2 rounded-full bg-[#800000]"></motion.div>
+                )}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>

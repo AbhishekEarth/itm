@@ -1,25 +1,30 @@
 import { useEffect, useRef } from "react";
 import { motion, useMotionValue, useTransform, animate, useInView } from "framer-motion";
+import {
+  Briefcase,
+  GraduationCap,
+  FlaskConical,
+  Cpu,
+  MapPin,
+  Users,
+} from "lucide-react";
 
 function Counter({ value }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
   const count = useMotionValue(0);
-  const rounded = useTransform(count, (latest) => Math.round(latest));
+  const rounded = useTransform(count, (l) => Math.round(l).toLocaleString());
 
-  const numericValue = parseInt(value.replace(/[^0-9]/g, "")) || 0;
-  const prefix = value.match(/^[^\d]+/)?.[0] || "";
-  const suffix = value.replace(prefix, "").replace(/\d+/, "");
+  const numeric = parseInt(String(value).replace(/[^0-9]/g, "")) || 0;
+  const prefix = String(value).match(/^[^\d]+/)?.[0] || "";
+  const suffix = String(value).replace(prefix, "").replace(/\d|,/g, "");
 
   useEffect(() => {
     if (isInView) {
-      const controls = animate(count, numericValue, {
-        duration: 2,
-        ease: [0.16, 1, 0.3, 1],
-      });
-      return controls.stop;
+      const c = animate(count, numeric, { duration: 2.2, ease: [0.16, 1, 0.3, 1] });
+      return c.stop;
     }
-  }, [isInView, numericValue, count]);
+  }, [isInView, numeric, count]);
 
   return (
     <span ref={ref}>
@@ -30,46 +35,88 @@ function Counter({ value }) {
   );
 }
 
+// Real campus stats scraped from itmgoi.in
+const data = [
+  { icon: MapPin, value: "10.85 ac", label: "Sprawling Campus", accent: "from-rose-500 to-[#800000]" },
+  { icon: GraduationCap, value: "45", label: "Classrooms", accent: "from-amber-500 to-orange-600" },
+  { icon: FlaskConical, value: "42", label: "Modern Labs", accent: "from-emerald-500 to-teal-700" },
+  { icon: Cpu, value: "728", label: "Computers", accent: "from-indigo-500 to-violet-700" },
+  { icon: Users, value: "2500", label: "NAAD Amphitheatre", accent: "from-sky-500 to-blue-700" },
+  { icon: Briefcase, value: "80%+", label: "Placement Track", accent: "from-rose-500 to-pink-700" },
+];
+
 export default function Stats() {
-  const data = [
-    { label: "Placement Rate", val: "90%+" },
-    { label: "Global Tie-ups", val: "150+" },
-    { label: "Scholarships", val: "₹5Cr+" },
-    { label: "Research Papers", val: "2000+" }
-  ];
-
   return (
-    <div className="relative z-20 -mt-12 max-w-6xl mx-auto px-6 mb-20">
-      {/* Background Ambient Glow to blend with Hero */}
-      <div className="absolute inset-0 bg-[#800000]/5 blur-[100px] -z-10 rounded-full" />
+    <section className="relative py-20 md:py-28 bg-gradient-to-b from-[#fbf7f2] via-white to-white dark:from-[#0a0a14] dark:to-[#020617] overflow-hidden">
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-        {data.map((item, i) => (
-          <motion.div 
-            key={i} 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1, duration: 0.6 }}
-            whileHover={{ y: -8, transition: { duration: 0.2 } }}
-            className="group bg-white/70 dark:bg-[#020617]/40 backdrop-blur-2xl p-8 rounded-[2.5rem] border border-red-100/50 dark:border-red-900/20 shadow-[0_20px_50px_rgba(128,0,0,0.08)] hover:shadow-[0_20px_50px_rgba(128,0,0,0.15)] text-center transition-all"
-          >
-            {/* Animated Icon/Dot for flair */}
-            <div className="w-1.5 h-1.5 bg-[#800000] rounded-full mx-auto mb-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+      {/* Decorative blurs */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60vw] h-[300px] rounded-full bg-gradient-to-br from-rose-200/30 to-transparent blur-2xl pointer-events-none"></div>
 
-            <div className="text-3xl md:text-4xl font-black text-[#800000] dark:text-red-500 tracking-tighter">
-              <Counter value={item.val} />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div className="max-w-xl">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">
+                Numbers don&apos;t lie
+              </span>
             </div>
-            
-            <div className="text-[10px] uppercase tracking-[0.2em] font-black text-[#3e0202]/60 dark:text-white/40 mt-3 leading-tight">
-              {item.label}
-            </div>
+            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+              A campus built on{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
+                  outcomes.
+                </span>
+                <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 -z-0 -skew-x-3"></span>
+              </span>
+            </h2>
+          </div>
+          <p className="text-sm text-gray-600 dark:text-gray-400 font-medium leading-relaxed max-w-md">
+            From day-one placement support to a worldwide alumni network — every number reflects
+            a real student outcome, year after year.
+          </p>
+        </div>
 
-            {/* Subtle bottom accent line */}
-            <div className="mt-6 h-[1px] w-8 bg-gray-100 dark:bg-white/5 mx-auto group-hover:w-16 group-hover:bg-red-500/50 transition-all duration-500" />
-          </motion.div>
-        ))}
+        {/* Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {data.map((s, i) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.07, duration: 0.5 }}
+              whileHover={{ y: -6 }}
+              className="group relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow p-5"
+            >
+              {/* Glow */}
+              <div
+                className={`absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br ${s.accent} opacity-10 group-hover:opacity-25 blur-2xl transition-opacity duration-500`}
+              ></div>
+
+              <div className="relative">
+                <div
+                  className={`w-10 h-10 rounded-xl bg-gradient-to-br ${s.accent} text-white flex items-center justify-center shadow-lg mb-4`}
+                >
+                  <s.icon size={16} />
+                </div>
+
+                <div className="text-3xl md:text-4xl font-black tracking-[-0.04em] text-[#1a0606] dark:text-white leading-none mb-2">
+                  <Counter value={s.value} />
+                </div>
+
+                <div className="text-[9px] uppercase tracking-[0.18em] font-black text-gray-500 dark:text-gray-400 leading-tight">
+                  {s.label}
+                </div>
+
+                <div className="mt-4 h-[2px] w-6 bg-gray-200 dark:bg-gray-700 group-hover:w-full bg-gradient-to-r from-[#800000] to-amber-400 transition-all duration-500"></div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

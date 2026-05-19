@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+
+// Real campus photos from the official ITM Gwalior website (itmgoi.in)
 const images = [
-  "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1200&h=600&fit=crop",
-  "https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=1200&h=600&fit=crop"
+  "/images/hero/slider1.jpg",
+  "/images/hero/slider2.jpg",
+  "/images/hero/slider3.jpg",
+  "/images/hero/slider4.jpg",
+  "/images/hero/slider5.jpg",
+  "/images/hero/slider9.jpg",
+  "/images/hero/slider10.png",
 ];
 
 export default function Hero() {
@@ -17,32 +24,33 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-white dark:bg-[#020617] pt-12 pb-20">
-      
+
       {/* --- BACKGROUND LAYER --- */}
       <div className="absolute inset-0 z-0 bg-white">
-        <AnimatePresence initial={false}>
-          <motion.img 
-            key={currentIndex}
-            src={images[currentIndex]} 
-            alt="ITM Campus" 
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 0.8, scale: 1 }} // Low transparency for high visibility
-            exit={{ opacity: 0, scale: 1.05 }}
-            transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0 w-full h-full object-cover" 
+        {/* Preload all hero images once; cross-fade via opacity (cheap on GPU) */}
+        {images.map((src, i) => (
+          <img
+            key={src}
+            src={src}
+            alt=""
+            loading={i === 0 ? "eager" : "lazy"}
+            decoding="async"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+              i === currentIndex ? "opacity-80" : "opacity-0"
+            }`}
           />
-        </AnimatePresence>
-        
+        ))}
+
         {/* Subtle Gradient to protect text legibility without hiding the photo */}
         <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/10 to-transparent dark:from-[#020617]/90 dark:via-[#020617]/20 dark:to-transparent z-[1]"></div>
       </div>
 
       {/* --- CONTENT CONTAINER --- */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full"> 
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
         <div className="max-w-3xl">
-          
+
           {/* Animated Badge */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-3 mb-6"
@@ -52,9 +60,9 @@ export default function Hero() {
               NAAC A+ Accredited University
             </span>
           </motion.div>
-          
+
           {/* NEW MANTRA-BASED TITLE */}
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
@@ -65,35 +73,35 @@ export default function Hero() {
               Think Beyond.
             </span>
           </motion.h1>
-          
+
           {/* NEW MANTRA-BASED DESCRIPTION */}
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
             className="text-lg md:text-xl text-gray-800 dark:text-gray-100 mb-10 max-w-lg leading-relaxed font-bold drop-shadow-lg"
           >
-            At ITM Gwalior, we don't just follow the future—we architect it. 
-            Empowering a new generation of leaders to transcend boundaries 
+            At ITM Gwalior, we don't just follow the future—we architect it.
+            Empowering a new generation of leaders to transcend boundaries
             and redefine excellence.
           </motion.p>
-          
+
           {/* INTERACTIVE BUTTONS */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
             className="flex flex-wrap gap-6"
           >
-            <motion.button 
+            <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               className="bg-[#800000] text-white px-10 py-4 rounded-xl font-black text-[11px] tracking-widest uppercase shadow-xl transition-all cursor-pointer"
             >
               Apply Now 2026
             </motion.button>
-            
-            <motion.button 
+
+            <motion.button
               className="group flex items-center gap-4 px-8 py-4 rounded-xl font-black text-[11px] tracking-widest uppercase border-2 border-[#800000]/40 dark:border-white/20 bg-white/10 backdrop-blur-sm text-[#3e0202] dark:text-white transition-all cursor-pointer shadow-lg"
             >
               <div className="flex items-center justify-center w-8 h-8 bg-red-600 text-white rounded-full shadow-lg group-hover:rotate-[360deg] transition-transform duration-700">
@@ -110,7 +118,7 @@ export default function Hero() {
         {images.map((_, index) => (
           <div key={index} className="h-1 w-12 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
             {currentIndex === index && (
-              <motion.div 
+              <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 transition={{ duration: 5, ease: "linear" }}

@@ -72,10 +72,12 @@ export default function CampusLife() {
               className={`${item.size} relative group rounded-[2.5rem] overflow-hidden shadow-2xl h-80 md:h-full border border-gray-100 dark:border-white/10`}
             >
               {/* Image */}
-              <img 
-                src={item.image} 
+              <img
+                src={item.image}
                 alt={item.title}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
               
