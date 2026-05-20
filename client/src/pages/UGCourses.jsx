@@ -708,16 +708,16 @@ export default function UGCourses() {
 
       {/* ─────────── LATERAL ENTRY CALLOUT ─────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-50 to-amber-50 border border-emerald-200 p-8 md:p-10 grid md:grid-cols-2 gap-6 items-center">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-50 to-amber-50 dark:from-gray-800 dark:to-gray-800 border border-emerald-200 dark:border-gray-700 p-8 md:p-10 grid md:grid-cols-2 gap-6 items-center">
           <div>
             <span className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-100 rounded-full mb-3">
               <Zap size={12} className="text-emerald-700" />
               <span className="text-[10px] font-black uppercase tracking-widest text-emerald-700">Lateral Entry</span>
             </span>
-            <h3 className="text-2xl md:text-3xl font-black tracking-[-0.03em] text-[#1a0606] mb-3">
+            <h3 className="text-2xl md:text-3xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white mb-3">
               Diploma in hand? Skip year 1.
             </h3>
-            <p className="text-sm text-gray-700 font-medium leading-relaxed mb-4">
+            <p className="text-sm text-gray-700 dark:text-gray-300 font-medium leading-relaxed mb-4">
               Direct admission to 2nd year B.Tech for Diploma / B.Sc holders across all branches. Graduate in 3 years.
             </p>
             <Link to="/admissions/how-to-apply" className="inline-flex items-center gap-2 bg-emerald-700 text-white px-5 py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:bg-emerald-800 transition-colors">
@@ -731,7 +731,7 @@ export default function UGCourses() {
               { n: "Diploma", l: "From any State Board" },
               { n: "B.Sc", l: "With PCM eligible" },
             ].map((b) => (
-              <div key={b.l} className="bg-white border border-emerald-100 rounded-2xl p-4 text-center">
+              <div key={b.l} className="bg-white dark:bg-gray-900 border border-emerald-100 dark:border-gray-700 rounded-2xl p-4 text-center">
                 <div className="text-2xl font-black tracking-tight text-emerald-700">{b.n}</div>
                 <div className="text-[9px] uppercase tracking-widest font-black text-emerald-700/70 mt-1">{b.l}</div>
               </div>

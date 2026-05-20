@@ -306,7 +306,7 @@ export default function DepartmentTemplate({ dept }) {
                         <div className="grid sm:grid-cols-2 gap-3 pt-2">
                           {dept.features.map((f, i) => (
                             <motion.div key={f.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                              className="flex items-start gap-3 p-4 bg-gradient-to-br from-rose-50/60 to-white dark:from-gray-800 dark:to-gray-800 border border-rose-100 dark:border-gray-700 rounded-2xl hover:shadow-md transition-shadow">
+                              className="flex items-start gap-3 p-4 bg-gradient-to-br from-rose-50/60 to-white dark:from-gray-800 dark:to-gray-900 border border-rose-100 dark:border-gray-700 rounded-2xl hover:shadow-md transition-shadow">
                               <span className="text-3xl shrink-0">{f.icon}</span>
                               <div>
                                 <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{f.title}</h4>
@@ -343,11 +343,11 @@ export default function DepartmentTemplate({ dept }) {
                         </div>
                       )}
 
-                      <div className="pt-4 border-t border-rose-50">
+                      <div className="pt-4 border-t border-rose-50 dark:border-gray-800">
                         <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-3">Accreditations</div>
                         <div className="flex flex-wrap gap-2">
                           {dept.accreditations.map((a) => (
-                            <span key={a} className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-widest font-black px-3 py-1.5 bg-rose-50 text-[#800000] rounded-full">
+                            <span key={a} className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-widest font-black px-3 py-1.5 bg-rose-50 dark:bg-gray-800 text-[#800000] rounded-full">
                               <CheckCircle2 size={11} /> {a}
                             </span>
                           ))}
@@ -380,7 +380,7 @@ export default function DepartmentTemplate({ dept }) {
                           <div className="grid sm:grid-cols-3 gap-3 mb-6">
                             {dept.hodHighlights.map((h, i) => (
                               <motion.div key={h.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                                className="p-4 bg-gradient-to-br from-rose-50/60 to-white border border-rose-100 rounded-2xl">
+                                className="p-4 bg-gradient-to-br from-rose-50/60 to-white dark:from-gray-800 dark:to-gray-900 border border-rose-100 dark:border-gray-700 rounded-2xl">
                                 <div className="text-2xl mb-2">{h.icon}</div>
                                 <h5 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{h.title}</h5>
                                 <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{h.sub}</p>
@@ -390,14 +390,14 @@ export default function DepartmentTemplate({ dept }) {
                         )}
 
                         {(dept.hod.phone || dept.hod.email) && (
-                          <div className="flex flex-wrap gap-3 pt-5 border-t border-rose-50">
+                          <div className="flex flex-wrap gap-3 pt-5 border-t border-rose-50 dark:border-gray-800">
                             {dept.hod.phone && (
-                              <a href={`tel:${dept.hod.phone.replace(/[^+\d]/g, "")}`} className="inline-flex items-center gap-2 px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-[#800000] rounded-xl font-black text-xs">
+                              <a href={`tel:${dept.hod.phone.replace(/[^+\d]/g, "")}`} className="inline-flex items-center gap-2 px-4 py-2.5 bg-rose-50 dark:bg-gray-800 hover:bg-rose-100 dark:hover:bg-gray-700 text-[#800000] rounded-xl font-black text-xs">
                                 <Phone size={13} /> {dept.hod.phone}
                               </a>
                             )}
                             {dept.hod.email && (
-                              <a href={`mailto:${dept.hod.email}`} className="inline-flex items-center gap-2 px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-[#800000] rounded-xl font-black text-xs break-all">
+                              <a href={`mailto:${dept.hod.email}`} className="inline-flex items-center gap-2 px-4 py-2.5 bg-rose-50 dark:bg-gray-800 hover:bg-rose-100 dark:hover:bg-gray-700 text-[#800000] rounded-xl font-black text-xs break-all">
                                 <Mail size={13} /> {dept.hod.email}
                               </a>
                             )}
@@ -410,7 +410,7 @@ export default function DepartmentTemplate({ dept }) {
                   {/* ── VISION & MISSION ── */}
                   {active === "vision" && (
                     <div className="space-y-5">
-                      <div className="relative bg-gradient-to-br from-rose-50/40 to-white dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-3xl p-7">
+                      <div className="relative bg-gradient-to-br from-rose-50/40 to-white dark:from-gray-800 dark:to-gray-900 border border-rose-50 dark:border-gray-700 rounded-3xl p-7">
                         <div className="flex items-center gap-2 mb-3">
                           <Compass size={16} className="text-[#800000]" />
                           <span className="text-[10px] uppercase tracking-widest font-black text-[#800000]">Vision</span>
@@ -520,11 +520,11 @@ export default function DepartmentTemplate({ dept }) {
                         ))}
                       </div>
                       {dept.software && (
-                        <div className="mt-6 pt-6 border-t border-rose-50">
+                        <div className="mt-6 pt-6 border-t border-rose-50 dark:border-gray-800">
                           <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-3">Industry Software</div>
                           <div className="flex flex-wrap gap-2">
                             {dept.software.map((s) => (
-                              <span key={s} className="text-xs font-black tracking-tight px-3 py-1.5 bg-rose-50 text-[#800000] rounded-full">{s}</span>
+                              <span key={s} className="text-xs font-black tracking-tight px-3 py-1.5 bg-rose-50 dark:bg-gray-800 text-[#800000] rounded-full">{s}</span>
                             ))}
                           </div>
                         </div>
@@ -661,17 +661,17 @@ export default function DepartmentTemplate({ dept }) {
                         </div>
                       </div>
                       {dept.govPartners && (
-                        <div className="pt-4 border-t border-rose-50">
+                        <div className="pt-4 border-t border-rose-50 dark:border-gray-800">
                           <div className="text-[10px] uppercase tracking-widest font-black text-emerald-700 mb-3">Government / PSU</div>
                           <div className="flex flex-wrap gap-2">
                             {dept.govPartners.map((p) => (
-                              <span key={p} className="text-[10px] uppercase tracking-widest font-black px-2.5 py-1.5 bg-emerald-50 text-emerald-700 rounded">{p}</span>
+                              <span key={p} className="text-[10px] uppercase tracking-widest font-black px-2.5 py-1.5 bg-emerald-50 dark:bg-gray-800 text-emerald-700 rounded">{p}</span>
                             ))}
                           </div>
                         </div>
                       )}
                       {dept.industrialVisits && (
-                        <div className="pt-4 border-t border-rose-50">
+                        <div className="pt-4 border-t border-rose-50 dark:border-gray-800">
                           <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-3">Industrial Visits</div>
                           <ul className="space-y-2">
                             {dept.industrialVisits.map((v, i) => (
@@ -726,7 +726,7 @@ export default function DepartmentTemplate({ dept }) {
                           <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-3">Top Recruiters</div>
                           <div className="flex flex-wrap gap-1.5">
                             {dept.placement.recruiters.map((r) => (
-                              <span key={r} className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest px-3 py-1.5 bg-rose-50 text-[#800000] rounded-full">
+                              <span key={r} className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest px-3 py-1.5 bg-rose-50 dark:bg-gray-800 text-[#800000] rounded-full">
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#800000]"></span>{r}
                               </span>
                             ))}

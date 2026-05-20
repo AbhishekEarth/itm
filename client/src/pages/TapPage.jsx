@@ -340,7 +340,7 @@ export default function TapPage() {
       </section>
 
       {/* ─────────── WHAT WE DO ─────────── */}
-      <section className="bg-white dark:bg-gray-900/30 py-16 md:py-24 border-y border-rose-100">
+      <section className="bg-white dark:bg-gray-900/30 py-16 md:py-24 border-y border-rose-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <div className="flex items-center justify-center gap-3 mb-3">
@@ -418,7 +418,7 @@ export default function TapPage() {
                   <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-3">{mou.desc}</p>
                   <div className="flex flex-wrap gap-1.5">
                     {mou.tags.map((t) => (
-                      <span key={t} className="text-[9px] uppercase tracking-widest font-black px-2 py-1 bg-rose-50 text-[#800000] rounded">
+                      <span key={t} className="text-[9px] uppercase tracking-widest font-black px-2 py-1 bg-rose-50 dark:bg-gray-800 text-[#800000] rounded">
                         {t}
                       </span>
                     ))}
@@ -574,7 +574,7 @@ export default function TapPage() {
                   <p className="text-lg md:text-2xl text-gray-800 dark:text-gray-100 leading-relaxed font-medium italic mb-8">
                     &ldquo;{speak.text}&rdquo;
                   </p>
-                  <div className="flex items-center gap-4 pt-6 border-t border-rose-50">
+                  <div className="flex items-center gap-4 pt-6 border-t border-rose-50 dark:border-gray-800">
                     <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${speak.accent} text-white flex items-center justify-center font-black tracking-tight shadow-lg`}>
                       {speak.initials}
                     </div>

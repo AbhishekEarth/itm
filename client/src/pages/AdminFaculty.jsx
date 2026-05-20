@@ -75,17 +75,17 @@ export default function AdminFaculty() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#020617]">
 
       {/* Header */}
-      <header className="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-10">
+      <header className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 shadow-sm sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-4">
           <Link to="/admin" className="text-gray-400 hover:text-[#800000] transition-colors">
             <ChevronLeft size={20} />
           </Link>
           <div className="flex items-center gap-2">
             <GraduationCap size={18} className="text-[#800000]" />
-            <h1 className="font-black text-gray-900">Faculty Management</h1>
+            <h1 className="font-black text-gray-900 dark:text-white">Faculty Management</h1>
           </div>
           <div className="ml-auto flex gap-2">
             {['list', 'add'].map(t => (
@@ -103,8 +103,8 @@ export default function AdminFaculty() {
 
         {/* ── ADD FORM ── */}
         {tab === 'add' && (
-          <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 space-y-6">
-            <h2 className="font-black text-xl text-gray-900">Add New Faculty Member</h2>
+          <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm p-8 space-y-6">
+            <h2 className="font-black text-xl text-gray-900 dark:text-white">Add New Faculty Member</h2>
 
             {msg && (
               <div className={`text-sm font-semibold px-4 py-3 rounded-xl ${
@@ -196,7 +196,7 @@ export default function AdminFaculty() {
                 <Plus size={14} /> {loading ? 'Saving…' : 'Add Faculty'}
               </button>
               <button type="button" onClick={() => setTab('list')}
-                className="border border-gray-200 text-gray-500 font-bold text-xs tracking-wide px-5 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+                className="border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 font-bold text-xs tracking-wide px-5 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                 Cancel
               </button>
             </div>
@@ -211,14 +211,14 @@ export default function AdminFaculty() {
               {['', ...DEPARTMENTS].map(d => (
                 <button key={d} onClick={() => setFilterDept(d)}
                   className={`text-[11px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full transition-all ${
-                    filterDept === d ? 'bg-[#800000] text-white' : 'bg-white border border-gray-200 text-gray-500 hover:border-[#800000]'}`}>
+                    filterDept === d ? 'bg-[#800000] text-white' : 'bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-[#800000]'}`}>
                   {d || 'All'}
                 </button>
               ))}
             </div>
 
             {faculty.length === 0 ? (
-              <div className="bg-white rounded-2xl border-2 border-dashed border-gray-200 p-12 text-center">
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-700 p-12 text-center">
                 <GraduationCap size={40} className="text-gray-200 mx-auto mb-3" />
                 <p className="text-gray-400 font-medium text-sm">No faculty members yet.</p>
                 <button onClick={() => setTab('add')} className="mt-4 bg-[#800000] text-white font-black text-xs tracking-widest uppercase px-5 py-2.5 rounded-xl">
@@ -228,7 +228,7 @@ export default function AdminFaculty() {
             ) : (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {faculty.map(f => (
-                  <div key={f.id} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 hover:shadow-md transition-shadow">
+                  <div key={f.id} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm p-5 hover:shadow-md transition-shadow">
                     <div className="flex items-start gap-3 mb-3">
                       {f.image_url ? (
                         <img src={f.image_url} className="w-12 h-12 rounded-xl object-cover shrink-0" />
@@ -238,7 +238,7 @@ export default function AdminFaculty() {
                         </div>
                       )}
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-black text-sm text-gray-900 tracking-tight truncate">{f.name}</h3>
+                        <h3 className="font-black text-sm text-gray-900 dark:text-white tracking-tight truncate">{f.name}</h3>
                         <p className="text-[10px] text-gray-500 font-medium truncate">{f.designation}</p>
                       </div>
                     </div>
@@ -265,8 +265,11 @@ export default function AdminFaculty() {
 
       <style>{`
         .field-label { display: block; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #6b7280; margin-bottom: 5px; }
-        .field { width: 100%; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 10px; font-size: 14px; font-weight: 500; outline: none; transition: border-color 0.15s; }
+        .field { width: 100%; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 10px; font-size: 14px; font-weight: 500; outline: none; transition: border-color 0.15s; background: #fff; color: #111827; }
         .field:focus { border-color: #800000; box-shadow: 0 0 0 3px rgba(128,0,0,0.08); }
+        .dark .field-label { color: #9ca3af; }
+        .dark .field { border-color: #374151; background: #1f2937; color: #f9fafb; }
+        .dark .field:focus { border-color: #800000; }
       `}</style>
     </div>
   );

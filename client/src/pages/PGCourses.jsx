@@ -188,6 +188,7 @@ export default function PGCourses() {
           <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
             Four programmes. Three of them MBA-stream picks.
           </h2>
+
         </div>
 
         <div className="grid lg:grid-cols-12 gap-6">
@@ -346,7 +347,7 @@ export default function PGCourses() {
                         </div>
                         <div className="flex flex-wrap gap-2">
                           {activeProgram.careers.map((c) => (
-                            <span key={c} className="text-[10px] uppercase tracking-widest font-black px-2.5 py-1.5 bg-rose-50 text-[#800000] rounded-full">
+                            <span key={c} className="text-[10px] uppercase tracking-widest font-black px-2.5 py-1.5 bg-rose-50 dark:bg-gray-800 text-[#800000] rounded-full">
                               {c}
                             </span>
                           ))}
@@ -596,7 +597,7 @@ export default function PGCourses() {
               </thead>
               <tbody>
                 {PG_PROGRAMS.map((p, i) => (
-                  <tr key={p.id} className={`border-t border-rose-50 dark:border-gray-800 ${i % 2 ? "bg-rose-50/30 dark:bg-gray-900/50" : ""} hover:bg-rose-50 transition-colors`}>
+                  <tr key={p.id} className={`border-t border-rose-50 dark:border-gray-800 ${i % 2 ? "bg-rose-50/30 dark:bg-gray-900/50" : ""} hover:bg-rose-50 dark:hover:bg-gray-800/50 transition-colors`}>
                     <td className="p-4">
                       <div className="flex items-center gap-3">
                         <span className="text-xl">{p.icon}</span>

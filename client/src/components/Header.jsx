@@ -112,6 +112,7 @@ export default function Header() {
             {[
               { label: 'Home', path: '/' },
               { label: 'Training & Placement', path: '/tap' },
+              { label: 'Onboarding', path: '/onboarding' },
             ].map((item) => (
               <Link key={item.label} to={item.path} onMouseEnter={() => setHoveredItem(item.label)} className="relative px-4 py-2 hover:text-[#800000] transition-colors z-10">
                 {hoveredItem === item.label && (
@@ -264,10 +265,13 @@ export default function Header() {
           <Link to="/admissions/how-to-apply" className="bg-[#800000] text-white px-6 py-3 rounded-full font-black text-[10px] tracking-widest hover:shadow-lg transition-all ml-2">
             APPLY NOW
           </Link>
+          <Link to="/login" className="border border-[#800000] text-[#800000] px-5 py-3 rounded-full font-black text-[10px] tracking-widest hover:bg-[#800000] hover:text-white transition-all ml-2">
+            SIGN IN
+          </Link>
         </nav>
 
         {/* MOBILE MENU BUTTON (Shown on screens < XL) */}
-        <div className="xl:hidden flex items-center gap-3">
+        <div className="xl:hidden flex items-center gap-2">
             <button
               onClick={toggle}
               aria-label="Toggle dark mode"
@@ -275,6 +279,9 @@ export default function Header() {
             >
               {dark ? <Sun size={15} /> : <Moon size={15} />}
             </button>
+            <Link to="/login" className="border border-[#800000] text-[#800000] dark:text-red-400 dark:border-red-400 px-3 py-2 rounded-full font-black text-[10px] tracking-widest">
+                SIGN IN
+            </Link>
             <Link to="/admissions/how-to-apply" className="bg-[#800000] text-white px-4 py-2 rounded-full font-black text-[10px] tracking-widest">
                 APPLY
             </Link>
@@ -407,6 +414,7 @@ export default function Header() {
                 </AnimatePresence>
               </div>
               <Link to="/tap" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000] dark:hover:text-red-400">Training &amp; Placement</Link>
+              <Link to="/onboarding" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000] dark:hover:text-red-400">Onboarding</Link>
 
               <div>
                 <button

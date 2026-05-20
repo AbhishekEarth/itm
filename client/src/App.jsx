@@ -42,6 +42,10 @@ import Admissions from "./pages/Admissions";
 import UGCourses from "./pages/UGCourses";
 import PGCourses from "./pages/PGCourses";
 import SeekAdmission from "./pages/SeekAdmission";
+import Onboarding from "./pages/Onboarding";
+import Login from "./pages/Login";
+import StudentDashboard from "./pages/StudentDashboard";
+import FacultyDashboard from "./pages/FacultyDashboard";
 import Research from "./pages/Research";
 import ResearchRDCell from "./pages/ResearchRDCell";
 import ResearchInnovation from "./pages/ResearchInnovation";
@@ -51,7 +55,17 @@ import ResearchFDP from "./pages/ResearchFDP";
 
 function ProtectedRoute({ children }) {
   const { isAdmin } = useAuth();
-  return isAdmin ? children : <Navigate to="/admin/login" replace />;
+  return isAdmin ? children : <Navigate to="/login" replace />;
+}
+
+function StudentRoute({ children }) {
+  const { isStudent } = useAuth();
+  return isStudent ? children : <Navigate to="/login" replace />;
+}
+
+function FacultyRoute({ children }) {
+  const { isFaculty } = useAuth();
+  return isFaculty ? children : <Navigate to="/login" replace />;
 }
 
 function App() {
@@ -135,11 +149,19 @@ function App() {
             {/* CLUBS ROUTES */}
             <Route path="/pac" element={<PACPage />} />
 
+            {/* ONBOARDING */}
+            <Route path="/onboarding" element={<Onboarding />} />
+
             {/* OTHER PAGE ROUTES */}
             <Route path="/tap" element={<TapPage />} />
             <Route path="/library" element={<CentralLibrary />} />
             <Route path="/central-library" element={<CentralLibrary />} />
             <Route path="/emerging-branches" element={<EmergingBranches />} />
+            {/* AUTH & ROLE ROUTES */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/student/dashboard" element={<StudentRoute><StudentDashboard /></StudentRoute>} />
+            <Route path="/faculty/dashboard" element={<FacultyRoute><FacultyDashboard /></FacultyRoute>} />
+
             {/* ADMIN ROUTES */}
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />

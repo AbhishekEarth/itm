@@ -54,7 +54,7 @@ export default function ResearchJournal() {
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">
 
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-rose-100">
+      <div className="bg-white dark:bg-gray-900 border-b border-rose-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
           <Link to="/" className="hover:text-[#800000] inline-flex items-center gap-1.5"><Home size={11} /> Home</Link>
           <Crumb size={10} className="text-gray-300" />
@@ -130,41 +130,41 @@ export default function ResearchJournal() {
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Why publish with IIJISEM</span>
             <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
           </div>
-          <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] leading-[1.05]">
+          <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
             A serious research outlet — at your fingertips.
           </h2>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {FEATURES.map((f, i) => (
             <motion.div key={f.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }} whileHover={{ y: -4 }}
-              className="bg-white border border-rose-50 rounded-3xl p-6 hover:shadow-xl transition-shadow">
+              className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-6 hover:shadow-xl transition-shadow">
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#800000] to-[#5a0000] text-white flex items-center justify-center mb-4"><f.icon size={20} /></div>
-              <h4 className="font-black text-base text-[#1a0606] tracking-tight mb-2">{f.title}</h4>
-              <p className="text-xs text-gray-600 leading-relaxed font-medium">{f.body}</p>
+              <h4 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight mb-2">{f.title}</h4>
+              <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{f.body}</p>
             </motion.div>
           ))}
         </div>
       </section>
 
       {/* Scope */}
-      <section className="bg-white border-y border-rose-100 py-16 md:py-20">
+      <section className="bg-white dark:bg-gray-900 border-y border-rose-100 dark:border-gray-800 py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <div className="flex items-center justify-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Scope</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] leading-[1.05]">
+            <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Six domains. One journal.
             </h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {SCOPE_TOPICS.map((t, i) => (
               <motion.div key={t.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
-                className="bg-gradient-to-br from-white to-rose-50/40 border border-rose-50 rounded-3xl p-6">
+                className="bg-gradient-to-br from-white dark:from-gray-900 to-rose-50/40 dark:to-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-6">
                 <div className="text-4xl mb-3">{t.icon}</div>
-                <h4 className="font-black text-base text-[#1a0606] tracking-tight mb-2">{t.title}</h4>
-                <p className="text-xs text-gray-600 leading-relaxed font-medium">{t.desc}</p>
+                <h4 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight mb-2">{t.title}</h4>
+                <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{t.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -179,7 +179,7 @@ export default function ResearchJournal() {
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Submission Process</span>
             <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
           </div>
-          <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] leading-[1.05]">
+          <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
             Four steps from manuscript to publication.
           </h2>
         </div>
@@ -187,15 +187,15 @@ export default function ResearchJournal() {
           <div className="hidden lg:block absolute top-12 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-rose-200 via-[#800000] to-rose-200"></div>
           {SUBMISSION_STEPS.map((s, i) => (
             <motion.div key={s.n} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-              className="relative bg-white border border-rose-50 rounded-3xl p-6 text-center">
+              className="relative bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-6 text-center">
               <div className="relative w-16 h-16 mx-auto mb-4">
                 <div className="absolute inset-0 bg-gradient-to-br from-[#800000] to-[#5a0000] rounded-2xl rotate-3"></div>
-                <div className="absolute inset-0 bg-white border-2 border-[#800000] rounded-2xl flex items-center justify-center text-2xl font-black tracking-tight text-[#800000]">
+                <div className="absolute inset-0 bg-white dark:bg-gray-900 border-2 border-[#800000] rounded-2xl flex items-center justify-center text-2xl font-black tracking-tight text-[#800000]">
                   {String(s.n).padStart(2, "0")}
                 </div>
               </div>
-              <h4 className="font-black text-sm text-[#1a0606] tracking-tight mb-2">{s.title}</h4>
-              <p className="text-xs text-gray-600 leading-relaxed font-medium">{s.body}</p>
+              <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight mb-2">{s.title}</h4>
+              <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{s.body}</p>
             </motion.div>
           ))}
         </div>

@@ -314,15 +314,15 @@ export default function ResearchInnovation() {
               </thead>
               <tbody>
                 {IIC_COUNCIL.map((m, i) => (
-                  <tr key={m.name} className="border-t border-rose-50 hover:bg-rose-50/40 transition-colors">
-                    <td className="p-4 text-[10px] font-black uppercase tracking-widest text-gray-300">{String(i + 1).padStart(2, "0")}</td>
-                    <td className="p-4 font-black text-[#1a0606] tracking-tight">{m.name}</td>
+                  <tr key={m.name} className="border-t border-rose-50 dark:border-gray-800 hover:bg-rose-50/40 dark:hover:bg-gray-800/50 transition-colors">
+                    <td className="p-4 text-[10px] font-black uppercase tracking-widest text-gray-300 dark:text-gray-600">{String(i + 1).padStart(2, "0")}</td>
+                    <td className="p-4 font-black text-[#1a0606] dark:text-white tracking-tight">{m.name}</td>
                     <td className="p-4">
-                      <span className="text-[10px] uppercase tracking-widest font-black px-2 py-1 bg-rose-50 text-[#800000] rounded">{m.role}</span>
+                      <span className="text-[10px] uppercase tracking-widest font-black px-2 py-1 bg-rose-50 dark:bg-gray-800 text-[#800000] rounded">{m.role}</span>
                     </td>
-                    <td className="p-4 text-xs font-bold text-gray-600">{m.dept}</td>
-                    <td className="p-4 text-xs text-gray-600 font-medium">
-                      {m.email ? <a href={`mailto:${m.email}`} className="hover:text-[#800000] break-all">{m.email}</a> : <span className="text-gray-300">—</span>}
+                    <td className="p-4 text-xs font-bold text-gray-600 dark:text-gray-400">{m.dept}</td>
+                    <td className="p-4 text-xs text-gray-600 dark:text-gray-400 font-medium">
+                      {m.email ? <a href={`mailto:${m.email}`} className="hover:text-[#800000] break-all">{m.email}</a> : <span className="text-gray-300 dark:text-gray-600">—</span>}
                     </td>
                   </tr>
                 ))}
@@ -333,7 +333,7 @@ export default function ResearchInnovation() {
       </section>
 
       {/* EDC */}
-      <section className="bg-white border-y border-rose-100 py-16 md:py-24">
+      <section className="bg-white dark:bg-gray-900 border-y border-rose-100 dark:border-gray-800 py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <div className="flex items-center justify-center gap-3 mb-3">
@@ -341,17 +341,17 @@ export default function ResearchInnovation() {
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Entrepreneurship Development Cell</span>
               <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] leading-[1.05]">EDC</h2>
+            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">EDC</h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4 mb-10">
-            <div className="bg-gradient-to-br from-rose-50/40 to-white border border-rose-50 rounded-3xl p-7">
+            <div className="bg-gradient-to-br from-rose-50/40 dark:from-gray-900 to-white dark:to-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-7">
               <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] mb-2">EDC Vision</div>
-              <p className="text-sm text-gray-700 leading-relaxed font-medium italic">&ldquo;{EDC.vision}&rdquo;</p>
+              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">&ldquo;{EDC.vision}&rdquo;</p>
             </div>
-            <div className="bg-gradient-to-br from-amber-50/40 to-white border border-amber-100 rounded-3xl p-7">
-              <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-700 mb-2">EDC Mission</div>
-              <p className="text-sm text-gray-700 leading-relaxed font-medium italic">&ldquo;{EDC.mission}&rdquo;</p>
+            <div className="bg-gradient-to-br from-amber-50/40 dark:from-gray-900 to-white dark:to-gray-900 border border-amber-100 dark:border-gray-800 rounded-3xl p-7">
+              <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-700 dark:text-amber-400 mb-2">EDC Mission</div>
+              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">&ldquo;{EDC.mission}&rdquo;</p>
             </div>
           </div>
 
@@ -360,9 +360,9 @@ export default function ResearchInnovation() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3">
               {EDC.programs.map((p, i) => (
                 <motion.div key={p.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} whileHover={{ y: -4 }}
-                  className="bg-white border border-rose-50 rounded-2xl p-5 text-center hover:shadow-md transition-shadow">
+                  className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-2xl p-5 text-center hover:shadow-md transition-shadow">
                   <div className="text-3xl mb-2">{p.icon}</div>
-                  <div className="text-xs font-black text-[#1a0606] tracking-tight leading-snug">{p.title}</div>
+                  <div className="text-xs font-black text-[#1a0606] dark:text-white tracking-tight leading-snug">{p.title}</div>
                 </motion.div>
               ))}
             </div>
@@ -378,7 +378,7 @@ export default function ResearchInnovation() {
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Activities Calendar</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] leading-[1.05]">
+            <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Recent &amp; upcoming activities.
             </h2>
           </div>
@@ -386,7 +386,7 @@ export default function ResearchInnovation() {
             <Filter size={12} className="text-gray-400 mr-1" />
             {filterOpts.map((f) => (
               <button key={f} onClick={() => setFilter(f)}
-                className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-colors ${filter === f ? "bg-[#800000] text-white shadow" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+                className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-colors ${filter === f ? "bg-[#800000] text-white shadow" : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"}`}>
                 {f}
               </button>
             ))}
@@ -396,19 +396,19 @@ export default function ResearchInnovation() {
         <div className="space-y-3">
           {filtered.map((a, i) => (
             <motion.div key={`${a.date}-${a.title}`} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.03 }}
-              className="flex items-center gap-4 p-4 bg-white border border-rose-50 rounded-2xl hover:shadow-md transition-shadow group">
+              className="flex items-center gap-4 p-4 bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-2xl hover:shadow-md transition-shadow group">
               <div className="shrink-0 w-20 text-center">
                 <div className="text-xs font-black text-[#800000] tracking-tight">{a.date}</div>
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
                   <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded ${
-                    a.type === "IIC Calendar" ? "bg-rose-50 text-[#800000]" :
-                    a.type === "Self-Driven" ? "bg-amber-50 text-amber-700" :
-                    "bg-emerald-50 text-emerald-700"
+                    a.type === "IIC Calendar" ? "bg-rose-50 dark:bg-gray-800 text-[#800000]" :
+                    a.type === "Self-Driven" ? "bg-amber-50 dark:bg-gray-800 text-amber-700 dark:text-amber-400" :
+                    "bg-emerald-50 dark:bg-gray-800 text-emerald-700 dark:text-emerald-400"
                   }`}>{a.type}</span>
                 </div>
-                <h4 className="font-black text-sm text-[#1a0606] tracking-tight leading-snug">{a.title}</h4>
+                <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug">{a.title}</h4>
               </div>
               <Calendar size={16} className="text-gray-300 shrink-0" />
             </motion.div>

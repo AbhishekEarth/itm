@@ -133,9 +133,9 @@ export default function DynamicDepartmentPage() {
                 </thead>
                 <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                   {faculty.map((f, i) => (
-                    <tr key={i} className={i % 2 === 0 ? 'bg-gray-50/50 dark:bg-gray-900/20' : ''}>
+                    <tr key={i} className={i % 2 === 0 ? 'bg-gray-50/50 dark:bg-gray-800/30' : ''}>
                       <td className="px-5 py-3.5 text-center font-black text-[#800000] text-xs">{f.sno}</td>
-                      <td className="px-5 py-3.5 font-semibold text-gray-800 dark:text-white">{f.name}</td>
+                      <td className="px-5 py-3.5 font-semibold text-gray-800 dark:text-gray-100">{f.name}</td>
                       <td className="px-5 py-3.5 text-center">{f.qual}</td>
                       <td className="px-5 py-3.5 text-center">{f.desig}</td>
                       <td className="px-5 py-3.5 text-center">{f.exp}</td>
@@ -159,7 +159,7 @@ export default function DynamicDepartmentPage() {
               {labs.map((lab, i) => (
                 <Card key={i} className="p-6 hover:border-red-200 dark:hover:border-red-900/50 transition-all group">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-900/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">{lab.icon || '🔬'}</div>
+                    <div className="w-12 h-12 rounded-xl bg-red-50 dark:bg-gray-800 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">{lab.icon || '🔬'}</div>
                     <div className="flex-1">
                       <h4 className="font-black text-[#0b2a4a] dark:text-white text-base group-hover:text-[#800000] dark:group-hover:text-red-400 transition-colors">{lab.name}</h4>
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">{lab.description}</p>
@@ -190,9 +190,9 @@ export default function DynamicDepartmentPage() {
               <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">{sectionData.description}</p>
               <div className="grid gap-4">
                 {sectionData.schemes?.map((s, i) => (
-                  <div key={i} className="flex items-center justify-between p-5 bg-gray-50 dark:bg-gray-900/40 border border-gray-100 dark:border-gray-800 rounded-2xl group hover:border-red-200 dark:hover:border-red-900/50 transition-all">
+                  <div key={i} className="flex items-center justify-between p-5 bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl group hover:border-red-200 dark:hover:border-red-900/50 transition-all">
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center text-lg shadow-sm group-hover:bg-[#800000] group-hover:text-white transition-colors">📄</div>
+                      <div className="w-10 h-10 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center text-lg shadow-sm group-hover:bg-[#800000] group-hover:text-white transition-colors">📄</div>
                       <div>
                         <p className="font-black text-sm text-[#0b2a4a] dark:text-white">{s.name}</p>
                         <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{s.type}</p>
@@ -214,7 +214,7 @@ export default function DynamicDepartmentPage() {
               <p className="text-sm text-gray-700 dark:text-gray-300 font-medium leading-relaxed mb-6">{sectionData.description}</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 {sectionData.roles?.map((r, i) => (
-                  <div key={i} className="flex items-center gap-4 p-4 bg-red-50/50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-xl">
+                  <div key={i} className="flex items-center gap-4 p-4 bg-red-50/50 dark:bg-gray-800 border border-red-100 dark:border-gray-700 rounded-xl">
                     <div className="text-2xl">{r.icon}</div>
                     <div className="font-black text-sm text-[#800000] dark:text-red-400">{r.name}</div>
                   </div>
@@ -263,7 +263,7 @@ export default function DynamicDepartmentPage() {
                   <h3 className="text-sm font-black uppercase tracking-widest text-[#800000] mb-4">Programme Educational Objectives (PEOs)</h3>
                   <ul className="space-y-4">
                     {sectionData.peos?.map((p, i) => (
-                      <li key={i} className="flex gap-4 p-4 bg-gray-50 dark:bg-gray-900/40 rounded-xl text-xs text-gray-700 dark:text-gray-300 font-medium">
+                      <li key={i} className="flex gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl text-xs text-gray-700 dark:text-gray-300 font-medium">
                         <span className="shrink-0 w-6 h-6 rounded-full bg-[#800000] text-white flex items-center justify-center font-black">{i+1}</span>
                         {p}
                       </li>
@@ -274,7 +274,7 @@ export default function DynamicDepartmentPage() {
                   <h3 className="text-sm font-black uppercase tracking-widest text-[#800000] mb-4">Programme Specific Outcomes (PSOs)</h3>
                   <ul className="space-y-4">
                     {sectionData.psos?.map((p, i) => (
-                      <li key={i} className="flex gap-4 p-4 bg-red-50/50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-xl text-xs text-gray-700 dark:text-gray-300 font-medium underline-offset-4 decoration-[#800000]">
+                      <li key={i} className="flex gap-4 p-4 bg-red-50/50 dark:bg-gray-800 border border-red-100 dark:border-gray-700 rounded-xl text-xs text-gray-700 dark:text-gray-300 font-medium underline-offset-4 decoration-[#800000]">
                         <span className="shrink-0 w-6 h-6 rounded-full bg-white dark:bg-gray-800 text-[#800000] border border-red-100 flex items-center justify-center font-black">{i+1}</span>
                         {p}
                       </li>
@@ -295,7 +295,7 @@ export default function DynamicDepartmentPage() {
               <div className="grid sm:grid-cols-2 gap-6">
                 {sectionData.items?.map((item, i) => (
                   <div key={i} className="space-y-3">
-                    <div className="h-40 bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden relative group">
+                    <div className="h-40 bg-gray-100 dark:bg-gray-700 rounded-2xl overflow-hidden relative group">
                       <div className="absolute inset-0 bg-[#800000]/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                       <div className="absolute inset-0 flex items-center justify-center text-4xl">{item.icon || '🏗️'}</div>
                     </div>

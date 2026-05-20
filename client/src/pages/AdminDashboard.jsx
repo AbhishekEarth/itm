@@ -9,12 +9,12 @@ import {
 
 function StatCard({ icon: Icon, label, value, color, to }) {
   return (
-    <Link to={to} className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md p-6 flex items-center gap-4 transition-all hover:-translate-y-0.5">
+    <Link to={to} className="group bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md p-6 flex items-center gap-4 transition-all hover:-translate-y-0.5">
       <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${color}`}>
         <Icon size={22} className="text-white" />
       </div>
       <div className="flex-1">
-        <p className="text-2xl font-black text-gray-900 tracking-tight">{value ?? '—'}</p>
+        <p className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">{value ?? '—'}</p>
         <p className="text-[11px] font-black uppercase tracking-widest text-gray-400 mt-0.5">{label}</p>
       </div>
       <ChevronRight size={16} className="text-gray-300 group-hover:text-[#800000] group-hover:translate-x-0.5 transition-all" />
@@ -26,13 +26,13 @@ function ActionCard({ icon: Icon, label, desc, to, accent }) {
   return (
     <Link
       to={to}
-      className="group relative overflow-hidden bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg p-6 transition-all hover:-translate-y-1 block"
+      className="group relative overflow-hidden bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg p-6 transition-all hover:-translate-y-1 block"
     >
       <div className={`absolute -top-6 -right-6 w-24 h-24 rounded-full opacity-10 ${accent}`} />
       <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${accent}`}>
         <Icon size={20} className="text-white" />
       </div>
-      <h3 className="font-black text-base text-gray-900 tracking-tight flex items-center gap-2">
+      <h3 className="font-black text-base text-gray-900 dark:text-white tracking-tight flex items-center gap-2">
         {label}
         <Plus size={14} className="text-gray-300 group-hover:text-[#800000] transition-colors" />
       </h3>
@@ -71,16 +71,16 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#020617]">
 
       {/* Top bar */}
-      <header className="bg-white border-b border-gray-100 sticky top-0 z-20 shadow-sm">
+      <header className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 sticky top-0 z-20 shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#800000] to-[#3e0202] flex items-center justify-center">
               <LayoutDashboard size={14} className="text-white" />
             </div>
-            <span className="font-black text-sm text-gray-900 tracking-tight">ITM Admin</span>
+            <span className="font-black text-sm text-gray-900 dark:text-white tracking-tight">ITM Admin</span>
           </div>
           <button
             onClick={handleLogout}
@@ -95,7 +95,7 @@ export default function AdminDashboard() {
 
         {/* Hero */}
         <div>
-          <h1 className="text-3xl font-black text-gray-900 tracking-tight">Dashboard</h1>
+          <h1 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">Dashboard</h1>
           <p className="text-sm text-gray-500 font-medium mt-1">Manage all content for the ITM Gwalior website.</p>
         </div>
 

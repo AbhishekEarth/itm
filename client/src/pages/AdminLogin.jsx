@@ -23,7 +23,7 @@ export default function AdminLogin() {
       const res = await axios.post('/api/auth/login', body, {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       });
-      login(res.data.access_token);
+      login(res.data.access_token, 'admin', null);
       navigate('/admin', { replace: true });
     } catch {
       setError('Invalid username or password.');
@@ -47,16 +47,16 @@ export default function AdminLogin() {
 
         <form
           onSubmit={handleSubmit}
-          className="bg-white rounded-3xl shadow-2xl p-8 space-y-5"
+          className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl p-8 space-y-5"
         >
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 text-sm font-semibold px-4 py-3 rounded-xl">
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm font-semibold px-4 py-3 rounded-xl">
               {error}
             </div>
           )}
 
           <div>
-            <label className="block text-[11px] font-black uppercase tracking-widest text-gray-500 mb-1.5">
+            <label className="block text-[11px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-1.5">
               Username
             </label>
             <div className="relative">
@@ -66,14 +66,14 @@ export default function AdminLogin() {
                 required
                 value={form.username}
                 onChange={e => setForm(f => ({ ...f, username: e.target.value }))}
-                className="w-full pl-9 pr-4 py-3 border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[#800000] focus:ring-2 focus:ring-[#800000]/10 transition"
+                className="w-full pl-9 pr-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl text-sm font-medium bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:border-[#800000] focus:ring-2 focus:ring-[#800000]/10 transition"
                 placeholder="admin"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-[11px] font-black uppercase tracking-widest text-gray-500 mb-1.5">
+            <label className="block text-[11px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-1.5">
               Password
             </label>
             <div className="relative">
@@ -83,7 +83,7 @@ export default function AdminLogin() {
                 required
                 value={form.password}
                 onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
-                className="w-full pl-9 pr-10 py-3 border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[#800000] focus:ring-2 focus:ring-[#800000]/10 transition"
+                className="w-full pl-9 pr-10 py-3 border border-gray-200 dark:border-gray-700 rounded-xl text-sm font-medium bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:border-[#800000] focus:ring-2 focus:ring-[#800000]/10 transition"
                 placeholder="••••••••"
               />
               <button
