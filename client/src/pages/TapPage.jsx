@@ -176,7 +176,7 @@ export default function TapPage() {
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">
 
       {/* ─────────── BREADCRUMB ─────────── */}
-      <div className="bg-white border-b border-rose-100">
+      <div className="bg-white dark:bg-gray-900 border-b border-rose-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
           <Link to="/" className="hover:text-[#800000] inline-flex items-center gap-1.5"><Home size={11} /> Home</Link>
           <Crumb size={10} className="text-gray-300" />
@@ -288,7 +288,7 @@ export default function TapPage() {
                 { v: "11+", l: "Top Brands", c: "bg-amber-50 text-amber-700" },
                 { v: "10+", l: "Industry MOUs", c: "bg-emerald-50 text-emerald-700" },
               ].map((b) => (
-                <div key={b.l} className="bg-white border border-rose-50 rounded-2xl p-4 text-center">
+                <div key={b.l} className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-2xl p-4 text-center">
                   <div className={`inline-block px-3 py-1 rounded-full text-2xl md:text-3xl font-black tracking-tighter ${b.c}`}>{b.v}</div>
                   <div className="text-[9px] uppercase tracking-widest font-black text-gray-500 mt-2">{b.l}</div>
                 </div>
@@ -324,11 +324,11 @@ export default function TapPage() {
                       <p className="text-[10px] uppercase tracking-widest font-bold text-[#800000] mt-0.5">{m.role}</p>
                     </div>
                   </div>
-                  <div className="mt-4 pt-4 border-t border-rose-50 flex flex-wrap gap-3 text-xs">
-                    <a href={`tel:${m.phone.replace(/[^+\d]/g, "")}`} className="inline-flex items-center gap-1.5 text-gray-700 hover:text-[#800000] font-bold">
+                  <div className="mt-4 pt-4 border-t border-rose-50 dark:border-gray-800 flex flex-wrap gap-3 text-xs">
+                    <a href={`tel:${m.phone.replace(/[^+\d]/g, "")}`} className="inline-flex items-center gap-1.5 text-gray-700 dark:text-gray-300 hover:text-[#800000] font-bold">
                       <Phone size={12} className="text-[#800000]" /> {m.phone}
                     </a>
-                    <a href={`mailto:${m.email}`} className="inline-flex items-center gap-1.5 text-gray-700 hover:text-[#800000] font-bold break-all">
+                    <a href={`mailto:${m.email}`} className="inline-flex items-center gap-1.5 text-gray-700 dark:text-gray-300 hover:text-[#800000] font-bold break-all">
                       <Mail size={12} className="text-[#800000]" /> {m.email}
                     </a>
                   </div>
@@ -391,7 +391,7 @@ export default function TapPage() {
               Backed by the world&apos;s biggest brands.
             </h2>
           </div>
-          <p className="text-sm text-gray-600 max-w-md font-medium leading-relaxed">
+          <p className="text-sm text-gray-600 dark:text-gray-400 max-w-md font-medium leading-relaxed">
             Formal collaborations with Microsoft, AWS, EduSkills, Bajaj FinServ and 8+ specialised training partners.
           </p>
         </div>
@@ -430,7 +430,7 @@ export default function TapPage() {
         </div>
 
         {/* Training partners strip */}
-        <div className="bg-gradient-to-br from-gray-50 to-rose-50/40 dark:bg-gray-900 rounded-3xl p-6 border border-rose-50">
+        <div className="bg-gradient-to-br from-gray-50 to-rose-50/40 dark:from-gray-900 dark:to-gray-900 rounded-3xl p-6 border border-rose-50 dark:border-gray-800">
           <div className="flex items-center gap-2 mb-4">
             <Building2 size={14} className="text-[#800000]" />
             <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#800000]">
@@ -439,7 +439,7 @@ export default function TapPage() {
           </div>
           <div className="flex flex-wrap gap-2">
             {TRAINING_PARTNERS.map((p) => (
-              <span key={p} className="text-xs font-black tracking-tight px-3 py-2 bg-white text-[#1a0606] rounded-xl border border-gray-200">
+              <span key={p} className="text-xs font-black tracking-tight px-3 py-2 bg-white dark:bg-gray-800 text-[#1a0606] dark:text-white rounded-xl border border-gray-200 dark:border-gray-700">
                 {p}
               </span>
             ))}
@@ -541,13 +541,13 @@ export default function TapPage() {
             </h2>
           </div>
           <div className="flex items-center gap-3">
-            <button onClick={prevQuote} className="w-12 h-12 rounded-full border border-rose-200 bg-white hover:bg-[#800000] hover:text-white hover:border-[#800000] text-[#800000] flex items-center justify-center transition-all">
+            <button onClick={prevQuote} className="w-12 h-12 rounded-full border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-[#800000] hover:text-white hover:border-[#800000] text-[#800000] flex items-center justify-center transition-all">
               <ChevronLeft size={18} />
             </button>
             <span className="text-[10px] font-black uppercase tracking-widest text-gray-500 px-2">
               {String(activeQuote + 1).padStart(2, "0")} <span className="text-gray-300">/</span> {String(INDUSTRY_SPEAK.length).padStart(2, "0")}
             </span>
-            <button onClick={nextQuote} className="w-12 h-12 rounded-full border border-rose-200 bg-white hover:bg-[#800000] hover:text-white hover:border-[#800000] text-[#800000] flex items-center justify-center transition-all">
+            <button onClick={nextQuote} className="w-12 h-12 rounded-full border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-[#800000] hover:text-white hover:border-[#800000] text-[#800000] flex items-center justify-center transition-all">
               <ChevronRight size={18} />
             </button>
           </div>
@@ -647,7 +647,7 @@ export default function TapPage() {
                       transition={{ duration: 0.4 }}
                       className="grid md:grid-cols-2 gap-0"
                     >
-                      <div className="relative aspect-video md:aspect-auto md:min-h-[400px] overflow-hidden bg-gray-100">
+                      <div className="relative aspect-video md:aspect-auto md:min-h-[400px] overflow-hidden bg-gray-100 dark:bg-gray-800">
                         <img src={`http://localhost:8000${e.image_url}`} alt={e.title} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                         <div className="absolute top-4 left-4 inline-flex items-center gap-2 bg-emerald-500 text-white px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">
                           <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
@@ -700,7 +700,7 @@ export default function TapPage() {
                         i === activeEvent ? "border-[#800000] shadow-xl" : "border-rose-50 hover:border-rose-200"
                       }`}
                     >
-                      <div className="aspect-video bg-gray-100">
+                      <div className="aspect-video bg-gray-100 dark:bg-gray-800">
                         <img src={`http://localhost:8000${e.image_url}`} alt={e.title} className="w-full h-full object-cover" loading="lazy" />
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -715,10 +715,10 @@ export default function TapPage() {
             </>
           ) : (
             // ─── Empty state ───
-            <div className="bg-gradient-to-br from-rose-50/60 to-amber-50/60 border-2 border-dashed border-rose-200 rounded-3xl p-12 text-center mb-10">
+            <div className="bg-gradient-to-br from-rose-50/60 dark:from-gray-800/60 to-amber-50/60 dark:to-gray-800/60 border-2 border-dashed border-rose-200 dark:border-gray-700 rounded-3xl p-12 text-center mb-10">
               <div className="text-6xl mb-4">📭</div>
-              <h3 className="font-black text-xl text-[#1a0606] mb-2">No upcoming events at the moment</h3>
-              <p className="text-sm text-gray-600 font-medium max-w-md mx-auto mb-5">
+              <h3 className="font-black text-xl text-[#1a0606] dark:text-white mb-2">No upcoming events at the moment</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 font-medium max-w-md mx-auto mb-5">
                 The TAP team is preparing the next set of campus drives. Check back soon — new events are added regularly.
               </p>
               <a href="tel:+919691973919" className="inline-flex items-center gap-2 bg-[#800000] text-white px-5 py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:bg-red-900 transition-colors">
@@ -738,8 +738,8 @@ export default function TapPage() {
               </div>
               <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-3">
                 {events.past.map((e) => (
-                  <div key={e.id} className="bg-white rounded-2xl border border-rose-50 overflow-hidden hover:shadow-md transition-shadow group">
-                    <div className="aspect-video bg-gray-100 overflow-hidden">
+                  <div key={e.id} className="bg-white dark:bg-gray-900 rounded-2xl border border-rose-50 dark:border-gray-800 overflow-hidden hover:shadow-md transition-shadow group">
+                    <div className="aspect-video bg-gray-100 dark:bg-gray-800 overflow-hidden">
                       <img src={`http://localhost:8000${e.image_url}`} alt={e.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" loading="lazy" />
                     </div>
                     <div className="p-3">
@@ -749,7 +749,7 @@ export default function TapPage() {
                           {new Date(e.event_date).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
                         </span>
                       </div>
-                      <h4 className="font-black text-xs text-[#1a0606] tracking-tight leading-snug line-clamp-2">{e.title}</h4>
+                      <h4 className="font-black text-xs text-[#1a0606] dark:text-white tracking-tight leading-snug line-clamp-2">{e.title}</h4>
                     </div>
                   </div>
                 ))}
@@ -771,7 +771,7 @@ export default function TapPage() {
               Real students. Real offers.
             </h2>
           </div>
-          <p className="text-sm text-gray-600 max-w-md font-medium leading-relaxed">
+          <p className="text-sm text-gray-600 dark:text-gray-400 max-w-md font-medium leading-relaxed">
             Browse the verified placement letters from our most recent batches.
           </p>
         </div>

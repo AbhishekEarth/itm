@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown } from "lucide-react"; 
+import { Menu, X, ChevronDown, Sun, Moon } from "lucide-react";
+import { useTheme } from "../context/ThemeContext";
 
 const logo = "/images/ITMGOILogo.png";
 const NAACLogo = "/images/NAACLogo.png";
@@ -42,6 +43,7 @@ const ADMISSION_LINKS = [
 ];
 
 export default function Header() {
+  const { dark, toggle } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -59,11 +61,6 @@ export default function Header() {
   const resRef = useRef(null);
 
   useEffect(() => {
-    if (typeof document !== 'undefined') {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-    
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -73,13 +70,13 @@ export default function Header() {
     <header className={`absolute top-0 w-full z-50 transition-all duration-500 ${isScrolled || mobileMenuOpen ? "bg-white/95 dark:bg-[#020617]/95 shadow-xl" : "bg-transparent"}`}>
       
       {/* 1. UTILITY BAR (Hidden on Mobile) */}
-      <div className="hidden md:block bg-gradient-to-r from-[#3e0202] via-[#600000] to-[#3e0202] dark:from-white dark:via-[#1a0202] dark:to-white text-[11px] text-white/90 py-2 border-b border-white/10">
+      <div className="hidden md:block bg-gradient-to-r from-[#3e0202] via-[#600000] to-[#3e0202] dark:from-[#0d0d1a] dark:via-[#0d0d1a] dark:to-[#0d0d1a] text-[11px] text-white/90 py-2 border-b border-white/10">
         <div className="max-w-[1500px] mx-auto px-6 lg:px-10 flex justify-between items-center font-bold tracking-tight">
           <div className="flex gap-4 lg:gap-8 opacity-80 uppercase tracking-widest">
             <a href="#" className="hover:text-red-400">Anti-Ragging</a>
             <a href="#" className="hover:text-red-400">NIRF</a>
             <a href="#" className="hover:text-red-400">IQAC</a>
-            <a href="#" className="hover:text-red-400">NAAC A+</a>
+            <a href="#" className="hover:text-red-400">NAAC Grade A</a>
           </div>
           <div className="flex gap-4 lg:gap-6 items-center">
             <a href="https://onlineapply.itmgoi.in/form_hdfc.php?ok=Apply+Now" target="_blank" rel="noreferrer" className="hover:text-red-300">Online Payment</a>
@@ -111,14 +108,14 @@ export default function Header() {
 
         {/* DESKTOP LINKS (Hidden on XL screens and below) */}
         <nav className="hidden xl:flex items-center gap-4">
-          <div className="flex items-center gap-1 text-[12px] font-black uppercase tracking-widest text-gray-800" onMouseLeave={() => setHoveredItem(null)}>
+          <div className="flex items-center gap-1 text-[12px] font-black uppercase tracking-widest text-gray-800 dark:text-white" onMouseLeave={() => setHoveredItem(null)}>
             {[
               { label: 'Home', path: '/' },
               { label: 'Training & Placement', path: '/tap' },
             ].map((item) => (
               <Link key={item.label} to={item.path} onMouseEnter={() => setHoveredItem(item.label)} className="relative px-4 py-2 hover:text-[#800000] transition-colors z-10">
                 {hoveredItem === item.label && (
-                  <motion.span layoutId="navbar-pill" className="absolute inset-0 bg-red-50/80 rounded-full border border-red-200/50 -z-10" transition={{ type: "spring", stiffness: 380, damping: 30 }} />
+                  <motion.span layoutId="navbar-pill" className="absolute inset-0 bg-red-50/80 dark:bg-white/10 rounded-full border border-red-200/50 dark:border-white/20 -z-10" transition={{ type: "spring", stiffness: 380, damping: 30 }} />
                 )}
                 {item.label}
               </Link>
@@ -139,7 +136,7 @@ export default function Header() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 6 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute top-full left-0 mt-1 w-60 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50"
+                    className="absolute top-full left-0 mt-1 w-60 bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 overflow-hidden z-50"
                   >
                     {ADMISSION_LINKS.map((a) =>
                       a.external ? (
@@ -149,7 +146,7 @@ export default function Header() {
                           target="_blank"
                           rel="noreferrer"
                           onClick={() => setAdmOpen(false)}
-                          className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 hover:bg-red-50 hover:text-[#800000] transition-colors"
+                          className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-gray-800 hover:text-[#800000] transition-colors"
                         >
                           {a.label} ↗
                         </a>
@@ -158,7 +155,7 @@ export default function Header() {
                           key={a.label}
                           to={a.path}
                           onClick={() => setAdmOpen(false)}
-                          className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 hover:bg-red-50 hover:text-[#800000] transition-colors"
+                          className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-gray-800 hover:text-[#800000] transition-colors"
                         >
                           {a.label}
                         </Link>
@@ -181,14 +178,14 @@ export default function Header() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 6 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute top-full left-0 mt-1 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50"
+                    className="absolute top-full left-0 mt-1 w-52 bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 overflow-hidden z-50"
                   >
                     {DEPT_LINKS.map((d) => (
                       <Link
                         key={d.path}
                         to={d.path}
                         onClick={() => setDeptOpen(false)}
-                        className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 hover:bg-red-50 hover:text-[#800000] transition-colors"
+                        className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-gray-800 hover:text-[#800000] transition-colors"
                       >
                         {d.label}
                       </Link>
@@ -210,14 +207,14 @@ export default function Header() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 6 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute top-full left-0 mt-1 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50"
+                    className="absolute top-full left-0 mt-1 w-72 bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 overflow-hidden z-50"
                   >
                     {RESEARCH_LINKS.map((d) => (
                       <Link
                         key={d.path}
                         to={d.path}
                         onClick={() => setResOpen(false)}
-                        className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 hover:bg-red-50 hover:text-[#800000] transition-colors"
+                        className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-gray-800 hover:text-[#800000] transition-colors"
                       >
                         {d.label}
                       </Link>
@@ -239,14 +236,14 @@ export default function Header() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 6 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute top-full left-0 mt-1 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50"
+                    className="absolute top-full left-0 mt-1 w-64 bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 overflow-hidden z-50"
                   >
                     {CLUB_LINKS.map((d) => (
                       <Link
                         key={d.path}
                         to={d.path}
                         onClick={() => setClubOpen(false)}
-                        className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 hover:bg-red-50 hover:text-[#800000] transition-colors"
+                        className="block px-4 py-3 text-[11px] font-black uppercase tracking-widest text-gray-700 dark:text-gray-200 hover:bg-red-50 dark:hover:bg-gray-800 hover:text-[#800000] transition-colors"
                       >
                         {d.label}
                       </Link>
@@ -257,17 +254,31 @@ export default function Header() {
             </div>
           </div>
 
-          <Link to="/admissions/how-to-apply" className="bg-[#800000] text-white px-6 py-3 rounded-full font-black text-[10px] tracking-widest hover:shadow-lg transition-all ml-4">
+          <button
+            onClick={toggle}
+            aria-label="Toggle dark mode"
+            className="ml-4 w-9 h-9 flex items-center justify-center rounded-full border border-gray-200 dark:border-white/20 bg-white/70 dark:bg-white/10 hover:bg-gray-100 dark:hover:bg-white/20 transition-all text-gray-700 dark:text-amber-300"
+          >
+            {dark ? <Sun size={15} /> : <Moon size={15} />}
+          </button>
+          <Link to="/admissions/how-to-apply" className="bg-[#800000] text-white px-6 py-3 rounded-full font-black text-[10px] tracking-widest hover:shadow-lg transition-all ml-2">
             APPLY NOW
           </Link>
         </nav>
 
         {/* MOBILE MENU BUTTON (Shown on screens < XL) */}
-        <div className="xl:hidden flex items-center gap-4">
+        <div className="xl:hidden flex items-center gap-3">
+            <button
+              onClick={toggle}
+              aria-label="Toggle dark mode"
+              className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-200 dark:border-white/20 bg-white/70 dark:bg-white/10 text-gray-700 dark:text-amber-300"
+            >
+              {dark ? <Sun size={15} /> : <Moon size={15} />}
+            </button>
             <Link to="/admissions/how-to-apply" className="bg-[#800000] text-white px-4 py-2 rounded-full font-black text-[10px] tracking-widest">
                 APPLY
             </Link>
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-gray-800">
+            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-gray-800 dark:text-white">
                 {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
         </div>
@@ -276,14 +287,14 @@ export default function Header() {
       {/* MOBILE DROPDOWN MENU */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="xl:hidden bg-white border-t border-gray-100 overflow-hidden shadow-2xl"
+            className="xl:hidden bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 overflow-hidden shadow-2xl"
           >
-            <div className="flex flex-col p-6 gap-6 font-black uppercase tracking-widest text-sm">
-              <Link to="/" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Home</Link>
+            <div className="flex flex-col p-6 gap-6 font-black uppercase tracking-widest text-sm text-gray-800 dark:text-white">
+              <Link to="/" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000] dark:hover:text-red-400">Home</Link>
 
               <div>
                 <button
@@ -310,7 +321,7 @@ export default function Header() {
                               target="_blank"
                               rel="noreferrer"
                               onClick={() => { setMobileMenuOpen(false); setMobileAdmOpen(false); }}
-                              className="text-gray-600 hover:text-[#800000] py-1"
+                              className="text-gray-600 dark:text-gray-300 hover:text-[#800000] dark:hover:text-red-400 py-1"
                             >
                               {a.label} ↗
                             </a>
@@ -319,7 +330,7 @@ export default function Header() {
                               key={a.label}
                               to={a.path}
                               onClick={() => { setMobileMenuOpen(false); setMobileAdmOpen(false); }}
-                              className="text-gray-600 hover:text-[#800000] py-1"
+                              className="text-gray-600 dark:text-gray-300 hover:text-[#800000] dark:hover:text-red-400 py-1"
                             >
                               {a.label}
                             </Link>
@@ -352,7 +363,7 @@ export default function Header() {
                             key={d.path} 
                             to={d.path} 
                             onClick={() => { setMobileMenuOpen(false); setMobileDeptOpen(false); }} 
-                            className="text-gray-600 hover:text-[#800000] py-1"
+                            className="text-gray-600 dark:text-gray-300 hover:text-[#800000] dark:hover:text-red-400 py-1"
                           >
                             {d.label}
                           </Link>
@@ -385,7 +396,7 @@ export default function Header() {
                             key={d.path} 
                             to={d.path} 
                             onClick={() => { setMobileMenuOpen(false); setMobileClubOpen(false); }} 
-                            className="text-gray-600 hover:text-[#800000] py-1"
+                            className="text-gray-600 dark:text-gray-300 hover:text-[#800000] dark:hover:text-red-400 py-1"
                           >
                             {d.label}
                           </Link>
@@ -395,7 +406,7 @@ export default function Header() {
                   )}
                 </AnimatePresence>
               </div>
-              <Link to="/tap" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000]">Training &amp; Placement</Link>
+              <Link to="/tap" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000] dark:hover:text-red-400">Training &amp; Placement</Link>
 
               <div>
                 <button
@@ -419,7 +430,7 @@ export default function Header() {
                             key={d.path}
                             to={d.path}
                             onClick={() => { setMobileMenuOpen(false); setMobileResOpen(false); }}
-                            className="text-gray-600 hover:text-[#800000] py-1"
+                            className="text-gray-600 dark:text-gray-300 hover:text-[#800000] dark:hover:text-red-400 py-1"
                           >
                             {d.label}
                           </Link>
@@ -429,8 +440,8 @@ export default function Header() {
                   )}
                 </AnimatePresence>
               </div>
-              <div className="h-[1px] bg-gray-100"></div>
-              <div className="grid grid-cols-2 gap-4 text-[10px] opacity-70">
+              <div className="h-[1px] bg-gray-100 dark:bg-gray-700"></div>
+              <div className="grid grid-cols-2 gap-4 text-[10px] opacity-70 dark:text-gray-400">
                  <a href="#">LMS Portal</a>
                  <a href="#">MIS Login</a>
                  <a href="#">Anti-Ragging</a>

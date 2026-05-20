@@ -63,7 +63,7 @@ export default function PageLayout({
 
         {/* ── MOBILE TAB BAR (hidden on lg+) ───────────────────── */}
         {tabNames.length > 0 && (
-          <div className="lg:hidden bg-gray-50 py-3 -mx-3 px-3 sm:-mx-6 sm:px-6">
+          <div className="lg:hidden bg-gray-50 dark:bg-gray-900 py-3 -mx-3 px-3 sm:-mx-6 sm:px-6">
             <div className="flex overflow-x-auto gap-2 pb-1 snap-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {tabNames.map((tab) => (
                 <button
@@ -72,7 +72,7 @@ export default function PageLayout({
                   className={`shrink-0 snap-start px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-200 ${
                     activeTab === tab
                       ? 'bg-[#800000] text-white shadow-md'
-                      : 'bg-white border border-gray-200 text-gray-600 hover:border-[#800000] hover:text-[#800000]'
+                      : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-[#800000] hover:text-[#800000]'
                   }`}
                 >
                   {tab}

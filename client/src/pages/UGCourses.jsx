@@ -158,7 +158,7 @@ export default function UGCourses() {
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">
 
       {/* ─────────── BREADCRUMB ─────────── */}
-      <div className="bg-white border-b border-rose-100">
+      <div className="bg-white dark:bg-gray-900 border-b border-rose-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
           <Link to="/" className="hover:text-[#800000] inline-flex items-center gap-1.5">
             <Home size={11} /> Home
@@ -240,14 +240,14 @@ export default function UGCourses() {
       </section>
 
       {/* ─────────── STREAM TABS ─────────── */}
-      <section className="bg-white dark:bg-gray-900 border-b border-rose-100">
+      <section className="bg-white dark:bg-gray-900 border-b border-rose-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center gap-2">
           {Object.entries(STREAM_GROUPS).map(([id, g]) => (
             <button
               key={id}
               onClick={() => setGroup(id)}
               className={`relative px-5 py-2.5 rounded-full text-[11px] font-black uppercase tracking-[0.2em] transition ${
-                group === id ? "text-white shadow-lg" : "text-gray-600 hover:text-gray-900 bg-gray-100"
+                group === id ? "text-white shadow-lg" : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white bg-gray-100 dark:bg-gray-800"
               }`}
             >
               {group === id && (
@@ -427,10 +427,10 @@ export default function UGCourses() {
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Browse {filtered.length}</span>
           </div>
           <div className="flex items-center gap-2">
-            <button onClick={() => scrollStrip(-1)} className="w-10 h-10 rounded-full bg-white border border-rose-100 hover:border-[#800000] text-[#800000] flex items-center justify-center transition">
+            <button onClick={() => scrollStrip(-1)} className="w-10 h-10 rounded-full bg-white dark:bg-gray-900 border border-rose-100 dark:border-gray-700 hover:border-[#800000] text-[#800000] flex items-center justify-center transition">
               <ChevronLeft size={16} />
             </button>
-            <button onClick={() => scrollStrip(1)} className="w-10 h-10 rounded-full bg-white border border-rose-100 hover:border-[#800000] text-[#800000] flex items-center justify-center transition">
+            <button onClick={() => scrollStrip(1)} className="w-10 h-10 rounded-full bg-white dark:bg-gray-900 border border-rose-100 dark:border-gray-700 hover:border-[#800000] text-[#800000] flex items-center justify-center transition">
               <ChevronRight size={16} />
             </button>
           </div>
@@ -452,14 +452,14 @@ export default function UGCourses() {
                 className={`group relative shrink-0 w-64 snap-start text-left overflow-hidden rounded-3xl border-2 transition-all ${
                   isActive
                     ? "border-[#800000] shadow-2xl ring-4 ring-rose-100"
-                    : "border-rose-50 bg-white hover:border-rose-200 shadow-sm hover:shadow-lg"
+                    : "border-rose-50 dark:border-gray-700 bg-white dark:bg-gray-900 hover:border-rose-200 dark:hover:border-gray-600 shadow-sm hover:shadow-lg"
                 }`}
               >
                 {/* Top accent bar */}
                 <div className={`h-2 bg-gradient-to-r ${p.accent}`}></div>
 
                 {/* Body */}
-                <div className="p-5 bg-white">
+                <div className="p-5 bg-white dark:bg-gray-900">
                   <div className="flex items-start justify-between mb-3">
                     <div className="text-4xl">{p.icon}</div>
                     {isBookmarked && (
@@ -467,11 +467,11 @@ export default function UGCourses() {
                     )}
                   </div>
                   <div className="text-[9px] font-black uppercase tracking-[0.25em] text-gray-400 mb-1">{p.code}</div>
-                  <h4 className="font-black text-sm tracking-tight text-[#1a0606] leading-snug min-h-[2.5rem] line-clamp-2">
+                  <h4 className="font-black text-sm tracking-tight text-[#1a0606] dark:text-white leading-snug min-h-[2.5rem] line-clamp-2">
                     {p.name}
                   </h4>
 
-                  <div className="flex items-baseline gap-3 mt-4 pt-4 border-t border-rose-50">
+                  <div className="flex items-baseline gap-3 mt-4 pt-4 border-t border-rose-50 dark:border-gray-800">
                     <div>
                       <div className="text-2xl font-black tracking-[-0.04em] text-[#800000] leading-none">{p.seats}</div>
                       <div className="text-[8px] uppercase tracking-widest font-black text-gray-400 mt-0.5">seats</div>
@@ -504,26 +504,26 @@ export default function UGCourses() {
               transition={{ duration: 0.3 }}
               className="grid md:grid-cols-3 gap-4"
             >
-              <div className="bg-white rounded-3xl border border-rose-50 p-6 shadow-sm">
-                <div className="w-10 h-10 rounded-xl bg-rose-50 text-[#800000] flex items-center justify-center mb-4">
+              <div className="bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 p-6 shadow-sm">
+                <div className="w-10 h-10 rounded-xl bg-rose-50 dark:bg-gray-800 text-[#800000] flex items-center justify-center mb-4">
                   <CheckCircle2 size={18} />
                 </div>
                 <div className="text-[9px] uppercase tracking-[0.25em] font-black text-[#800000] mb-1.5">Eligibility</div>
-                <p className="text-sm text-gray-700 leading-relaxed font-medium">{active.eligibility}</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{active.eligibility}</p>
               </div>
-              <div className="bg-white rounded-3xl border border-rose-50 p-6 shadow-sm">
-                <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-4">
+              <div className="bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 p-6 shadow-sm">
+                <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-gray-800 text-amber-700 dark:text-amber-400 flex items-center justify-center mb-4">
                   <Award size={18} />
                 </div>
-                <div className="text-[9px] uppercase tracking-[0.25em] font-black text-amber-700 mb-1.5">Selection</div>
-                <p className="text-sm text-gray-700 leading-relaxed font-medium">{active.selection}</p>
+                <div className="text-[9px] uppercase tracking-[0.25em] font-black text-amber-700 dark:text-amber-400 mb-1.5">Selection</div>
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{active.selection}</p>
               </div>
-              <div className="bg-white rounded-3xl border border-rose-50 p-6 shadow-sm">
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-4">
+              <div className="bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 p-6 shadow-sm">
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-gray-800 text-emerald-700 flex items-center justify-center mb-4">
                   <Layers size={18} />
                 </div>
                 <div className="text-[9px] uppercase tracking-[0.25em] font-black text-emerald-700 mb-1.5">Structure</div>
-                <p className="text-sm text-gray-700 leading-relaxed font-medium">
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
                   {active.duration} · {active.semesters} semesters · {active.seats} sanctioned seats per academic year
                 </p>
               </div>
@@ -571,14 +571,14 @@ export default function UGCourses() {
       {/* ─────────── OFFICIAL ADMISSION TABLES ─────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-20">
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-50 border border-rose-100 mb-3">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-50 dark:bg-gray-800 border border-rose-100 dark:border-gray-700 mb-3">
             <Table2 size={12} className="text-[#800000]" />
             <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#800000]">Official Intake Tables</span>
           </div>
           <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-3">
             Undergraduate Courses
           </h2>
-          <p className="text-sm md:text-base text-gray-600 font-medium leading-relaxed">
+          <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-medium leading-relaxed">
             The following programs are offered under the Bachelor of Technology (B.Tech), BCA and BBA degrees.
             Intake and eligibility figures verified from ITM Gwalior&apos;s official records.
           </p>
@@ -621,7 +621,7 @@ export default function UGCourses() {
               <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="bg-rose-50/50">
+                    <tr className="bg-rose-50/50 dark:bg-gray-800/50">
                       <th className="text-left p-4 text-[10px] font-black uppercase tracking-[0.25em] text-[#800000] w-12">#</th>
                       <th className="text-left p-4 text-[10px] font-black uppercase tracking-[0.25em] text-[#800000]">Program</th>
                       <th className="text-center p-4 text-[10px] font-black uppercase tracking-[0.25em] text-[#800000] w-24">Seats</th>
@@ -632,7 +632,7 @@ export default function UGCourses() {
                   </thead>
                   <tbody>
                     {tbl.rows.map((row, i) => (
-                      <tr key={row.name} className="border-t border-rose-50 hover:bg-rose-50/30 transition-colors group">
+                      <tr key={row.name} className="border-t border-rose-50 dark:border-gray-800 hover:bg-rose-50/30 dark:hover:bg-gray-800/50 transition-colors group">
                         <td className="p-4 text-[10px] font-black uppercase tracking-widest text-gray-300">
                           {String(i + 1).padStart(2, "0")}
                         </td>
@@ -643,9 +643,9 @@ export default function UGCourses() {
                           </span>
                         </td>
                         <td className="p-4 text-xs text-gray-600 dark:text-gray-400 font-medium leading-relaxed">{row.elig}</td>
-                        <td className="p-4 text-center text-xs font-black uppercase tracking-widest text-gray-700">{tbl.duration}</td>
+                        <td className="p-4 text-center text-xs font-black uppercase tracking-widest text-gray-700 dark:text-gray-300">{tbl.duration}</td>
                         <td className="p-4 text-center">
-                          <Link to="/admissions/how-to-apply" className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-rose-50 text-[#800000] hover:bg-[#800000] hover:text-white transition-colors group-hover:scale-110" title="Apply">
+                          <Link to="/admissions/how-to-apply" className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-rose-50 dark:bg-gray-800 text-[#800000] hover:bg-[#800000] hover:text-white transition-colors group-hover:scale-110" title="Apply">
                             <ArrowRight size={14} />
                           </Link>
                         </td>
@@ -667,20 +667,20 @@ export default function UGCourses() {
               </div>
 
               {/* Mobile — stacked cards */}
-              <div className="md:hidden divide-y divide-rose-50">
+              <div className="md:hidden divide-y divide-rose-50 dark:divide-gray-800">
                 {tbl.rows.map((row, i) => (
                   <div key={row.name} className="p-4">
                     <div className="flex items-start justify-between gap-3 mb-2">
-                      <h4 className="font-black text-sm text-[#1a0606] tracking-tight leading-snug flex-1">
+                      <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug flex-1">
                         {row.name}
                       </h4>
                       <span className="shrink-0 inline-flex items-center justify-center min-w-[2.5rem] px-2 py-1 bg-[#800000] text-white rounded-lg font-black text-xs">
                         {row.seats}
                       </span>
                     </div>
-                    <p className="text-xs text-gray-600 leading-relaxed font-medium mb-2">{row.elig}</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-2">{row.elig}</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-[9px] font-black uppercase tracking-widest text-gray-500">
+                      <span className="text-[9px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">
                         <Clock size={10} className="inline mr-1" /> {tbl.duration}
                       </span>
                       <Link to="/admissions/how-to-apply" className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-[#800000]">
@@ -689,7 +689,7 @@ export default function UGCourses() {
                     </div>
                   </div>
                 ))}
-                <div className="p-4 bg-amber-50/50 flex items-center justify-between">
+                <div className="p-4 bg-amber-50/50 dark:bg-gray-800/50 flex items-center justify-between">
                   <span className="text-[10px] font-black uppercase tracking-widest text-[#800000]">Total Intake</span>
                   <span className="text-2xl font-black text-[#800000] tracking-tight">{tbl.rows.reduce((s, r) => s + r.seats, 0)}</span>
                 </div>
@@ -757,12 +757,12 @@ export default function UGCourses() {
               onClick={(e) => e.stopPropagation()}
               className="bg-white dark:bg-gray-900 rounded-3xl max-w-5xl w-full shadow-2xl my-8 overflow-hidden"
             >
-              <div className="flex items-center justify-between p-6 border-b border-gray-100">
+              <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-gray-800">
                 <div>
                   <h3 className="font-black text-xl tracking-tight text-[#1a0606] dark:text-white">Side-by-side comparison</h3>
-                  <p className="text-xs text-gray-500 font-medium">{compareList.length} programme{compareList.length !== 1 ? "s" : ""}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{compareList.length} programme{compareList.length !== 1 ? "s" : ""}</p>
                 </div>
-                <button onClick={() => setShowCompare(false)} className="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500">
+                <button onClick={() => setShowCompare(false)} className="w-9 h-9 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400">
                   <X size={16} />
                 </button>
               </div>
@@ -771,7 +771,7 @@ export default function UGCourses() {
                 <table className="w-full">
                   <thead>
                     <tr>
-                      <th className="text-left p-4 bg-gray-50 sticky left-0 w-32 text-[10px] uppercase tracking-widest font-black text-gray-500">Spec</th>
+                      <th className="text-left p-4 bg-gray-50 dark:bg-gray-800 sticky left-0 w-32 text-[10px] uppercase tracking-widest font-black text-gray-500 dark:text-gray-400">Spec</th>
                       {compareList.map((p) => (
                         <th key={p.id} className="text-left p-4 min-w-[200px]">
                           <div className="text-3xl mb-2">{p.icon}</div>
@@ -791,8 +791,8 @@ export default function UGCourses() {
                       { k: "Top Careers", get: (p) => p.careers.join(", ") },
                       { k: "Tags", get: (p) => p.tags.join(" · ") },
                     ].map((row) => (
-                      <tr key={row.k} className="border-t border-gray-100">
-                        <td className="p-4 bg-gray-50 text-[10px] uppercase tracking-widest font-black text-gray-500 sticky left-0">{row.k}</td>
+                      <tr key={row.k} className="border-t border-gray-100 dark:border-gray-800">
+                        <td className="p-4 bg-gray-50 dark:bg-gray-800 text-[10px] uppercase tracking-widest font-black text-gray-500 dark:text-gray-400 sticky left-0">{row.k}</td>
                         {compareList.map((p) => (
                           <td key={p.id} className="p-4 text-xs font-medium text-gray-700 dark:text-gray-300 leading-relaxed">
                             {row.get(p)}
@@ -804,11 +804,11 @@ export default function UGCourses() {
                 </table>
               </div>
 
-              <div className="p-6 border-t border-gray-100 flex gap-2 flex-wrap">
+              <div className="p-6 border-t border-gray-100 dark:border-gray-800 flex gap-2 flex-wrap">
                 <Link to="/admissions/how-to-apply" className="inline-flex items-center gap-2 bg-[#800000] text-white px-5 py-3 rounded-full font-black text-[11px] tracking-widest uppercase">
                   Apply Now <ArrowRight size={12} />
                 </Link>
-                <button onClick={() => { setCompare([]); setShowCompare(false); }} className="inline-flex items-center gap-2 bg-gray-100 text-gray-700 px-5 py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:bg-gray-200">
+                <button onClick={() => { setCompare([]); setShowCompare(false); }} className="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-5 py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:bg-gray-200 dark:hover:bg-gray-700">
                   Clear all
                 </button>
               </div>

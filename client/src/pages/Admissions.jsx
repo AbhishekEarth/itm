@@ -149,15 +149,15 @@ export default function Admissions() {
       </section>
 
       {/* ── FAST FACTS RIBBON ────────────────────────────── */}
-      <section className="border-y border-rose-100 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4 divide-x divide-rose-100">
+      <section className="border-y border-rose-100 dark:border-gray-800 bg-white dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4 divide-x divide-rose-100 dark:divide-gray-800">
           {FAST_FACTS.map((f) => (
             <div key={f.label} className="p-5 flex items-center gap-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#800000] to-[#5a0000] text-white flex items-center justify-center shrink-0">
                 <f.icon size={16} />
               </div>
               <div className="min-w-0">
-                <div className="text-base md:text-lg font-black tracking-tight text-[#1a0606] truncate">{f.value}</div>
+                <div className="text-base md:text-lg font-black tracking-tight text-[#1a0606] dark:text-white truncate">{f.value}</div>
                 <div className="text-[9px] uppercase tracking-widest font-black text-gray-500 mt-0.5">{f.label}</div>
               </div>
             </div>
@@ -240,7 +240,7 @@ export default function Admissions() {
                       item.state === "active" ? "bg-gradient-to-br from-amber-400 to-orange-600" :
                       "bg-gradient-to-br from-[#800000] to-[#5a0000]"
                     }`}></div>
-                    <div className={`absolute inset-0 bg-white border-2 rounded-2xl flex items-center justify-center font-black text-sm tracking-tight ${
+                    <div className={`absolute inset-0 bg-white dark:bg-gray-900 border-2 rounded-2xl flex items-center justify-center font-black text-sm tracking-tight ${
                       item.state === "done" ? "border-emerald-500 text-emerald-700" :
                       item.state === "active" ? "border-amber-500 text-amber-700" :
                       "border-[#800000] text-[#800000]"
@@ -323,7 +323,7 @@ export default function Admissions() {
               </div>
 
               {/* Progress */}
-              <div className="px-6 py-3 border-b border-rose-50 bg-rose-50/30">
+              <div className="px-6 py-3 border-b border-rose-50 dark:border-gray-800 bg-rose-50/30 dark:bg-gray-800/50">
                 <div className="flex gap-2">
                   {[1, 2, 3].map((s) => (
                     <div key={s} className={`h-1 flex-1 rounded-full ${s <= wiz.step ? "bg-[#800000]" : "bg-rose-100"}`}></div>
@@ -342,10 +342,10 @@ export default function Admissions() {
                       <button
                         key={o.id}
                         onClick={() => setWiz({ ...wiz, level: o.id, step: 2 })}
-                        className="group text-left p-6 rounded-3xl border-2 border-rose-50 hover:border-[#800000] hover:shadow-xl transition-all bg-white"
+                        className="group text-left p-6 rounded-3xl border-2 border-rose-50 dark:border-gray-700 hover:border-[#800000] hover:shadow-xl transition-all bg-white dark:bg-gray-800"
                       >
                         <div className="text-4xl mb-3">{o.icon}</div>
-                        <div className="font-black text-lg text-[#1a0606] tracking-tight mb-1">{o.label}</div>
+                        <div className="font-black text-lg text-[#1a0606] dark:text-white tracking-tight mb-1">{o.label}</div>
                         <div className="text-xs text-gray-500 font-medium">{o.desc}</div>
                         <div className="mt-4 text-[10px] font-black uppercase tracking-widest text-[#800000] inline-flex items-center gap-1 group-hover:gap-2 transition-all">
                           Continue <ArrowRight size={12} />
@@ -365,10 +365,10 @@ export default function Admissions() {
                       <button
                         key={o.id}
                         onClick={() => setWiz({ ...wiz, interest: o.id, step: 3 })}
-                        className="group text-left p-5 rounded-3xl border-2 border-rose-50 hover:border-[#800000] hover:shadow-xl transition-all bg-white"
+                        className="group text-left p-5 rounded-3xl border-2 border-rose-50 dark:border-gray-700 hover:border-[#800000] hover:shadow-xl transition-all bg-white dark:bg-gray-800"
                       >
                         <div className="text-3xl mb-2">{o.icon}</div>
-                        <div className="font-black text-sm text-[#1a0606] tracking-tight mb-1">{o.label}</div>
+                        <div className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight mb-1">{o.label}</div>
                         <div className="text-[10px] text-gray-500 font-medium leading-relaxed">{o.desc}</div>
                       </button>
                     ))}
@@ -390,15 +390,15 @@ export default function Admissions() {
                         </div>
                         <div className="grid sm:grid-cols-2 gap-3 max-h-[300px] overflow-y-auto pr-1">
                           {recommendations.map((p) => (
-                            <div key={p.id} className="bg-rose-50/40 border border-rose-100 rounded-2xl p-4">
+                            <div key={p.id} className="bg-rose-50/40 dark:bg-gray-800 border border-rose-100 dark:border-gray-700 rounded-2xl p-4">
                               <div className="flex items-start justify-between mb-2">
                                 <div className="text-3xl">{p.icon}</div>
-                                <span className="text-[9px] uppercase tracking-widest font-black text-[#800000] bg-white px-2 py-0.5 rounded">
+                                <span className="text-[9px] uppercase tracking-widest font-black text-[#800000] bg-white dark:bg-gray-700 px-2 py-0.5 rounded">
                                   {p.code}
                                 </span>
                               </div>
-                              <div className="font-black text-sm text-[#1a0606] tracking-tight leading-snug mb-2">{p.short}</div>
-                              <div className="text-[10px] text-gray-600 font-bold">{p.seats} seats · {p.duration}</div>
+                              <div className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-2">{p.short}</div>
+                              <div className="text-[10px] text-gray-600 dark:text-gray-400 font-bold">{p.seats} seats · {p.duration}</div>
                             </div>
                           ))}
                         </div>
@@ -408,7 +408,7 @@ export default function Admissions() {
                 )}
               </div>
 
-              <div className="p-6 border-t border-rose-50 bg-rose-50/30 flex items-center justify-between">
+              <div className="p-6 border-t border-rose-50 dark:border-gray-800 bg-rose-50/30 dark:bg-gray-800/50 flex items-center justify-between">
                 <button
                   onClick={() => wiz.step > 1 ? setWiz({ ...wiz, step: wiz.step - 1 }) : resetWiz()}
                   className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-gray-600 hover:text-[#800000]"

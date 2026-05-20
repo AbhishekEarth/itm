@@ -156,7 +156,7 @@ export default function SeekAdmission() {
       {/* ─────────── INTERACTIVE ELIGIBILITY WIZARD ─────────── */}
       <section id="wizard" className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-50 border border-rose-100 mb-3">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-50 dark:bg-gray-800 border border-rose-100 dark:border-gray-700 mb-3">
             <Sparkles size={12} className="text-[#800000]" />
             <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#800000]">
               Interactive Tool · No Signup
@@ -309,12 +309,12 @@ export default function SeekAdmission() {
             </div>
 
             {matches.length === 0 ? (
-              <div className="bg-amber-50 border border-amber-200 rounded-3xl p-8 text-center">
+              <div className="bg-amber-50 dark:bg-gray-800 border border-amber-200 dark:border-gray-700 rounded-3xl p-8 text-center">
                 <AlertCircle size={32} className="mx-auto text-amber-700 mb-3" />
-                <h4 className="font-black text-base text-amber-900 mb-2">
+                <h4 className="font-black text-base text-amber-900 dark:text-amber-300 mb-2">
                   Your inputs don&apos;t match the minimum cutoff.
                 </h4>
-                <p className="text-sm text-amber-800 font-medium">
+                <p className="text-sm text-amber-800 dark:text-amber-400 font-medium">
                   Try increasing your percentage, or call our counsellors below — special quotas may apply.
                 </p>
               </div>
@@ -488,8 +488,8 @@ export default function SeekAdmission() {
                   activeStep === s.step
                     ? "bg-[#800000] text-white shadow-xl"
                     : activeStep > s.step
-                    ? "bg-emerald-50 text-emerald-700 border-2 border-emerald-200"
-                    : "bg-white text-gray-400 border-2 border-gray-200"
+                    ? "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-2 border-emerald-200 dark:border-emerald-700"
+                    : "bg-white dark:bg-gray-800 text-gray-400 border-2 border-gray-200 dark:border-gray-700"
                 }`}
               >
                 {activeStep > s.step ? <CheckCircle2 size={22} /> : s.step}
@@ -512,7 +512,7 @@ export default function SeekAdmission() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
-                  className="relative overflow-hidden bg-gradient-to-br from-white to-rose-50/20 rounded-3xl border border-rose-50 shadow-xl p-8 md:p-10 grid md:grid-cols-5 gap-8"
+                  className="relative overflow-hidden bg-gradient-to-br from-white to-rose-50/20 dark:from-gray-900 dark:to-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-xl p-8 md:p-10 grid md:grid-cols-5 gap-8"
                 >
                   <div className="md:col-span-2 flex flex-col items-center md:items-start gap-4">
                     <div className="text-7xl">{s.icon}</div>
@@ -520,13 +520,13 @@ export default function SeekAdmission() {
                       <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-1">
                         Step {s.step} of {ADMISSION_STEPS.length}
                       </div>
-                      <h3 className="font-black text-2xl md:text-3xl tracking-tight text-[#1a0606] leading-tight">
+                      <h3 className="font-black text-2xl md:text-3xl tracking-tight text-[#1a0606] dark:text-white leading-tight">
                         {s.title}
                       </h3>
                     </div>
                   </div>
                   <div className="md:col-span-3">
-                    <p className="text-base md:text-lg text-gray-700 leading-relaxed font-medium mb-6">{s.body}</p>
+                    <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-medium mb-6">{s.body}</p>
                     <div className="flex flex-wrap gap-2">
                       {s.action && (
                         <a
@@ -541,7 +541,7 @@ export default function SeekAdmission() {
                       <button
                         onClick={() => setActiveStep(Math.max(1, activeStep - 1))}
                         disabled={activeStep === 1}
-                        className="px-4 py-3 rounded-full bg-gray-100 text-gray-700 font-black text-xs tracking-widest disabled:opacity-40 hover:bg-gray-200"
+                        className="px-4 py-3 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-black text-xs tracking-widest disabled:opacity-40 hover:bg-gray-200 dark:hover:bg-gray-700"
                       >← PREV</button>
                       <button
                         onClick={() => setActiveStep(Math.min(ADMISSION_STEPS.length, activeStep + 1))}
@@ -560,8 +560,8 @@ export default function SeekAdmission() {
       <section id="fees" className="bg-gray-50 dark:bg-gray-900/30 py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 max-w-2xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-50 border border-amber-200 mb-3">
-              <Calculator size={12} className="text-amber-700" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-50 dark:bg-gray-800 border border-amber-200 dark:border-gray-700 mb-3">
+              <Calculator size={12} className="text-amber-700 dark:text-amber-400" />
               <span className="text-[10px] font-black uppercase tracking-[0.25em] text-amber-700">
                 Fee Estimator
               </span>
@@ -733,7 +733,7 @@ export default function SeekAdmission() {
                   className={`shrink-0 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-colors ${
                     counsellorFilter === p
                       ? "bg-[#800000] text-white shadow-md"
-                      : "bg-white text-gray-600 hover:bg-gray-100 border border-gray-200"
+                      : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700"
                   }`}
                 >
                   {p}
@@ -755,7 +755,7 @@ export default function SeekAdmission() {
               >
                 <div className="flex items-center justify-between mb-4">
                   <div className="text-3xl">{c.icon}</div>
-                  <span className="text-[9px] font-black uppercase tracking-widest text-[#800000] bg-rose-50 px-2 py-1 rounded">
+                  <span className="text-[9px] font-black uppercase tracking-widest text-[#800000] bg-rose-50 dark:bg-gray-800 px-2 py-1 rounded">
                     {c.programme}
                   </span>
                 </div>
@@ -765,14 +765,14 @@ export default function SeekAdmission() {
                 </h4>
 
                 <div className="flex flex-col gap-2.5">
-                  <a href={`tel:${c.phone.replace(/[^+\d]/g, "")}`} className="flex items-center gap-2.5 text-xs font-bold text-gray-700 hover:text-[#800000] transition-colors">
-                    <div className="w-8 h-8 rounded-lg bg-rose-50 text-[#800000] flex items-center justify-center group-hover:bg-[#800000] group-hover:text-white transition-colors">
+                  <a href={`tel:${c.phone.replace(/[^+\d]/g, "")}`} className="flex items-center gap-2.5 text-xs font-bold text-gray-700 dark:text-gray-300 hover:text-[#800000] transition-colors">
+                    <div className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-gray-800 text-[#800000] flex items-center justify-center group-hover:bg-[#800000] group-hover:text-white transition-colors">
                       <Phone size={12} />
                     </div>
                     {c.phone}
                   </a>
-                  <a href={`mailto:${c.email}`} className="flex items-center gap-2.5 text-xs font-bold text-gray-700 hover:text-[#800000]">
-                    <div className="w-8 h-8 rounded-lg bg-rose-50 text-[#800000] flex items-center justify-center group-hover:bg-[#800000] group-hover:text-white transition-colors">
+                  <a href={`mailto:${c.email}`} className="flex items-center gap-2.5 text-xs font-bold text-gray-700 dark:text-gray-300 hover:text-[#800000]">
+                    <div className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-gray-800 text-[#800000] flex items-center justify-center group-hover:bg-[#800000] group-hover:text-white transition-colors">
                       <Mail size={12} />
                     </div>
                     {c.email}

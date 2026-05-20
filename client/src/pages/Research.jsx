@@ -86,7 +86,7 @@ export default function Research() {
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">
 
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-rose-100">
+      <div className="bg-white dark:bg-gray-900 border-b border-rose-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
           <Link to="/" className="hover:text-[#800000] inline-flex items-center gap-1.5"><Home size={11} /> Home</Link>
           <Crumb size={10} className="text-gray-300" />
@@ -169,7 +169,7 @@ export default function Research() {
                   <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium mb-5">{q.body}</p>
                   <div className="flex flex-wrap gap-1.5 mb-5">
                     {q.stats.map((s) => (
-                      <span key={s} className="text-[9px] uppercase tracking-widest font-black px-2 py-1 bg-rose-50 text-[#800000] rounded">{s}</span>
+                      <span key={s} className="text-[9px] uppercase tracking-widest font-black px-2 py-1 bg-rose-50 dark:bg-gray-800 text-[#800000] dark:text-rose-400 rounded">{s}</span>
                     ))}
                   </div>
                   <div className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-[#800000] group-hover:gap-3 transition-all">

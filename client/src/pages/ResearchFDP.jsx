@@ -67,7 +67,7 @@ export default function ResearchFDP() {
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">
 
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-rose-100">
+      <div className="bg-white dark:bg-gray-900 border-b border-rose-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
           <Link to="/" className="hover:text-[#800000] inline-flex items-center gap-1.5"><Home size={11} /> Home</Link>
           <Crumb size={10} className="text-gray-300" />
@@ -131,10 +131,10 @@ export default function ResearchFDP() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-3 -mt-6 relative z-10">
         {HIGHLIGHTS.map((h, i) => (
           <motion.div key={h.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-            className="bg-white rounded-3xl border border-rose-50 shadow-xl p-5">
+            className="bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-xl p-5">
             <div className="text-3xl mb-2">{h.icon}</div>
-            <div className="text-lg font-black tracking-tight text-[#1a0606] leading-none">{h.value}</div>
-            <div className="text-[9px] uppercase tracking-widest font-black text-gray-500 mt-1">{h.title}</div>
+            <div className="text-lg font-black tracking-tight text-[#1a0606] dark:text-white leading-none">{h.value}</div>
+            <div className="text-[9px] uppercase tracking-widest font-black text-gray-500 dark:text-gray-400 mt-1">{h.title}</div>
           </motion.div>
         ))}
       </section>
@@ -142,22 +142,22 @@ export default function ResearchFDP() {
       {/* Organising team + Department */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid lg:grid-cols-3 gap-4">
-          <div className="bg-gradient-to-br from-rose-50/40 to-white border border-rose-50 rounded-3xl p-7">
+          <div className="bg-gradient-to-br from-rose-50/40 dark:from-gray-900 to-white dark:to-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-7">
             <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2 flex items-center gap-1.5"><Briefcase size={11} /> Organising Department</div>
-            <h3 className="font-black text-base text-[#1a0606] tracking-tight leading-snug">{FDP.department}</h3>
+            <h3 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight leading-snug">{FDP.department}</h3>
           </div>
           {[FDP.convenor, FDP.coordinator].map((person) => (
-            <div key={person.name} className="bg-white border border-rose-50 rounded-3xl p-7 hover:shadow-xl transition-shadow">
+            <div key={person.name} className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-7 hover:shadow-xl transition-shadow">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#800000] to-[#5a0000] text-white flex items-center justify-center font-black text-sm">
                   {person.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
                 </div>
                 <div>
                   <div className="text-[9px] uppercase tracking-widest font-black text-[#800000]">{person.role}</div>
-                  <h4 className="font-black text-sm text-[#1a0606] tracking-tight">{person.name}</h4>
+                  <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight">{person.name}</h4>
                 </div>
               </div>
-              <a href={`tel:${person.phone.replace(/[^+\d]/g, "")}`} className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-700 hover:text-[#800000]">
+              <a href={`tel:${person.phone.replace(/[^+\d]/g, "")}`} className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-700 dark:text-gray-300 hover:text-[#800000]">
                 <Phone size={11} className="text-[#800000]" /> {person.phone}
               </a>
             </div>
@@ -166,7 +166,7 @@ export default function ResearchFDP() {
       </section>
 
       {/* Course modules */}
-      <section className="bg-white border-y border-rose-100 py-16 md:py-20">
+      <section className="bg-white dark:bg-gray-900 border-y border-rose-100 dark:border-gray-800 py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <div className="flex items-center justify-center gap-3 mb-3">
@@ -174,19 +174,19 @@ export default function ResearchFDP() {
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Course Modules · 5 sessions</span>
               <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] leading-[1.05]">
+            <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               What you&apos;ll cover in 7 days.
             </h2>
           </div>
           <div className="space-y-3 max-w-3xl mx-auto">
             {FDP.modules.map((m, i) => (
               <motion.div key={m} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                className="flex items-center gap-4 p-5 bg-gradient-to-br from-rose-50/40 to-white border border-rose-50 rounded-2xl hover:shadow-md transition-shadow">
+                className="flex items-center gap-4 p-5 bg-gradient-to-br from-rose-50/40 dark:from-gray-900 to-white dark:to-gray-900 border border-rose-50 dark:border-gray-800 rounded-2xl hover:shadow-md transition-shadow">
                 <span className="shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-[#800000] to-[#5a0000] text-white flex items-center justify-center font-black text-sm tracking-tight">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div className="flex-1">
-                  <h4 className="font-black text-base text-[#1a0606] tracking-tight leading-snug">{m}</h4>
+                  <h4 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight leading-snug">{m}</h4>
                   <div className="text-[9px] uppercase tracking-widest font-bold text-gray-400 mt-1">Day {i + 1} · Session</div>
                 </div>
                 <CheckCircle2 size={18} className="text-[#800000] shrink-0" />
@@ -204,21 +204,21 @@ export default function ResearchFDP() {
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Expert Resource Persons</span>
             <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
           </div>
-          <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] leading-[1.05]">
+          <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
             Six experts from leading institutions.
           </h2>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {FDP.resourcePersons.map((p, i) => (
             <motion.div key={p.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} whileHover={{ y: -4 }}
-              className="relative overflow-hidden bg-white border border-rose-50 rounded-3xl p-6 hover:shadow-xl transition-shadow">
+              className="relative overflow-hidden bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-6 hover:shadow-xl transition-shadow">
               <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${p.accent}`}></div>
               <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${p.accent} text-white flex items-center justify-center font-black text-sm tracking-tight shadow-lg mb-4 mt-2`}>
                 {p.name.replace(/[^A-Z]/g, "").slice(0, 2) || p.name.slice(0, 2).toUpperCase()}
               </div>
-              <h4 className="font-black text-base text-[#1a0606] tracking-tight leading-snug mb-2">{p.name}</h4>
+              <h4 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight leading-snug mb-2">{p.name}</h4>
               <p className="text-xs font-bold text-[#800000] mb-2">{p.role}</p>
-              <p className="text-xs text-gray-600 font-medium leading-relaxed">{p.inst}</p>
+              <p className="text-xs text-gray-600 dark:text-gray-400 font-medium leading-relaxed">{p.inst}</p>
             </motion.div>
           ))}
         </div>

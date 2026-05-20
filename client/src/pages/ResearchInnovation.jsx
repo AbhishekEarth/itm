@@ -119,7 +119,7 @@ export default function ResearchInnovation() {
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">
 
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-rose-100">
+      <div className="bg-white dark:bg-gray-900 border-b border-rose-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
           <Link to="/" className="hover:text-[#800000] inline-flex items-center gap-1.5"><Home size={11} /> Home</Link>
           <Crumb size={10} className="text-gray-300" />
@@ -188,22 +188,22 @@ export default function ResearchInnovation() {
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Campus Incubator</span>
             <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] leading-[1.05] mb-4">IDEAPAD</h2>
-          <p className="text-sm md:text-base text-gray-600 font-medium leading-relaxed">{IDEAPAD.desc}</p>
-          <p className="text-xs text-gray-500 mt-3 font-medium italic">{IDEAPAD.foundation}</p>
+          <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-4">IDEAPAD</h2>
+          <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-medium leading-relaxed">{IDEAPAD.desc}</p>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 font-medium italic">{IDEAPAD.foundation}</p>
         </div>
 
         {/* Vision + Mission split */}
         <div className="grid md:grid-cols-2 gap-4 mb-10">
-          <div className="bg-white border border-rose-50 rounded-3xl p-7 shadow-sm">
+          <div className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-7 shadow-sm">
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#800000] to-[#5a0000] text-white flex items-center justify-center mb-4"><Compass size={20} /></div>
             <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] mb-2">IDEAPAD Vision</div>
-            <p className="text-sm text-gray-700 leading-relaxed font-medium italic">&ldquo;{IDEAPAD.vision}&rdquo;</p>
+            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">&ldquo;{IDEAPAD.vision}&rdquo;</p>
           </div>
-          <div className="bg-white border border-rose-50 rounded-3xl p-7 shadow-sm">
+          <div className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-7 shadow-sm">
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-700 text-white flex items-center justify-center mb-4"><Target size={20} /></div>
-            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-700 mb-2">IDEAPAD Mission</div>
-            <p className="text-sm text-gray-700 leading-relaxed font-medium italic">&ldquo;{IDEAPAD.mission}&rdquo;</p>
+            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-700 dark:text-amber-400 mb-2">IDEAPAD Mission</div>
+            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">&ldquo;{IDEAPAD.mission}&rdquo;</p>
           </div>
         </div>
 
@@ -213,9 +213,9 @@ export default function ResearchInnovation() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {IDEAPAD_FACILITIES.map((f, i) => (
               <motion.div key={f.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.03 }}
-                className="bg-white border border-rose-50 rounded-2xl p-4 text-center hover:shadow-md transition-shadow">
+                className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-2xl p-4 text-center hover:shadow-md transition-shadow">
                 <div className="text-3xl mb-2">{f.icon}</div>
-                <div className="text-xs font-black text-[#1a0606] tracking-tight leading-snug">{f.title}</div>
+                <div className="text-xs font-black text-[#1a0606] dark:text-white tracking-tight leading-snug">{f.title}</div>
               </motion.div>
             ))}
           </div>
@@ -223,13 +223,13 @@ export default function ResearchInnovation() {
 
         {/* Contact */}
         <div className="mt-10 grid md:grid-cols-2 gap-3">
-          <a href="mailto:iic@itmgoi.in" className="flex items-center gap-3 p-4 bg-rose-50 rounded-2xl hover:bg-rose-100 transition-colors">
-            <div className="w-12 h-12 rounded-xl bg-white text-[#800000] flex items-center justify-center"><Mail size={18} /></div>
-            <div><div className="text-[9px] uppercase tracking-widest font-black text-gray-500">Email</div><div className="text-sm font-black text-[#1a0606]">iic@itmgoi.in</div></div>
+          <a href="mailto:iic@itmgoi.in" className="flex items-center gap-3 p-4 bg-rose-50 dark:bg-gray-800 rounded-2xl hover:bg-rose-100 dark:hover:bg-gray-700 transition-colors">
+            <div className="w-12 h-12 rounded-xl bg-white dark:bg-gray-900 text-[#800000] flex items-center justify-center"><Mail size={18} /></div>
+            <div><div className="text-[9px] uppercase tracking-widest font-black text-gray-500 dark:text-gray-400">Email</div><div className="text-sm font-black text-[#1a0606] dark:text-white">iic@itmgoi.in</div></div>
           </a>
-          <a href="tel:+917889961796" className="flex items-center gap-3 p-4 bg-rose-50 rounded-2xl hover:bg-rose-100 transition-colors">
-            <div className="w-12 h-12 rounded-xl bg-white text-[#800000] flex items-center justify-center"><Phone size={18} /></div>
-            <div><div className="text-[9px] uppercase tracking-widest font-black text-gray-500">Phone</div><div className="text-sm font-black text-[#1a0606]">+91-7889961796</div></div>
+          <a href="tel:+917889961796" className="flex items-center gap-3 p-4 bg-rose-50 dark:bg-gray-800 rounded-2xl hover:bg-rose-100 dark:hover:bg-gray-700 transition-colors">
+            <div className="w-12 h-12 rounded-xl bg-white dark:bg-gray-900 text-[#800000] flex items-center justify-center"><Phone size={18} /></div>
+            <div><div className="text-[9px] uppercase tracking-widest font-black text-gray-500 dark:text-gray-400">Phone</div><div className="text-sm font-black text-[#1a0606] dark:text-white">+91-7889961796</div></div>
           </a>
         </div>
       </section>
@@ -291,10 +291,10 @@ export default function ResearchInnovation() {
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">IIC 8.0 · 2025-26</span>
             <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] leading-[1.05]">
+          <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
             Institution&apos;s Innovation Council
           </h2>
-          <p className="text-sm text-gray-600 mt-3 font-medium leading-relaxed">
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-3 font-medium leading-relaxed">
             Established under MoE&apos;s Innovation Cell in collaboration with AICTE to systematically foster a culture
             of innovation and startup ecosystem.
           </p>

@@ -68,7 +68,7 @@ export default function ResearchConference() {
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">
 
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-rose-100">
+      <div className="bg-white dark:bg-gray-900 border-b border-rose-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
           <Link to="/" className="hover:text-[#800000] inline-flex items-center gap-1.5"><Home size={11} /> Home</Link>
           <Crumb size={10} className="text-gray-300" />
@@ -134,7 +134,7 @@ export default function ResearchConference() {
       {/* Tabs */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-20">
         <div className="flex items-center justify-center mb-10">
-          <div className="inline-flex bg-white border border-rose-100 rounded-full p-1.5 shadow-sm">
+          <div className="inline-flex bg-white dark:bg-gray-900 border border-rose-100 dark:border-gray-800 rounded-full p-1.5 shadow-sm">
             {[
               { id: "about", label: "About" },
               { id: "tracks", label: "6 Tracks" },
@@ -142,7 +142,7 @@ export default function ResearchConference() {
               { id: "timeline", label: "Timeline" },
             ].map((t) => (
               <button key={t.id} onClick={() => setTab(t.id)}
-                className={`relative px-5 py-2.5 text-[10px] font-black uppercase tracking-widest rounded-full transition-colors ${tab === t.id ? "text-white" : "text-gray-500 hover:text-gray-700"}`}>
+                className={`relative px-5 py-2.5 text-[10px] font-black uppercase tracking-widest rounded-full transition-colors ${tab === t.id ? "text-white" : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"}`}>
                 {tab === t.id && <motion.span layoutId="conf-tab" className="absolute inset-0 bg-[#800000] rounded-full"></motion.span>}
                 <span className="relative">{t.label}</span>
               </button>
@@ -153,21 +153,21 @@ export default function ResearchConference() {
         <AnimatePresence mode="wait">
           {tab === "about" && (
             <motion.div key="about" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="grid md:grid-cols-3 gap-4">
-              <div className="md:col-span-2 bg-white rounded-3xl p-7 shadow-sm border border-rose-50">
+              <div className="md:col-span-2 bg-white dark:bg-gray-900 rounded-3xl p-7 shadow-sm border border-rose-50 dark:border-gray-800">
                 <div className="space-y-5">
                   <div>
                     <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2 flex items-center gap-1.5"><MapPin size={11} /> Venue</div>
-                    <p className="text-sm text-gray-700 font-medium leading-relaxed">{CONF.venue}</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 font-medium leading-relaxed">{CONF.venue}</p>
                   </div>
                   <div>
                     <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2 flex items-center gap-1.5"><Users size={11} /> Organising Department</div>
-                    <p className="text-sm text-gray-700 font-bold leading-relaxed">{CONF.organisingDept}</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 font-bold leading-relaxed">{CONF.organisingDept}</p>
                   </div>
                   <div>
                     <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2 flex items-center gap-1.5"><Award size={11} /> Associated Bodies</div>
                     <div className="flex flex-wrap gap-2">
                       {CONF.associatedBodies.map((b) => (
-                        <span key={b} className="text-[10px] font-black px-2.5 py-1 bg-rose-50 text-[#800000] rounded-full">{b}</span>
+                        <span key={b} className="text-[10px] font-black px-2.5 py-1 bg-rose-50 dark:bg-gray-800 text-[#800000] rounded-full">{b}</span>
                       ))}
                     </div>
                   </div>
@@ -188,10 +188,10 @@ export default function ResearchConference() {
             <motion.div key="tracks" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {TRACKS.map((t, i) => (
                 <motion.div key={t.title} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.05 }} whileHover={{ y: -4 }}
-                  className="relative overflow-hidden bg-white border border-rose-50 rounded-3xl p-6 hover:shadow-xl transition-shadow">
-                  <div className="absolute top-3 right-3 text-[10px] font-black uppercase tracking-widest text-[#800000] bg-rose-50 px-2 py-1 rounded">Track {String(t.n).padStart(2, "0")}</div>
+                  className="relative overflow-hidden bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-6 hover:shadow-xl transition-shadow">
+                  <div className="absolute top-3 right-3 text-[10px] font-black uppercase tracking-widest text-[#800000] bg-rose-50 dark:bg-gray-800 px-2 py-1 rounded">Track {String(t.n).padStart(2, "0")}</div>
                   <div className="text-5xl mb-4">{t.icon}</div>
-                  <h4 className="font-black text-base text-[#1a0606] tracking-tight leading-snug">{t.title}</h4>
+                  <h4 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight leading-snug">{t.title}</h4>
                 </motion.div>
               ))}
             </motion.div>
@@ -201,14 +201,14 @@ export default function ResearchConference() {
             <motion.div key="team" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {ORGANISERS.map((o, i) => (
                 <motion.div key={o.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06 }} whileHover={{ y: -4 }}
-                  className="relative overflow-hidden bg-white border border-rose-50 rounded-3xl p-6 hover:shadow-xl transition-shadow">
+                  className="relative overflow-hidden bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-6 hover:shadow-xl transition-shadow">
                   <div className={`h-1.5 bg-gradient-to-r ${o.accent} -mx-6 -mt-6 mb-5`}></div>
                   <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${o.accent} text-white flex items-center justify-center font-black text-base tracking-tight shadow-lg mb-4`}>
                     {o.name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()}
                   </div>
                   <div className="text-[9px] uppercase tracking-widest font-black text-[#800000] mb-1">{o.role}</div>
-                  <h4 className="font-black text-base text-[#1a0606] tracking-tight mb-3">{o.name}</h4>
-                  <a href={`tel:${o.phone.replace(/[^+\d]/g, "")}`} className="inline-flex items-center gap-1.5 text-xs text-gray-700 hover:text-[#800000] font-bold">
+                  <h4 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight mb-3">{o.name}</h4>
+                  <a href={`tel:${o.phone.replace(/[^+\d]/g, "")}`} className="inline-flex items-center gap-1.5 text-xs text-gray-700 dark:text-gray-300 hover:text-[#800000] font-bold">
                     <Phone size={11} /> {o.phone}
                   </a>
                 </motion.div>
@@ -220,13 +220,13 @@ export default function ResearchConference() {
             <motion.div key="timeline" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-3">
               {TIMELINE.map((t, i) => (
                 <motion.div key={t.label} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }}
-                  className={`flex items-center gap-4 p-5 rounded-2xl ${t.state === "active" ? "bg-gradient-to-r from-amber-50 to-rose-50 border-2 border-amber-300 shadow-md" : "bg-white border border-rose-50"}`}>
-                  <div className={`shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs ${t.state === "active" ? "bg-amber-300 text-[#1a0606]" : "bg-rose-50 text-[#800000]"}`}>
+                  className={`flex items-center gap-4 p-5 rounded-2xl ${t.state === "active" ? "bg-gradient-to-r from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-800 border-2 border-amber-300 shadow-md" : "bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800"}`}>
+                  <div className={`shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center font-black text-xs ${t.state === "active" ? "bg-amber-300 text-[#1a0606]" : "bg-rose-50 dark:bg-gray-800 text-[#800000]"}`}>
                     {String(i + 1).padStart(2, "0")}
                   </div>
                   <div className="flex-1">
-                    <div className={`text-[10px] uppercase tracking-widest font-black mb-1 ${t.state === "active" ? "text-amber-700" : "text-gray-400"}`}>{t.date}</div>
-                    <div className="font-black text-sm text-[#1a0606] tracking-tight">{t.label}</div>
+                    <div className={`text-[10px] uppercase tracking-widest font-black mb-1 ${t.state === "active" ? "text-amber-700 dark:text-amber-400" : "text-gray-400"}`}>{t.date}</div>
+                    <div className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight">{t.label}</div>
                   </div>
                   {t.state === "active" && <span className="text-[9px] font-black uppercase tracking-widest text-amber-700 bg-amber-300 px-2 py-1 rounded-full">Active</span>}
                 </motion.div>

@@ -93,7 +93,7 @@ export default function PGCourses() {
     <div className="min-h-screen bg-gradient-to-b from-indigo-50/20 via-white to-white dark:from-[#020617] dark:to-[#020617]">
 
       {/* ─────────── BREADCRUMB ─────────── */}
-      <div className="bg-white border-b border-rose-100">
+      <div className="bg-white dark:bg-gray-900 border-b border-rose-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
           <Link to="/" className="hover:text-[#800000] inline-flex items-center gap-1.5">
             <Home size={11} /> Home
@@ -266,7 +266,7 @@ export default function PGCourses() {
 
                   {/* MBA: interactive stream picker */}
                   {activeProgram.id === "mba" && (
-                    <div className="mb-6 p-5 bg-gradient-to-br from-amber-50 to-rose-50 rounded-2xl border border-amber-100">
+                    <div className="mb-6 p-5 bg-gradient-to-br from-amber-50 dark:from-gray-800 to-rose-50 dark:to-gray-800 rounded-2xl border border-amber-100 dark:border-gray-700">
                       <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#800000] mb-3">
                         <Sparkles size={12} /> Pick your MBA stream
                       </div>
@@ -276,12 +276,12 @@ export default function PGCourses() {
                             key={s.id}
                             onClick={() => setMbaStream(s.id)}
                             className={`relative p-3 rounded-2xl border-2 transition-all text-left ${
-                              mbaStream === s.id ? "border-[#800000] bg-white shadow-lg" : "border-transparent bg-white/50 hover:bg-white"
+                              mbaStream === s.id ? "border-[#800000] bg-white dark:bg-gray-900 shadow-lg" : "border-transparent bg-white/50 dark:bg-gray-900/50 hover:bg-white dark:hover:bg-gray-900"
                             }`}
                           >
                             <div className="text-2xl mb-1">{s.icon}</div>
                             <div className="text-[9px] uppercase tracking-widest font-black text-gray-400">{s.code}</div>
-                            <div className="text-xs font-black text-[#1a0606] tracking-tight">{s.name}</div>
+                            <div className="text-xs font-black text-[#1a0606] dark:text-white tracking-tight">{s.name}</div>
                           </button>
                         ))}
                       </div>
@@ -295,14 +295,14 @@ export default function PGCourses() {
                           transition={{ duration: 0.25 }}
                           className="space-y-4"
                         >
-                          <p className="text-sm text-gray-700 leading-relaxed font-medium">{activeStream.desc}</p>
+                          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{activeStream.desc}</p>
                           <div>
                             <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2 flex items-center gap-1">
                               <Microscope size={11} /> Core Topics
                             </div>
                             <div className="flex flex-wrap gap-1.5">
                               {activeStream.topics.map((t) => (
-                                <span key={t} className="text-[10px] uppercase tracking-widest font-black px-2.5 py-1 bg-white text-[#800000] rounded-full border border-rose-100">
+                                <span key={t} className="text-[10px] uppercase tracking-widest font-black px-2.5 py-1 bg-white dark:bg-gray-800 text-[#800000] rounded-full border border-rose-100 dark:border-gray-700">
                                   {t}
                                 </span>
                               ))}
@@ -437,14 +437,14 @@ export default function PGCourses() {
       {/* ─────────── OFFICIAL PG ADMISSION TABLE ─────────── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-20">
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-50 border border-rose-100 mb-3">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-50 dark:bg-gray-800 border border-rose-100 dark:border-gray-700 mb-3">
             <Table2 size={12} className="text-[#800000]" />
             <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#800000]">Official Intake Table</span>
           </div>
           <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-3">
             Post Graduate Courses
           </h2>
-          <p className="text-sm md:text-base text-gray-600 font-medium leading-relaxed">
+          <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-medium leading-relaxed">
             {OFFICIAL_PG_TABLE.intro} Intake and eligibility figures verified from ITM Gwalior&apos;s official records.
           </p>
         </div>
@@ -481,7 +481,7 @@ export default function PGCourses() {
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-rose-50/50">
+                <tr className="bg-rose-50/50 dark:bg-gray-800/50">
                   <th className="text-left p-4 text-[10px] font-black uppercase tracking-[0.25em] text-[#800000] w-12">#</th>
                   <th className="text-left p-4 text-[10px] font-black uppercase tracking-[0.25em] text-[#800000]">Programme</th>
                   <th className="text-center p-4 text-[10px] font-black uppercase tracking-[0.25em] text-[#800000] w-24">Seats</th>
@@ -492,7 +492,7 @@ export default function PGCourses() {
               </thead>
               <tbody>
                 {OFFICIAL_PG_TABLE.rows.map((row, i) => (
-                  <tr key={row.name} className="border-t border-rose-50 hover:bg-rose-50/30 transition-colors group">
+                  <tr key={row.name} className="border-t border-rose-50 dark:border-gray-800 hover:bg-rose-50/30 dark:hover:bg-gray-800/50 transition-colors group">
                     <td className="p-4 text-[10px] font-black uppercase tracking-widest text-gray-300">
                       {String(i + 1).padStart(2, "0")}
                     </td>
@@ -508,9 +508,9 @@ export default function PGCourses() {
                       </span>
                     </td>
                     <td className="p-4 text-xs text-gray-600 dark:text-gray-400 font-medium leading-relaxed">{row.elig}</td>
-                    <td className="p-4 text-center text-xs font-black uppercase tracking-widest text-gray-700">{row.duration}</td>
+                    <td className="p-4 text-center text-xs font-black uppercase tracking-widest text-gray-700 dark:text-gray-300">{row.duration}</td>
                     <td className="p-4 text-center">
-                      <Link to="/admissions/how-to-apply" className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-rose-50 text-[#800000] hover:bg-[#800000] hover:text-white transition-colors group-hover:scale-110" title="Apply">
+                      <Link to="/admissions/how-to-apply" className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-rose-50 dark:bg-gray-800 text-[#800000] hover:bg-[#800000] hover:text-white transition-colors group-hover:scale-110" title="Apply">
                         <ArrowRight size={14} />
                       </Link>
                     </td>
@@ -518,7 +518,7 @@ export default function PGCourses() {
                 ))}
               </tbody>
               <tfoot>
-                <tr className="border-t-2 border-[#800000]/20 bg-gradient-to-r from-amber-50/50 to-rose-50/50">
+                <tr className="border-t-2 border-[#800000]/20 bg-gradient-to-r from-amber-50/50 dark:from-gray-800/50 to-rose-50/50 dark:to-gray-800/50">
                   <td colSpan="2" className="p-4 text-[10px] font-black uppercase tracking-[0.25em] text-[#800000]">Total Sanctioned Intake</td>
                   <td className="p-4 text-center">
                     <span className="text-2xl font-black tracking-[-0.04em] text-[#800000]">
@@ -532,21 +532,21 @@ export default function PGCourses() {
           </div>
 
           {/* Mobile — stacked cards */}
-          <div className="md:hidden divide-y divide-rose-50">
+          <div className="md:hidden divide-y divide-rose-50 dark:divide-gray-800">
             {OFFICIAL_PG_TABLE.rows.map((row) => (
               <div key={row.name} className="p-4">
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div className="flex items-center gap-2 flex-1">
                     <span className="text-2xl shrink-0">{row.icon}</span>
-                    <h4 className="font-black text-sm text-[#1a0606] tracking-tight leading-snug">{row.name}</h4>
+                    <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug">{row.name}</h4>
                   </div>
                   <span className="shrink-0 inline-flex items-center justify-center min-w-[2.5rem] px-2 py-1 bg-[#800000] text-white rounded-lg font-black text-xs">
                     {String(row.seats).padStart(2, "0")}
                   </span>
                 </div>
-                <p className="text-xs text-gray-600 leading-relaxed font-medium mb-2">{row.elig}</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-2">{row.elig}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-gray-500">
+                  <span className="text-[9px] font-black uppercase tracking-widest text-gray-500 dark:text-gray-400">
                     <Clock size={10} className="inline mr-1" /> {row.duration}
                   </span>
                   <Link to="/admissions/how-to-apply" className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-[#800000]">
@@ -555,7 +555,7 @@ export default function PGCourses() {
                 </div>
               </div>
             ))}
-            <div className="p-4 bg-amber-50/50 flex items-center justify-between">
+            <div className="p-4 bg-amber-50/50 dark:bg-gray-800/50 flex items-center justify-between">
               <span className="text-[10px] font-black uppercase tracking-widest text-[#800000]">Total Intake</span>
               <span className="text-2xl font-black text-[#800000] tracking-tight">{OFFICIAL_PG_TABLE.rows.reduce((s, r) => s + r.seats, 0)}</span>
             </div>
@@ -605,7 +605,7 @@ export default function PGCourses() {
                     </td>
                     <td className="p-4 text-xs font-black uppercase tracking-widest text-gray-500">{p.code}</td>
                     <td className="p-4 text-center font-black text-[#800000]">{p.seats}</td>
-                    <td className="p-4 text-center text-xs font-bold text-gray-600">{p.duration}</td>
+                    <td className="p-4 text-center text-xs font-bold text-gray-600 dark:text-gray-400">{p.duration}</td>
                     <td className="p-4 text-xs text-gray-600 dark:text-gray-400 font-medium">{p.selection}</td>
                   </tr>
                 ))}

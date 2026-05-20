@@ -34,7 +34,7 @@ const CATEGORIES = [
 
 function LogoCard({ folder, idx }) {
   return (
-    <div className="group relative shrink-0 w-32 h-20 md:w-40 md:h-24 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-rose-200 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+    <div className="group relative shrink-0 w-32 h-20 md:w-40 md:h-24 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-xl hover:border-rose-200 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-rose-50/0 via-white to-amber-50/0 group-hover:from-rose-50/40 group-hover:to-amber-50/40 transition-colors"></div>
       <img
         src={`/images/company_logos/${folder}/logo_${idx}.png`}
@@ -106,7 +106,7 @@ export default function RecruiterMarquee() {
                 className={`group relative flex items-center gap-2 px-4 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all ${
                   activeId === c.id
                     ? "text-white shadow-lg"
-                    : "text-gray-600 bg-gray-100 hover:bg-gray-200"
+                    : "text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
                 }`}
               >
                 {activeId === c.id && (
@@ -132,7 +132,7 @@ export default function RecruiterMarquee() {
           <span className={`px-3 py-1.5 rounded-full bg-gradient-to-r ${active.accent} text-white inline-flex items-center gap-1.5`}>
             <active.icon size={11} /> {active.label}
           </span>
-          <span className="px-3 py-1.5 rounded-full bg-rose-50 text-[#800000]">
+          <span className="px-3 py-1.5 rounded-full bg-rose-50 dark:bg-gray-800 text-[#800000] dark:text-rose-400">
             {active.count} verified recruiters
           </span>
           <span className="text-gray-400">· hover any logo to highlight</span>

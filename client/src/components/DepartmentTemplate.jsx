@@ -101,7 +101,7 @@ export default function DepartmentTemplate({ dept }) {
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">
 
       {/* Breadcrumb */}
-      <div className="bg-white border-b border-rose-100">
+      <div className="bg-white dark:bg-gray-900 border-b border-rose-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
           <Link to="/" className="hover:text-[#800000] inline-flex items-center gap-1.5"><Home size={11} /> Home</Link>
           <Crumb size={10} className="text-gray-300" />
@@ -174,7 +174,7 @@ export default function DepartmentTemplate({ dept }) {
               return (
                 <button key={s.id} onClick={() => setActive(s.id)}
                   className={`relative shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-colors ${
-                    active === s.id ? "text-white shadow-md" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    active === s.id ? "text-white shadow-md" : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
                   }`}>
                   {active === s.id && <motion.span layoutId="dept-mobile-pill" className={`absolute inset-0 bg-gradient-to-r from-[#800000] to-[#3e0202] rounded-full`} transition={{ type: "spring", stiffness: 300, damping: 30 }}></motion.span>}
                   <Icon size={11} className="relative" />
@@ -203,7 +203,7 @@ export default function DepartmentTemplate({ dept }) {
                       return (
                         <button key={s.id} onClick={() => setActive(s.id)}
                           className={`relative text-left py-2.5 px-3 rounded-xl flex items-center gap-2.5 text-[11px] font-black uppercase tracking-widest transition-all ${
-                            isActive ? "text-white" : "text-gray-600 hover:bg-rose-50 hover:text-[#800000]"
+                            isActive ? "text-white" : "text-gray-600 dark:text-gray-300 hover:bg-rose-50 dark:hover:bg-gray-800 hover:text-[#800000]"
                           }`}>
                           {isActive && <motion.span layoutId="dept-side-pill" className={`absolute inset-0 bg-gradient-to-r from-[#800000] to-[#3e0202] rounded-xl shadow-md`} transition={{ type: "spring", stiffness: 320, damping: 28 }}></motion.span>}
                           <Icon size={13} className="relative shrink-0 opacity-80" />
@@ -248,15 +248,15 @@ export default function DepartmentTemplate({ dept }) {
               </div>
 
               {/* Quick Contact */}
-              <div className="bg-white border border-rose-50 rounded-3xl p-5 shadow-sm">
+              <div className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-5 shadow-sm">
                 <div className="text-[10px] font-black uppercase tracking-[0.25em] text-[#800000] mb-3">Contact</div>
                 <div className="space-y-2.5">
-                  <a href={`tel:${dept.contact.phone.replace(/[^+\d]/g, "")}`} className="flex items-center gap-2.5 text-xs font-bold text-gray-700 hover:text-[#800000]">
-                    <div className="w-8 h-8 rounded-lg bg-rose-50 text-[#800000] flex items-center justify-center"><Phone size={12} /></div>
+                  <a href={`tel:${dept.contact.phone.replace(/[^+\d]/g, "")}`} className="flex items-center gap-2.5 text-xs font-bold text-gray-700 dark:text-gray-300 hover:text-[#800000]">
+                    <div className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-gray-800 text-[#800000] flex items-center justify-center"><Phone size={12} /></div>
                     {dept.contact.phone}
                   </a>
-                  <a href={`mailto:${dept.contact.email}`} className="flex items-center gap-2.5 text-xs font-bold text-gray-700 hover:text-[#800000] break-all">
-                    <div className="w-8 h-8 rounded-lg bg-rose-50 text-[#800000] flex items-center justify-center"><Mail size={12} /></div>
+                  <a href={`mailto:${dept.contact.email}`} className="flex items-center gap-2.5 text-xs font-bold text-gray-700 dark:text-gray-300 hover:text-[#800000] break-all">
+                    <div className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-gray-800 text-[#800000] flex items-center justify-center"><Mail size={12} /></div>
                     {dept.contact.email}
                   </a>
                 </div>
@@ -306,11 +306,11 @@ export default function DepartmentTemplate({ dept }) {
                         <div className="grid sm:grid-cols-2 gap-3 pt-2">
                           {dept.features.map((f, i) => (
                             <motion.div key={f.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                              className="flex items-start gap-3 p-4 bg-gradient-to-br from-rose-50/60 to-white border border-rose-100 rounded-2xl hover:shadow-md transition-shadow">
+                              className="flex items-start gap-3 p-4 bg-gradient-to-br from-rose-50/60 to-white dark:from-gray-800 dark:to-gray-800 border border-rose-100 dark:border-gray-700 rounded-2xl hover:shadow-md transition-shadow">
                               <span className="text-3xl shrink-0">{f.icon}</span>
                               <div>
-                                <h4 className="font-black text-sm text-[#1a0606] tracking-tight leading-snug mb-1">{f.title}</h4>
-                                <p className="text-xs text-gray-600 leading-relaxed font-medium">{f.sub}</p>
+                                <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{f.title}</h4>
+                                <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{f.sub}</p>
                               </div>
                             </motion.div>
                           ))}
@@ -318,17 +318,17 @@ export default function DepartmentTemplate({ dept }) {
                       )}
 
                       <div className="grid sm:grid-cols-3 gap-3 pt-2">
-                        <div className="bg-rose-50 rounded-2xl p-4">
+                        <div className="bg-rose-50 dark:bg-gray-800 rounded-2xl p-4">
                           <div className="text-[9px] uppercase tracking-widest font-black text-[#800000] mb-1">Established</div>
-                          <div className="text-2xl font-black tracking-[-0.04em] text-[#1a0606]">{dept.established}</div>
+                          <div className="text-2xl font-black tracking-[-0.04em] text-[#1a0606] dark:text-white">{dept.established}</div>
                         </div>
-                        <div className="bg-rose-50 rounded-2xl p-4">
+                        <div className="bg-rose-50 dark:bg-gray-800 rounded-2xl p-4">
                           <div className="text-[9px] uppercase tracking-widest font-black text-[#800000] mb-1">Programme Duration</div>
-                          <div className="text-2xl font-black tracking-[-0.04em] text-[#1a0606]">{dept.duration}</div>
+                          <div className="text-2xl font-black tracking-[-0.04em] text-[#1a0606] dark:text-white">{dept.duration}</div>
                         </div>
-                        <div className="bg-rose-50 rounded-2xl p-4">
+                        <div className="bg-rose-50 dark:bg-gray-800 rounded-2xl p-4">
                           <div className="text-[9px] uppercase tracking-widest font-black text-[#800000] mb-1">Annual Intake</div>
-                          <div className="text-2xl font-black tracking-[-0.04em] text-[#1a0606]">{dept.intake > 0 ? dept.intake : "—"}</div>
+                          <div className="text-2xl font-black tracking-[-0.04em] text-[#1a0606] dark:text-white">{dept.intake > 0 ? dept.intake : "—"}</div>
                         </div>
                       </div>
 
@@ -382,8 +382,8 @@ export default function DepartmentTemplate({ dept }) {
                               <motion.div key={h.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
                                 className="p-4 bg-gradient-to-br from-rose-50/60 to-white border border-rose-100 rounded-2xl">
                                 <div className="text-2xl mb-2">{h.icon}</div>
-                                <h5 className="font-black text-sm text-[#1a0606] tracking-tight mb-1 leading-snug">{h.title}</h5>
-                                <p className="text-xs text-gray-600 leading-relaxed font-medium">{h.sub}</p>
+                                <h5 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{h.title}</h5>
+                                <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{h.sub}</p>
                               </motion.div>
                             ))}
                           </div>
@@ -410,12 +410,12 @@ export default function DepartmentTemplate({ dept }) {
                   {/* ── VISION & MISSION ── */}
                   {active === "vision" && (
                     <div className="space-y-5">
-                      <div className="relative bg-gradient-to-br from-rose-50/40 to-white border border-rose-50 rounded-3xl p-7">
+                      <div className="relative bg-gradient-to-br from-rose-50/40 to-white dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-3xl p-7">
                         <div className="flex items-center gap-2 mb-3">
                           <Compass size={16} className="text-[#800000]" />
                           <span className="text-[10px] uppercase tracking-widest font-black text-[#800000]">Vision</span>
                         </div>
-                        <p className="text-base md:text-lg text-gray-700 leading-relaxed font-medium italic">&ldquo;{dept.vision}&rdquo;</p>
+                        <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">&ldquo;{dept.vision}&rdquo;</p>
                       </div>
                       <div>
                         <div className="flex items-center gap-2 mb-4">
@@ -425,9 +425,9 @@ export default function DepartmentTemplate({ dept }) {
                         <div className="space-y-2.5">
                           {dept.mission.map((m, i) => (
                             <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.07 }}
-                              className="flex items-start gap-3 p-4 bg-amber-50/40 border border-amber-100 rounded-2xl">
+                              className="flex items-start gap-3 p-4 bg-amber-50/40 dark:bg-gray-800 border border-amber-100 dark:border-gray-700 rounded-2xl">
                               <span className="shrink-0 w-7 h-7 rounded-lg bg-amber-300 text-[#1a0606] flex items-center justify-center font-black text-[10px]">M{i + 1}</span>
-                              <p className="text-sm text-gray-700 leading-relaxed font-medium">{m}</p>
+                              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{m}</p>
                             </motion.div>
                           ))}
                         </div>
@@ -447,9 +447,9 @@ export default function DepartmentTemplate({ dept }) {
                           <div className="grid sm:grid-cols-2 gap-3">
                             {dept.peos.map((p, i) => (
                               <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                                className="bg-white border border-rose-50 rounded-2xl p-5">
+                                className="bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl p-5">
                                 <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2">PEO {i + 1}</div>
-                                <p className="text-sm text-gray-700 leading-relaxed font-medium">{p}</p>
+                                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{p}</p>
                               </motion.div>
                             ))}
                           </div>
@@ -464,9 +464,9 @@ export default function DepartmentTemplate({ dept }) {
                           <div className="grid sm:grid-cols-2 gap-3">
                             {dept.psos.map((p, i) => (
                               <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                                className="bg-amber-50/40 border border-amber-100 rounded-2xl p-5">
+                                className="bg-amber-50/40 dark:bg-gray-800 border border-amber-100 dark:border-gray-700 rounded-2xl p-5">
                                 <div className="text-[10px] uppercase tracking-widest font-black text-amber-700 mb-2">PSO {i + 1}</div>
-                                <p className="text-sm text-gray-700 leading-relaxed font-medium">{p}</p>
+                                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{p}</p>
                               </motion.div>
                             ))}
                           </div>
@@ -478,20 +478,20 @@ export default function DepartmentTemplate({ dept }) {
                   {/* ── FACULTY ── */}
                   {active === "faculty" && dept.facultyHighlights && (
                     <div>
-                      <p className="text-sm text-gray-600 leading-relaxed font-medium mb-6">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-6">
                         The department has <span className="font-black text-[#800000]">{dept.facultyCount}</span> faculty members, including senior professors and dynamic young researchers from IITs, NITs and other reputed universities.
                       </p>
                       <div className="grid sm:grid-cols-2 gap-3">
                         {dept.facultyHighlights.map((f, i) => (
                           <motion.div key={f.name} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
-                            className="flex items-center gap-3 p-4 bg-white border border-rose-50 rounded-2xl hover:shadow-md transition-shadow">
+                            className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl hover:shadow-md transition-shadow">
                             <div className={`shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-white flex items-center justify-center font-black text-sm tracking-tight shadow`}>
                               {f.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
                             </div>
                             <div className="min-w-0">
-                              <h4 className="font-black text-sm text-[#1a0606] tracking-tight truncate">{f.name}</h4>
+                              <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight truncate">{f.name}</h4>
                               <div className="text-[10px] uppercase tracking-widest font-bold text-[#800000] mt-0.5 truncate">{f.role}</div>
-                              <div className="text-[10px] text-gray-500 font-medium mt-0.5 truncate">{f.qual}</div>
+                              <div className="text-[10px] text-gray-500 dark:text-gray-400 font-medium mt-0.5 truncate">{f.qual}</div>
                             </div>
                           </motion.div>
                         ))}
@@ -502,18 +502,18 @@ export default function DepartmentTemplate({ dept }) {
                   {/* ── LABS ── */}
                   {active === "labs" && dept.labs && (
                     <div>
-                      <p className="text-sm text-gray-600 leading-relaxed font-medium mb-6">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-6">
                         <span className="font-black text-[#800000]">{dept.labs.length}</span> specialised laboratories with industry-grade equipment and software for hands-on learning.
                       </p>
                       <div className="grid sm:grid-cols-2 gap-3">
                         {dept.labs.map((lab, i) => (
                           <motion.div key={lab.name} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }}
-                            className="bg-gradient-to-br from-white to-rose-50/40 border border-rose-50 rounded-2xl p-5 hover:shadow-md transition-shadow">
+                            className="bg-gradient-to-br from-white to-rose-50/40 dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl p-5 hover:shadow-md transition-shadow">
                             <div className="flex items-start gap-3">
                               <div className="text-3xl shrink-0">{lab.icon}</div>
                               <div>
-                                <h4 className="font-black text-sm text-[#1a0606] tracking-tight leading-snug mb-1">{lab.name}</h4>
-                                <p className="text-xs text-gray-600 leading-relaxed font-medium">{lab.desc}</p>
+                                <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{lab.name}</h4>
+                                <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{lab.desc}</p>
                               </div>
                             </div>
                           </motion.div>
@@ -536,12 +536,12 @@ export default function DepartmentTemplate({ dept }) {
                   {active === "subunits" && dept.subUnits && (
                     <div className="space-y-4">
                       {dept.subUnits.map((u) => (
-                        <div key={u.name} className="bg-gradient-to-br from-white to-rose-50/40 border border-rose-50 rounded-2xl p-6">
+                        <div key={u.name} className="bg-gradient-to-br from-white to-rose-50/40 dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl p-6">
                           <div className="flex items-start gap-4">
                             <div className="text-5xl shrink-0">{u.icon}</div>
                             <div>
-                              <h3 className="font-black text-lg text-[#1a0606] tracking-tight mb-2">{u.name}</h3>
-                              <p className="text-sm text-gray-700 leading-relaxed font-medium mb-3">{u.desc}</p>
+                              <h3 className="font-black text-lg text-[#1a0606] dark:text-white tracking-tight mb-2">{u.name}</h3>
+                              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium mb-3">{u.desc}</p>
                               {u.research && (
                                 <div className="text-xs text-emerald-700 font-bold italic bg-emerald-50 rounded-xl px-3 py-2">
                                   💡 {u.research}
@@ -559,9 +559,9 @@ export default function DepartmentTemplate({ dept }) {
                     <div className="grid sm:grid-cols-2 gap-3">
                       {dept.projects.map((p, i) => (
                         <motion.div key={p.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                          className="bg-gradient-to-br from-amber-50 to-rose-50 border border-amber-100 rounded-2xl p-5">
+                          className="bg-gradient-to-br from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-800 border border-amber-100 dark:border-gray-700 rounded-2xl p-5">
                           <Trophy size={20} className="text-amber-700 mb-3" />
-                          <h4 className="font-black text-base text-[#1a0606] tracking-tight leading-snug mb-2">{p.title}</h4>
+                          <h4 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight leading-snug mb-2">{p.title}</h4>
                           <p className="text-xs text-amber-800 font-bold leading-relaxed">{p.note}</p>
                         </motion.div>
                       ))}
@@ -573,11 +573,11 @@ export default function DepartmentTemplate({ dept }) {
                     <div className="grid sm:grid-cols-2 gap-3">
                       {dept.studentAchievements.map((s, i) => (
                         <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.05 }}
-                          className="bg-gradient-to-br from-amber-50 to-rose-50 border border-amber-100 rounded-2xl p-5">
+                          className="bg-gradient-to-br from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-800 border border-amber-100 dark:border-gray-700 rounded-2xl p-5">
                           <Award size={18} className="text-amber-700 mb-3" />
-                          <h4 className="font-black text-sm text-[#1a0606] tracking-tight leading-snug mb-1">{s.name}</h4>
+                          <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{s.name}</h4>
                           <p className="text-[10px] uppercase tracking-widest font-bold text-amber-800">{s.award}</p>
-                          {s.batch && <p className="text-[10px] uppercase tracking-widest text-gray-500 font-bold mt-1">Batch · {s.batch}</p>}
+                          {s.batch && <p className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-gray-400 font-bold mt-1">Batch · {s.batch}</p>}
                         </motion.div>
                       ))}
                     </div>
@@ -588,9 +588,9 @@ export default function DepartmentTemplate({ dept }) {
                     <div className="space-y-2.5">
                       {dept.achievements.map((a, i) => (
                         <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}
-                          className="flex items-start gap-3 p-4 bg-gradient-to-br from-rose-50/40 to-white border border-rose-50 rounded-2xl">
+                          className="flex items-start gap-3 p-4 bg-gradient-to-br from-rose-50/40 to-white dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl">
                           <CheckCircle2 size={18} className="text-[#800000] shrink-0 mt-0.5" />
-                          <p className="text-sm text-gray-700 leading-relaxed font-medium">{a}</p>
+                          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{a}</p>
                         </motion.div>
                       ))}
                     </div>
@@ -601,9 +601,9 @@ export default function DepartmentTemplate({ dept }) {
                     <div className="grid sm:grid-cols-2 gap-3">
                       {dept.infra.map((i, idx) => (
                         <motion.div key={i.name} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.04 }}
-                          className="flex items-center gap-3 bg-white border border-rose-50 rounded-2xl p-4 hover:shadow-md transition-shadow">
+                          className="flex items-center gap-3 bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl p-4 hover:shadow-md transition-shadow">
                           <span className="text-3xl">{i.icon}</span>
-                          <span className="font-black text-sm text-[#1a0606] tracking-tight">{i.name}</span>
+                          <span className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight">{i.name}</span>
                         </motion.div>
                       ))}
                     </div>
@@ -611,7 +611,7 @@ export default function DepartmentTemplate({ dept }) {
 
                   {/* ── CONSULTANCY (MBA) ── */}
                   {active === "consultancy" && dept.consultancy && (
-                    <div className="overflow-hidden rounded-2xl border border-rose-50">
+                    <div className="overflow-hidden rounded-2xl border border-rose-50 dark:border-gray-700">
                       <table className="w-full text-sm">
                         <thead className={`bg-gradient-to-r from-[#800000] to-[#3e0202] text-white`}>
                           <tr>
@@ -622,9 +622,9 @@ export default function DepartmentTemplate({ dept }) {
                         </thead>
                         <tbody>
                           {dept.consultancy.map((c, i) => (
-                            <tr key={i} className="border-t border-rose-50 hover:bg-rose-50/30">
-                              <td className="p-4 font-black text-[#1a0606] tracking-tight">{c.client}</td>
-                              <td className="p-4 text-xs text-gray-700 font-medium">{c.project}</td>
+                            <tr key={i} className="border-t border-rose-50 dark:border-gray-700 hover:bg-rose-50/30 dark:hover:bg-gray-700/30">
+                              <td className="p-4 font-black text-[#1a0606] dark:text-white tracking-tight">{c.client}</td>
+                              <td className="p-4 text-xs text-gray-700 dark:text-gray-300 font-medium">{c.project}</td>
                               <td className="p-4 text-right font-black text-[#800000] tracking-tight">{c.value}</td>
                             </tr>
                           ))}
@@ -638,9 +638,9 @@ export default function DepartmentTemplate({ dept }) {
                     <div className="space-y-2.5">
                       {dept.events.map((e, i) => (
                         <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}
-                          className="flex items-start gap-3 p-4 bg-gradient-to-br from-amber-50/40 to-white border border-amber-100 rounded-2xl">
+                          className="flex items-start gap-3 p-4 bg-gradient-to-br from-amber-50/40 to-white dark:from-gray-800 dark:to-gray-800 border border-amber-100 dark:border-gray-700 rounded-2xl">
                           <BookOpen size={16} className="text-amber-700 shrink-0 mt-0.5" />
-                          <p className="text-sm text-gray-700 leading-relaxed font-medium">{e}</p>
+                          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{e}</p>
                         </motion.div>
                       ))}
                     </div>
@@ -653,7 +653,7 @@ export default function DepartmentTemplate({ dept }) {
                         <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-3">Industry Recruiters</div>
                         <div className="flex flex-wrap gap-2">
                           {dept.industryPartners.map((p) => (
-                            <span key={p} className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-rose-50 rounded-xl text-xs font-black text-[#1a0606]">
+                            <span key={p} className="inline-flex items-center gap-1.5 px-3 py-2 bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-xl text-xs font-black text-[#1a0606] dark:text-white">
                               <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-[#800000] to-amber-500"></span>
                               {p}
                             </span>
@@ -675,7 +675,7 @@ export default function DepartmentTemplate({ dept }) {
                           <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-3">Industrial Visits</div>
                           <ul className="space-y-2">
                             {dept.industrialVisits.map((v, i) => (
-                              <li key={i} className="flex items-start gap-2 text-sm text-gray-700 font-medium">
+                              <li key={i} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300 font-medium">
                                 <span className="shrink-0 w-1.5 h-1.5 rounded-full bg-[#800000] mt-2"></span>
                                 {v}
                               </li>
@@ -690,7 +690,7 @@ export default function DepartmentTemplate({ dept }) {
                   {active === "placement" && dept.placement && (
                     <div className="space-y-5">
                       {dept.placement.desc && (
-                        <p className="text-base text-gray-700 leading-relaxed font-medium">{dept.placement.desc}</p>
+                        <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{dept.placement.desc}</p>
                       )}
 
                       {/* Stats grid */}
@@ -711,10 +711,10 @@ export default function DepartmentTemplate({ dept }) {
                         <div className="grid sm:grid-cols-3 gap-3">
                           {dept.placement.highlights.map((h, i) => (
                             <motion.div key={h.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                              className="p-5 bg-gradient-to-br from-rose-50/60 to-white border border-rose-100 rounded-2xl">
+                              className="p-5 bg-gradient-to-br from-rose-50/60 to-white dark:from-gray-800 dark:to-gray-800 border border-rose-100 dark:border-gray-700 rounded-2xl">
                               <div className="text-3xl mb-3">{h.icon}</div>
-                              <h5 className="font-black text-sm text-[#1a0606] tracking-tight mb-1 leading-snug">{h.title}</h5>
-                              <p className="text-xs text-gray-600 leading-relaxed font-medium">{h.sub}</p>
+                              <h5 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{h.title}</h5>
+                              <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{h.sub}</p>
                             </motion.div>
                           ))}
                         </div>
@@ -739,23 +739,23 @@ export default function DepartmentTemplate({ dept }) {
                   {/* ── CONTACT ── */}
                   {active === "contact" && (
                     <div className="grid sm:grid-cols-2 gap-4">
-                      <a href={`tel:${dept.contact.phone.replace(/[^+\d]/g, "")}`} className="flex items-center gap-4 p-5 bg-rose-50 rounded-2xl hover:bg-rose-100 transition-colors">
-                        <div className="w-14 h-14 rounded-2xl bg-white text-[#800000] flex items-center justify-center shadow"><Phone size={20} /></div>
+                      <a href={`tel:${dept.contact.phone.replace(/[^+\d]/g, "")}`} className="flex items-center gap-4 p-5 bg-rose-50 dark:bg-gray-800 rounded-2xl hover:bg-rose-100 dark:hover:bg-gray-700 transition-colors">
+                        <div className="w-14 h-14 rounded-2xl bg-white dark:bg-gray-700 text-[#800000] flex items-center justify-center shadow"><Phone size={20} /></div>
                         <div>
-                          <div className="text-[10px] uppercase tracking-widest font-black text-gray-500">Phone</div>
-                          <div className="text-base font-black text-[#1a0606]">{dept.contact.phone}</div>
+                          <div className="text-[10px] uppercase tracking-widest font-black text-gray-500 dark:text-gray-400">Phone</div>
+                          <div className="text-base font-black text-[#1a0606] dark:text-white">{dept.contact.phone}</div>
                         </div>
                       </a>
-                      <a href={`mailto:${dept.contact.email}`} className="flex items-center gap-4 p-5 bg-rose-50 rounded-2xl hover:bg-rose-100 transition-colors">
-                        <div className="w-14 h-14 rounded-2xl bg-white text-[#800000] flex items-center justify-center shadow"><Mail size={20} /></div>
+                      <a href={`mailto:${dept.contact.email}`} className="flex items-center gap-4 p-5 bg-rose-50 dark:bg-gray-800 rounded-2xl hover:bg-rose-100 dark:hover:bg-gray-700 transition-colors">
+                        <div className="w-14 h-14 rounded-2xl bg-white dark:bg-gray-700 text-[#800000] flex items-center justify-center shadow"><Mail size={20} /></div>
                         <div className="min-w-0">
-                          <div className="text-[10px] uppercase tracking-widest font-black text-gray-500">Email</div>
-                          <div className="text-base font-black text-[#1a0606] break-all">{dept.contact.email}</div>
+                          <div className="text-[10px] uppercase tracking-widest font-black text-gray-500 dark:text-gray-400">Email</div>
+                          <div className="text-base font-black text-[#1a0606] dark:text-white break-all">{dept.contact.email}</div>
                         </div>
                       </a>
-                      <div className="sm:col-span-2 p-5 bg-gradient-to-br from-rose-50/40 to-white border border-rose-50 rounded-2xl">
+                      <div className="sm:col-span-2 p-5 bg-gradient-to-br from-rose-50/40 to-white dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl">
                         <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2">Campus Address</div>
-                        <p className="text-sm font-bold text-[#1a0606] leading-relaxed">ITM Campus, NH-75 Sithouli, Jhansi Road, Gwalior – 475001, M.P., India</p>
+                        <p className="text-sm font-bold text-[#1a0606] dark:text-white leading-relaxed">ITM Campus, NH-75 Sithouli, Jhansi Road, Gwalior – 475001, M.P., India</p>
                       </div>
                     </div>
                   )}
@@ -769,9 +769,9 @@ export default function DepartmentTemplate({ dept }) {
               <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-4">Explore other departments</div>
               <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
                 {otherDepts.map((d) => (
-                  <Link key={d.id} to={d.subPath} className="group text-center p-3 bg-white border border-rose-50 rounded-xl hover:shadow-lg hover:border-[#800000] transition-all">
+                  <Link key={d.id} to={d.subPath} className="group text-center p-3 bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-xl hover:shadow-lg hover:border-[#800000] transition-all">
                     <div className="text-2xl mb-1 group-hover:scale-110 transition-transform">{d.icon}</div>
-                    <div className="text-[9px] uppercase tracking-widest font-black text-gray-500 group-hover:text-[#800000]">{d.code}</div>
+                    <div className="text-[9px] uppercase tracking-widest font-black text-gray-500 dark:text-gray-400 group-hover:text-[#800000]">{d.code}</div>
                   </Link>
                 ))}
               </div>

@@ -53,7 +53,7 @@ export default function Distinctiveness() {
                 <div className="flex items-start justify-between mb-4">
                   <div className="text-5xl">{p.icon}</div>
                   {p.since && (
-                    <span className="text-[9px] font-black uppercase tracking-widest text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-gray-700 px-2.5 py-1 rounded-full">
                       {p.since}
                     </span>
                   )}
@@ -75,9 +75,9 @@ export default function Distinctiveness() {
         {/* ─── Achievements timeline ─────────────────────────────── */}
         <div className="relative">
           <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-50 border border-amber-200 mb-3">
-              <Trophy size={12} className="text-amber-700" />
-              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-amber-700">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-50 dark:bg-gray-800 border border-amber-200 dark:border-gray-700 mb-3">
+              <Trophy size={12} className="text-amber-700 dark:text-amber-400" />
+              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-amber-700 dark:text-amber-400">
                 Recent Recognitions
               </span>
             </div>
@@ -102,7 +102,7 @@ export default function Distinctiveness() {
                 <div className="relative">
                   <div className="flex items-center gap-2 mb-3">
                     <Award size={16} className="text-amber-600" />
-                    <span className="text-[9px] font-black uppercase tracking-widest text-amber-700 bg-amber-100 px-2 py-0.5 rounded">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-gray-700 px-2 py-0.5 rounded">
                       {a.year}
                     </span>
                   </div>

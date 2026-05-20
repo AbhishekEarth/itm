@@ -183,6 +183,34 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Map */}
+        <div className="mb-12">
+          <h4 className="text-amber-300 font-black uppercase tracking-[0.25em] text-[10px] mb-4 flex items-center gap-2">
+            <MapPin size={12} /> Find Us on the Map
+          </h4>
+          <div className="rounded-2xl overflow-hidden border border-white/10">
+            <iframe
+              title="ITM Gwalior Location"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=78.1406%2C26.1325%2C78.1606%2C26.1565&layer=mapnik&marker=26.1445%2C78.1506"
+              width="100%"
+              height="280"
+              loading="lazy"
+              style={{ border: 0, display: "block" }}
+              allowFullScreen
+            />
+            <div className="bg-white/5 px-4 py-2 text-center">
+              <a
+                href="https://www.openstreetmap.org/?mlat=26.1445&mlon=78.1506#map=15/26.1445/78.1506"
+                target="_blank"
+                rel="noreferrer"
+                className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-amber-300 transition-colors inline-flex items-center gap-1"
+              >
+                Open in OpenStreetMap <ArrowUpRight size={10} />
+              </a>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-[10px] uppercase tracking-[0.3em] font-black text-gray-500">

@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminFaculty from './pages/AdminFaculty';
@@ -55,6 +56,7 @@ function ProtectedRoute({ children }) {
 
 function App() {
   return (
+    <ThemeProvider>
     <AuthProvider>
     <Router>
       <div className="bg-white dark:bg-[#020617] min-h-screen transition-colors duration-500">
@@ -155,6 +157,7 @@ function App() {
       </div>
     </Router>
     </AuthProvider>
+    </ThemeProvider>
   );
 }
 

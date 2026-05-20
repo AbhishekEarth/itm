@@ -26,7 +26,7 @@ export default function Hero() {
     <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-white dark:bg-[#020617] pt-12 pb-20">
 
       {/* --- BACKGROUND LAYER --- */}
-      <div className="absolute inset-0 z-0 bg-white">
+      <div className="absolute inset-0 z-0 bg-white dark:bg-[#020617]">
         {/* Preload all hero images once; cross-fade via opacity (cheap on GPU) */}
         {images.map((src, i) => (
           <img

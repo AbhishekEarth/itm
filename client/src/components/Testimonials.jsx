@@ -89,7 +89,7 @@ export default function Testimonials() {
           <div className="flex items-center gap-3">
             <button
               onClick={prev}
-              className="w-12 h-12 rounded-full border border-rose-200 bg-white hover:bg-[#800000] hover:text-white hover:border-[#800000] text-[#800000] flex items-center justify-center transition-all"
+              className="w-12 h-12 rounded-full border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-[#800000] hover:text-white hover:border-[#800000] text-[#800000] flex items-center justify-center transition-all"
             >
               <ChevronLeft size={18} />
             </button>
@@ -98,7 +98,7 @@ export default function Testimonials() {
             </span>
             <button
               onClick={next}
-              className="w-12 h-12 rounded-full border border-rose-200 bg-white hover:bg-[#800000] hover:text-white hover:border-[#800000] text-[#800000] flex items-center justify-center transition-all"
+              className="w-12 h-12 rounded-full border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-[#800000] hover:text-white hover:border-[#800000] text-[#800000] flex items-center justify-center transition-all"
             >
               <ChevronRight size={18} />
             </button>
