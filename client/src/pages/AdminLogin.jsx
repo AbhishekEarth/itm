@@ -23,7 +23,7 @@ export default function AdminLogin() {
       const res = await axios.post('/api/auth/login', body, {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       });
-      login(res.data.access_token);
+      login(res.data.access_token, 'admin', null);
       navigate('/admin', { replace: true });
     } catch {
       setError('Invalid username or password.');

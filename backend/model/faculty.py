@@ -30,3 +30,4 @@ class Faculty(Base):
     image_url        = Column(String,  nullable=True)
     bio              = Column(Text,    nullable=True)
     is_active        = Column(Boolean, default=True, nullable=False)
+    password_hash    = Column(String,  nullable=True)
