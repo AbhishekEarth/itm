@@ -1,0 +1,51 @@
+# College Website
+
+## Quick Start
+
+### Frontend (React + Vite)
+From repo root:
+```powershell
+npm run frontend
+```
+Opens at `http://localhost:5173/`
+
+### Backend (FastAPI)
+From repo root:
+```powershell
+npm run backend
+```
+Runs at `http://127.0.0.1:8000/`
+API docs: `http://127.0.0.1:8000/docs`
+
+---
+
+## Manual Setup (if needed)
+
+### Frontend Setup
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+
+### Backend Setup
+```powershell
+cd backend
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+uvicorn main:app --reload --host 127.0.0.1 --port 8000
+```
+
+---
+
+## Project Structure
+- `frontend/` — Vite + React app
+- `backend/` — FastAPI server with SQLite database
+- `backend/server_backup/` — archived older server code
+
+## Notes
+- Backend uses SQLite at `backend/itm.db`
+- For seed data: `python seed.py` (from backend folder, inside venv)
+- Config example: `config.example.json` at repo root
+
