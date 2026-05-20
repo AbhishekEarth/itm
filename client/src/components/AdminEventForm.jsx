@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Upload, X, ChevronLeft, Trash2, Calendar, Sparkles } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 
 function Card({ children, className = "" }) {
   return (
@@ -14,6 +15,8 @@ function Card({ children, className = "" }) {
 const ICONS = ["📅", "📋", "🏭", "💼", "🎯", "🎓", "🤝", "🏆", "💻", "🔬"];
 
 export default function AdminEventForm() {
+  const { token } = useAuth();
+  const authHeaders = { Authorization: `Bearer ${token}` };
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -39,7 +42,7 @@ export default function AdminEventForm() {
 
   const fetchEvents = async () => {
     try {
-      const r = await axios.get("http://localhost:8000/api/events/all");
+      const r = await axios.get("/api/events/all");
       setEvents(r.data);
     } catch (e) {
       console.error("Fetch failed:", e);
@@ -65,8 +68,8 @@ export default function AdminEventForm() {
     data.append("file", file);
 
     try {
-      const res = await axios.post("http://localhost:8000/api/events/add", data, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const res = await axios.post("/api/events/add", data, {
+        headers: { ...authHeaders, "Content-Type": "multipart/form-data" },
       });
       if (res.data.status === "success") {
         alert("TAP event uploaded successfully!");
@@ -86,7 +89,7 @@ export default function AdminEventForm() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this TAP event?")) return;
     try {
-      await axios.delete(`http://localhost:8000/api/events/delete/${id}`);
+      await axios.delete(`/api/events/delete/${id}`, { headers: authHeaders });
       fetchEvents();
     } catch (e) {
       alert("Delete failed.");
@@ -227,7 +230,7 @@ export default function AdminEventForm() {
                   return (
                     <div key={e.id} className="bg-white border border-rose-50 rounded-2xl overflow-hidden flex shadow-sm hover:shadow-md transition-shadow">
                       <div className="w-32 shrink-0 bg-gray-100">
-                        <img src={`http://localhost:8000${e.image_url}`} alt={e.title} className={`w-full h-full object-cover ${!isUpcoming ? "grayscale" : ""}`} />
+                        <img src={e.image_url} alt={e.title} className={`w-full h-full object-cover ${!isUpcoming ? "grayscale" : ""}`} />
                       </div>
                       <div className="flex-1 p-4 min-w-0">
                         <div className="flex items-center gap-2 mb-1.5">

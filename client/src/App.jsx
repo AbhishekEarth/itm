@@ -1,4 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import AdminLogin from './pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminFaculty from './pages/AdminFaculty';
+import AdminStudents from './pages/AdminStudents';
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Stats from "./components/Stats";
@@ -43,8 +48,14 @@ import ResearchJournal from "./pages/ResearchJournal";
 import ResearchConference from "./pages/ResearchConference";
 import ResearchFDP from "./pages/ResearchFDP";
 
+function ProtectedRoute({ children }) {
+  const { isAdmin } = useAuth();
+  return isAdmin ? children : <Navigate to="/admin/login" replace />;
+}
+
 function App() {
   return (
+    <AuthProvider>
     <Router>
       <div className="bg-white dark:bg-[#020617] min-h-screen transition-colors duration-500">
         <Header />
@@ -127,8 +138,14 @@ function App() {
             <Route path="/library" element={<CentralLibrary />} />
             <Route path="/central-library" element={<CentralLibrary />} />
             <Route path="/emerging-branches" element={<EmergingBranches />} />
-            <Route path="/admin/pac" element={<AdminPACEventForm />} />
-            <Route path="/admin/tap" element={<AdminEventForm />} />
+            {/* ADMIN ROUTES */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/admin/faculty" element={<ProtectedRoute><AdminFaculty /></ProtectedRoute>} />
+            <Route path="/admin/students" element={<ProtectedRoute><AdminStudents /></ProtectedRoute>} />
+            <Route path="/admin/pac" element={<ProtectedRoute><AdminPACEventForm /></ProtectedRoute>} />
+            <Route path="/admin/tap" element={<ProtectedRoute><AdminEventForm /></ProtectedRoute>} />
+            <Route path="/admin/placements" element={<ProtectedRoute><AdminPACEventForm /></ProtectedRoute>} />
             <Route path="/department" element={<DepartmentPage />} />
           </Routes>
         </div>
@@ -137,6 +154,7 @@ function App() {
         <section id="footer"><Footer /></section>
       </div>
     </Router>
+    </AuthProvider>
   );
 }
 

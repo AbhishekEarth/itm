@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Upload, X, ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Card({ children, className = "" }) {
   return (
@@ -12,6 +13,7 @@ function Card({ children, className = "" }) {
 }
 
 export default function AdminPACEventForm() {
+  const { token } = useAuth();
   const [formData, setFormData] = useState({
     title: "",
     director: "",
@@ -60,8 +62,8 @@ export default function AdminPACEventForm() {
     });
 
     try {
-      const response = await axios.post("http://localhost:8000/api/pac/add", data, {
-        headers: { "Content-Type": "multipart/form-data" }
+      const response = await axios.post("/api/pac/add", data, {
+        headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` }
       });
       if (response.data.status === "success") {
         alert("PAC Event Uploaded Successfully!");

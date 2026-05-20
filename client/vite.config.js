@@ -4,4 +4,11 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    proxy: {
+      // All /api/* and /uploads/* calls are forwarded to the FastAPI backend
+      '/api': 'http://localhost:8000',
+      '/uploads': 'http://localhost:8000',
+    },
+  },
 })
