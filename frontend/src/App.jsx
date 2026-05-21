@@ -52,6 +52,10 @@ import ResearchInnovation from "./pages/ResearchInnovation";
 import ResearchJournal from "./pages/ResearchJournal";
 import ResearchConference from "./pages/ResearchConference";
 import ResearchFDP from "./pages/ResearchFDP";
+import UBAPage from "./pages/UBAPage";
+import NSSPage from "./pages/NSSPage";
+import SportsPage from "./pages/SportsPage";
+import WECPage from "./pages/WECPage";
 
 function ProtectedRoute({ children }) {
   const { isAdmin } = useAuth();
@@ -148,6 +152,10 @@ function App() {
 
             {/* CLUBS ROUTES */}
             <Route path="/pac" element={<PACPage />} />
+            <Route path="/uba" element={<UBAPage />} />
+            <Route path="/nss" element={<NSSPage />} />
+            <Route path="/sports" element={<SportsPage />} />
+            <Route path="/wec" element={<WECPage />} />
 
             {/* ONBOARDING */}
             <Route path="/onboarding" element={<Onboarding />} />

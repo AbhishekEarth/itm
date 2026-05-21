@@ -266,7 +266,7 @@ export default function ResearchConference() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
             {CONF_GALLERY.map((src, i) => (
               <div key={i} className="aspect-square overflow-hidden rounded-xl">
-                <img src={src} alt={`Conference moment ${i + 1}`} loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                <img src={src} alt={`Conference moment ${i + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
               </div>
             ))}
           </div>

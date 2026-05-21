@@ -22,6 +22,10 @@ const DEPT_LINKS = [
 
 const CLUB_LINKS = [
   { label: 'Performing Arts Club (PAC)', path: '/pac' },
+  { label: 'Unnat Bharat Abhiyan (UBA)', path: '/uba' },
+  { label: 'NSS Cell', path: '/nss' },
+  { label: 'Sports Cell', path: '/sports' },
+  { label: 'Women Empowerment Cell (WEC)', path: '/wec' },
 ];
 
 const RESEARCH_LINKS = [

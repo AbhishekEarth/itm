@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Music, Camera, Code2, Users2 } from "lucide-react";
+import { ArrowUpRight, Music, Leaf, Heart, Trophy, Shield, Users2 } from "lucide-react";
 
 const CLUBS = [
   {
@@ -12,30 +12,52 @@ const CLUBS = [
     desc: "Music, dance, drama and stagecraft — the home of KRONOS, Maharathi and our biggest cultural productions.",
     accent: "from-rose-500 to-[#800000]",
     path: "/pac",
-    image: "https://images.unsplash.com/photo-1503095396549-807759245b35?w=900&q=80",
+    image: "https://www.itmgoi.in/include/gallery/PAC/6.jpg",
     tags: ["50+ Members", "Annual Production", "₹5L Grant"],
   },
   {
-    name: "Photography Club",
-    short: "PIX",
-    icon: Camera,
-    emoji: "📸",
-    desc: "Visual storytellers capturing campus life, events and the streets of Gwalior. Regular exhibits and workshops.",
-    accent: "from-amber-500 to-orange-600",
-    path: "#",
-    image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=900&q=80",
-    tags: ["Weekly Walks", "Print Studio", "Exhibits"],
+    name: "Unnat Bharat Abhiyan",
+    short: "UBA",
+    icon: Leaf,
+    emoji: "🌾",
+    desc: "Connecting campus to community — rural development, village adoption, renewable energy and social outreach across 5 adopted villages.",
+    accent: "from-emerald-500 to-teal-700",
+    path: "/uba",
+    image: "https://www.itmgoi.in/include/gallery/UBA/uba1.jpg",
+    tags: ["5 Villages", "IIT Delhi Award", "Since 2018"],
   },
   {
-    name: "Coding Club",
-    short: "DEV",
-    icon: Code2,
-    emoji: "💻",
-    desc: "Competitive programming, hackathons, open-source sprints and weekend project hacks across all years.",
-    accent: "from-indigo-500 to-violet-700",
-    path: "#",
-    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=900&q=80",
-    tags: ["Hackathons", "ICPC Prep", "Mentor Network"],
+    name: "NSS Cell",
+    short: "NSS",
+    icon: Heart,
+    emoji: "🤝",
+    desc: "\"Not Me, But You\" — blood donation drives, Swachh Bharat campaigns, plantation drives and social service with 200+ volunteers.",
+    accent: "from-blue-500 to-indigo-700",
+    path: "/nss",
+    image: "https://www.itmgoi.in/include/gallery/NSS/nss1.jpg",
+    tags: ["200+ Volunteers", "500+ Units/Year", "2 Units"],
+  },
+  {
+    name: "Sports Cell",
+    short: "SPORTS",
+    icon: Trophy,
+    emoji: "🏆",
+    desc: "10+ sports, national-level competitions, inter-departmental tournaments and a vision to make ITM Gwalior a sporting powerhouse.",
+    accent: "from-amber-500 to-orange-600",
+    path: "/sports",
+    image: "https://www.itmgoi.in/include/gallery/Sports/achievement/1.jpg",
+    tags: ["10+ Sports", "National Level", "6 Dept Reps"],
+  },
+  {
+    name: "Women Empowerment Cell",
+    short: "WEC",
+    icon: Shield,
+    emoji: "♀️",
+    desc: "Creating awareness of women's rights, promoting equality and empowering girl students through events, seminars and community outreach.",
+    accent: "from-pink-500 to-rose-700",
+    path: "/wec",
+    image: "https://www.itmgoi.in/include/gallery/WEC/1.jpg",
+    tags: ["4 Members", "9+ Events", "NCW Collaboration"],
   },
 ];
 
@@ -70,7 +92,7 @@ export default function ClubsCells() {
         </div>
 
         {/* Grid */}
-        <div className="grid md:grid-cols-3 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
           {CLUBS.map((c, i) => (
             <Link to={c.path} key={c.short}>
               <motion.div
