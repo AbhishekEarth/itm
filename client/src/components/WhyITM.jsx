@@ -22,7 +22,6 @@ const REASONS = [
     title: "Microsoft Learn — Center of Excellence",
     body: "Recognised as a Microsoft Learn Center of Excellence (May 2024 – April 2025). Tech-first curriculum, certifications and labs.",
     accent: "from-amber-500 to-orange-600",
-    big: true,
   },
   {
     icon: Microscope,
@@ -88,8 +87,8 @@ export default function WhyITM() {
           </p>
         </div>
 
-        {/* Bento grid */}
-        <div className="grid md:grid-cols-3 gap-4 md:gap-5">
+        {/* Equal-cell grid — 1 col on mobile, 2 on tablet, 3 on desktop. auto-rows-fr keeps every row the same height. */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-fr">
           {REASONS.map((r, i) => (
             <motion.div
               key={r.title}
@@ -98,16 +97,14 @@ export default function WhyITM() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: i * 0.07, duration: 0.5 }}
               whileHover={{ y: -6 }}
-              className={`group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur border border-white/10 p-7 ${
-                r.big ? "md:col-span-2" : ""
-              }`}
+              className="group relative h-full flex flex-col overflow-hidden rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur border border-white/10 p-7"
             >
               {/* Hover glow */}
               <div
                 className={`absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br ${r.accent} opacity-0 group-hover:opacity-25 blur-2xl transition-opacity duration-500`}
               ></div>
 
-              <div className="relative">
+              <div className="relative flex flex-col h-full">
                 <div
                   className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${r.accent} flex items-center justify-center shadow-lg mb-5`}
                 >
@@ -118,11 +115,12 @@ export default function WhyITM() {
                   {r.title}
                 </h3>
 
-                <p className="text-sm text-white/70 leading-relaxed font-medium max-w-md">
+                <p className="text-sm text-white/70 leading-relaxed font-medium">
                   {r.body}
                 </p>
 
-                <div className="mt-6 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] text-amber-300/0 group-hover:text-amber-300 transition-colors">
+                {/* Pinned to the bottom of every card so the "Learn more" baseline is identical across all six. */}
+                <div className="mt-auto pt-6 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] text-amber-300/0 group-hover:text-amber-300 transition-colors">
                   <span className="w-6 h-px bg-amber-300"></span>
                   Learn more
                 </div>

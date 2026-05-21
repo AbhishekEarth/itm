@@ -65,11 +65,8 @@ export default function Stats() {
             </div>
             <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               A campus built on{" "}
-              <span className="relative inline-block">
-                <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
-                  outcomes.
-                </span>
-                <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 -z-0 -skew-x-3"></span>
+              <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
+                outcomes.
               </span>
             </h2>
           </div>

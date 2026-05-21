@@ -1,12 +1,99 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  /* Smooth in-page scrolling + clear the fixed navbar when jumping to anchors. */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 140px;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
   body {
     @apply font-sans antialiased text-gray-800 bg-white;
+    font-feature-settings: 'cv11', 'ss01', 'ss03';
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Branded text selection — maroon highlight, off-white text. */
+  ::selection {
+    background-color: #800000;
+    color: #fff8f0;
+  }
+
+  /* Custom scrollbar — slim, on-brand, replaces the default grey OS bar. */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #800000, #3e0202);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #a30000, #5c0202);
+    background-clip: padding-box;
+  }
+  html.dark ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #fcd34d, #b45309);
+    background-clip: padding-box;
+  }
+
+  /* Visible-only focus rings (keyboard only — don't dirty mouse interactions). */
+  :focus-visible {
+    outline: 2px solid #800000;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* Images never overflow their box (avoids layout jitter on slow networks). */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@layer utilities {
+  /* Reusable transition timing so interactive elements feel consistent. */
+  .ease-soft {
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* GPU-friendly fade-up entrance — drop-in for any plain section. */
+  .smooth-fade-up {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: smoothFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes smoothFadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Respect users who've requested reduced motion — kill long transitions/animations. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

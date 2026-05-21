@@ -7,33 +7,80 @@ const logo = "/images/ITMGOILogo.png";
 
 const SECTIONS = [
   {
+    title: "About",
+    links: [
+      { label: "About Institute",    to: "/about" },
+      { label: "Mission & Vision",   to: "/about/mission-vision" },
+      { label: "Director's Message", to: "/about/director-message" },
+      { label: "Board of Governors", to: "/about/board-of-governors" },
+      { label: "Infrastructure",     to: "/about/infrastructure" },
+      { label: "Best Practices",     to: "/about/best-practices" },
+    ],
+  },
+  {
     title: "Admissions",
     links: [
-      { label: "Overview", to: "/admissions" },
-      { label: "UG Courses", to: "/admissions/ug" },
-      { label: "PG Courses", to: "/admissions/pg" },
-      { label: "How to Apply", to: "/admissions/how-to-apply" },
-      { label: "Online Pay", href: "https://onlineapply.itmgoi.in/form_hdfc.php?ok=Apply+Now", external: true },
+      { label: "Overview",          to: "/admissions" },
+      { label: "UG Courses",        to: "/admissions/ug" },
+      { label: "PG Courses",        to: "/admissions/pg" },
+      { label: "How to Apply",      to: "/admissions/how-to-apply" },
+      { label: "Online Apply",      href: "http://itmgoi.in/OnlineApply_ITMGOI", external: true },
+      { label: "Online Pay",        href: "https://onlineapply.itmgoi.in/form_hdfc.php?ok=Apply+Now", external: true },
     ],
   },
   {
     title: "Departments",
     links: [
-      { label: "Computer Science", to: "/cs" },
-      { label: "Information Tech", to: "/it" },
+      { label: "Computer Science",  to: "/cs" },
+      { label: "Information Tech",  to: "/it" },
       { label: "Electronics & Comm.", to: "/ece" },
+      { label: "Mechanical Eng.",   to: "/me" },
       { label: "Civil Engineering", to: "/ce" },
+      { label: "MBA · Management",  to: "/mba" },
+      { label: "Engg. Sci. & Hum.", to: "/esh" },
       { label: "Emerging Branches", to: "/emerging-branches" },
+      { label: "Central Library",   to: "/library" },
     ],
   },
   {
-    title: "Campus",
+    title: "Campus Life",
     links: [
-      { label: "Central Library", to: "/library" },
-      { label: "Performing Arts", to: "/pac" },
       { label: "Training & Placement", to: "/tap" },
-      { label: "Anti-Ragging", href: "#" },
-      { label: "NIRF / IQAC", href: "#" },
+      { label: "Performing Arts Club", to: "/pac" },
+      { label: "Other Clubs",          to: "/clubs" },
+      { label: "UBA Cell",              to: "/cells/uba" },
+      { label: "NSS Cell",              to: "/cells/nss" },
+      { label: "Sports Cell",           to: "/cells/sports" },
+      { label: "Women Empowerment",    to: "/cells/wec" },
+    ],
+  },
+  {
+    title: "Alumni & Research",
+    links: [
+      { label: "Alumni Portal",          href: "https://www.itmalumni.in/", external: true },
+      { label: "Alumni Speaks",          to: "/alumni/speaks" },
+      { label: "Mentorship",              to: "/alumni/mentorship" },
+      { label: "Chapters",                to: "/alumni/chapters" },
+      { label: "R&D Cell",                to: "/research/rd-cell" },
+      { label: "International Journal",  href: "https://iijisem.com", external: true },
+      { label: "FDP",                    to: "/research/fdp" },
+      { label: "JRF",                    to: "/jrf" },
+    ],
+  },
+  {
+    title: "Compliance",
+    links: [
+      { label: "NAAC Policies",  to: "/naac" },
+      { label: "IQAC",            to: "/iqac" },
+      { label: "Committees",     to: "/committees" },
+      { label: "NIRF Ranking",   to: "/nirf" },
+      { label: "Anti-Ragging",   to: "/anti-ragging" },
+      { label: "MOUs",            to: "/mous" },
+      { label: "Appreciation",   to: "/appreciation" },
+      { label: "Grievance Form", href: "https://forms.gle/VTEumajnux762Vtv8", external: true },
+      { label: "Careers",        to: "/careers" },
+      { label: "Gallery",         to: "/gallery" },
+      { label: "Contact",         to: "/contact" },
     ],
   },
 ];
@@ -85,14 +132,14 @@ export default function Footer() {
           </form>
         </div>
 
-        {/* Main grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 mb-16">
+        {/* Top row — brand + contact strip */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-12">
 
           {/* Brand */}
-          <div className="md:col-span-4 space-y-6">
+          <div className="lg:col-span-8 space-y-6">
             <img src={logo} alt="ITM Logo" className="h-14 w-auto brightness-200 drop-shadow-xl" />
             <p className="text-sm text-gray-400 leading-relaxed font-medium max-w-sm">
-              <span className="text-amber-300 font-black">Think Big. Think Beyond.</span> 29 years of
+              <span className="text-amber-300 font-black">Think Big. Think Beyond.</span> 30 years of
               shaping leaders, engineers and entrepreneurs in central India.
             </p>
 
@@ -125,22 +172,56 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Link columns */}
+          {/* Contact column */}
+          <div className="lg:col-span-4 space-y-4">
+            <h4 className="text-amber-300 font-black uppercase tracking-[0.25em] text-[10px]">Reach Us</h4>
+            <div className="grid sm:grid-cols-2 gap-4 text-sm">
+              <a href="tel:+917773005065" className="flex items-start gap-2.5 text-gray-300 hover:text-white">
+                <Phone size={14} className="mt-1 text-amber-300 shrink-0" />
+                <span className="font-medium leading-relaxed">
+                  <span className="block text-[9px] uppercase tracking-widest text-gray-500 mb-0.5">Admissions</span>
+                  +91-77730 05065<br />+91-77730 01624
+                </span>
+              </a>
+              <a href="tel:+917512440056" className="flex items-start gap-2.5 text-gray-300 hover:text-white">
+                <Phone size={14} className="mt-1 text-amber-300 shrink-0" />
+                <span className="font-medium leading-relaxed">
+                  <span className="block text-[9px] uppercase tracking-widest text-gray-500 mb-0.5">General</span>
+                  +91-751-2440056<br />+91-751-2432977
+                </span>
+              </a>
+              <a href="mailto:admission@itmgoi.in" className="sm:col-span-2 flex items-start gap-2.5 text-gray-300 hover:text-white">
+                <Mail size={14} className="mt-1 text-amber-300 shrink-0" />
+                <span className="font-medium break-all">admission@itmgoi.in</span>
+              </a>
+              <div className="sm:col-span-2 flex items-start gap-2.5 text-gray-300">
+                <MapPin size={14} className="mt-1 text-amber-300 shrink-0" />
+                <span className="text-xs font-medium leading-relaxed">
+                  ITM Campus, Opp. Sithouli Railway Station,<br />
+                  NH-75 Sithouli, Jhansi Road, Gwalior – 475001, M.P.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Link sections grid — 6 columns of pages */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 mb-16 pb-12 border-b border-white/10">
           {SECTIONS.map((sec) => (
-            <div key={sec.title} className="md:col-span-2">
-              <h4 className="text-amber-300 font-black uppercase tracking-[0.25em] text-[10px] mb-5">
+            <div key={sec.title}>
+              <h4 className="text-amber-300 font-black uppercase tracking-[0.22em] text-[10px] mb-5">
                 {sec.title}
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2.5">
                 {sec.links.map((l) =>
                   l.to ? (
                     <li key={l.label}>
                       <Link
                         to={l.to}
-                        className="group inline-flex items-center gap-1.5 text-gray-400 hover:text-white text-sm font-medium transition-colors"
+                        className="group inline-flex items-center gap-1.5 text-gray-400 hover:text-white text-[13px] font-medium transition-colors"
                       >
                         {l.label}
-                        <ArrowUpRight size={11} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                       </Link>
                     </li>
                   ) : (
@@ -149,10 +230,10 @@ export default function Footer() {
                         href={l.href}
                         target={l.external ? "_blank" : undefined}
                         rel={l.external ? "noreferrer" : undefined}
-                        className="group inline-flex items-center gap-1.5 text-gray-400 hover:text-white text-sm font-medium transition-colors"
+                        className="group inline-flex items-center gap-1.5 text-gray-400 hover:text-white text-[13px] font-medium transition-colors"
                       >
                         {l.label}
-                        {l.external && <ArrowUpRight size={11} className="opacity-50" />}
+                        {l.external && <ArrowUpRight size={10} className="opacity-50" />}
                       </a>
                     </li>
                   )
@@ -160,27 +241,6 @@ export default function Footer() {
               </ul>
             </div>
           ))}
-
-          {/* Contact column */}
-          <div className="md:col-span-2 space-y-5">
-            <h4 className="text-amber-300 font-black uppercase tracking-[0.25em] text-[10px]">Contact</h4>
-            <div className="space-y-3 text-sm">
-              <a href="tel:+917773005065" className="flex items-start gap-2.5 text-gray-300 hover:text-white">
-                <Phone size={14} className="mt-1 text-[#800000] shrink-0" />
-                <span className="font-medium leading-relaxed">+91-7773005065<br />+91-7773001624</span>
-              </a>
-              <a href="mailto:admission@itmgoi.in" className="flex items-start gap-2.5 text-gray-300 hover:text-white">
-                <Mail size={14} className="mt-1 text-[#800000] shrink-0" />
-                <span className="font-medium break-all">admission@itmgoi.in</span>
-              </a>
-              <div className="flex items-start gap-2.5 text-gray-300">
-                <MapPin size={14} className="mt-1 text-[#800000] shrink-0" />
-                <span className="text-xs font-medium leading-relaxed">
-                  NH-75 Sithouli, Jhansi Road, Gwalior – 475001, M.P.
-                </span>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Bottom bar */}
@@ -192,7 +252,7 @@ export default function Footer() {
             <a href="#" className="hover:text-amber-300 transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-amber-300 transition-colors">Terms of Use</a>
             <a href="#" className="hover:text-amber-300 transition-colors">Sitemap</a>
-            <a href="#" className="hover:text-amber-300 transition-colors">Anti-Ragging</a>
+            <Link to="/anti-ragging" className="hover:text-amber-300 transition-colors">Anti-Ragging</Link>
           </div>
         </div>
       </div>

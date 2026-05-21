@@ -22,10 +22,10 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-[100vh] flex items-center overflow-hidden bg-[#020617] pt-32 md:pt-40 pb-20">
+    <section className="relative min-h-[100vh] flex items-center overflow-hidden bg-[#020617] pt-[150px] md:pt-[180px] pb-24">
 
-      {/* --- BACKGROUND IMAGES (dark cinematic) --- */}
-      <div className="absolute inset-0 z-0 bg-[#020617]">
+      {/* --- BACKGROUND IMAGES (start below the fixed navbar so it never overlaps the image) --- */}
+      <div className="absolute left-0 right-0 bottom-0 top-[120px] md:top-[150px] z-0 overflow-hidden bg-[#020617]">
         {images.map((src, i) => (
           <img
             key={src}
@@ -36,18 +36,14 @@ export default function Hero() {
             className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ${
               i === currentIndex ? "opacity-100" : "opacity-0"
             }`}
-            style={{ filter: "brightness(0.85) saturate(1.05) contrast(1.02)", objectPosition: "50% 35%" }}
+            style={{ filter: "brightness(0.9) saturate(1.05) contrast(1.02)", objectPosition: "center center" }}
           />
         ))}
 
-        {/* Strong left-side gradient so text always reads, image stays bright on the right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/0 z-[1]" />
-        {/* Maroon brand tint for cohesion */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#3e0202]/55 via-transparent to-transparent z-[1]" />
-        {/* Soft bottom fade */}
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/40 to-transparent z-[1]" />
-        {/* Maroon accent glow */}
-        <div className="absolute -left-32 top-1/3 w-[520px] h-[520px] rounded-full bg-[#800000]/25 blur-3xl z-[1]" />
+        {/* Left-side dark gradient so headline text always reads */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-black/0 z-[1]" />
+        {/* Soft bottom fade for a clean handoff to the next section */}
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/45 to-transparent z-[1]" />
       </div>
 
       {/* --- CONTENT --- */}

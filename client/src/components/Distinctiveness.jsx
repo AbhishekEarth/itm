@@ -51,7 +51,9 @@ export default function Distinctiveness() {
 
               <div className="relative">
                 <div className="flex items-start justify-between mb-4">
-                  <div className="text-5xl">{p.icon}</div>
+                  <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 ring-1 ring-amber-300/30 shadow-md">
+                    <p.Icon size={22} strokeWidth={2.1} />
+                  </div>
                   {p.since && (
                     <span className="text-[9px] font-black uppercase tracking-widest text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">
                       {p.since}

@@ -7,8 +7,7 @@ const CLUBS = [
   {
     name: "Performing Arts Club",
     short: "PAC",
-    icon: Music,
-    emoji: "🎭",
+    Icon: Music,
     desc: "Music, dance, drama and stagecraft — the home of KRONOS, Maharathi and our biggest cultural productions.",
     accent: "from-rose-500 to-[#800000]",
     path: "/pac",
@@ -18,8 +17,7 @@ const CLUBS = [
   {
     name: "Photography Club",
     short: "PIX",
-    icon: Camera,
-    emoji: "📸",
+    Icon: Camera,
     desc: "Visual storytellers capturing campus life, events and the streets of Gwalior. Regular exhibits and workshops.",
     accent: "from-amber-500 to-orange-600",
     path: "#",
@@ -29,8 +27,7 @@ const CLUBS = [
   {
     name: "Coding Club",
     short: "DEV",
-    icon: Code2,
-    emoji: "💻",
+    Icon: Code2,
     desc: "Competitive programming, hackathons, open-source sprints and weekend project hacks across all years.",
     accent: "from-indigo-500 to-violet-700",
     path: "#",
@@ -93,7 +90,9 @@ export default function ClubsCells() {
                   <div className={`absolute inset-0 bg-gradient-to-br ${c.accent} mix-blend-multiply opacity-65`}></div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
 
-                  <div className="absolute top-4 right-4 text-4xl drop-shadow-xl">{c.emoji}</div>
+                  <div className="absolute top-4 right-4 flex items-center justify-center w-11 h-11 rounded-2xl bg-white/15 backdrop-blur ring-1 ring-white/30 text-white shadow-xl">
+                    <c.Icon size={20} strokeWidth={2.2} />
+                  </div>
 
                   <div className="absolute bottom-4 left-5 right-5 text-white">
                     <div className="text-[9px] font-black uppercase tracking-[0.3em] text-white/70 mb-1">Club</div>

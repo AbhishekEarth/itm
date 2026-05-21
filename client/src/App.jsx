@@ -42,6 +42,34 @@ import ResearchInnovation from "./pages/ResearchInnovation";
 import ResearchJournal from "./pages/ResearchJournal";
 import ResearchConference from "./pages/ResearchConference";
 import ResearchFDP from "./pages/ResearchFDP";
+import {
+  CellsAndCommittees,
+  UpcomingEvents,
+  QuickLinks,
+  AlumniSection,
+  GalleryPreview,
+  ContactSection,
+} from "./components/HomeExtras";
+import {
+  AboutInstitutePage, MissionVisionPage, OfficialsPage, BoardOfGovernorsPage,
+  DirectorMessagePage, ProgrammesPage, InfrastructurePage, BestPracticesPage,
+  MagazinePage, PoliciesPage, DistinctivenessPageRoute, GwaliorPage,
+} from "./pages/AboutPages";
+import {
+  NSSPage, UBAPage, WECPage, SportsPage, IQACPage, AntiRaggingPage, OtherClubsPage,
+} from "./pages/CellsPages";
+import {
+  AlumniSpeaksPage, MentorshipPage, MembershipPage, ChaptersPage,
+} from "./pages/AlumniPages";
+import {
+  NAACPolicyPage, CommitteesPage, MOUsPage, AppreciationPage, NIRFPage,
+  CareersPage, JRFPage,
+} from "./pages/CompliancePages";
+import {
+  GalleryHubPage, CulturalGalleryPage, ExpertsGalleryPage, InfraGalleryPage,
+  SportsGalleryPage, StudentsGalleryPage, LifeAtITMPage, VideoGalleryPage,
+} from "./pages/GalleryPages";
+import ContactPage from "./pages/ContactPage";
 
 function RouteShell({ children }) {
   const location = useLocation();
@@ -78,9 +106,15 @@ function App() {
                 <RecruiterMarquee />
                 <CampusLife />
                 <section id="clubs"><ClubsCells /></section>
+                <section id="cells"><CellsAndCommittees /></section>
                 <Placements />
+                <section id="events"><UpcomingEvents /></section>
                 <Testimonials />
+                <section id="alumni"><AlumniSection /></section>
+                <section id="gallery"><GalleryPreview /></section>
+                <QuickLinks />
                 <AdmissionCTA />
+                <section id="contact"><ContactSection /></section>
               </>
             } />
 
@@ -138,6 +172,57 @@ function App() {
             <Route path="/admin/pac" element={<AdminPACEventForm />} />
             <Route path="/admin/tap" element={<AdminEventForm />} />
             <Route path="/department" element={<DepartmentPage />} />
+
+            {/* ABOUT (12 routes) */}
+            <Route path="/about" element={<AboutInstitutePage />} />
+            <Route path="/about/mission-vision" element={<MissionVisionPage />} />
+            <Route path="/about/officials" element={<OfficialsPage />} />
+            <Route path="/about/board-of-governors" element={<BoardOfGovernorsPage />} />
+            <Route path="/about/director-message" element={<DirectorMessagePage />} />
+            <Route path="/about/programmes" element={<ProgrammesPage />} />
+            <Route path="/about/infrastructure" element={<InfrastructurePage />} />
+            <Route path="/about/best-practices" element={<BestPracticesPage />} />
+            <Route path="/about/distinctiveness" element={<DistinctivenessPageRoute />} />
+            <Route path="/about/magazine" element={<MagazinePage />} />
+            <Route path="/about/policies" element={<PoliciesPage />} />
+            <Route path="/about/gwalior" element={<GwaliorPage />} />
+
+            {/* CELLS (7 routes) */}
+            <Route path="/cells/nss" element={<NSSPage />} />
+            <Route path="/cells/uba" element={<UBAPage />} />
+            <Route path="/cells/wec" element={<WECPage />} />
+            <Route path="/cells/sports" element={<SportsPage />} />
+            <Route path="/iqac" element={<IQACPage />} />
+            <Route path="/anti-ragging" element={<AntiRaggingPage />} />
+            <Route path="/clubs" element={<OtherClubsPage />} />
+
+            {/* ALUMNI (4 routes) */}
+            <Route path="/alumni/speaks" element={<AlumniSpeaksPage />} />
+            <Route path="/alumni/mentorship" element={<MentorshipPage />} />
+            <Route path="/alumni/membership" element={<MembershipPage />} />
+            <Route path="/alumni/chapters" element={<ChaptersPage />} />
+
+            {/* COMPLIANCE (7 routes) */}
+            <Route path="/naac" element={<NAACPolicyPage />} />
+            <Route path="/committees" element={<CommitteesPage />} />
+            <Route path="/mous" element={<MOUsPage />} />
+            <Route path="/appreciation" element={<AppreciationPage />} />
+            <Route path="/nirf" element={<NIRFPage />} />
+            <Route path="/careers" element={<CareersPage />} />
+            <Route path="/jrf" element={<JRFPage />} />
+
+            {/* GALLERY (8 routes) */}
+            <Route path="/gallery" element={<GalleryHubPage />} />
+            <Route path="/gallery/cultural" element={<CulturalGalleryPage />} />
+            <Route path="/gallery/experts" element={<ExpertsGalleryPage />} />
+            <Route path="/gallery/infrastructure" element={<InfraGalleryPage />} />
+            <Route path="/gallery/sports" element={<SportsGalleryPage />} />
+            <Route path="/gallery/students" element={<StudentsGalleryPage />} />
+            <Route path="/gallery/life" element={<LifeAtITMPage />} />
+            <Route path="/gallery/videos" element={<VideoGalleryPage />} />
+
+            {/* CONTACT */}
+            <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </RouteShell>
 

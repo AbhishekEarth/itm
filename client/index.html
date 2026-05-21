@@ -5,6 +5,16 @@
     <link rel="icon" type="image/png" href="/images/ITMGOILogo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ITM GOI</title>
+    <script>
+      // Apply the saved light/dark choice before React mounts (no flash).
+      (function () {
+        try {
+          if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

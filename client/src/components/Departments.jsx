@@ -1,13 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Sparkles } from "lucide-react";
+import {
+  ArrowUpRight, Sparkles, Code2, Network, RadioTower, Building2,
+  BookOpen, Brain, ShieldCheck, Cloud, BarChart3, Wifi, Rocket,
+} from "lucide-react";
 
 const DEPARTMENTS = [
   {
     name: "Computer Science & Engineering",
     short: "CSE",
-    icon: "💻",
+    Icon: Code2,
     desc: "Innovators of the digital era. NBA-accredited curriculum, AI/ML labs, hackathon culture and unmatched placement record.",
     accent: "from-rose-500 to-[#800000]",
     badge: "NBA Accredited",
@@ -18,7 +21,7 @@ const DEPARTMENTS = [
   {
     name: "Information Technology",
     short: "IT",
-    icon: "🌐",
+    Icon: Network,
     desc: "Full-stack developers, cloud architects and DevOps engineers. 565 hybrid terminals and AICTE-approved curriculum.",
     accent: "from-amber-500 to-orange-600",
     badge: "AICTE Approved",
@@ -29,7 +32,7 @@ const DEPARTMENTS = [
   {
     name: "Electronics & Communication",
     short: "ECE",
-    icon: "📡",
+    Icon: RadioTower,
     desc: "VLSI design, embedded systems, signals and wireless. Dedicated R&D labs running since 1997.",
     accent: "from-indigo-500 to-violet-700",
     badge: "VLSI Lab",
@@ -40,7 +43,7 @@ const DEPARTMENTS = [
   {
     name: "Civil Engineering",
     short: "CE",
-    icon: "🏗️",
+    Icon: Building2,
     desc: "Building India's infrastructure — structural, geotech, transportation and sustainable construction.",
     accent: "from-yellow-600 to-amber-800",
     badge: "Est. 1997",
@@ -51,7 +54,7 @@ const DEPARTMENTS = [
   {
     name: "Central Library",
     short: "LIB",
-    icon: "📚",
+    Icon: BookOpen,
     desc: "64,000+ print books, 50,000+ e-journals, IEEE, Springer access, dedicated reading and research spaces.",
     accent: "from-emerald-500 to-teal-700",
     badge: "Knowledge Hub",
@@ -62,11 +65,11 @@ const DEPARTMENTS = [
 ];
 
 const EMERGING = [
-  { name: "AI & ML", icon: "🤖", path: "/aiml" },
-  { name: "Cyber Security", icon: "🛡️", path: "/cyber-security" },
-  { name: "Cloud Computing", icon: "☁️", path: "/cloud-computing" },
-  { name: "Data Science", icon: "📊", path: "/emerging-branches" },
-  { name: "IoT", icon: "🌐", path: "/emerging-branches" },
+  { name: "AI & ML",           Icon: Brain,        path: "/aiml" },
+  { name: "Cyber Security",    Icon: ShieldCheck,  path: "/cyber-security" },
+  { name: "Cloud Computing",   Icon: Cloud,        path: "/cloud-computing" },
+  { name: "Data Science",      Icon: BarChart3,    path: "/emerging-branches" },
+  { name: "IoT",               Icon: Wifi,         path: "/emerging-branches" },
 ];
 
 export default function Departments() {
@@ -132,8 +135,10 @@ export default function Departments() {
                     <Sparkles size={9} /> {d.badge}
                   </span>
 
-                  {/* Big icon top-right */}
-                  <div className="absolute top-3 right-3 text-4xl drop-shadow-lg">{d.icon}</div>
+                  {/* Icon top-right — soft glass chip with the lucide icon */}
+                  <div className="absolute top-3 right-3 flex items-center justify-center w-11 h-11 rounded-2xl bg-white/15 backdrop-blur ring-1 ring-white/30 text-white shadow-lg">
+                    <d.Icon size={20} strokeWidth={2.2} />
+                  </div>
 
                   {/* Department code overlay */}
                   <div className="absolute bottom-4 left-4 text-white">
@@ -201,7 +206,9 @@ export default function Departments() {
                 <Sparkles size={9} /> Future-Ready
               </span>
 
-              <div className="text-5xl mb-4">🚀</div>
+              <div className="mb-4 flex items-center justify-center w-14 h-14 rounded-2xl bg-amber-400/20 ring-1 ring-amber-300/40 text-amber-200 shadow-lg">
+                <Rocket size={24} strokeWidth={2.2} />
+              </div>
 
               <h3 className="font-black text-xl tracking-tight mb-2">Emerging Branches</h3>
               <p className="text-xs text-rose-100/70 leading-relaxed font-medium mb-5">
@@ -216,7 +223,7 @@ export default function Departments() {
                     onClick={(e) => e.stopPropagation()}
                     className="flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-black bg-white/10 backdrop-blur text-white border border-white/20 rounded-full hover:bg-white hover:text-[#800000] transition-colors"
                   >
-                    <span>{b.icon}</span>
+                    <b.Icon size={11} strokeWidth={2.4} />
                     {b.name}
                   </Link>
                 ))}

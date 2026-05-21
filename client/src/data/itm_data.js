@@ -1,5 +1,7 @@
 // Scraped from https://www.itmgoi.in/ (Official ITM Gwalior website)
 
+import { Landmark, Palette, BookOpen, Music2, Sparkles, Drama } from "lucide-react";
+
 export const INSTITUTE = {
   name: "Institute of Technology and Management",
   short: "ITM Gwalior",
@@ -178,36 +180,36 @@ export const DISTINCTIVENESS = {
   intro: "At ITM Gwalior, art, culture and education converge. Our campus is an open-air gallery where engineering students learn alongside global sculptures, classical music and centuries-old literary traditions.",
   pillars: [
     {
-      icon: "🗿",
+      Icon: Landmark,
       title: "Harmony in Stone",
       since: "Since 2006",
       body: "An international sculpture symposium that has hosted 50+ sculptors from Japan, Germany, Italy, Mexico and South Africa. Their work now lives permanently on our campus.",
     },
     {
-      icon: "🎨",
+      Icon: Palette,
       title: "Harmony in Color",
       since: "Since 2007",
       body: "A growing collection of paintings from diverse Indian and international traditions, curated to foster visual appreciation among students.",
     },
     {
-      icon: "📖",
+      Icon: BookOpen,
       title: "Ibarat — Literary Festival",
       since: "Since 2007",
       body: "Our annual literary and cultural event that brings together writers, poets and thinkers for intellectual exchange.",
     },
     {
-      icon: "🎵",
+      Icon: Music2,
       title: "Sangeet & Megh Malhar",
       since: "Since 2007",
       body: "Music festivals celebrating classical-to-contemporary forms, including Megh Malhar honouring the raag attributed to Tansen.",
     },
     {
-      icon: "💃",
+      Icon: Sparkles,
       title: "Nritya Mahotsav",
       body: "A dance festival showcasing Odissi, Kathakali, Manipuri and other classical Indian dance forms.",
     },
     {
-      icon: "🎭",
+      Icon: Drama,
       title: "Performing Arts as Curriculum",
       since: "Since 2022-23",
       body: "PAC offers a value-added course under the Indian Knowledge System with hands-on training in theatre, music, dance and fine arts.",
