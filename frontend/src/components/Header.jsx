@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, Sun, Moon } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
+import ThemeToggle from "./ThemeToggle";
 
 const logo = "/images/ITMGOILogo.png";
 const NAACLogo = "/images/NAACLogo.png";
@@ -47,7 +48,7 @@ const ADMISSION_LINKS = [
 ];
 
 export default function Header() {
-  const { dark, toggle } = useTheme();
+  const { dark } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -259,13 +260,7 @@ export default function Header() {
             </div>
           </div>
 
-          <button
-            onClick={toggle}
-            aria-label="Toggle dark mode"
-            className="ml-4 w-9 h-9 flex items-center justify-center rounded-full border border-gray-200 dark:border-white/20 bg-white/70 dark:bg-white/10 hover:bg-gray-100 dark:hover:bg-white/20 transition-all text-gray-700 dark:text-amber-300"
-          >
-            {dark ? <Sun size={15} /> : <Moon size={15} />}
-          </button>
+          <ThemeToggle className="ml-4" />
           <Link to="/admissions/how-to-apply" className="bg-[#800000] text-white px-6 py-3 rounded-full font-black text-[10px] tracking-widest hover:shadow-lg transition-all ml-2">
             APPLY NOW
           </Link>
@@ -276,13 +271,7 @@ export default function Header() {
 
         {/* MOBILE MENU BUTTON (Shown on screens < XL) */}
         <div className="xl:hidden flex items-center gap-2">
-            <button
-              onClick={toggle}
-              aria-label="Toggle dark mode"
-              className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-200 dark:border-white/20 bg-white/70 dark:bg-white/10 text-gray-700 dark:text-amber-300"
-            >
-              {dark ? <Sun size={15} /> : <Moon size={15} />}
-            </button>
+            <ThemeToggle />
             <Link to="/login" className="border border-[#800000] text-[#800000] dark:text-red-400 dark:border-red-400 px-3 py-2 rounded-full font-black text-[10px] tracking-widest">
                 SIGN IN
             </Link>
