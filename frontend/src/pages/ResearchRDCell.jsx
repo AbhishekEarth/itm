@@ -151,6 +151,18 @@ const DOCUMENTS = [
   },
 ];
 
+const RESEARCH_GALLERY = [1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32].map(
+  (n) => `https://www.itmgoi.in/include/gallery/Research_gallery/${n}.jpg`
+);
+
+const BOOK_COVERS = Array.from({ length: 22 }, (_, i) =>
+  `https://www.itmgoi.in/include/gallery/Book_Cover/${i + 1}.jpg`
+);
+
+const RESEARCH_PAPERS = Array.from({ length: 8 }, (_, i) =>
+  `https://www.itmgoi.in/include/gallery/Book_Cover/Research/${i + 1}.jpg`
+);
+
 function BigNumber({ value, suffix = "" }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
@@ -427,6 +439,51 @@ export default function ResearchRDCell() {
         </AnimatePresence>
       </section>
 
+      {/* Research Photo Gallery */}
+      <section className="bg-white dark:bg-gray-900 border-y border-rose-100 dark:border-gray-800 py-16 md:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Research Gallery</span>
+              <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+              Research in action.
+            </h2>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 mb-12">
+            {RESEARCH_GALLERY.map((src, i) => (
+              <div key={i} className="aspect-square overflow-hidden rounded-xl">
+                <img src={src} alt={`Research activity ${i + 1}`} loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+              </div>
+            ))}
+          </div>
+          <div className="grid md:grid-cols-2 gap-10">
+            <div>
+              <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-4">Book Covers · {BOOK_COVERS.length} publications</div>
+              <div className="grid grid-cols-5 sm:grid-cols-6 gap-2">
+                {BOOK_COVERS.map((src, i) => (
+                  <div key={i} className="aspect-[3/4] overflow-hidden rounded-lg">
+                    <img src={src} alt={`Book cover ${i + 1}`} loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-4">Research Paper Front Pages · {RESEARCH_PAPERS.length} samples</div>
+              <div className="grid grid-cols-4 gap-2">
+                {RESEARCH_PAPERS.map((src, i) => (
+                  <div key={i} className="aspect-[3/4] overflow-hidden rounded-lg">
+                    <img src={src} alt={`Research paper ${i + 1}`} loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Documents downloads */}
       <section className="bg-white dark:bg-gray-900 border-y border-rose-100 dark:border-gray-800 py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -452,6 +509,24 @@ export default function ResearchRDCell() {
                 </div>
               </motion.a>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Electoral Literacy Club */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+        <div className="relative overflow-hidden bg-gradient-to-br from-rose-50 dark:from-gray-900 to-white dark:to-gray-900 border border-rose-100 dark:border-gray-800 rounded-3xl p-8 md:p-10">
+          <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-[#800000]/5 pointer-events-none"></div>
+          <div className="relative max-w-3xl">
+            <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] px-3 py-1.5 bg-rose-100 dark:bg-gray-800 text-[#800000] rounded-full mb-4">
+              🗳️ Electoral Literacy Club · ELC
+            </span>
+            <h3 className="text-2xl md:text-3xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white mb-3 leading-snug">
+              Promoting democratic participation.
+            </h3>
+            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+              A student-driven initiative at ITM Gwalior, the Electoral Literacy Club promotes voter awareness and democratic participation under the guidance of the Election Commission of India. ELC actively engages students in understanding electoral processes and their civic responsibilities.
+            </p>
           </div>
         </div>
       </section>

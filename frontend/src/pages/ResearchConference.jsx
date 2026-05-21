@@ -61,6 +61,15 @@ const TIMELINE = [
   { date: "Jun 26, 2025", label: "Conference Day 2" },
 ];
 
+const CONF_GALLERY = [
+  "111A8808.JPG", "111A8838.JPG", "111A8847.JPG", "111A8857.JPG",
+  "111A8872.JPG", "111A8907.JPG", "111A8914.JPG", "111A8920.JPG",
+  "111A8958.JPG", "111A8963.JPG", "111A8974.JPG", "111A9014.JPG",
+  "111A9033.JPG", "111A9041.JPG", "111A9049.JPG",
+].map((f) => `https://www.itmgoi.in/include/gallery/Conference_Pics/${f}`);
+
+const BROCHURE_URL = "https://www.itmgoi.in/IQAC/Conf_FDP/Brochure_International_Conference.pdf";
+
 export default function ResearchConference() {
   const [tab, setTab] = useState("about");
 
@@ -180,6 +189,11 @@ export default function ResearchConference() {
                   <div className="text-[10px] uppercase tracking-widest font-black mb-1">Early Bird Deadline</div>
                   <div className="text-2xl font-black tracking-tight">{CONF.earlyBird}</div>
                 </div>
+                <div className="border-t border-[#1a0606]/20 pt-4 mt-4">
+                  <a href={BROCHURE_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-[#1a0606] text-amber-300 px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-black transition-colors">
+                    <ExternalLink size={11} /> Download Brochure PDF
+                  </a>
+                </div>
               </div>
             </motion.div>
           )}
@@ -234,6 +248,29 @@ export default function ResearchConference() {
             </motion.div>
           )}
         </AnimatePresence>
+      </section>
+
+      {/* Conference Gallery */}
+      <section className="bg-white dark:bg-gray-900 border-y border-rose-100 dark:border-gray-800 py-16 md:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Conference Gallery</span>
+              <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+              Moments from the conference.
+            </h2>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
+            {CONF_GALLERY.map((src, i) => (
+              <div key={i} className="aspect-square overflow-hidden rounded-xl">
+                <img src={src} alt={`Conference moment ${i + 1}`} loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* CTA */}

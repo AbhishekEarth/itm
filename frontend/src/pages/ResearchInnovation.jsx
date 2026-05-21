@@ -110,6 +110,13 @@ const ACTIVITIES = [
   { date: "28 Feb 2025", type: "Celebration", title: "National Science Day" },
 ];
 
+const IIC_SOCIALS = [
+  { label: "LinkedIn", handle: "IIC ITM Gwalior", url: "https://www.linkedin.com/company/iic-itm-gwalior" },
+  { label: "Facebook", handle: "IIC ITM Gwalior", url: "https://www.facebook.com/iicitmgwalior" },
+  { label: "Instagram", handle: "@iicitmgwalior", url: "https://www.instagram.com/iicitmgwalior" },
+  { label: "YouTube", handle: "@IICITMGwl", url: "https://www.youtube.com/@IICITMGwl" },
+];
+
 export default function ResearchInnovation() {
   const [filter, setFilter] = useState("All");
   const filterOpts = ["All", ...new Set(ACTIVITIES.map((a) => a.type))];
@@ -331,6 +338,19 @@ export default function ResearchInnovation() {
           </div>
         </div>
       </section>
+
+      {/* IIC Social Media */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="text-[10px] font-black uppercase tracking-[0.25em] text-gray-500 dark:text-gray-400">Follow IIC ITM:</span>
+          {IIC_SOCIALS.map((s) => (
+            <a key={s.label} href={s.url} target="_blank" rel="noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-full text-xs font-black text-[#1a0606] dark:text-white hover:border-[#800000] hover:text-[#800000] transition-colors">
+              {s.label} <span className="text-gray-400 font-medium text-[10px]">{s.handle}</span>
+            </a>
+          ))}
+        </div>
+      </div>
 
       {/* EDC */}
       <section className="bg-white dark:bg-gray-900 border-y border-rose-100 dark:border-gray-800 py-16 md:py-24">

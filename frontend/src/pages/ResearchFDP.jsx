@@ -62,6 +62,12 @@ const HIGHLIGHTS = [
   { icon: "👥", title: "Target Audience", value: "Academicians" },
 ];
 
+const FDP_GALLERY = Array.from({ length: 8 }, (_, i) =>
+  `https://www.itmgoi.in/include/gallery/fdp_Pics/fdp_0${i + 1}.jpeg`
+);
+const FDP_DOC_URL = "https://www.itmgoi.in/IQAC/Conf_FDP/National_FDP_ITM.pdf";
+const FDP_BANNER = "https://www.itmgoi.in/IQAC/Conf_FDP/Fdp.jpg";
+
 export default function ResearchFDP() {
   return (
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">
@@ -141,11 +147,22 @@ export default function ResearchFDP() {
 
       {/* Organising team + Department */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="grid lg:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-gradient-to-br from-rose-50/40 dark:from-gray-900 to-white dark:to-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-7">
             <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2 flex items-center gap-1.5"><Briefcase size={11} /> Organising Department</div>
             <h3 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight leading-snug">{FDP.department}</h3>
           </div>
+          <a href={FDP_DOC_URL} target="_blank" rel="noreferrer"
+            className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-7 hover:shadow-xl transition-shadow flex flex-col justify-between group">
+            <div>
+              <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2 flex items-center gap-1.5"><ArrowUpRight size={11} /> Official Brochure</div>
+              <h3 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight leading-snug mb-2">National FDP Document</h3>
+              <p className="text-xs text-gray-600 dark:text-gray-400 font-medium">Download the official FDP brochure and programme schedule.</p>
+            </div>
+            <div className="mt-4 inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-[#800000] group-hover:gap-3 transition-all">
+              Download PDF <ArrowUpRight size={11} />
+            </div>
+          </a>
           {[FDP.convenor, FDP.coordinator].map((person) => (
             <div key={person.name} className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-7 hover:shadow-xl transition-shadow">
               <div className="flex items-center gap-3 mb-3">
@@ -221,6 +238,32 @@ export default function ResearchFDP() {
               <p className="text-xs text-gray-600 dark:text-gray-400 font-medium leading-relaxed">{p.inst}</p>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* FDP Gallery */}
+      <section className="bg-white dark:bg-gray-900 border-y border-rose-100 dark:border-gray-800 py-16 md:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">FDP Gallery</span>
+              <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+              Program highlights.
+            </h2>
+          </div>
+          <div className="mb-4 rounded-2xl overflow-hidden max-h-64">
+            <img src={FDP_BANNER} alt="FDP Official Banner" className="w-full h-full object-cover" />
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {FDP_GALLERY.map((src, i) => (
+              <div key={i} className="aspect-square overflow-hidden rounded-xl">
+                <img src={src} alt={`FDP activity ${i + 1}`} loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
