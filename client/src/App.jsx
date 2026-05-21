@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Stats from "./components/Stats";
@@ -43,20 +43,28 @@ import ResearchJournal from "./pages/ResearchJournal";
 import ResearchConference from "./pages/ResearchConference";
 import ResearchFDP from "./pages/ResearchFDP";
 
+function RouteShell({ children }) {
+  const location = useLocation();
+  // Home renders the hero edge-to-edge so the transparent navbar floats over the dark hero photo.
+  // Every other page needs top padding to clear the fixed navbar.
+  const isHome = location.pathname === '/';
+  return (
+    <div className={isHome ? '' : 'pt-[88px] md:pt-[140px]'}>
+      {children}
+    </div>
+  );
+}
+
 function App() {
   return (
     <Router>
       <div className="bg-white dark:bg-[#020617] min-h-screen transition-colors duration-500">
         <Header />
-        
-        {/* Persistent Floating Sidebar */}
-        <FloatingSidebar /> 
 
-        {/* FIX: Adjusted padding-top to match the height of the fixed header.
-            Desktop: pt-[160px] (Utility bar ~40px + Main Nav ~120px)
-            Mobile: pt-[120px] 
-        */}
-        <div className="pt-[120px] md:pt-[160px]">
+        {/* Persistent Floating Sidebar */}
+        <FloatingSidebar />
+
+        <RouteShell>
           <Routes>
             {/* HOME PAGE ROUTE */}
             <Route path="/" element={
@@ -131,7 +139,7 @@ function App() {
             <Route path="/admin/tap" element={<AdminEventForm />} />
             <Route path="/department" element={<DepartmentPage />} />
           </Routes>
-        </div>
+        </RouteShell>
 
         {/* Global Footer — appears on every page */}
         <section id="footer"><Footer /></section>
