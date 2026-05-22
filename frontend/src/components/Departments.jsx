@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Sparkles } from "lucide-react";
+import EmojiToIcon from "./EmojiToIcon";
 
 const DEPARTMENTS = [
   {
@@ -133,7 +134,9 @@ export default function Departments() {
                   </span>
 
                   {/* Big icon top-right */}
-                  <div className="absolute top-3 right-3 text-4xl drop-shadow-lg">{d.icon}</div>
+                  <div className="absolute top-4 right-4 text-white/90 drop-shadow-md">
+                    <EmojiToIcon emoji={d.icon} size={32} />
+                  </div>
 
                   {/* Department code overlay */}
                   <div className="absolute bottom-4 left-4 text-white">
@@ -201,7 +204,9 @@ export default function Departments() {
                 <Sparkles size={9} /> Future-Ready
               </span>
 
-              <div className="text-5xl mb-4">🚀</div>
+              <div className="text-amber-300 mb-4">
+                <EmojiToIcon emoji="🚀" size={44} />
+              </div>
 
               <h3 className="font-black text-xl tracking-tight mb-2">Emerging Branches</h3>
               <p className="text-xs text-rose-100/70 leading-relaxed font-medium mb-5">
@@ -216,7 +221,7 @@ export default function Departments() {
                     onClick={(e) => e.stopPropagation()}
                     className="flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-black bg-white/10 backdrop-blur text-white border border-white/20 rounded-full hover:bg-white hover:text-[#800000] transition-colors"
                   >
-                    <span>{b.icon}</span>
+                    <EmojiToIcon emoji={b.icon} size={11} className="shrink-0" />
                     {b.name}
                   </Link>
                 ))}
