@@ -23,7 +23,7 @@ export default function Hero() {
   }, [images.length]);
 
   return (
-    <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-white dark:bg-[#020617] pt-12 pb-20">
+    <section className="relative -mt-[120px] md:-mt-[160px] min-h-[calc(100vh+120px)] md:min-h-[calc(100vh+160px)] flex items-center overflow-hidden bg-white dark:bg-[#020617] pb-20">
 
       {/* --- BACKGROUND LAYER --- */}
       <div className="absolute inset-0 z-0 bg-white dark:bg-[#020617]">
@@ -46,7 +46,7 @@ export default function Hero() {
       </div>
 
       {/* --- CONTENT CONTAINER --- */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-[120px] md:pt-[160px]">
         <div className="max-w-3xl">
 
           {/* Animated Badge */}
