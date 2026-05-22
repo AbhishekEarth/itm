@@ -87,7 +87,7 @@ function App() {
             Desktop: pt-[160px] (Utility bar ~40px + Main Nav ~120px)
             Mobile: pt-[120px] 
         */}
-        <div className="pt-[120px] md:pt-[160px]">
+        <div className="pt-[88px] md:pt-[148px]">
           <Routes>
             {/* HOME PAGE ROUTE */}
             <Route path="/" element={

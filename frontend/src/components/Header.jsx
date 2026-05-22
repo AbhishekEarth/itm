@@ -74,7 +74,7 @@ export default function Header() {
   return (
     <header className={`fixed top-0 w-full z-50 transition-all duration-500 ${
       isScrolled || mobileMenuOpen
-        ? "bg-gradient-to-r from-[#3e0202] via-[#800000] to-[#3e0202] shadow-xl"
+        ? "bg-gradient-to-r from-[#3e0202] via-[#800000] to-[#3e0202] dark:from-[#020617] dark:via-[#0d1117] dark:to-[#020617] dark:border-b dark:border-white/5 shadow-xl"
         : "bg-gradient-to-b from-black/60 via-black/20 to-transparent"
     }`}>
 
@@ -148,7 +148,6 @@ export default function Header() {
             {[
               { label: 'Home', path: '/' },
               { label: 'Training & Placement', path: '/tap' },
-              { label: 'Onboarding', path: '/onboarding' },
             ].map((item) => (
               <Link
                 key={item.label}
@@ -330,7 +329,6 @@ export default function Header() {
             <div className="flex flex-col p-6 gap-6 font-black uppercase tracking-widest text-sm text-gray-800 dark:text-white">
               <Link to="/" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000] dark:hover:text-red-400">Home</Link>
               <Link to="/tap" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000] dark:hover:text-red-400">Training & Placement</Link>
-              <Link to="/onboarding" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#800000] dark:hover:text-red-400">Onboarding</Link>
 
               <div>
                 <button
