@@ -116,7 +116,7 @@ export default function Header() {
             <img
               src={logo}
               alt="ITM Logo"
-              className={`transition-all duration-500 group-hover:scale-105 object-contain ${isScrolled ? 'h-10 lg:h-12' : 'h-14 lg:h-20'}`}
+              className={`transition-all duration-500 group-hover:scale-105 object-contain ${isScrolled ? 'h-10 lg:h-12 brightness-0 invert' : 'h-14 lg:h-20'}`}
             />
           </Link>
 

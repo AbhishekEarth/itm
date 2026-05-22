@@ -34,14 +34,13 @@ const CATEGORIES = [
 
 function LogoCard({ folder, idx }) {
   return (
-    <div className="group relative shrink-0 w-32 h-20 md:w-40 md:h-24 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-xl hover:border-rose-200 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-rose-50/0 via-white to-amber-50/0 group-hover:from-rose-50/40 group-hover:to-amber-50/40 transition-colors"></div>
+    <div className="group relative shrink-0 w-32 h-20 md:w-40 md:h-24 bg-white dark:bg-[#1e293b] border border-gray-100 dark:border-slate-700/60 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden">
       <img
         src={`/images/company_logos/${folder}/logo_${idx}.png`}
         alt={`Recruiter ${idx + 1}`}
         loading="lazy"
         onError={(e) => (e.target.style.display = "none")}
-        className="relative w-full h-full object-contain p-3 md:p-4 grayscale group-hover:grayscale-0 transition-all duration-300"
+        className="w-full h-full object-contain p-3 md:p-4 grayscale group-hover:grayscale-0 dark:grayscale-0 dark:brightness-150 dark:contrast-[0.9] transition-all duration-300"
       />
     </div>
   );
@@ -65,7 +64,7 @@ export default function RecruiterMarquee() {
   const loop = (arr) => [...arr, ...arr];
 
   return (
-    <section className="relative py-16 md:py-20 bg-white dark:bg-[#020617] overflow-hidden border-y border-rose-100/60">
+    <section className="relative py-16 md:py-20 bg-white dark:bg-[#020617] overflow-hidden border-y border-rose-100/60 dark:border-white/5">
 
       {/* Edge fade masks */}
       <div className="absolute inset-y-0 left-0 w-24 md:w-44 bg-gradient-to-r from-white dark:from-[#020617] to-transparent z-10 pointer-events-none"></div>
@@ -88,7 +87,7 @@ export default function RecruiterMarquee() {
                 <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
                   go to work.
                 </span>
-                <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 -z-0 -skew-x-3"></span>
+                <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 dark:bg-amber-900/30 -z-0 -skew-x-3"></span>
               </span>
             </h2>
             <p className="text-sm text-gray-600 dark:text-gray-400 font-medium leading-relaxed mt-3">
