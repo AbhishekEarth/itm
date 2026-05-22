@@ -35,6 +35,7 @@ import AIMLPage from './pages/AIMLPage';
 import CloudComputingPage from './pages/CloudComputingPage';
 import CyberSecurityPage from './pages/CyberSecurityPage';
 import FloatingSidebar from "./components/FloatingSidebar";
+import ScrollToTop from "./components/ScrollToTop";
 import ClubsCells from "./components/ClubsCells";
 import AdminPACEventForm from "./components/AdminPACEventForm";
 import AdminEventForm from "./components/AdminEventForm";
@@ -77,6 +78,7 @@ function App() {
     <ThemeProvider>
     <AuthProvider>
     <Router>
+      <ScrollToTop />
       <div className="bg-white dark:bg-[#020617] min-h-screen transition-colors duration-500">
         <Header />
         

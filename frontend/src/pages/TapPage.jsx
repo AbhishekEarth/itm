@@ -25,6 +25,8 @@ import {
   CheckCircle2,
   TrendingUp,
   FileDown,
+  ClipboardCheck,
+  Presentation,
 } from "lucide-react";
 import PlacementData from "../components/PlacementData";
 
@@ -55,27 +57,35 @@ const TAP_TEAM = [
 
 const TAP_SERVICES = [
   {
-    icon: "📋",
+    icon: ClipboardCheck,
     title: "Personal Interview Training",
     desc: "One-on-one sessions before every placement / internship drive — covering aptitude, mock interviews and HR-fit grooming.",
+    bgClass: "bg-rose-50 dark:bg-rose-950/20",
+    textClass: "text-[#800000] dark:text-rose-400",
     accent: "from-rose-500 to-[#800000]",
   },
   {
-    icon: "🏭",
+    icon: Presentation,
     title: "Industrial Expert Talks",
     desc: "Renowned professionals from industry share overviews, tips and case studies — online and offline sessions throughout the year.",
+    bgClass: "bg-amber-50 dark:bg-amber-950/20",
+    textClass: "text-amber-700 dark:text-amber-400",
     accent: "from-amber-500 to-orange-600",
   },
   {
-    icon: "💼",
+    icon: Briefcase,
     title: "Mandatory 45-day Internship",
     desc: "Every student completes a 45-day summer internship — industry exposure, practical learning and an offer pipeline.",
+    bgClass: "bg-emerald-50 dark:bg-emerald-950/20",
+    textClass: "text-emerald-700 dark:text-emerald-400",
     accent: "from-emerald-500 to-teal-700",
   },
   {
-    icon: "🎯",
+    icon: Target,
     title: "Campus Recruitment Drives",
     desc: "150+ recruiters on campus year-round including TCS, Infosys, Wipro, Capgemini, ICICI, IBM, Cognizant, FedEx and more.",
+    bgClass: "bg-indigo-50 dark:bg-indigo-950/20",
+    textClass: "text-indigo-600 dark:text-indigo-400",
     accent: "from-indigo-500 to-violet-700",
   },
 ];
@@ -372,27 +382,32 @@ export default function TapPage() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {TAP_SERVICES.map((s, i) => (
-              <motion.div
-                key={s.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                whileHover={{ y: -6 }}
-                className="group relative overflow-hidden bg-gradient-to-br from-white to-rose-50/40 dark:from-gray-900 dark:to-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow p-6"
-              >
-                <div className={`absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br ${s.accent} opacity-10 group-hover:opacity-20 blur-2xl transition-opacity`}></div>
-                <div className="relative">
-                  <div className="text-5xl mb-4">{s.icon}</div>
-                  <h3 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight mb-3 leading-snug">
-                    {s.title}
-                  </h3>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{s.desc}</p>
-                  <div className={`mt-4 h-px w-8 bg-gradient-to-r ${s.accent} group-hover:w-full transition-all duration-700`}></div>
-                </div>
-              </motion.div>
-            ))}
+            {TAP_SERVICES.map((s, i) => {
+              const IconComponent = s.icon;
+              return (
+                <motion.div
+                  key={s.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  whileHover={{ y: -6 }}
+                  className="group relative overflow-hidden bg-gradient-to-br from-white to-rose-50/40 dark:from-gray-900 dark:to-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow p-6"
+                >
+                  <div className={`absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br ${s.accent} opacity-10 group-hover:opacity-20 blur-2xl transition-opacity`}></div>
+                  <div className="relative">
+                    <div className={`w-12 h-12 rounded-2xl ${s.bgClass} ${s.textClass} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}>
+                      <IconComponent size={22} />
+                    </div>
+                    <h3 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight mb-3 leading-snug">
+                      {s.title}
+                    </h3>
+                    <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{s.desc}</p>
+                    <div className={`mt-4 h-px w-8 bg-gradient-to-r ${s.accent} group-hover:w-full transition-all duration-700`}></div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
