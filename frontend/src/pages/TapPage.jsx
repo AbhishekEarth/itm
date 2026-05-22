@@ -24,12 +24,13 @@ import {
   Star,
   CheckCircle2,
   TrendingUp,
+  FileDown,
 } from "lucide-react";
 import PlacementData from "../components/PlacementData";
 
 // ─── Real content scraped from itmgoi.in ──────────────────────────
-const TAP_VISION = "To bridge the gap between students' skill, knowledge and the industry's requirement and expectation.";
-const TAP_MISSION = "The team is dedicated towards achieving 100% placements by collaborating with HR teams of different corporates.";
+const TAP_VISION = "To bridge the gap between students' skill, knowledge and the industry's requirement and expectation by building employability through various workshops, seminars and campus recruitment training so that the student can grab the best opportunities and will grow vigorously in their career.";
+const TAP_MISSION = "The Training Augmentation and Placement team of ITM Gwalior is dedicated towards achieving 100% placements by collaborating with HR teams of different corporates to ensure the smooth functioning of the Campus-Recruitment process.";
 
 const TAP_TEAM = [
   {
@@ -39,6 +40,7 @@ const TAP_TEAM = [
     phone: "+91-9691973919",
     initials: "AC",
     accent: "from-rose-500 to-[#800000]",
+    photo: "https://www.itmgoi.in/assets2/images/Arpit_Singh.jpg",
   },
   {
     name: "Mrs. Shikha Sharma",
@@ -47,6 +49,7 @@ const TAP_TEAM = [
     phone: "+91-9229333335",
     initials: "SS",
     accent: "from-amber-500 to-orange-600",
+    photo: "https://www.itmgoi.in/assets2/images/Shikha_Sharma.jpg",
   },
 ];
 
@@ -81,33 +84,44 @@ const TAP_MOUS = [
   {
     name: "EduSkills Foundation",
     logo: "🎓",
-    desc: "Digital skills programmes in networking, cyber security, cloud computing, automation and RPA. ITM ranked #35 nationally in EduSkills Virtual Internship Rankings 2024.",
+    logo_img: "https://www.itmgoi.in/assets2/images/LOGO_EduSkills.png",
+    desc: "Digital skills expansion in networking, cyber security, cloud computing, automation and RPA. ITM ranked #35 nationally in EduSkills Virtual Internship Rankings 2024.",
     tags: ["Networking", "Cyber Security", "Cloud", "RPA"],
   },
   {
     name: "AWS Academy",
     logo: "☁️",
+    logo_img: "https://www.itmgoi.in/assets2/images/aws.jpg",
     desc: "Authorised AWS Academy — cloud computing, machine learning and data analytics training with AWS-recognised certifications.",
     tags: ["AWS Cloud", "ML", "Data Analytics"],
   },
   {
     name: "Microsoft Learn",
     logo: "🪟",
+    logo_img: "https://www.itmgoi.in/assets2/images/ms.jpg",
     desc: "Center of Excellence (May 2024 – April 2025). Programmes in AI, cyber security and green skills with Microsoft certifications.",
     tags: ["AI", "Cyber Security", "Green Skills"],
   },
   {
     name: "Bajaj FinServ",
     logo: "💼",
+    logo_img: "https://www.itmgoi.in/assets2/images/mou.jpg",
     desc: "Certificate Programme in Banking, Finance and Insurance (CPBFI) — industry-driven curriculum and guaranteed interview pipeline.",
     tags: ["BFSI", "Certified"],
   },
 ];
 
-const TRAINING_PARTNERS = [
-  "WebTek Labs", "DRDE Gwalior", "CETPA Infotech",
-  "British Council", "SSDN Technologies", "Xtrude Engineers",
-  "Illuminate Minds", "Aspiring Minds Assessment",
+const MOU_DOCS = [
+  { label: "MoU 2023–2024", url: "https://www.itmgoi.in/IQAC/docs/Website_UpdateDec2024/MoU_2023-2024.pdf" },
+  { label: "MoU 2022–2023", url: "https://www.itmgoi.in/IQAC/docs/Website_UpdateDec2024/MoU_2022-2023.pdf" },
+  { label: "MoU 2021–2022", url: "https://www.itmgoi.in/IQAC/docs/Website_UpdateDec2024/MoU_2021-2022.pdf" },
+  { label: "MoU 2020–2021", url: "https://www.itmgoi.in/IQAC/docs/Website_UpdateDec2024/MoU_2020-2021.pdf" },
+  { label: "MoU 2019–2020", url: "https://www.itmgoi.in/IQAC/docs/Website_UpdateDec2024/MoU_2019-2020.pdf" },
+];
+
+const TAP_SHOWCASE = [
+  { src: "https://www.itmgoi.in/assets2/images/ITM_Gwalior_Major_Recruiter.jpg", alt: "Major Recruiters at ITM Gwalior" },
+  { src: "https://www.itmgoi.in/assets2/images/itm_gwalior_placement.jpg", alt: "ITM Gwalior Placement Drive" },
 ];
 
 const INDUSTRY_SPEAK = [
@@ -121,9 +135,11 @@ const INDUSTRY_SPEAK = [
   { name: "Akhil James", role: "HR Specialist, FedEx", text: "Had a great experience visiting ITM. Courtesy campus members really appreciate the efforts and support provided. Well-groomed and prepared students.", initials: "AJ", accent: "from-violet-500 to-indigo-700" },
   { name: "Amrita Paul", role: "DGM, IBM India", text: "Good Campus. Got lot of support from the staff, well organised. It was a pleasure being here.", initials: "AP", accent: "from-cyan-500 to-blue-700" },
   { name: "Ms. Shazia Siddiqui", role: "HR Manager, Infosys Technologies", text: "Extremely impressive infrastructure. A good team of officials with a good vision for the institute and the students. The students will definitely be groomed into good professionals.", initials: "SS", accent: "from-lime-500 to-green-700" },
+  { name: "Achu Mani", role: "Senior Analyst, Mphasis", text: "It was a good batch that we interviewed. Good luck to each of them.", initials: "AM", accent: "from-teal-500 to-cyan-700" },
+  { name: "Varun Jain", role: "Senior Project Manager, Infosys Limited", text: "Overall good performance by students. Impressive communication skills.", initials: "VJ", accent: "from-blue-500 to-sky-700" },
 ];
 
-const TOP_RECRUITERS = ["TCS", "Wipro", "Cognizant", "ICICI", "Xiaomi", "VISA Steel", "Thermax", "FedEx", "Mphasis", "IBM India", "Infosys"];
+const TOP_RECRUITERS = ["TCS", "Wipro", "Cognizant", "ICICI", "Xiaomi", "VISA Steel", "Thermax", "FedEx", "Mphasis", "IBM India", "Infosys Technologies", "Infosys Limited"];
 
 // ─── animated counter ─────────────────────────────────
 function BigNumber({ value, suffix = "" }) {
@@ -316,8 +332,10 @@ export default function TapPage() {
                   className="group relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-xl transition-shadow p-5"
                 >
                   <div className="flex items-center gap-4">
-                    <div className={`shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${m.accent} text-white flex items-center justify-center font-black text-lg tracking-tight shadow-lg`}>
-                      {m.initials}
+                    <div className={`shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${m.accent} text-white flex items-center justify-center font-black text-lg tracking-tight shadow-lg overflow-hidden`}>
+                      {m.photo
+                        ? <img src={m.photo} alt={m.name} loading="lazy" decoding="async" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = "none"; }} />
+                        : m.initials}
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight">{m.name}</h4>
@@ -409,7 +427,11 @@ export default function TapPage() {
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-amber-100 to-transparent rounded-bl-full opacity-50"></div>
               <div className="relative flex items-start gap-5">
-                <div className="text-5xl shrink-0">{mou.logo}</div>
+                <div className="shrink-0 w-16 h-16 rounded-2xl bg-white border border-gray-100 dark:border-gray-700 flex items-center justify-center overflow-hidden p-1">
+                  {mou.logo_img
+                    ? <img src={mou.logo_img} alt={mou.name} loading="lazy" decoding="async" className="w-full h-full object-contain" onError={(e) => { e.target.replaceWith(Object.assign(document.createElement("span"), { textContent: mou.logo, className: "text-4xl" })); }} />
+                    : <span className="text-4xl">{mou.logo}</span>}
+                </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
                     <h3 className="font-black text-lg tracking-tight text-[#1a0606] dark:text-white">{mou.name}</h3>
@@ -429,19 +451,29 @@ export default function TapPage() {
           ))}
         </div>
 
-        {/* Training partners strip */}
-        <div className="bg-gradient-to-br from-gray-50 to-rose-50/40 dark:from-gray-900 dark:to-gray-900 rounded-3xl p-6 border border-rose-50 dark:border-gray-800">
-          <div className="flex items-center gap-2 mb-4">
-            <Building2 size={14} className="text-[#800000]" />
-            <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#800000]">
-              8+ Training Partners
-            </span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {TRAINING_PARTNERS.map((p) => (
-              <span key={p} className="text-xs font-black tracking-tight px-3 py-2 bg-white dark:bg-gray-800 text-[#1a0606] dark:text-white rounded-xl border border-gray-200 dark:border-gray-700">
-                {p}
+        {/* MoU documents + showcase */}
+        <div className="grid md:grid-cols-2 gap-4">
+          <div className="bg-gradient-to-br from-gray-50 to-rose-50/40 dark:from-gray-900 dark:to-gray-900 rounded-3xl p-6 border border-rose-50 dark:border-gray-800">
+            <div className="flex items-center gap-2 mb-4">
+              <FileDown size={14} className="text-[#800000]" />
+              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#800000]">
+                MoU Documents
               </span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {MOU_DOCS.map((d) => (
+                <a key={d.label} href={d.url} target="_blank" rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-black tracking-tight px-3 py-2 bg-white dark:bg-gray-800 text-[#800000] rounded-xl border border-rose-100 dark:border-gray-700 hover:bg-[#800000] hover:text-white hover:border-[#800000] transition-colors">
+                  <FileDown size={11} /> {d.label}
+                </a>
+              ))}
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            {TAP_SHOWCASE.map((img) => (
+              <div key={img.alt} className="rounded-2xl overflow-hidden bg-rose-50 dark:bg-gray-800 aspect-video">
+                <img src={img.src} alt={img.alt} loading="lazy" decoding="async" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+              </div>
             ))}
           </div>
         </div>

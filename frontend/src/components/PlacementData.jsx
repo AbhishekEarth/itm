@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 export default function PlacementData() {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
-  const API_BASE_URL = "http://localhost:8000"; // Ensure this matches your Uvicorn port
+  const API_BASE_URL = "http://localhost:8000"; 
 
   useEffect(() => {
     const fetchRecords = async () => {

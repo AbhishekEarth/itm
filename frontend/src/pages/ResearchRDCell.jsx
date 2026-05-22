@@ -180,6 +180,7 @@ function BigNumber({ value, suffix = "" }) {
 export default function ResearchRDCell() {
   const [activeArea, setActiveArea] = useState(0);
   const [pubTab, setPubTab] = useState("papers");
+  const [showAllGallery, setShowAllGallery] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">
@@ -452,20 +453,27 @@ export default function ResearchRDCell() {
               Research in action.
             </h2>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 mb-12">
-            {RESEARCH_GALLERY.map((src, i) => (
-              <div key={i} className="aspect-square overflow-hidden rounded-xl">
-                <img src={src} alt={`Research activity ${i + 1}`} loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 mb-4">
+            {(showAllGallery ? RESEARCH_GALLERY : RESEARCH_GALLERY.slice(0, 8)).map((src, i) => (
+              <div key={i} className="aspect-square overflow-hidden rounded-xl bg-rose-50 dark:bg-gray-800">
+                <img src={src} alt={`Research activity ${i + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
               </div>
             ))}
           </div>
+          {!showAllGallery && (
+            <div className="text-center mb-12">
+              <button onClick={() => setShowAllGallery(true)} className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-gray-900 border border-rose-100 dark:border-gray-800 rounded-full text-[11px] font-black uppercase tracking-widest text-[#800000] hover:shadow-md transition-shadow">
+                Show all {RESEARCH_GALLERY.length} photos
+              </button>
+            </div>
+          )}
           <div className="grid md:grid-cols-2 gap-10">
             <div>
               <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-4">Book Covers · {BOOK_COVERS.length} publications</div>
               <div className="grid grid-cols-5 sm:grid-cols-6 gap-2">
                 {BOOK_COVERS.map((src, i) => (
                   <div key={i} className="aspect-[3/4] overflow-hidden rounded-lg">
-                    <img src={src} alt={`Book cover ${i + 1}`} loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                    <img src={src} alt={`Book cover ${i + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
                   </div>
                 ))}
               </div>
@@ -475,7 +483,7 @@ export default function ResearchRDCell() {
               <div className="grid grid-cols-4 gap-2">
                 {RESEARCH_PAPERS.map((src, i) => (
                   <div key={i} className="aspect-[3/4] overflow-hidden rounded-lg">
-                    <img src={src} alt={`Research paper ${i + 1}`} loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                    <img src={src} alt={`Research paper ${i + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
                   </div>
                 ))}
               </div>

@@ -16,8 +16,7 @@ class Settings(BaseSettings):
     APP_VERSION: str = "1.0.0"
     DEBUG: bool = False
 
-    # SQLite by default; swap to postgresql+psycopg2://... in .env for production
-    DATABASE_URL: str = f"sqlite:///{BASE_DIR / 'itm.db'}"
+    DATABASE_URL: str = "postgresql+psycopg2://postgres:ssss@localhost:5432/itmgoi"
 
     # Generate a strong key: python -c "import secrets; print(secrets.token_hex(32))"
     SECRET_KEY: str = "change-me-before-going-to-production"
