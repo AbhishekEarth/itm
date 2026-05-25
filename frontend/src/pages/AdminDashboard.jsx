@@ -1,0 +1,129 @@
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
+import {
+  GraduationCap, Users, Calendar, Image, Music,
+  LogOut, ChevronRight, LayoutDashboard, Plus
+} from 'lucide-react';
+
+function StatCard({ icon: Icon, label, value, color, to }) {
+  return (
+    <Link to={to} className="group bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md p-6 flex items-center gap-4 transition-all hover:-translate-y-0.5">
+      <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${color}`}>
+        <Icon size={22} className="text-white" />
+      </div>
+      <div className="flex-1">
+        <p className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">{value ?? '—'}</p>
+        <p className="text-[11px] font-black uppercase tracking-widest text-gray-400 mt-0.5">{label}</p>
+      </div>
+      <ChevronRight size={16} className="text-gray-300 group-hover:text-[#800000] group-hover:translate-x-0.5 transition-all" />
+    </Link>
+  );
+}
+
+function ActionCard({ icon: Icon, label, desc, to, accent }) {
+  return (
+    <Link
+      to={to}
+      className="group relative overflow-hidden bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-lg p-6 transition-all hover:-translate-y-1 block"
+    >
+      <div className={`absolute -top-6 -right-6 w-24 h-24 rounded-full opacity-10 ${accent}`} />
+      <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${accent}`}>
+        <Icon size={20} className="text-white" />
+      </div>
+      <h3 className="font-black text-base text-gray-900 dark:text-white tracking-tight flex items-center gap-2">
+        {label}
+        <Plus size={14} className="text-gray-300 group-hover:text-[#800000] transition-colors" />
+      </h3>
+      <p className="text-xs text-gray-500 font-medium mt-1 leading-relaxed">{desc}</p>
+    </Link>
+  );
+}
+
+export default function AdminDashboard() {
+  const { logout, token } = useAuth();
+  const navigate = useNavigate();
+  const [stats, setStats] = useState({});
+
+  useEffect(() => {
+    const headers = { Authorization: `Bearer ${token}` };
+    Promise.all([
+      axios.get('/api/faculty/', { headers }).catch(() => ({ data: [] })),
+      axios.get('/api/students/', { headers }).catch(() => ({ data: [] })),
+      axios.get('/api/events/all').catch(() => ({ data: { upcoming: [], past: [] } })),
+      axios.get('/api/pac/all').catch(() => ({ data: [] })),
+      axios.get('/api/placements/all').catch(() => ({ data: [] })),
+    ]).then(([fac, stu, ev, pac, pl]) => {
+      setStats({
+        faculty: fac.data.length,
+        students: stu.data.length,
+        events: (ev.data.upcoming?.length ?? 0) + (ev.data.past?.length ?? 0),
+        pac: pac.data.length,
+        placements: pl.data.length,
+      });
+    });
+  }, [token]);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/admin/login', { replace: true });
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-[#020617]">
+
+      {/* Top bar */}
+      <header className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 sticky top-0 z-20 shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#800000] to-[#3e0202] flex items-center justify-center">
+              <LayoutDashboard size={14} className="text-white" />
+            </div>
+            <span className="font-black text-sm text-gray-900 dark:text-white tracking-tight">ITM Admin</span>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-gray-400 hover:text-[#800000] transition-colors"
+          >
+            <LogOut size={13} /> Logout
+          </button>
+        </div>
+      </header>
+
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-10">
+
+        {/* Hero */}
+        <div>
+          <h1 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">Dashboard</h1>
+          <p className="text-sm text-gray-500 font-medium mt-1">Manage all content for the ITM Gwalior website.</p>
+        </div>
+
+        {/* Stats grid */}
+        <div>
+          <h2 className="text-[11px] font-black uppercase tracking-widest text-gray-400 mb-4">Overview</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <StatCard icon={GraduationCap} label="Faculty Members"  value={stats.faculty}     color="bg-gradient-to-br from-[#800000] to-[#3e0202]" to="/admin/faculty" />
+            <StatCard icon={Users}         label="Students"          value={stats.students}    color="bg-gradient-to-br from-indigo-500 to-indigo-700"  to="/admin/students" />
+            <StatCard icon={Calendar}      label="TAP Events"        value={stats.events}      color="bg-gradient-to-br from-emerald-500 to-teal-700"    to="/admin/tap" />
+            <StatCard icon={Music}         label="PAC Events"        value={stats.pac}         color="bg-gradient-to-br from-amber-500 to-orange-600"    to="/admin/pac" />
+            <StatCard icon={Image}         label="Placement Logos"   value={stats.placements}  color="bg-gradient-to-br from-rose-500 to-pink-700"       to="/admin/placements" />
+          </div>
+        </div>
+
+        {/* Quick actions */}
+        <div>
+          <h2 className="text-[11px] font-black uppercase tracking-widest text-gray-400 mb-4">Manage Sections</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <ActionCard icon={GraduationCap} label="Faculty"       desc="Add, view and remove faculty members by department."     to="/admin/faculty"     accent="bg-gradient-to-br from-[#800000] to-[#3e0202]" />
+            <ActionCard icon={Users}         label="Students"      desc="Register students, filter by year and department."       to="/admin/students"    accent="bg-gradient-to-br from-indigo-500 to-indigo-700" />
+            <ActionCard icon={Calendar}      label="TAP Events"    desc="Post upcoming campus drives, internships and talks."     to="/admin/tap"         accent="bg-gradient-to-br from-emerald-500 to-teal-700" />
+            <ActionCard icon={Music}         label="PAC Events"    desc="Upload cultural event highlights with gallery images."   to="/admin/pac"         accent="bg-gradient-to-br from-amber-500 to-orange-600" />
+            <ActionCard icon={Image}         label="Placements"    desc="Upload recruiter logos shown on the placements page."   to="/admin/placements"  accent="bg-gradient-to-br from-rose-500 to-pink-700" />
+          </div>
+        </div>
+
+      </main>
+    </div>
+  );
+}
