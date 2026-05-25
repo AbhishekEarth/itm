@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Briefcase, GraduationCap, FlaskConical, ArrowUpRight } from "lucide-react";
+import { Briefcase, GraduationCap, ArrowUpRight } from "lucide-react";
 
 const CATEGORIES = [
   {
@@ -20,15 +20,6 @@ const CATEGORIES = [
     folder: "Management",
     count: 37,
     accent: "from-amber-500 to-orange-600",
-  },
-  {
-    id: "lifesci",
-    label: "Life Sciences & Pharmacy",
-    short: "Life Sci",
-    icon: FlaskConical,
-    folder: "Life_Sciences_Pharmacy",
-    count: 35,
-    accent: "from-emerald-500 to-teal-700",
   },
 ];
 

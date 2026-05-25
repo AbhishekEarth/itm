@@ -1,15 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import slider1 from "../assets/slider1.jpg";
+import slider2 from "../assets/slider2.jpg";
 
-const images = [
-  "/images/hero/slider1.jpg",
-  "/images/hero/slider2.jpg",
-  "/images/hero/slider3.jpg",
-  "/images/hero/slider4.jpg",
-  "/images/hero/slider5.jpg",
-  "/images/hero/slider9.jpg",
-  "/images/hero/slider10.png",
-];
+const images = [slider1, slider2];
 
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -24,7 +18,7 @@ export default function Hero() {
   return (
     <section className="relative min-h-[100vh] flex items-center overflow-hidden bg-[#020617] pt-[150px] md:pt-[180px] pb-24">
 
-      <div className="absolute left-0 right-0 bottom-0 top-[120px] md:top-[150px] z-0 overflow-hidden bg-[#020617]">
+      <div className="absolute inset-0 z-0 overflow-hidden bg-[#020617]">
         {images.map((src, i) => (
           <img
             key={src}
@@ -35,12 +29,12 @@ export default function Hero() {
             className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ${
               i === currentIndex ? "opacity-100" : "opacity-0"
             }`}
-            style={{ filter: "brightness(0.9) saturate(1.05) contrast(1.02)", objectPosition: "center center" }}
+            style={{ filter: "saturate(1.05) contrast(1.02)", objectPosition: "center center" }}
           />
         ))}
 
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 to-black/0 z-[1]" />
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/45 to-transparent z-[1]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-transparent z-[1]" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/40 to-transparent z-[1]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">

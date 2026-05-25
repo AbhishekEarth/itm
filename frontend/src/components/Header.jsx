@@ -227,7 +227,7 @@ export default function Header() {
         {/* top + bottom gold hairlines */}
         <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-300/70 to-transparent" />
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-amber-300/40 to-transparent" />
-        <div className="relative max-w-[1500px] mx-auto px-6 lg:px-10 flex justify-between items-center py-1.5">
+        <div className="relative w-full px-4 lg:px-8 flex justify-between items-center py-1.5">
           <div className="flex items-center gap-2 text-[11px] font-medium tracking-wide text-white/85">
             <span>Developed By</span>
             <span className="text-white/30">—</span>
@@ -298,20 +298,19 @@ export default function Header() {
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent dark:via-amber-300/40" />
 
         <div
-          className={`relative max-w-[1500px] mx-auto px-6 lg:px-10 flex items-center justify-between transition-[padding] duration-300 ease-out ${
+          className={`relative w-full px-4 lg:px-8 flex items-center justify-between transition-[padding] duration-300 ease-out ${
             isScrolled ? "py-2.5" : "py-4"
           }`}
         >
-          {/* LOGO GROUP — single flex row, all images vertically centered, uniform badge heights */}
-          <div className="flex items-center gap-4 lg:gap-6 shrink-0 min-w-0">
+          {/* LOGO GROUP — pinned to the far left edge */}
+          <div className="flex items-center gap-4 lg:gap-6 shrink-0 min-w-0 mr-auto">
             <Link to="/" className="group relative cursor-pointer flex items-center shrink-0">
-              <span className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-amber-300/0 via-sky-400/0 to-amber-300/0 group-hover:from-amber-300/15 group-hover:via-sky-400/10 group-hover:to-amber-300/10 transition-all duration-500" />
               <motion.img
                 whileHover={{ scale: 1.05, rotate: -2 }}
                 transition={{ type: "spring", stiffness: 300, damping: 18 }}
                 src={logo}
                 alt="ITM Logo"
-                className={`relative block object-contain transition-[height] duration-300 ease-out drop-shadow-[0_4px_18px_rgba(0,0,0,0.55)] ${
+                className={`relative block object-contain transition-[height] duration-300 ease-out ${
                   isScrolled ? "h-12 lg:h-14" : "h-14 lg:h-[68px]"
                 }`}
               />
@@ -327,7 +326,7 @@ export default function Header() {
                 whileHover={{ scale: 1.08 }}
                 src={YearsLogo}
                 alt="30 Years"
-                className={`block w-auto object-contain transition-[height] duration-300 ease-out drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)] ${
+                className={`block w-auto object-contain transition-[height] duration-300 ease-out ${
                   isScrolled ? "h-10 lg:h-12" : "h-12 lg:h-[58px]"
                 }`}
               />
@@ -335,7 +334,7 @@ export default function Header() {
                 whileHover={{ scale: 1.08 }}
                 src={NAACLogo}
                 alt="NAAC"
-                className={`block w-auto object-contain transition-[height] duration-300 ease-out drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)] ${
+                className={`block w-auto object-contain transition-[height] duration-300 ease-out ${
                   isScrolled ? "h-10 lg:h-12" : "h-12 lg:h-[58px]"
                 }`}
               />
@@ -343,15 +342,16 @@ export default function Header() {
                 whileHover={{ scale: 1.08 }}
                 src={NBALogo}
                 alt="NBA Accredited"
-                className={`block w-auto object-contain transition-[height] duration-300 ease-out drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)] ${
+                style={{ mixBlendMode: "multiply" }}
+                className={`block w-auto object-contain transition-[height] duration-300 ease-out bg-transparent ${
                   isScrolled ? "h-10 lg:h-12" : "h-12 lg:h-[58px]"
                 }`}
               />
             </div>
           </div>
 
-          {/* DESKTOP LINKS */}
-          <nav className="hidden xl:flex items-center gap-2" onMouseLeave={() => setHoveredItem(null)}>
+          {/* DESKTOP LINKS — pinned to the far right edge */}
+          <nav className="hidden xl:flex items-center gap-2 ml-auto" onMouseLeave={() => setHoveredItem(null)}>
             <div className="flex items-center gap-0.5 text-[13px] font-semibold rounded-full px-1.5 py-1 text-slate-800 bg-slate-100/80 border border-slate-200 shadow-[0_4px_24px_-6px_rgba(0,0,0,0.08)] dark:text-white dark:bg-white/5 dark:border-white/10 dark:shadow-[0_4px_24px_-6px_rgba(0,0,0,0.6)]">
             {/* simple links */}
             {[
@@ -547,8 +547,8 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* MOBILE CONTROLS */}
-          <div className="xl:hidden flex items-center gap-3">
+          {/* MOBILE CONTROLS — pinned to the far right edge */}
+          <div className="xl:hidden flex items-center gap-3 ml-auto">
             {/* Light / dark toggle — mobile */}
             <button
               type="button"
