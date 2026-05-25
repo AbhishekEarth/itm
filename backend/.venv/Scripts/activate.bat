@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\aarav\Desktop\ITMGOI-Frontend-main\backend\.venv
+set VIRTUAL_ENV=C:\ITM_WEB\ITMGOI-Frontend\backend\.venv
 
 if not defined PROMPT set PROMPT=$P$G
 

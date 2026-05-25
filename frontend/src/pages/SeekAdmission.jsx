@@ -17,6 +17,21 @@ import {
   Building2,
   Clock,
   AlertCircle,
+  // Added for dynamic program icons mapping:
+  Monitor,
+  BrainCircuit,
+  BarChart3,
+  ShieldCheck,
+  Globe,
+  Network,
+  Radio,
+  Cog,
+  FlaskConical,
+  Code2,
+  Briefcase,
+  GraduationCap,
+  Cpu,
+  TrendingUp,
 } from "lucide-react";
 import {
   ADMISSION_STEPS,
@@ -29,6 +44,39 @@ import {
   UG_PROGRAMS,
   PG_PROGRAMS,
 } from "../data/admissions_data";
+
+// ─── icon map: string name → Lucide component ─────────
+const ICON_MAP = {
+  Monitor,
+  BrainCircuit,
+  BarChart3,
+  ShieldCheck,
+  Globe,
+  Network,
+  Radio,
+  Cog,
+  Building2,
+  FlaskConical,
+  Code2,
+  Briefcase,
+  GraduationCap,
+  Cpu,
+  TrendingUp,
+};
+
+/** Renders a Lucide icon with optional wrapping container */
+function ProgramIcon({ name, size = 28, className = "", wrapClass = "" }) {
+  const Icon = ICON_MAP[name];
+  if (!Icon) return null;
+  if (wrapClass) {
+    return (
+      <div className={wrapClass}>
+        <Icon size={size} className={className} strokeWidth={1.8} />
+      </div>
+    );
+  }
+  return <Icon size={size} className={className} strokeWidth={1.8} />;
+}
 
 // ─── Eligibility wizard logic ────────────────────────────────────────
 function matchPrograms({ level, stream, percent, category }) {
@@ -216,7 +264,7 @@ export default function SeekAdmission() {
                           onClick={() => setWiz({ ...wiz, stream: s.id })}
                           className={`text-left p-3 rounded-2xl border-2 transition-all ${
                             wiz.stream === s.id
-                              ? "border-[#800000] bg-rose-50"
+                              ? "border-[#800000] bg-rose-50 dark:bg-[#800000]/30"
                               : "border-gray-100 dark:border-gray-800 hover:border-rose-200"
                           }`}
                         >
@@ -233,7 +281,7 @@ export default function SeekAdmission() {
                           onClick={() => setWiz({ ...wiz, stream: s.id })}
                           className={`text-left p-3 rounded-2xl border-2 transition-all ${
                             wiz.stream === s.id
-                              ? "border-[#800000] bg-rose-50"
+                              ? "border-[#800000] bg-rose-50 dark:bg-[#800000]/30"
                               : "border-gray-100 dark:border-gray-800 hover:border-rose-200"
                           }`}
                         >
@@ -333,7 +381,12 @@ export default function SeekAdmission() {
                     >
                       <div className={`absolute top-0 left-5 right-5 h-1 bg-gradient-to-r ${p.accent} rounded-b-full`}></div>
                       <div className="flex items-start justify-between mb-3 mt-1">
-                        <span className="text-3xl">{p.icon}</span>
+                        <ProgramIcon
+                          name={p.icon}
+                          size={24}
+                          className="text-[#800000] dark:text-rose-200"
+                          wrapClass="w-10 h-10 rounded-xl bg-rose-50 dark:bg-gray-800 flex items-center justify-center"
+                        />
                         <span className="text-[9px] font-black uppercase tracking-widest text-gray-400 bg-gray-50 dark:bg-gray-800 px-2 py-0.5 rounded">
                           {p.code}
                         </span>
@@ -342,10 +395,10 @@ export default function SeekAdmission() {
                         {p.name}
                       </h4>
                       <div className="flex flex-wrap gap-1.5">
-                        <span className="text-[9px] uppercase tracking-widest font-black px-2 py-1 bg-rose-50 text-[#800000] rounded">
+                        <span className="text-[9px] uppercase tracking-widest font-black px-2 py-1 bg-rose-50 text-[#800000] dark:bg-rose-950/40 dark:text-rose-300 rounded">
                           {p.seats} seats
                         </span>
-                        <span className="text-[9px] uppercase tracking-widest font-black px-2 py-1 bg-gray-100 text-gray-600 rounded">
+                        <span className="text-[9px] uppercase tracking-widest font-black px-2 py-1 bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400 rounded">
                           {p.duration}
                         </span>
                       </div>
@@ -367,7 +420,7 @@ export default function SeekAdmission() {
                 </a>
                 <a
                   href="#fees"
-                  className="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white px-5 py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:bg-gray-200 transition-colors"
+                  className="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white px-5 py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                 >
                   <Calculator size={12} /> Estimate Fees
                 </a>

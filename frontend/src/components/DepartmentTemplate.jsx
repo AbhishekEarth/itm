@@ -29,6 +29,7 @@ import {
   HandCoins,
 } from "lucide-react";
 import { DEPT_LIST } from "../data/departments_v2";
+import EmojiToIcon from "./EmojiToIcon";
 
 function BigNumber({ value, suffix = "" }) {
   const ref = useRef(null);
@@ -126,7 +127,9 @@ export default function DepartmentTemplate({ dept }) {
                 <Sparkles size={12} /> {dept.badge}
               </span>
               <div className="flex items-center gap-4 mb-3">
-                <span className="text-5xl md:text-6xl">{dept.icon}</span>
+                <span className="text-amber-200 shrink-0">
+                  <EmojiToIcon emoji={dept.icon} size={48} />
+                </span>
                 <div>
                   <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-200 mb-1">Department of</div>
                   <h1 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.04em] leading-[0.95]">{dept.name}</h1>
@@ -144,7 +147,7 @@ export default function DepartmentTemplate({ dept }) {
                 <div className="flex flex-wrap gap-2 mt-3">
                   {dept.chips.map(([icon, label]) => (
                     <span key={label} className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur border border-white/20 rounded-full text-[10px] font-black uppercase tracking-widest">
-                      <span>{icon}</span>{label}
+                      <EmojiToIcon emoji={icon} size={11} className="shrink-0 text-amber-200" />{label}
                     </span>
                   ))}
                 </div>
@@ -307,7 +310,9 @@ export default function DepartmentTemplate({ dept }) {
                           {dept.features.map((f, i) => (
                             <motion.div key={f.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
                               className="flex items-start gap-3 p-4 bg-gradient-to-br from-rose-50/60 to-white dark:from-gray-800 dark:to-gray-900 border border-rose-100 dark:border-gray-700 rounded-2xl hover:shadow-md transition-shadow">
-                              <span className="text-3xl shrink-0">{f.icon}</span>
+                              <span className="shrink-0 text-[#800000] dark:text-rose-300">
+                                <EmojiToIcon emoji={f.icon} size={28} />
+                              </span>
                               <div>
                                 <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{f.title}</h4>
                                 <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{f.sub}</p>
@@ -381,7 +386,9 @@ export default function DepartmentTemplate({ dept }) {
                             {dept.hodHighlights.map((h, i) => (
                               <motion.div key={h.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
                                 className="p-4 bg-gradient-to-br from-rose-50/60 to-white dark:from-gray-800 dark:to-gray-900 border border-rose-100 dark:border-gray-700 rounded-2xl">
-                                <div className="text-2xl mb-2">{h.icon}</div>
+                                <div className="text-[#800000] dark:text-rose-300 mb-2">
+                                  <EmojiToIcon emoji={h.icon} size={24} />
+                                </div>
                                 <h5 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{h.title}</h5>
                                 <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{h.sub}</p>
                               </motion.div>
@@ -510,7 +517,9 @@ export default function DepartmentTemplate({ dept }) {
                           <motion.div key={lab.name} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }}
                             className="bg-gradient-to-br from-white to-rose-50/40 dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl p-5 hover:shadow-md transition-shadow">
                             <div className="flex items-start gap-3">
-                              <div className="text-3xl shrink-0">{lab.icon}</div>
+                              <div className="shrink-0 text-[#800000] dark:text-rose-300">
+                                <EmojiToIcon emoji={lab.icon} size={28} />
+                              </div>
                               <div>
                                 <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{lab.name}</h4>
                                 <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{lab.desc}</p>
@@ -538,13 +547,15 @@ export default function DepartmentTemplate({ dept }) {
                       {dept.subUnits.map((u) => (
                         <div key={u.name} className="bg-gradient-to-br from-white to-rose-50/40 dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl p-6">
                           <div className="flex items-start gap-4">
-                            <div className="text-5xl shrink-0">{u.icon}</div>
+                            <div className="shrink-0 text-[#800000] dark:text-rose-300">
+                              <EmojiToIcon emoji={u.icon} size={44} />
+                            </div>
                             <div>
                               <h3 className="font-black text-lg text-[#1a0606] dark:text-white tracking-tight mb-2">{u.name}</h3>
                               <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium mb-3">{u.desc}</p>
                               {u.research && (
-                                <div className="text-xs text-emerald-700 font-bold italic bg-emerald-50 rounded-xl px-3 py-2">
-                                  💡 {u.research}
+                                <div className="text-xs text-emerald-700 font-bold italic bg-emerald-50 rounded-xl px-3 py-2 flex items-center gap-1">
+                                  <EmojiToIcon emoji="💡" size={13} className="shrink-0" /> {u.research}
                                 </div>
                               )}
                             </div>
@@ -602,7 +613,9 @@ export default function DepartmentTemplate({ dept }) {
                       {dept.infra.map((i, idx) => (
                         <motion.div key={i.name} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.04 }}
                           className="flex items-center gap-3 bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl p-4 hover:shadow-md transition-shadow">
-                          <span className="text-3xl">{i.icon}</span>
+                          <span className="text-[#800000] dark:text-rose-300">
+                            <EmojiToIcon emoji={i.icon} size={28} />
+                          </span>
                           <span className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight">{i.name}</span>
                         </motion.div>
                       ))}
@@ -712,7 +725,9 @@ export default function DepartmentTemplate({ dept }) {
                           {dept.placement.highlights.map((h, i) => (
                             <motion.div key={h.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
                               className="p-5 bg-gradient-to-br from-rose-50/60 to-white dark:from-gray-800 dark:to-gray-800 border border-rose-100 dark:border-gray-700 rounded-2xl">
-                              <div className="text-3xl mb-3">{h.icon}</div>
+                              <div className="text-[#800000] dark:text-rose-300 mb-3">
+                                <EmojiToIcon emoji={h.icon} size={28} />
+                              </div>
                               <h5 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{h.title}</h5>
                               <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{h.sub}</p>
                             </motion.div>
@@ -770,7 +785,9 @@ export default function DepartmentTemplate({ dept }) {
               <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
                 {otherDepts.map((d) => (
                   <Link key={d.id} to={d.subPath} className="group text-center p-3 bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-xl hover:shadow-lg hover:border-[#800000] transition-all">
-                    <div className="text-2xl mb-1 group-hover:scale-110 transition-transform">{d.icon}</div>
+                    <div className="text-gray-600 dark:text-gray-300 group-hover:text-[#800000] dark:group-hover:text-rose-300 mb-1 group-hover:scale-110 transition-transform flex justify-center">
+                      <EmojiToIcon emoji={d.icon} size={24} />
+                    </div>
                     <div className="text-[9px] uppercase tracking-widest font-black text-gray-500 dark:text-gray-400 group-hover:text-[#800000]">{d.code}</div>
                   </Link>
                 ))}
