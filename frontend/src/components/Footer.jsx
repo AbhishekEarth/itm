@@ -98,7 +98,7 @@ export default function Footer() {
 
             {/* Accreditation badges */}
             <div className="flex flex-wrap gap-2">
-              {["NAAC A+", "NBA", "AICTE", "RGPV"].map((b) => (
+              {["NAAC Grade A", "NBA", "AICTE", "RGPV"].map((b) => (
                 <span
                   key={b}
                   className="text-[9px] font-black uppercase tracking-widest px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-amber-300"
@@ -176,14 +176,14 @@ export default function Footer() {
               <div className="flex items-start gap-2.5 text-gray-300">
                 <MapPin size={14} className="mt-1 text-[#800000] shrink-0" />
                 <span className="text-xs font-medium leading-relaxed">
-                  NH-75 Sithouli, Jhansi Road, Gwalior – 475001, M.P.
+                  45XQ+27R, Nh-75, opp. Sithouli Railway Station, Sithouli, Gwalior, Madhya Pradesh 474001
                 </span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Map */}
+        {/* Google Map — free embed, no API key needed */}
         <div className="mb-12">
           <h4 className="text-amber-300 font-black uppercase tracking-[0.25em] text-[10px] mb-4 flex items-center gap-2">
             <MapPin size={12} /> Find Us on the Map
@@ -191,21 +191,25 @@ export default function Footer() {
           <div className="rounded-2xl overflow-hidden border border-white/10">
             <iframe
               title="ITM Gwalior Location"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=78.1406%2C26.1325%2C78.1606%2C26.1565&layer=mapnik&marker=26.1445%2C78.1506"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3581.5644837840134!2d78.188140625!3d26.1476125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3976c12c5b0586e9%3A0x600c3b01859c7625!2sITM%20University%2C%20Gwalior!5e1!3m2!1sen!2sin!4v1716358261000!5m2!1sen!2sin"
               width="100%"
-              height="280"
+              height="300"
               loading="lazy"
-              style={{ border: 0, display: "block" }}
+              referrerPolicy="no-referrer-when-downgrade"
+              style={{ border: 0, display: "block", filter: "brightness(0.85) contrast(1.1) saturate(0.8)" }}
               allowFullScreen
             />
-            <div className="bg-white/5 px-4 py-2 text-center">
+            <div className="bg-white/5 px-4 py-2.5 flex items-center justify-between">
+              <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">
+                45XQ+27R, Nh-75, opp. Sithouli Railway Station, Sithouli, Gwalior, Madhya Pradesh 474001
+              </span>
               <a
-                href="https://www.openstreetmap.org/?mlat=26.1445&mlon=78.1506#map=15/26.1445/78.1506"
+                href="https://www.bing.com/maps/search?FORM=HDRSC6&style=h&q=ITM+Gwalior&ss=id.ypid%3A9E50EDE66558A167"
                 target="_blank"
                 rel="noreferrer"
                 className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-amber-300 transition-colors inline-flex items-center gap-1"
               >
-                Open in OpenStreetMap <ArrowUpRight size={10} />
+                Open in Bing Maps <ArrowUpRight size={10} />
               </a>
             </div>
           </div>

@@ -20,18 +20,47 @@ import {
   Table2,
   ClipboardList,
   HelpCircle,
+  Monitor,
+  Cpu,
+  Wallet,
+  Handshake,
 } from "lucide-react";
 import { PG_PROGRAMS, SELECTION_PROCESS } from "../data/admissions_data";
+
+// ─── icon map: string name → Lucide component ─────────
+const PG_ICON_MAP = {
+  GraduationCap,
+  Cpu,
+  TrendingUp,
+  Monitor,
+  Wallet,
+  Handshake,
+  Award,
+};
+
+/** Renders a Lucide icon with optional wrapping container */
+function ProgramIcon({ name, size = 28, className = "", wrapClass = "" }) {
+  const Icon = PG_ICON_MAP[name];
+  if (!Icon) return null;
+  if (wrapClass) {
+    return (
+      <div className={wrapClass}>
+        <Icon size={size} className={className} strokeWidth={1.8} />
+      </div>
+    );
+  }
+  return <Icon size={size} className={className} strokeWidth={1.8} />;
+}
 
 // ─── Official PG Admission Table (verbatim from itmgoi.in) ───────
 const OFFICIAL_PG_TABLE = {
   degree: "ITM (Institute of Technology & Management) — PG",
   intro: "The institute offers the following Postgraduate degree programmes.",
   rows: [
-    { name: "M.Tech. (CS)", seats: 9, elig: "B.E./B. Tech. in concerned Branch", duration: "2 Years", icon: "🎓" },
-    { name: "M.Tech. (VLSI)", seats: 9, elig: "B.E./B. Tech. in concerned Branch", duration: "2 Years", icon: "🔬" },
-    { name: "MBA (MM, FM, HR)", seats: 120, elig: "Any Graduate with 50 % Marks.", duration: "2 Years", icon: "📈" },
-    { name: "MCA", seats: 60, elig: "Any Graduate with Mathematics / Physics at 10+2 level.", duration: "2 Years", icon: "💻" },
+    { name: "M.Tech. (CS)", seats: 9, elig: "B.E./B. Tech. in concerned Branch", duration: "2 Years", icon: "GraduationCap" },
+    { name: "M.Tech. (VLSI)", seats: 9, elig: "B.E./B. Tech. in concerned Branch", duration: "2 Years", icon: "Cpu" },
+    { name: "MBA (MM, FM, HR)", seats: 120, elig: "Any Graduate with 50 % Marks.", duration: "2 Years", icon: "TrendingUp" },
+    { name: "MCA", seats: 60, elig: "Any Graduate with Mathematics / Physics at 10+2 level.", duration: "2 Years", icon: "Monitor" },
   ],
 };
 
@@ -48,7 +77,7 @@ const MBA_STREAMS = [
     id: "mm",
     name: "Marketing Management",
     code: "MM",
-    icon: "📈",
+    icon: "TrendingUp",
     accent: "from-rose-500 to-[#800000]",
     careers: ["Brand Manager", "Sales Head", "Digital Marketing Lead", "Product Marketer"],
     topics: ["Consumer Behaviour", "Sales Strategy", "Digital Marketing", "Marketing Research", "Brand Management"],
@@ -58,7 +87,7 @@ const MBA_STREAMS = [
     id: "fm",
     name: "Financial Management",
     code: "FM",
-    icon: "💰",
+    icon: "Wallet",
     accent: "from-amber-500 to-orange-600",
     careers: ["Financial Analyst", "Investment Banker", "Treasury Manager", "Wealth Advisor"],
     topics: ["Corporate Finance", "Equity Research", "Risk Management", "Banking Operations", "Derivatives"],
@@ -68,7 +97,7 @@ const MBA_STREAMS = [
     id: "hr",
     name: "Human Resources",
     code: "HR",
-    icon: "🤝",
+    icon: "Handshake",
     accent: "from-emerald-500 to-teal-700",
     careers: ["HR Business Partner", "Talent Acquisition", "L&D Manager", "Comp & Benefits"],
     topics: ["Organisational Behaviour", "Talent Management", "Industrial Relations", "Comp & Benefits", "HR Analytics"],
@@ -206,7 +235,12 @@ export default function PGCourses() {
               >
                 {active === p.id && <motion.div layoutId="pg-active-bar" className={`absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b ${p.accent}`} />}
                 <div className="p-5 flex items-center gap-4">
-                  <div className="text-3xl">{p.icon}</div>
+                  <ProgramIcon
+                    name={p.icon}
+                    size={24}
+                    className="text-[#800000]"
+                    wrapClass="w-10 h-10 rounded-xl bg-rose-50 dark:bg-gray-800 flex items-center justify-center shrink-0"
+                  />
                   <div className="flex-1 min-w-0">
                     <div className="text-[9px] font-black uppercase tracking-widest text-gray-400 mb-0.5">{p.code}</div>
                     <h4 className="font-black text-sm text-gray-900 dark:text-white tracking-tight leading-snug truncate">{p.short}</h4>
@@ -234,7 +268,12 @@ export default function PGCourses() {
                 <div className="p-8 md:p-10 relative">
                   <div className="flex items-start justify-between mb-6">
                     <div>
-                      <div className="text-5xl mb-3">{activeProgram.icon}</div>
+                      <ProgramIcon
+                        name={activeProgram.icon}
+                        size={36}
+                        className="text-[#800000]"
+                        wrapClass="w-16 h-16 rounded-2xl bg-rose-50 dark:bg-gray-800 flex items-center justify-center mb-3"
+                      />
                       <span className="text-[10px] font-black uppercase tracking-widest text-[#800000]">{activeProgram.code}</span>
                       <h3 className="font-black text-2xl md:text-3xl tracking-tighter text-gray-900 dark:text-white leading-tight mt-1">
                         {activeProgram.name}
@@ -280,7 +319,12 @@ export default function PGCourses() {
                               mbaStream === s.id ? "border-[#800000] bg-white dark:bg-gray-900 shadow-lg" : "border-transparent bg-white/50 dark:bg-gray-900/50 hover:bg-white dark:hover:bg-gray-900"
                             }`}
                           >
-                            <div className="text-2xl mb-1">{s.icon}</div>
+                            <ProgramIcon
+                              name={s.icon}
+                              size={20}
+                              className="text-[#800000]"
+                              wrapClass="w-9 h-9 rounded-xl bg-rose-50 dark:bg-gray-800 flex items-center justify-center mb-1"
+                            />
                             <div className="text-[9px] uppercase tracking-widest font-black text-gray-400">{s.code}</div>
                             <div className="text-xs font-black text-[#1a0606] dark:text-white tracking-tight">{s.name}</div>
                           </button>
@@ -459,7 +503,9 @@ export default function PGCourses() {
         >
           {/* Programme header */}
           <div className="relative overflow-hidden bg-gradient-to-r from-[#3e0202] via-[#800000] to-[#5a0000] text-white p-6 md:p-7">
-            <div className="absolute -top-12 -right-12 text-[12rem] opacity-10 pointer-events-none leading-none">🎓</div>
+            <div className="absolute -top-12 -right-12 opacity-10 pointer-events-none leading-none">
+              <ProgramIcon name="GraduationCap" size={180} className="text-white" />
+            </div>
             <div className="relative flex flex-wrap items-end justify-between gap-3">
               <div>
                 <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-300 mb-1">Programmes Offered</div>
@@ -499,7 +545,12 @@ export default function PGCourses() {
                     </td>
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        <span className="text-2xl shrink-0">{row.icon}</span>
+                        <ProgramIcon
+                          name={row.icon}
+                          size={18}
+                          className="text-[#800000]"
+                          wrapClass="w-8 h-8 rounded-lg bg-rose-50 dark:bg-gray-800 flex items-center justify-center shrink-0"
+                        />
                         <span className="font-black text-[#1a0606] dark:text-white tracking-tight">{row.name}</span>
                       </div>
                     </td>
@@ -538,7 +589,12 @@ export default function PGCourses() {
               <div key={row.name} className="p-4">
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div className="flex items-center gap-2 flex-1">
-                    <span className="text-2xl shrink-0">{row.icon}</span>
+                    <ProgramIcon
+                      name={row.icon}
+                      size={18}
+                      className="text-[#800000]"
+                      wrapClass="w-8 h-8 rounded-lg bg-rose-50 dark:bg-gray-800 flex items-center justify-center shrink-0"
+                    />
                     <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug">{row.name}</h4>
                   </div>
                   <span className="shrink-0 inline-flex items-center justify-center min-w-[2.5rem] px-2 py-1 bg-[#800000] text-white rounded-lg font-black text-xs">
@@ -600,7 +656,12 @@ export default function PGCourses() {
                   <tr key={p.id} className={`border-t border-rose-50 dark:border-gray-800 ${i % 2 ? "bg-rose-50/30 dark:bg-gray-900/50" : ""} hover:bg-rose-50 dark:hover:bg-gray-800/50 transition-colors`}>
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        <span className="text-xl">{p.icon}</span>
+                        <ProgramIcon
+                          name={p.icon}
+                          size={18}
+                          className="text-[#800000]"
+                          wrapClass="w-8 h-8 rounded-lg bg-rose-50 dark:bg-gray-800 flex items-center justify-center shrink-0"
+                        />
                         <span className="font-black text-gray-900 dark:text-white tracking-tight">{p.short}</span>
                       </div>
                     </td>

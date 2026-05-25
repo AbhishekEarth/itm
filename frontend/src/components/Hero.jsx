@@ -42,7 +42,7 @@ export default function Hero() {
         ))}
 
         {/* Subtle Gradient to protect text legibility without hiding the photo */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/10 to-transparent dark:from-[#020617]/90 dark:via-[#020617]/20 dark:to-transparent z-[1]"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-white/55 via-white/5 to-transparent dark:from-[#020617]/90 dark:via-[#020617]/20 dark:to-transparent z-[1]"></div>
       </div>
 
       {/* --- CONTENT CONTAINER --- */}

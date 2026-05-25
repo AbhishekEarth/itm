@@ -26,8 +26,50 @@ import {
   FileText,
   ClipboardList,
   HelpCircle,
+  Monitor,
+  BrainCircuit,
+  BarChart3,
+  ShieldCheck,
+  Globe,
+  Network,
+  Radio,
+  Cog,
+  Building2,
+  FlaskConical,
+  Code2,
 } from "lucide-react";
 import { UG_PROGRAMS } from "../data/admissions_data";
+
+// ─── icon map: string name → Lucide component ─────────
+const ICON_MAP = {
+  Monitor,
+  BrainCircuit,
+  BarChart3,
+  ShieldCheck,
+  Globe,
+  Network,
+  Radio,
+  Cog,
+  Building2,
+  FlaskConical,
+  Code2,
+  Briefcase,
+  Award,
+};
+
+/** Renders the correct Lucide icon for a programme, with a gradient background circle */
+function ProgramIcon({ name, size = 28, className = "", wrapClass = "" }) {
+  const Icon = ICON_MAP[name];
+  if (!Icon) return null;
+  if (wrapClass) {
+    return (
+      <div className={wrapClass}>
+        <Icon size={size} className={className} strokeWidth={1.8} />
+      </div>
+    );
+  }
+  return <Icon size={size} className={className} strokeWidth={1.8} />;
+}
 
 // ─── Official Admission Tables (verbatim from itmgoi.in) ───────────
 const ELIG_PCM = "10+2 with PCM (Min. 45% for General, 40% for SC/ST/OBC)";
@@ -38,7 +80,7 @@ const OFFICIAL_TABLES = [
   {
     degree: "Bachelor of Technology (B.Tech)",
     short: "B.Tech",
-    icon: "🎓",
+    icon: "Award",
     duration: "4 Years",
     rows: [
       { name: "Computer Science Engineering", seats: 240, elig: ELIG_PCM },
@@ -55,14 +97,14 @@ const OFFICIAL_TABLES = [
   {
     degree: "Bachelor of Computer Application (BCA)",
     short: "BCA",
-    icon: "👨‍💻",
+    icon: "Code2",
     duration: "3 Years",
     rows: [{ name: "Bachelor of Computer Application", seats: 60, elig: ELIG_PCM_ALL }],
   },
   {
     degree: "Bachelor of Business Administration (BBA)",
     short: "BBA",
-    icon: "💼",
+    icon: "Briefcase",
     duration: "3 Years",
     rows: [{ name: "Bachelor of Business Administration", seats: 60, elig: ELIG_ANY }],
   },
@@ -278,8 +320,25 @@ export default function UGCourses() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative overflow-hidden rounded-[2.5rem] shadow-2xl"
+              className="relative"
             >
+              {/* Prev / Next arrows — positioned OUTSIDE the card frame */}
+              <button
+                onClick={prev}
+                className="absolute -left-5 md:-left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white dark:bg-gray-900 border-2 border-rose-100 dark:border-gray-700 text-[#800000] flex items-center justify-center hover:bg-[#800000] hover:text-white hover:border-[#800000] transition-colors shadow-lg"
+                title="Previous"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <button
+                onClick={next}
+                className="absolute -right-5 md:-right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white dark:bg-gray-900 border-2 border-rose-100 dark:border-gray-700 text-[#800000] flex items-center justify-center hover:bg-[#800000] hover:text-white hover:border-[#800000] transition-colors shadow-lg"
+                title="Next"
+              >
+                <ChevronRight size={20} />
+              </button>
+
+              <div className="relative overflow-hidden rounded-[2.5rem] shadow-2xl">
               {/* Background — uses programme's accent gradient */}
               <div className={`absolute inset-0 bg-gradient-to-br ${active.accent}`}></div>
               <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-black/10 to-transparent"></div>
@@ -290,26 +349,10 @@ export default function UGCourses() {
                 }}
               ></div>
 
-              {/* Big floating emoji backdrop */}
-              <div className="absolute -top-10 -right-10 text-[24rem] opacity-[0.08] pointer-events-none select-none leading-none">
-                {active.icon}
+              {/* Big floating icon backdrop */}
+              <div className="absolute -top-10 -right-10 opacity-[0.08] pointer-events-none select-none leading-none">
+                <ProgramIcon name={active.icon} size={320} className="text-white" />
               </div>
-
-              {/* Prev / Next arrows */}
-              <button
-                onClick={prev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-colors"
-                title="Previous"
-              >
-                <ChevronLeft size={20} />
-              </button>
-              <button
-                onClick={next}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 backdrop-blur border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-colors"
-                title="Next"
-              >
-                <ChevronRight size={20} />
-              </button>
 
               <div className="relative p-8 md:p-14 grid lg:grid-cols-12 gap-8 text-white">
 
@@ -324,7 +367,14 @@ export default function UGCourses() {
                     </span>
                   </div>
 
-                  <div className="text-7xl md:text-8xl mb-6">{active.icon}</div>
+                  <div className="mb-6">
+                    <ProgramIcon
+                      name={active.icon}
+                      size={56}
+                      className="text-white"
+                      wrapClass="w-20 h-20 rounded-2xl bg-white/15 backdrop-blur border border-white/20 flex items-center justify-center"
+                    />
+                  </div>
 
                   <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-[-0.03em] leading-[1.05] mb-5">
                     {active.name}
@@ -414,6 +464,7 @@ export default function UGCourses() {
                   </div>
                 </div>
               </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -461,7 +512,12 @@ export default function UGCourses() {
                 {/* Body */}
                 <div className="p-5 bg-white dark:bg-gray-900">
                   <div className="flex items-start justify-between mb-3">
-                    <div className="text-4xl">{p.icon}</div>
+                    <ProgramIcon
+                      name={p.icon}
+                      size={28}
+                      className="text-[#800000]"
+                      wrapClass="w-12 h-12 rounded-xl bg-rose-50 dark:bg-gray-800 flex items-center justify-center"
+                    />
                     {isBookmarked && (
                       <Bookmark size={14} className="text-amber-500" fill="currentColor" />
                     )}
@@ -549,11 +605,11 @@ export default function UGCourses() {
               {bookmarks.slice(0, 4).map((id) => {
                 const p = UG_PROGRAMS.find((x) => x.id === id);
                 return (
-                  <span key={id} className={`w-8 h-8 rounded-full bg-gradient-to-br ${p.accent} flex items-center justify-center text-lg border-2 border-[#1a0606] cursor-pointer`}
+                  <span key={id} className={`w-8 h-8 rounded-full bg-gradient-to-br ${p.accent} flex items-center justify-center border-2 border-[#1a0606] cursor-pointer`}
                     onClick={() => setActiveId(id)}
                     title={p.name}
                   >
-                    {p.icon}
+                    <ProgramIcon name={p.icon} size={14} className="text-white" />
                   </span>
                 );
               })}
@@ -596,8 +652,8 @@ export default function UGCourses() {
             >
               {/* Programme header */}
               <div className="relative overflow-hidden bg-gradient-to-r from-[#3e0202] via-[#800000] to-[#5a0000] text-white p-6 md:p-7">
-                <div className="absolute -top-12 -right-12 text-[12rem] opacity-10 pointer-events-none leading-none">
-                  {tbl.icon}
+                <div className="absolute -top-12 -right-12 opacity-10 pointer-events-none leading-none">
+                  <ProgramIcon name={tbl.icon} size={180} className="text-white" />
                 </div>
                 <div className="relative flex flex-wrap items-end justify-between gap-3">
                   <div>
@@ -774,7 +830,7 @@ export default function UGCourses() {
                       <th className="text-left p-4 bg-gray-50 dark:bg-gray-800 sticky left-0 w-32 text-[10px] uppercase tracking-widest font-black text-gray-500 dark:text-gray-400">Spec</th>
                       {compareList.map((p) => (
                         <th key={p.id} className="text-left p-4 min-w-[200px]">
-                          <div className="text-3xl mb-2">{p.icon}</div>
+                          <ProgramIcon name={p.icon} size={24} className="text-[#800000]" wrapClass="w-10 h-10 rounded-xl bg-rose-50 dark:bg-gray-800 flex items-center justify-center mb-2" />
                           <div className="text-[9px] font-black uppercase tracking-widest text-gray-400">{p.code}</div>
                           <div className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight">{p.short}</div>
                         </th>

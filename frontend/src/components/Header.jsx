@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
@@ -49,6 +49,8 @@ const ADMISSION_LINKS = [
 
 export default function Header() {
   const { dark } = useTheme();
+  const { pathname } = useLocation();
+  const isHome = pathname === '/';
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -72,11 +74,25 @@ export default function Header() {
   }, []);
 
   return (
-    <header className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-      isScrolled || mobileMenuOpen
-        ? "bg-gradient-to-r from-[#3e0202] via-[#800000] to-[#3e0202] dark:from-[#020617] dark:via-[#0d1117] dark:to-[#020617] dark:border-b dark:border-white/5 shadow-xl"
-        : "bg-gradient-to-b from-black/60 via-black/20 to-transparent"
-    }`}>
+    <header className={`fixed top-0 w-full z-50 ${(isScrolled || mobileMenuOpen || !isHome) ? "shadow-xl" : ""}`}>
+      {/* Transparent gradient layer — only on home, fades out on scroll */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-transparent pointer-events-none"
+        animate={{ opacity: isHome && !isScrolled && !mobileMenuOpen ? 1 : 0 }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}
+      />
+      {/* Maroon solid layer — light mode */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r from-[#3e0202] via-[#800000] to-[#3e0202] dark:hidden pointer-events-none"
+        animate={{ opacity: !isHome || isScrolled || mobileMenuOpen ? 1 : 0 }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}
+      />
+      {/* Dark layer — dark mode */}
+      <motion.div
+        className="absolute inset-0 hidden dark:block bg-gradient-to-r from-[#020617] via-[#0d1117] to-[#020617] border-b border-white/5 pointer-events-none"
+        animate={{ opacity: !isHome || isScrolled || mobileMenuOpen ? 1 : 0 }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}
+      />
 
       {/* UTILITY BAR — collapses on scroll */}
       <AnimatePresence>
@@ -87,7 +103,7 @@ export default function Header() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="hidden md:block bg-gradient-to-r from-[#3e0202] via-[#600000] to-[#3e0202] dark:from-[#0d0d1a] dark:via-[#0d0d1a] dark:to-[#0d0d1a] text-[11px] text-white/90 py-2 border-b border-white/10 overflow-hidden"
+            className="relative z-10 hidden md:block bg-gradient-to-r from-[#3e0202] via-[#600000] to-[#3e0202] dark:from-[#0d0d1a] dark:via-[#0d0d1a] dark:to-[#0d0d1a] text-[11px] text-white/90 py-2 border-b border-white/10 overflow-hidden"
           >
             <div className="max-w-[1500px] mx-auto px-6 lg:px-10 flex justify-between items-center font-bold tracking-tight">
               <div className="flex gap-4 lg:gap-8 opacity-80 uppercase tracking-widest">
@@ -108,7 +124,7 @@ export default function Header() {
       </AnimatePresence>
 
       {/* MAIN NAVIGATION */}
-      <div className={`max-w-[1500px] mx-auto px-6 lg:px-10 flex items-center justify-between transition-all duration-500 ${isScrolled ? 'py-2' : 'py-4'}`}>
+      <div className={`relative z-10 max-w-[1500px] mx-auto px-6 lg:px-10 flex items-center justify-between transition-all duration-500 ${isScrolled ? 'py-2' : 'py-4'}`}>
 
         {/* LOGO GROUP */}
         <div className="flex items-center gap-4 lg:gap-6 shrink-0 overflow-hidden">
@@ -122,7 +138,7 @@ export default function Header() {
 
           {/* Divider + secondary logos — slide left and disappear on scroll */}
           <AnimatePresence>
-            {!isScrolled && (
+            {!isScrolled && isHome && (
               <motion.div
                 key="secondary-logos"
                 className="hidden lg:flex items-center gap-4"
