@@ -78,44 +78,44 @@ export default function PACPage() {
         "In this, Harsh Pratap Singh played the role of Karna, Mohan portrayed Arjuna, Mitali depicted Draupadi, Anvesh portrayed Duryodhana, Dushyant played Krishna, Suyash played King Drupad as the main characters, while 19 others played pivoted roles and contributed to the success."
       ],
       images: [
-        "/images/Maharathi_1.jpg",
-        "/images/Maharathi_2.jpg",
-        "/images/Maharathi_3.jpg",
-        "/images/Maharathi_4.jpg"
+        "/images/Maharathi_1.webp",
+        "/images/Maharathi_2.webp",
+        "/images/Maharathi_3.webp",
+        "/images/Maharathi_4.webp"
       ]
     },
     {
       title: "PARSHURAM GATHA",
       date: "29 April 2023",
-      director: "Mr. Sanjay Singh Jadon",
-      writer: "Mr. Anirudh Tiwari (Virat)",
+      director: "Mr. संजय सिंह जादौन",
+      writer: "Mr. अनिरुद्ध तिवारी (विराट)",
       description: [
         "\"Parshuram Gatha\" is a well-known play in Indian culture that depicts the legendary tale of Parshuram, a revered figure in Hindu mythology. Parshuram is known as the sixth avatar of Lord Vishnu and is celebrated for his strength, valor, and devotion to his duties.",
         "In The artists from Gwalior presented the play 'Parshuram Gatha' at IITTM college, with the involvement of three students from ITM college: Krishna portrayed the characters of Sahastrabahu Arjun's son and Sudama, Anuj depicted Sahastrabahu Arjun's son, and Pranjal enacted the role of Vishwa, the son of Jamadagni, and Laxman."
       ],
       images: [
-        "/images/Parshuram_1.jpg",
-        "/images/Parshuram_2.jpg",
-        "/images/Parshuram_4.jpg",
-        "/images/Parshuram_3.jpg"
+        "/images/Parshuram_1.webp",
+        "/images/Parshuram_2.webp",
+        "/images/Parshuram_4.webp",
+        "/images/Parshuram_3.webp"
       ]
     },
     {
       title: "EK KHAMOSH CHEEKH",
       date: "19 May 2023",
-      director: "Mr. Gulshan Waliya Sir",
+      director: "Mr. गुलशन वालिया सर",
       assistantDirector: "Mr. Jay Solace",
-      writer: "Mr. Gulshan Waliya Sir",
+      writer: "Mr. गुलशन वालिया सर",
       description: [
         "“Ek Khamosh Cheekh” is a play that depicts injustice against girls in society. Although nowadays there has been considerable improvement, even today in rural areas far from the city, incidents like these are heard of, which inspired the writing of this play. This play entirely showcases the oppression faced by girls in society.",
         "This play was prepared during a 15-day workshop and was showcased on May 19th at the LDB Theatre Block of ITM University by the children of the ITM Performing Arts Club. The children from the club participated enthusiastically in the production. Along with this, MD Sir awarded the entire team a prize of Rs. 50,000 and additionally contributed Rs. 5 lakhs to the club fund.",
         "In this, Krishna Goyal played the role of Daya, Sejal portrayed Savitri, Mohan depicted Rokelal, and Tanish portrayed Durgesh as the main characters, while 13 others played pivoted roles and contributed to the success."
       ],
       images: [
-        "/images/Khamosh_1.jpg",
-        "/images/Khamosh_2.jpg",
-        "/images/Khamosh_4.jpg",
-        "/images/Khamosh_3.jpg"
+        "/images/Khamosh_1.webp",
+        "/images/Khamosh_2.webp",
+        "/images/Khamosh_4.webp",
+        "/images/Khamosh_3.webp"
       ]
     }
   ];
@@ -411,7 +411,7 @@ export default function PACPage() {
                         
                         <div className="bg-gray-50 dark:bg-white/[0.02] p-5 rounded-3xl border border-gray-100 dark:border-gray-800 text-center hover:shadow-lg transition-all cursor-pointer">
                           <div className="w-24 h-24 mx-auto rounded-full bg-gray-200 dark:bg-gray-700 mb-4 overflow-hidden border-2 border-white dark:border-gray-600 shadow-md">
-                            <img src="/images/Sanjay Singh jadon.png" alt="Co-Coordinator" className="w-full h-full object-cover" />
+                            <img src="/images/Sanjay Singh jadon.webp" alt="Co-Coordinator" className="w-full h-full object-cover" />
                           </div>
                           <h3 className="font-bold text-[#0b2a4a] dark:text-white mb-1">Mr. Sanjay Singh Jadon</h3>
                           <p className="text-xs font-medium text-[#800000]">Co-Coordinator</p>

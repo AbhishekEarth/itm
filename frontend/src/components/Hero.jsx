@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import slider1 from "../assets/slider1.jpg";
-import slider2 from "../assets/slider2.jpg";
+import LazyImage from "./LazyImage";
 
-const images = [slider1, slider2];
+const images = [
+  { jpg: "/images/hero/slider1.jpg", webp: "/images/hero/slider1.webp", priority: true },
+  { jpg: "/images/hero/slider2.jpg", webp: "/images/hero/slider2.webp" },
+];
 
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -19,18 +21,24 @@ export default function Hero() {
     <section className="relative min-h-[100vh] flex items-center overflow-hidden bg-[#020617] pt-[150px] md:pt-[180px] pb-24">
 
       <div className="absolute inset-0 z-0 overflow-hidden bg-[#020617]">
-        {images.map((src, i) => (
-          <img
-            key={src}
-            src={src}
-            alt=""
-            loading={i === 0 ? "eager" : "lazy"}
-            decoding="async"
-            className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ${
+        {images.map((imgSet, i) => (
+          <div
+            key={i}
+            className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${
               i === currentIndex ? "opacity-100" : "opacity-0"
             }`}
-            style={{ filter: "saturate(1.05) contrast(1.02)", objectPosition: "center center" }}
-          />
+            style={{ filter: "saturate(1.05) contrast(1.02)" }}
+          >
+            <LazyImage
+              src={imgSet.jpg}
+              webp={imgSet.webp}
+              alt={`Campus scene ${i + 1}`}
+              priority={imgSet.priority || false}
+              className="w-full h-full"
+              objectFit="cover"
+              objectPosition="center center"
+            />
+          </div>
         ))}
 
         <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-transparent z-[1]" />

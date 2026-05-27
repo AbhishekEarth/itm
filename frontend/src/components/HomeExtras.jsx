@@ -7,6 +7,7 @@ import {
   Award, FileText, Megaphone, Image as ImageIcon, Video,
   Building2, Camera, Sparkles, Phone, Mail, ExternalLink,
 } from "lucide-react";
+import LazyImage from "./LazyImage";
 
 /* ============================================================
    CELLS — student cells & committees from the old itmgoi.in
@@ -365,13 +366,13 @@ export function AlumniSection() {
    GALLERY PREVIEW — 7 categories from the old site
    ============================================================ */
 const GALLERY = [
-  { Icon: Sparkles,      label: "Cultural Events", to: "/gallery/cultural",       tint: "from-rose-500 to-pink-700" },
-  { Icon: GraduationCap, label: "Experts Visits",  to: "/gallery/experts",        tint: "from-amber-500 to-orange-700" },
-  { Icon: Building2,    label: "Infrastructure",  to: "/gallery/infrastructure", tint: "from-sky-500 to-blue-700" },
-  { Icon: Trophy,       label: "Sports",          to: "/gallery/sports",         tint: "from-emerald-500 to-teal-700" },
-  { Icon: Users2,       label: "Student Photos",  to: "/gallery/students",       tint: "from-indigo-500 to-violet-700" },
-  { Icon: ImageIcon,    label: "Life @ ITM",      to: "/gallery/life",           tint: "from-fuchsia-500 to-purple-700" },
-  { Icon: Video,         label: "Video Gallery",   to: "/gallery/videos",         tint: "from-yellow-500 to-amber-700" },
+  { Icon: Sparkles,      label: "Cultural Events", to: "/gallery/cultural",       tint: "from-rose-500 to-pink-700",       image: "cultural.jpg" },
+  { Icon: GraduationCap, label: "Experts Visits",  to: "/gallery/experts",        tint: "from-amber-500 to-orange-700",    image: "experts.jpg" },
+  { Icon: Building2,    label: "Infrastructure",  to: "/gallery/infrastructure", tint: "from-sky-500 to-blue-700",       image: "infrastructure.jpg" },
+  { Icon: Trophy,       label: "Sports",          to: "/gallery/sports",         tint: "from-emerald-500 to-teal-700",    image: "sports.jpg" },
+  { Icon: Users2,       label: "Student Photos",  to: "/gallery/students",       tint: "from-indigo-500 to-violet-700",    image: "students.jpg" },
+  { Icon: ImageIcon,    label: "Life @ ITM",      to: "/gallery/life",           tint: "from-fuchsia-500 to-purple-700",  image: "life.jpg" },
+  { Icon: Video,         label: "Video Gallery",   to: "/gallery/videos",         tint: "from-yellow-500 to-amber-700",    image: "videos.jpg" },
 ];
 
 export function GalleryPreview() {
@@ -409,12 +410,23 @@ export function GalleryPreview() {
               to={g.to}
               className={`group relative aspect-square rounded-3xl overflow-hidden bg-gradient-to-br ${g.tint} shadow-lg hover:shadow-2xl transition-shadow flex`}
             >
-              <div className="absolute inset-0 opacity-10" style={{
+              {/* Premium image backdrop with hover scale and opacity blend */}
+              <div className="absolute inset-0 w-full h-full">
+                <LazyImage
+                  src={`/images/gallery/${g.image}`}
+                  alt={g.label}
+                  className="transition-transform duration-700 group-hover:scale-110"
+                  objectFit="cover"
+                  objectPosition="center"
+                />
+              </div>
+              <div className="absolute inset-0 opacity-20 bg-gradient-to-br from-black/50 to-black/80" />
+              <div className="absolute inset-0 opacity-10 z-10" style={{
                 backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.5) 1px, transparent 0)",
                 backgroundSize: "18px 18px",
               }} />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-              <div className="relative h-full flex flex-col justify-between p-5 text-white">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent opacity-95 group-hover:opacity-100 transition-opacity z-10" />
+              <div className="relative h-full w-full flex flex-col justify-between p-5 text-white z-20">
                 <div className="w-11 h-11 rounded-2xl bg-white/20 backdrop-blur ring-1 ring-white/30 flex items-center justify-center">
                   <g.Icon size={20} strokeWidth={2.2} />
                 </div>
@@ -423,7 +435,7 @@ export function GalleryPreview() {
                   <div className="text-base md:text-lg font-black tracking-tight leading-tight">{g.label}</div>
                 </div>
               </div>
-              <ArrowUpRight size={14} className="absolute top-5 right-5 text-white/70 group-hover:text-white transition-colors" />
+              <ArrowUpRight size={14} className="absolute top-5 right-5 text-white/70 group-hover:text-white transition-colors z-20" />
             </Link>
             </motion.div>
           ))}

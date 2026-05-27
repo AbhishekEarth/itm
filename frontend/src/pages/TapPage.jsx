@@ -541,7 +541,7 @@ export default function TapPage() {
               {loopedRecruiters.map((idx, k) => (
                 <div key={`l${k}`} className="shrink-0 w-32 h-20 md:w-40 md:h-24 bg-white rounded-2xl flex items-center justify-center p-3 hover:scale-105 transition-transform">
                   <img
-                    src={`/images/company_logos/Engineering_Computer_Applications/logo_${idx}.png`}
+                    src={`/images/company_logos/Engineering_Computer_Applications/logo_${idx}.webp`}
                     alt={`Recruiter ${idx + 1}`}
                     loading="lazy"
                     onError={(e) => (e.target.style.display = "none")}
@@ -557,7 +557,7 @@ export default function TapPage() {
               {[...Array(37).keys(), ...Array(37).keys()].map((idx, k) => (
                 <div key={`r${k}`} className="shrink-0 w-32 h-20 md:w-40 md:h-24 bg-white rounded-2xl flex items-center justify-center p-3 hover:scale-105 transition-transform">
                   <img
-                    src={`/images/company_logos/Management/logo_${idx}.png`}
+                    src={`/images/company_logos/Management/logo_${idx}.webp`}
                     alt={`Recruiter ${idx + 1}`}
                     loading="lazy"
                     onError={(e) => (e.target.style.display = "none")}

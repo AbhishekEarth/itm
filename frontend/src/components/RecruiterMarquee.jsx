@@ -27,7 +27,7 @@ function LogoCard({ folder, idx }) {
   return (
     <div className="group relative shrink-0 w-32 h-20 md:w-40 md:h-24 bg-white dark:bg-[#1e293b] border border-gray-100 dark:border-slate-700/60 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden">
       <img
-        src={`/images/company_logos/${folder}/logo_${idx}.png`}
+        src={`/images/company_logos/${folder}/logo_${idx}.webp`}
         alt={`Recruiter ${idx + 1}`}
         loading="lazy"
         onError={(e) => (e.target.style.display = "none")}

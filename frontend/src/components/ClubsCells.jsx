@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Music, Camera, Code2, Users2 } from "lucide-react";
+import LazyImage from "./LazyImage";
 
 const CLUBS = [
   {
@@ -11,7 +12,7 @@ const CLUBS = [
     desc: "Music, dance, drama and stagecraft — the home of KRONOS, Maharathi and our biggest cultural productions.",
     accent: "from-rose-500 to-[#800000]",
     path: "/pac",
-    image: "https://www.itmgoi.in/include/gallery/PAC/6.jpg",
+    image: "/images/clubs/pac.png",
     tags: ["50+ Members", "Annual Production", "₹5L Grant"],
   },
   {
@@ -80,21 +81,21 @@ export default function ClubsCells() {
               >
                 {/* Image */}
                 <div className="relative h-52 overflow-hidden">
-                  <img
+                  <LazyImage
                     src={c.image}
                     alt={c.name}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="transition-transform duration-700 group-hover:scale-105"
+                    objectFit="cover"
+                    objectPosition="center"
                   />
-                  <div className={`absolute inset-0 bg-gradient-to-br ${c.accent} mix-blend-multiply opacity-65`}></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${c.accent} mix-blend-multiply opacity-65 z-10`}></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent z-10"></div>
 
-                  <div className="absolute top-4 right-4 flex items-center justify-center w-11 h-11 rounded-2xl bg-white/15 backdrop-blur ring-1 ring-white/30 text-white shadow-xl">
+                  <div className="absolute top-4 right-4 flex items-center justify-center w-11 h-11 rounded-2xl bg-white/15 backdrop-blur ring-1 ring-white/30 text-white shadow-xl z-20">
                     <c.Icon size={20} strokeWidth={2.2} />
                   </div>
 
-                  <div className="absolute bottom-4 left-5 right-5 text-white">
+                  <div className="absolute bottom-4 left-5 right-5 text-white z-20">
                     <div className="text-[9px] font-black uppercase tracking-[0.3em] text-white/70 mb-1">Club</div>
                     <h3 className="text-2xl font-black tracking-[-0.03em] leading-none">{c.name}</h3>
                   </div>

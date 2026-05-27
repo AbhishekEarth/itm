@@ -3,8 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu, X, ChevronDown, ArrowUpRight, ShieldCheck, Sun, Moon } from "lucide-react";
 
-const logo = "/images/ITMGOILogo.png";
-const NAACLogo = "/images/NAACLogo.png";
+const logo = "/images/ITMGOILogo.webp";
+const NAACLogo = "/images/NAACLogo.webp";
 const NBALogo = "/images/NBALogo.png";
 const YearsLogo = "/images/30years.png";
 

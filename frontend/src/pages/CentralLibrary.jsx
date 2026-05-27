@@ -3,8 +3,8 @@ import PageLayout from '../components/PageLayout';
 import SectionHeading from '../components/SectionHeading';
 import Card from '../components/Card';
 
-import libPosterMaking from '../assets/lib_poster_making.png';
-import libGroupPhoto from '../assets/lib_group_photo.png';
+const libPosterMaking = "/images/lib_poster_making.webp";
+const libGroupPhoto = "/images/lib_group_photo.webp";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 const libraryStats = [
