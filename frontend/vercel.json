@@ -5,8 +5,8 @@
   "rewrites": [
     { "source": "/sitemap.xml", "destination": "/api/public/sitemap.xml" },
     { "source": "/robots.txt",  "destination": "/api/public/robots.txt"  },
-    { "source": "/api/:path*",  "destination": "https://YOUR-HF-USERNAME-itmgoi-api.hf.space/api/:path*" },
-    { "source": "/uploads/:path*", "destination": "https://YOUR-HF-USERNAME-itmgoi-api.hf.space/uploads/:path*" },
+    { "source": "/api/:path*",  "destination": "https://anshul32467-itmgwalior.hf.space/api/:path*" },
+    { "source": "/uploads/:path*", "destination": "https://anshul32467-itmgwalior.hf.space/uploads/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
