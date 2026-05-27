@@ -92,7 +92,14 @@ const ADMISSION_LINKS = [
 ];
 
 /* ----- Reusable dropdown panel ---------------------------------------------- */
-function DropdownPanel({ open, items, width = "w-64", onItemClick }) {
+function DropdownPanel({ open, items, width = "w-64", onItemClick, align = "left" }) {
+  let alignmentClass = "left-0";
+  if (align === "right") {
+    alignmentClass = "right-0";
+  } else if (align === "center") {
+    alignmentClass = "left-1/2 -translate-x-1/2";
+  }
+
   return (
     <AnimatePresence>
       {open && (
@@ -101,7 +108,7 @@ function DropdownPanel({ open, items, width = "w-64", onItemClick }) {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 6, scale: 0.98 }}
           transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-          className={`absolute top-full left-1/2 -translate-x-1/2 mt-3 ${width} bg-white rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.18)] border border-black/5 overflow-hidden z-50`}
+          className={`absolute top-full mt-3 ${alignmentClass} ${width} bg-white rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.18)] border border-black/5 overflow-hidden z-50`}
         >
           <div className="h-[2px] bg-gradient-to-r from-[#800000] via-red-500 to-[#800000]" />
           <div className="py-2">
@@ -195,7 +202,7 @@ export default function Header() {
 
   return (
     <header
-      className="fixed top-0 w-full z-50 shadow-[0_18px_44px_-18px_rgba(0,0,0,0.65)]"
+      className="fixed top-0 w-full z-[200] shadow-[0_18px_44px_-18px_rgba(0,0,0,0.65)]"
       style={{ willChange: "background-color" }}
     >
 
@@ -510,7 +517,7 @@ export default function Header() {
                 Alumni
                 <ChevronDown size={12} strokeWidth={2.5} className={`transition-transform duration-200 ${alumniOpen ? "rotate-180" : ""}`} />
               </button>
-              <DropdownPanel open={alumniOpen} items={ALUMNI_LINKS} width="w-72" onItemClick={() => setAlumniOpen(false)} />
+              <DropdownPanel open={alumniOpen} items={ALUMNI_LINKS} width="w-72" onItemClick={() => setAlumniOpen(false)} align="right" />
             </div>
 
             {/* More — NAAC / Gallery / Compliance / Careers / Contact */}
@@ -531,7 +538,7 @@ export default function Header() {
                 More
                 <ChevronDown size={12} strokeWidth={2.5} className={`transition-transform duration-200 ${moreOpen ? "rotate-180" : ""}`} />
               </button>
-              <DropdownPanel open={moreOpen} items={MORE_LINKS} width="w-72" onItemClick={() => setMoreOpen(false)} />
+              <DropdownPanel open={moreOpen} items={MORE_LINKS} width="w-72" onItemClick={() => setMoreOpen(false)} align="right" />
             </div>
             </div>
 
