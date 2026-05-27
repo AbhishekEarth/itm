@@ -74,7 +74,7 @@ const EMERGING = [
 
 export default function Departments() {
   return (
-    <section id="departments" className="relative py-20 md:py-28 bg-[#fbf7f2] dark:bg-[#020617] overflow-hidden">
+    <section id="departments" className="relative py-8 sm:py-20 md:py-28 bg-[#fbf7f2] dark:bg-[#020617] overflow-hidden">
 
       {/* Decorative blurs */}
       <div className="absolute top-20 right-0 w-[40vw] h-[40vw] rounded-full bg-gradient-to-bl from-rose-200/40 to-transparent blur-3xl pointer-events-none"></div>
@@ -82,7 +82,7 @@ export default function Departments() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
 
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 md:mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 md:mb-16">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
@@ -90,7 +90,7 @@ export default function Departments() {
                 Academic Excellence
               </span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Explore our{" "}
               <span className="relative inline-block">
                 <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
@@ -107,7 +107,7 @@ export default function Departments() {
         </div>
 
         {/* Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
           {DEPARTMENTS.map((d, i) => (
             <Link to={d.path} key={d.short}>
               <motion.div
@@ -116,10 +116,10 @@ export default function Departments() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: i * 0.07, duration: 0.5 }}
                 whileHover={{ y: -8 }}
-                className="group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow h-full"
+                className="group relative overflow-hidden rounded-2xl sm:rounded-3xl bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow h-full"
               >
                 {/* Image header */}
-                <div className="relative h-44 overflow-hidden">
+                <div className="relative h-28 sm:h-44 overflow-hidden">
                   <img
                     src={d.image}
                     alt={d.name}
@@ -130,40 +130,40 @@ export default function Departments() {
                   <div className={`absolute inset-0 bg-gradient-to-br ${d.accent} mix-blend-multiply opacity-75`}></div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 
-                  {/* Badge top-left */}
-                  <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 bg-white/95 backdrop-blur text-[9px] font-black uppercase tracking-widest text-[#800000] rounded-full shadow">
+                  {/* Badge top-left — hidden on small phones to save space */}
+                  <span className="hidden sm:inline-flex absolute top-4 left-4 items-center gap-1.5 px-3 py-1 bg-white/95 backdrop-blur text-[9px] font-black uppercase tracking-widest text-[#800000] rounded-full shadow">
                     <Sparkles size={9} /> {d.badge}
                   </span>
 
                   {/* Icon top-right — soft glass chip with the lucide icon */}
-                  <div className="absolute top-3 right-3 flex items-center justify-center w-11 h-11 rounded-2xl bg-white/15 backdrop-blur ring-1 ring-white/30 text-white shadow-lg">
-                    <d.Icon size={20} strokeWidth={2.2} />
+                  <div className="absolute top-2 right-2 sm:top-3 sm:right-3 flex items-center justify-center w-8 h-8 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-white/15 backdrop-blur ring-1 ring-white/30 text-white shadow-lg">
+                    <d.Icon size={16} strokeWidth={2.2} className="sm:!w-5 sm:!h-5" />
                   </div>
 
                   {/* Department code overlay */}
-                  <div className="absolute bottom-4 left-4 text-white">
-                    <div className="text-[9px] font-black uppercase tracking-[0.3em] text-white/70 mb-1">
+                  <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4 text-white">
+                    <div className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.3em] text-white/70 mb-0.5 sm:mb-1">
                       Department
                     </div>
-                    <div className="text-3xl font-black tracking-[-0.04em] leading-none">{d.short}</div>
+                    <div className="text-xl sm:text-3xl font-black tracking-[-0.04em] leading-none">{d.short}</div>
                   </div>
                 </div>
 
                 {/* Body */}
-                <div className="p-6">
-                  <h3 className="font-black text-lg tracking-tight text-[#1a0606] dark:text-white mb-2 leading-snug group-hover:text-[#800000] transition-colors">
+                <div className="p-3 sm:p-6">
+                  <h3 className="font-black text-sm sm:text-lg tracking-tight text-[#1a0606] dark:text-white mb-2 leading-snug group-hover:text-[#800000] transition-colors">
                     {d.name}
                   </h3>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-4">
+                  <p className="text-[11px] sm:text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-3 sm:mb-4 line-clamp-3 sm:line-clamp-none">
                     {d.desc}
                   </p>
 
                   {/* Stats pills */}
-                  <div className="flex flex-wrap gap-1.5 mb-5">
+                  <div className="flex flex-wrap gap-1 sm:gap-1.5 mb-3 sm:mb-5">
                     {d.stats.map((s) => (
                       <span
                         key={s}
-                        className="text-[9px] uppercase tracking-widest font-black px-2 py-1 bg-rose-50 dark:bg-gray-800 text-[#800000] dark:text-rose-300 rounded"
+                        className="text-[8px] sm:text-[9px] uppercase tracking-widest font-black px-1.5 sm:px-2 py-0.5 sm:py-1 bg-rose-50 dark:bg-gray-800 text-[#800000] dark:text-rose-300 rounded"
                       >
                         {s}
                       </span>
@@ -171,12 +171,13 @@ export default function Departments() {
                   </div>
 
                   {/* CTA */}
-                  <div className="flex items-center justify-between pt-4 border-t border-rose-50 dark:border-gray-800">
-                    <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#800000] group-hover:gap-3 inline-flex items-center gap-2 transition-all">
-                      View Programme
+                  <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-rose-50 dark:border-gray-800">
+                    <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.25em] text-[#800000] group-hover:gap-3 inline-flex items-center gap-2 transition-all">
+                      View
+                      <span className="hidden sm:inline">Programme</span>
                     </span>
-                    <div className="w-8 h-8 rounded-full bg-rose-50 dark:bg-gray-800 group-hover:bg-[#800000] flex items-center justify-center text-[#800000] group-hover:text-white transition-colors">
-                      <ArrowUpRight size={14} />
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-rose-50 dark:bg-gray-800 group-hover:bg-[#800000] flex items-center justify-center text-[#800000] group-hover:text-white transition-colors">
+                      <ArrowUpRight size={12} className="sm:!w-3.5 sm:!h-3.5" />
                     </div>
                   </div>
                 </div>
@@ -191,7 +192,7 @@ export default function Departments() {
             viewport={{ once: true }}
             transition={{ delay: DEPARTMENTS.length * 0.07, duration: 0.5 }}
             whileHover={{ y: -8 }}
-            className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1a0606] via-[#3e0202] to-[#800000] text-white border border-rose-300/20 shadow-xl hover:shadow-2xl transition-shadow"
+            className="group relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#1a0606] via-[#3e0202] to-[#800000] text-white border border-rose-300/20 shadow-xl hover:shadow-2xl transition-shadow"
           >
             <div className="absolute inset-0 opacity-10 pointer-events-none"
               style={{
@@ -201,29 +202,29 @@ export default function Departments() {
             ></div>
             <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-amber-500/30 blur-3xl"></div>
 
-            <div className="relative p-7">
-              <span className="inline-flex items-center gap-1.5 mb-5 px-3 py-1 bg-amber-500/20 backdrop-blur border border-amber-300/30 rounded-full text-[9px] font-black uppercase tracking-widest text-amber-200">
+            <div className="relative p-4 sm:p-7">
+              <span className="inline-flex items-center gap-1.5 mb-3 sm:mb-5 px-2 sm:px-3 py-1 bg-amber-500/20 backdrop-blur border border-amber-300/30 rounded-full text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-amber-200">
                 <Sparkles size={9} /> Future-Ready
               </span>
 
-              <div className="mb-4 flex items-center justify-center w-14 h-14 rounded-2xl bg-amber-400/20 ring-1 ring-amber-300/40 text-amber-200 shadow-lg">
-                <Rocket size={24} strokeWidth={2.2} />
+              <div className="mb-3 sm:mb-4 flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-amber-400/20 ring-1 ring-amber-300/40 text-amber-200 shadow-lg">
+                <Rocket size={18} strokeWidth={2.2} className="sm:!w-6 sm:!h-6" />
               </div>
 
-              <h3 className="font-black text-xl tracking-tight mb-2">Emerging Branches</h3>
-              <p className="text-xs text-rose-100/70 leading-relaxed font-medium mb-5">
+              <h3 className="font-black text-sm sm:text-xl tracking-tight mb-1.5 sm:mb-2">Emerging Branches</h3>
+              <p className="text-[11px] sm:text-xs text-rose-100/70 leading-relaxed font-medium mb-3 sm:mb-5 line-clamp-2 sm:line-clamp-none">
                 Future-ready B.Tech specialisations under the CSE umbrella.
               </p>
 
-              <div className="flex flex-wrap gap-1.5 mb-6">
+              <div className="flex flex-wrap gap-1 sm:gap-1.5 mb-3 sm:mb-6">
                 {EMERGING.map((b) => (
                   <Link
                     key={b.name}
                     to={b.path}
                     onClick={(e) => e.stopPropagation()}
-                    className="flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-black bg-white/10 backdrop-blur text-white border border-white/20 rounded-full hover:bg-white hover:text-[#800000] transition-colors"
+                    className="flex items-center gap-1 sm:gap-1.5 px-1.5 sm:px-2.5 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-black bg-white/10 backdrop-blur text-white border border-white/20 rounded-full hover:bg-white hover:text-[#800000] transition-colors"
                   >
-                    <b.Icon size={11} strokeWidth={2.4} />
+                    <b.Icon size={10} strokeWidth={2.4} className="sm:!w-3 sm:!h-3" />
                     {b.name}
                   </Link>
                 ))}
@@ -231,7 +232,7 @@ export default function Departments() {
 
               <Link
                 to="/emerging-branches"
-                className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] text-amber-300 hover:gap-3 transition-all"
+                className="inline-flex items-center gap-2 text-[9px] sm:text-[10px] font-black uppercase tracking-[0.25em] text-amber-300 hover:gap-3 transition-all"
               >
                 Explore All <ArrowUpRight size={12} />
               </Link>

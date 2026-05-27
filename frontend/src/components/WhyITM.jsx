@@ -51,7 +51,7 @@ const REASONS = [
 
 export default function WhyITM() {
   return (
-    <section className="relative py-20 md:py-28 bg-[#1a0606] text-white overflow-hidden">
+    <section className="relative py-8 sm:py-20 md:py-28 bg-[#1a0606] text-white overflow-hidden">
 
       {/* Background patterns */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
@@ -69,13 +69,13 @@ export default function WhyITM() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
 
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/20 mb-5">
             <span className="text-[9px] font-black uppercase tracking-[0.3em] text-amber-300">
               Why ITM Gwalior
             </span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] leading-[1.05] mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] leading-[1.05] mb-4">
             Six reasons students <br className="hidden md:block" />
             <span className="bg-gradient-to-r from-amber-300 to-rose-300 bg-clip-text text-transparent">
               pick us over the rest.
@@ -88,7 +88,7 @@ export default function WhyITM() {
         </div>
 
         {/* Equal-cell grid — 1 col on mobile, 2 on tablet, 3 on desktop. auto-rows-fr keeps every row the same height. */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-fr">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 auto-rows-fr">
           {REASONS.map((r, i) => (
             <motion.div
               key={r.title}
@@ -97,7 +97,7 @@ export default function WhyITM() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: i * 0.07, duration: 0.5 }}
               whileHover={{ y: -6 }}
-              className="group relative h-full flex flex-col overflow-hidden rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur border border-white/10 p-7"
+              className="group relative h-full flex flex-col overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur border border-white/10 p-4 sm:p-7"
             >
               {/* Hover glow */}
               <div
@@ -106,21 +106,21 @@ export default function WhyITM() {
 
               <div className="relative flex flex-col h-full">
                 <div
-                  className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${r.accent} flex items-center justify-center shadow-lg mb-5`}
+                  className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br ${r.accent} flex items-center justify-center shadow-lg mb-3 sm:mb-5`}
                 >
-                  <r.icon size={20} />
+                  <r.icon size={18} className="sm:!w-5 sm:!h-5" />
                 </div>
 
-                <h3 className="text-lg md:text-xl font-black tracking-tight leading-tight mb-3">
+                <h3 className="text-sm sm:text-lg md:text-xl font-black tracking-tight leading-tight mb-2 sm:mb-3">
                   {r.title}
                 </h3>
 
-                <p className="text-sm text-white/70 leading-relaxed font-medium">
+                <p className="text-xs sm:text-sm text-white/70 leading-relaxed font-medium">
                   {r.body}
                 </p>
 
                 {/* Pinned to the bottom of every card so the "Learn more" baseline is identical across all six. */}
-                <div className="mt-auto pt-6 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] text-amber-300/0 group-hover:text-amber-300 transition-colors">
+                <div className="mt-auto pt-4 sm:pt-6 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] text-amber-300/0 group-hover:text-amber-300 transition-colors">
                   <span className="w-6 h-px bg-amber-300"></span>
                   Learn more
                 </div>

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { authApi } from '../api/auth';
+import { errorMessage } from '../api/client';
 import { Lock, User, LogIn, Eye, EyeOff } from 'lucide-react';
 
 export default function AdminLogin() {
@@ -17,16 +18,16 @@ export default function AdminLogin() {
     setError('');
     setLoading(true);
     try {
-      const body = new URLSearchParams();
-      body.append('username', form.username);
-      body.append('password', form.password);
-      const res = await axios.post('/api/auth/login', body, {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      });
-      login(res.data.access_token, 'admin', null);
+      const data = await authApi.login(form.username, form.password);
+      if (!['super_admin', 'editor', 'admin'].includes(data.role)) {
+        setError(`This is a ${data.role} account. Use the main /login page.`);
+        setLoading(false);
+        return;
+      }
+      login(data);
       navigate('/admin', { replace: true });
-    } catch {
-      setError('Invalid username or password.');
+    } catch (err) {
+      setError(errorMessage(err) || 'Invalid username or password.');
     } finally {
       setLoading(false);
     }

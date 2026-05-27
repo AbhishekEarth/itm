@@ -254,7 +254,7 @@ export default function UGCourses() {
               <span className="inline-flex items-center gap-2 text-red-200 font-bold tracking-widest text-[10px] uppercase mb-4 px-3 py-1.5 bg-white/10 backdrop-blur rounded-full border border-white/20">
                 <Sparkles size={12} /> 12 Undergraduate Programmes · Spotlight Explorer
               </span>
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-[-0.04em] leading-[0.95] mb-3">
+              <h1 className="text-3xl sm:text-4xl md:text-7xl font-black tracking-[-0.04em] leading-[0.95] mb-3">
                 Spotlight on<br />
                 <span className="text-red-200">your future.</span>
               </h1>
@@ -631,7 +631,7 @@ export default function UGCourses() {
             <Table2 size={12} className="text-[#800000]" />
             <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#800000]">Official Intake Tables</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-3">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-3">
             Undergraduate Courses
           </h2>
           <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-medium leading-relaxed">
@@ -663,18 +663,26 @@ export default function UGCourses() {
                     </h3>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1.5 bg-white/15 backdrop-blur rounded-full border border-white/20">
+                    <span className="hidden sm:inline-flex text-[10px] font-black uppercase tracking-widest px-3 py-1.5 bg-white/15 backdrop-blur rounded-full border border-white/20">
                       {tbl.rows.length} Programme{tbl.rows.length > 1 ? "s" : ""}
                     </span>
                     <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1.5 bg-amber-300 text-[#1a0606] rounded-full">
                       <Clock size={11} className="inline mr-1" /> {tbl.duration}
                     </span>
+                    <Link
+                      to="/admissions/how-to-apply"
+                      title="How to apply"
+                      className="group inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 bg-white text-[#800000] rounded-full hover:bg-amber-300 hover:text-[#1a0606] transition-colors shadow-md"
+                    >
+                      Apply
+                      <ArrowRight size={11} className="group-hover:translate-x-0.5 transition-transform" />
+                    </Link>
                   </div>
                 </div>
               </div>
 
               {/* Table — desktop */}
-              <div className="hidden md:block overflow-x-auto">
+              <div className="hidden md:block overflow-x-auto -mx-4 px-4">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="bg-rose-50/50 dark:bg-gray-800/50">
@@ -823,7 +831,7 @@ export default function UGCourses() {
                 </button>
               </div>
 
-              <div className="overflow-x-auto max-h-[70vh]">
+              <div className="overflow-x-auto -mx-4 px-4 max-h-[70vh]">
                 <table className="w-full">
                   <thead>
                     <tr>

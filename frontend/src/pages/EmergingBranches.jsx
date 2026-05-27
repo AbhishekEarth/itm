@@ -73,21 +73,21 @@ function BranchCard({ branch, isExpanded, onToggle }) {
       {/* Branch Header - Clickable area for toggle */}
       <div 
         onClick={onToggle}
-        className={`relative p-6 md:p-8 flex items-center gap-5 md:gap-8 group cursor-pointer
+        className={`relative p-3 sm:p-6 md:p-8 flex items-center gap-3 sm:gap-5 md:gap-8 group cursor-pointer
           ${isExpanded ? 'bg-gradient-to-r from-gray-50 to-white dark:from-gray-900/80 dark:to-gray-900/40' : 'hover:bg-gray-50/80 dark:hover:bg-gray-900/30'}
           transition-all duration-300`}
       >
         {/* Icon */}
-        <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br ${branch.color} flex items-center justify-center text-3xl md:text-4xl shadow-xl ${branch.shadowColor} shrink-0 group-hover:scale-110 transition-transform duration-500`}>
+        <div className={`w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br ${branch.color} flex items-center justify-center text-2xl sm:text-3xl md:text-4xl shadow-xl ${branch.shadowColor} shrink-0 group-hover:scale-110 transition-transform duration-500`}>
           {branch.icon}
         </div>
 
         {/* Info */}
         <div className="flex-1 min-w-0">
-          <h3 className="text-xl md:text-2xl font-black text-[#0b2a4a] dark:text-white tracking-tight group-hover:text-[#800000] dark:group-hover:text-red-400 transition-colors">
+          <h3 className="text-base sm:text-xl md:text-2xl font-black text-[#0b2a4a] dark:text-white tracking-tight group-hover:text-[#800000] dark:group-hover:text-red-400 transition-colors">
             {branch.name}
           </h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 font-medium mt-1 line-clamp-1 md:line-clamp-2">
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium mt-1 line-clamp-1 md:line-clamp-2">
             {!isExpanded ? branch.description : "Click to view less details"}
           </p>
         </div>
@@ -96,7 +96,7 @@ function BranchCard({ branch, isExpanded, onToggle }) {
         <div className="flex items-center justify-center shrink-0">
           <button
             aria-label={isExpanded ? "Collapse" : "Expand"}
-            className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300
+            className={`w-9 h-9 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-300
               ${isExpanded ? 'bg-[#800000] text-white rotate-180' : 'bg-gray-100 dark:bg-gray-800 text-gray-400 group-hover:bg-[#800000] group-hover:text-white'}
             `}
           >
@@ -120,18 +120,18 @@ function BranchCard({ branch, isExpanded, onToggle }) {
             transition={{ duration: 0.4, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="px-6 md:px-8 pb-8 pt-2 border-t border-gray-100 dark:border-gray-800">
-              
+            <div className="px-3 sm:px-6 md:px-8 pb-4 sm:pb-8 pt-2 border-t border-gray-100 dark:border-gray-800">
+
               {/* Description */}
-              <div className="mb-8">
+              <div className="mb-4 sm:mb-8">
                 <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
                   {branch.description}
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-2 gap-3 sm:gap-6">
                 {/* Key Topics */}
-                <div className="p-6 bg-gray-50 dark:bg-gray-900/40 rounded-2xl border border-gray-100 dark:border-gray-800">
+                <div className="p-3 sm:p-6 bg-gray-50 dark:bg-gray-900/40 rounded-2xl border border-gray-100 dark:border-gray-800">
                   <h4 className="font-black text-sm uppercase tracking-widest text-[#800000] dark:text-red-400 mb-4 flex items-center gap-2">
                     <span className="w-5 h-0.5 bg-[#800000] rounded"></span>
                     Key Topics
@@ -153,7 +153,7 @@ function BranchCard({ branch, isExpanded, onToggle }) {
                 </div>
 
                 {/* Career Paths */}
-                <div className="p-6 bg-gray-50 dark:bg-gray-900/40 rounded-2xl border border-gray-100 dark:border-gray-800">
+                <div className="p-3 sm:p-6 bg-gray-50 dark:bg-gray-900/40 rounded-2xl border border-gray-100 dark:border-gray-800">
                   <h4 className="font-black text-sm uppercase tracking-widest text-[#800000] dark:text-red-400 mb-4 flex items-center gap-2">
                     <span className="w-5 h-0.5 bg-[#800000] rounded"></span>
                     Career Paths
@@ -185,7 +185,7 @@ function BranchCard({ branch, isExpanded, onToggle }) {
               <div className="mt-6 flex justify-end">
                 <Link 
                   to={branch.path || '#'}
-                  className={`inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r ${branch.color} text-white rounded-full text-xs font-black uppercase tracking-widest shadow-lg ${branch.shadowColor} hover:scale-105 transition-transform duration-300 cursor-pointer`}
+                  className={`inline-flex items-center gap-2 px-4 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r ${branch.color} text-white rounded-full text-xs font-black uppercase tracking-widest shadow-lg ${branch.shadowColor} hover:scale-105 transition-transform duration-300 cursor-pointer`}
                 >
                   Explore Curriculum
                   <span className="text-sm">→</span>
@@ -217,7 +217,7 @@ export default function EmergingBranches() {
       menuItems={[]} // No sidebar for overview
     >
       {/* Branch Cards List */}
-      <div className="space-y-6">
+      <div className="space-y-3 sm:space-y-6">
         {branches.map((branch) => (
           <BranchCard 
             key={branch.id} 
@@ -229,16 +229,16 @@ export default function EmergingBranches() {
       </div>
 
       {/* Why Choose Section */}
-      <Card className="p-8 md:p-10 !mt-16">
-        <div className="flex flex-col md:flex-row items-center gap-8">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#800000] to-[#5a0000] flex items-center justify-center text-4xl shadow-xl shadow-red-900/25 shrink-0">
+      <Card className="p-4 sm:p-8 md:p-10 !mt-8 sm:!mt-16">
+        <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-8">
+          <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-[#800000] to-[#5a0000] flex items-center justify-center text-2xl sm:text-4xl shadow-xl shadow-red-900/25 shrink-0">
             🎯
           </div>
           <div className="flex-1 text-center md:text-left">
-            <h3 className="text-xl font-black text-[#0b2a4a] dark:text-white tracking-tight mb-2">
+            <h3 className="text-base sm:text-xl font-black text-[#0b2a4a] dark:text-white tracking-tight mb-2">
               Why Choose Emerging Branches?
             </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 font-medium leading-relaxed">
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-medium leading-relaxed line-clamp-3 sm:line-clamp-none">
               Our emerging branch programs are designed in collaboration with industry leaders to ensure you gain 
               the most relevant skills. With hands-on project-based learning, industry internships, and 
               state-of-the-art lab facilities, you'll be prepared to lead the technological revolution.

@@ -1,55 +1,56 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, User, Mail, LogIn, Eye, EyeOff, Shield, GraduationCap, BookOpen } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { authApi } from '../api/auth';
+import { errorMessage } from '../api/client';
 
 const ROLES = [
   {
     id: 'admin',
     label: 'Admin',
     icon: Shield,
-    endpoint: '/api/auth/login',
     userField: 'Username',
     userPlaceholder: 'admin',
     pwPlaceholder: '••••••••',
-    hint: 'Default: admin / admin123',
-    redirect: '/admin',
+    hint: 'Super-admin or scoped editor account',
     accent: 'from-rose-600 to-[#800000]',
     bg: 'bg-rose-50',
     border: 'border-rose-200',
     text: 'text-[#800000]',
+    matchRoles: ['super_admin', 'editor', 'admin'],
+    redirectByRole: { super_admin: '/admin', editor: '/admin', admin: '/admin' },
   },
   {
     id: 'student',
     label: 'Student',
     icon: GraduationCap,
-    endpoint: '/api/auth/student-login',
     userField: 'Enrollment No.',
     userPlaceholder: 'e.g. ITM2022CS001',
     pwPlaceholder: '(default: your enrollment no.)',
     hint: 'Default password = your enrollment number',
-    redirect: '/student/dashboard',
     accent: 'from-indigo-500 to-violet-700',
     bg: 'bg-indigo-50',
     border: 'border-indigo-200',
     text: 'text-indigo-700',
+    matchRoles: ['student'],
+    redirectByRole: { student: '/student/dashboard' },
   },
   {
     id: 'faculty',
     label: 'Faculty',
     icon: BookOpen,
-    endpoint: '/api/auth/faculty-login',
     userField: 'Email',
     userPlaceholder: 'your@itmgoi.in',
     pwPlaceholder: '(default: faculty@123)',
     hint: 'Default password = faculty@123',
-    redirect: '/faculty/dashboard',
     accent: 'from-amber-500 to-orange-600',
     bg: 'bg-amber-50',
     border: 'border-amber-200',
     text: 'text-amber-700',
+    matchRoles: ['faculty'],
+    redirectByRole: { faculty: '/faculty/dashboard' },
   },
 ];
 
@@ -76,16 +77,17 @@ export default function Login() {
     setError('');
     setLoading(true);
     try {
-      const body = new URLSearchParams();
-      body.append('username', form.username);
-      body.append('password', form.password);
-      const res = await axios.post(role.endpoint, body, {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      });
-      login(res.data.access_token, res.data.role, res.data.user ?? null);
-      navigate(role.redirect, { replace: true });
+      const data = await authApi.login(form.username, form.password);
+      if (!role.matchRoles.includes(data.role)) {
+        setError(`This account is a ${data.role}. Please use the ${data.role} tab.`);
+        setLoading(false);
+        return;
+      }
+      login(data);
+      const target = role.redirectByRole[data.role] || '/';
+      navigate(target, { replace: true });
     } catch (err) {
-      setError(err?.response?.data?.detail || 'Invalid credentials. Please try again.');
+      setError(errorMessage(err) || 'Invalid credentials. Please try again.');
     } finally {
       setLoading(false);
     }

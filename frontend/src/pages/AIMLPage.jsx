@@ -43,17 +43,17 @@ export default function AIMLPage() {
     >
       {/* ══ ABOUT ═════════════════════════════════════════════ */}
       {activeTab === 'About Department' && (
-        <Card className="p-8">
+        <Card className="p-4 sm:p-8">
           <SectionHeading>About the Specialization</SectionHeading>
           <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
             {aimlData.about}
           </p>
-          <div className="mt-8 grid sm:grid-cols-2 gap-4">
-            <div className="p-4 bg-red-50 dark:bg-red-900/10 border-l-4 border-[#800000] rounded-r-xl">
+          <div className="mt-4 sm:mt-8 grid sm:grid-cols-2 gap-3 sm:gap-4">
+            <div className="p-3 sm:p-4 bg-red-50 dark:bg-red-900/10 border-l-4 border-[#800000] rounded-r-xl">
               <h4 className="font-black text-[#800000] dark:text-red-400 text-xs uppercase mb-1">Vision</h4>
               <p className="text-[11px] text-gray-600 dark:text-gray-400 font-bold">To lead the world in intelligent system development and ethical AI implementation.</p>
             </div>
-            <div className="p-4 bg-gray-50 dark:bg-gray-800 border-l-4 border-gray-400 rounded-r-xl">
+            <div className="p-3 sm:p-4 bg-gray-50 dark:bg-gray-800 border-l-4 border-gray-400 rounded-r-xl">
               <h4 className="font-black text-gray-700 dark:text-gray-300 text-xs uppercase mb-1">Mission</h4>
               <p className="text-[11px] text-gray-600 dark:text-gray-400 font-bold">Empowering students with deep technical roots and innovative problem-solving skills.</p>
             </div>
@@ -63,13 +63,13 @@ export default function AIMLPage() {
 
       {/* ══ CURRICULUM ════════════════════════════════════════ */}
       {activeTab === 'Curriculum' && (
-        <Card className="p-8">
+        <Card className="p-4 sm:p-8">
           <SectionHeading>Academic Curriculum</SectionHeading>
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {aimlData.curriculum.map((item, i) => (
-              <div key={i} className="relative pl-8 border-l-2 border-red-100 dark:border-red-900/30">
+              <div key={i} className="relative pl-6 sm:pl-8 border-l-2 border-red-100 dark:border-red-900/30">
                 <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-[#800000] border-4 border-white dark:border-gray-900 shadow-sm" />
-                <h4 className="font-black text-[#0b2a4a] dark:text-white text-base mb-3">{item.sem}</h4>
+                <h4 className="font-black text-[#0b2a4a] dark:text-white text-sm sm:text-base mb-2 sm:mb-3">{item.sem}</h4>
                 <div className="flex flex-wrap gap-2">
                   {item.subjects.map((sub, j) => (
                     <span key={j} className="bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-xs font-bold border border-gray-100 dark:border-gray-700">
@@ -85,11 +85,11 @@ export default function AIMLPage() {
 
       {/* ══ LABORATORIES ══════════════════════════════════════ */}
       {activeTab === 'Laboratories' && (
-        <Card className="p-8">
+        <Card className="p-4 sm:p-8">
           <SectionHeading>Specialized Laboratories</SectionHeading>
-          <div className="grid gap-6">
+          <div className="grid gap-3 sm:gap-6">
             {aimlData.labs.map((lab, i) => (
-              <div key={i} className="p-5 bg-gray-50 dark:bg-gray-900/40 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-red-200 transition-colors">
+              <div key={i} className="p-3 sm:p-5 bg-gray-50 dark:bg-gray-900/40 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-red-200 transition-colors">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-xl">🔬</span>
                   <h4 className="font-black text-[#0b2a4a] dark:text-white text-sm uppercase tracking-tight">{lab.name}</h4>
@@ -105,15 +105,15 @@ export default function AIMLPage() {
 
       {/* ══ CAREERS ═══════════════════════════════════════════ */}
       {activeTab === 'Career Opportunities' && (
-        <Card className="p-8">
+        <Card className="p-4 sm:p-8">
           <SectionHeading>Career Opportunities</SectionHeading>
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
             {aimlData.careers.map((career, i) => (
-              <div key={i} className="p-6 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900/60 dark:to-gray-900/20 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-all group">
-                <div className="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-900/20 text-[#800000] dark:text-red-400 flex items-center justify-center text-lg mb-4 group-hover:scale-110 transition-transform">
+              <div key={i} className="p-3 sm:p-6 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900/60 dark:to-gray-900/20 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-all group">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-red-50 dark:bg-red-900/20 text-[#800000] dark:text-red-400 flex items-center justify-center text-base sm:text-lg mb-2 sm:mb-4 group-hover:scale-110 transition-transform">
                   💼
                 </div>
-                <h4 className="font-black text-[#0b2a4a] dark:text-white text-base mb-2">{career.role}</h4>
+                <h4 className="font-black text-[#0b2a4a] dark:text-white text-sm sm:text-base mb-1 sm:mb-2">{career.role}</h4>
                 <p className="text-xs text-gray-500 dark:text-gray-400 font-medium leading-relaxed">{career.description}</p>
               </div>
             ))}

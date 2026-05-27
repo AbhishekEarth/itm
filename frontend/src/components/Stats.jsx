@@ -47,7 +47,7 @@ const data = [
 
 export default function Stats() {
   return (
-    <section className="relative py-20 md:py-28 bg-gradient-to-b from-[#fbf7f2] via-white to-white dark:from-[#0a0a14] dark:to-[#020617] overflow-hidden">
+    <section className="relative py-8 sm:py-20 md:py-28 bg-gradient-to-b from-[#fbf7f2] via-white to-white dark:from-[#0a0a14] dark:to-[#020617] overflow-hidden">
 
       {/* Decorative blurs */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60vw] h-[300px] rounded-full bg-gradient-to-br from-rose-200/30 to-transparent blur-2xl pointer-events-none"></div>
@@ -55,7 +55,7 @@ export default function Stats() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
 
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-12">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
@@ -63,7 +63,7 @@ export default function Stats() {
                 Numbers don&apos;t lie
               </span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               A campus built on{" "}
               <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
                 outcomes.
@@ -77,7 +77,7 @@ export default function Stats() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
           {data.map((s, i) => (
             <motion.div
               key={s.label}
@@ -86,7 +86,7 @@ export default function Stats() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.07, duration: 0.5 }}
               whileHover={{ y: -6 }}
-              className="group relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow p-5"
+              className="group relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow p-3 sm:p-5"
             >
               {/* Glow */}
               <div
@@ -95,12 +95,12 @@ export default function Stats() {
 
               <div className="relative">
                 <div
-                  className={`w-10 h-10 rounded-xl bg-gradient-to-br ${s.accent} text-white flex items-center justify-center shadow-lg mb-4`}
+                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br ${s.accent} text-white flex items-center justify-center shadow-lg mb-2 sm:mb-4`}
                 >
                   <s.icon size={16} />
                 </div>
 
-                <div className="text-3xl md:text-4xl font-black tracking-[-0.04em] text-[#1a0606] dark:text-white leading-none mb-2">
+                <div className="text-2xl sm:text-3xl md:text-4xl font-black tracking-[-0.04em] text-[#1a0606] dark:text-white leading-none mb-2">
                   <Counter value={s.value} />
                 </div>
 
@@ -108,7 +108,7 @@ export default function Stats() {
                   {s.label}
                 </div>
 
-                <div className="mt-4 h-[2px] w-6 bg-gray-200 dark:bg-gray-700 group-hover:w-full bg-gradient-to-r from-[#800000] to-amber-400 transition-all duration-500"></div>
+                <div className="mt-2 sm:mt-4 h-[2px] w-6 bg-gray-200 dark:bg-gray-700 group-hover:w-full bg-gradient-to-r from-[#800000] to-amber-400 transition-all duration-500"></div>
               </div>
             </motion.div>
           ))}

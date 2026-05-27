@@ -157,12 +157,12 @@ export default function ResearchInnovation() {
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute -top-10 right-20 w-72 h-72 rounded-full border-2 border-white"></div>
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-14 md:py-20 grid lg:grid-cols-12 gap-10 items-end">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-14 md:py-20 grid lg:grid-cols-12 gap-10 items-end">
           <div className="lg:col-span-7">
             <span className="inline-flex items-center gap-2 text-red-200 font-bold tracking-widest text-[10px] uppercase mb-4 px-3 py-1.5 bg-white/10 backdrop-blur rounded-full border border-white/20">
               <Rocket size={12} /> IDEAPAD · IIC 8.0 · NISP · EDC
             </span>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-[-0.04em] leading-[0.95] mb-4">
+            <h1 className="text-2xl sm:text-5xl md:text-7xl font-black tracking-[-0.04em] leading-[0.95] mb-4">
               Innovation<br /><span className="text-red-200">Ecosystem.</span>
             </h1>
             <p className="text-red-100/80 text-sm sm:text-base max-w-xl leading-relaxed font-medium">
@@ -188,27 +188,27 @@ export default function ResearchInnovation() {
       </section>
 
       {/* IDEAPAD */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
-        <div className="text-center max-w-2xl mx-auto mb-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-16 md:py-24">
+        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
           <div className="flex items-center justify-center gap-3 mb-3">
             <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Campus Incubator</span>
             <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-4">IDEAPAD</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-4">IDEAPAD</h2>
           <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-medium leading-relaxed">{IDEAPAD.desc}</p>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 font-medium italic">{IDEAPAD.foundation}</p>
         </div>
 
         {/* Vision + Mission split */}
         <div className="grid md:grid-cols-2 gap-4 mb-10">
-          <div className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-7 shadow-sm">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#800000] to-[#5a0000] text-white flex items-center justify-center mb-4"><Compass size={20} /></div>
+          <div className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-4 sm:p-7 shadow-sm">
+            <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-[#800000] to-[#5a0000] text-white flex items-center justify-center mb-4"><Compass size={20} /></div>
             <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] mb-2">IDEAPAD Vision</div>
             <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">&ldquo;{IDEAPAD.vision}&rdquo;</p>
           </div>
-          <div className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-7 shadow-sm">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-700 text-white flex items-center justify-center mb-4"><Target size={20} /></div>
+          <div className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-4 sm:p-7 shadow-sm">
+            <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-700 text-white flex items-center justify-center mb-4"><Target size={20} /></div>
             <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-700 dark:text-amber-400 mb-2">IDEAPAD Mission</div>
             <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">&ldquo;{IDEAPAD.mission}&rdquo;</p>
           </div>
@@ -242,7 +242,7 @@ export default function ResearchInnovation() {
       </section>
 
       {/* NISP */}
-      <section className="bg-[#1a0606] text-white py-16 md:py-24 relative overflow-hidden">
+      <section className="bg-[#1a0606] text-white py-8 sm:py-16 md:py-24 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.4) 1px, transparent 0)", backgroundSize: "24px 24px" }}></div>
         <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-amber-500/20 blur-2xl"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
@@ -251,7 +251,7 @@ export default function ResearchInnovation() {
               <Shield size={12} className="text-amber-300" />
               <span className="text-[10px] font-black uppercase tracking-[0.25em] text-amber-300">National Innovation & Startup Policy</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] leading-[1.05]">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] leading-[1.05]">
               NISP at ITM
             </h2>
             <p className="text-sm text-rose-100/70 mt-3 font-medium leading-relaxed">
@@ -291,14 +291,14 @@ export default function ResearchInnovation() {
       </section>
 
       {/* IIC 8.0 Council */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
-        <div className="text-center max-w-2xl mx-auto mb-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-16 md:py-24">
+        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
           <div className="flex items-center justify-center gap-3 mb-3">
             <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">IIC 8.0 · 2025-26</span>
             <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
             Institution&apos;s Innovation Council
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-400 mt-3 font-medium leading-relaxed">
@@ -353,23 +353,23 @@ export default function ResearchInnovation() {
       </div>
 
       {/* EDC */}
-      <section className="bg-white dark:bg-gray-900 border-y border-rose-100 dark:border-gray-800 py-16 md:py-24">
+      <section className="bg-white dark:bg-gray-900 border-y border-rose-100 dark:border-gray-800 py-8 sm:py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-10">
+          <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
             <div className="flex items-center justify-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Entrepreneurship Development Cell</span>
               <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">EDC</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">EDC</h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4 mb-10">
-            <div className="bg-gradient-to-br from-rose-50/40 dark:from-gray-900 to-white dark:to-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-7">
+            <div className="bg-gradient-to-br from-rose-50/40 dark:from-gray-900 to-white dark:to-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-4 sm:p-7">
               <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] mb-2">EDC Vision</div>
               <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">&ldquo;{EDC.vision}&rdquo;</p>
             </div>
-            <div className="bg-gradient-to-br from-amber-50/40 dark:from-gray-900 to-white dark:to-gray-900 border border-amber-100 dark:border-gray-800 rounded-3xl p-7">
+            <div className="bg-gradient-to-br from-amber-50/40 dark:from-gray-900 to-white dark:to-gray-900 border border-amber-100 dark:border-gray-800 rounded-3xl p-4 sm:p-7">
               <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-700 dark:text-amber-400 mb-2">EDC Mission</div>
               <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">&ldquo;{EDC.mission}&rdquo;</p>
             </div>
@@ -391,14 +391,14 @@ export default function ResearchInnovation() {
       </section>
 
       {/* Activities timeline */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-16 md:py-24">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6 sm:mb-10">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Activities Calendar</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Recent &amp; upcoming activities.
             </h2>
           </div>
@@ -438,12 +438,12 @@ export default function ResearchInnovation() {
 
       {/* CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-20">
-        <div className="rounded-3xl overflow-hidden bg-gradient-to-br from-[#3e0202] via-[#800000] to-[#5a0000] text-white p-8 md:p-12 grid md:grid-cols-2 gap-6 items-center">
+        <div className="rounded-3xl overflow-hidden bg-gradient-to-br from-[#3e0202] via-[#800000] to-[#5a0000] text-white p-4 sm:p-8 md:p-12 grid md:grid-cols-2 gap-6 items-center">
           <div>
             <span className="inline-flex items-center gap-2 text-amber-300 font-bold tracking-widest text-[10px] uppercase mb-3 px-3 py-1.5 bg-white/10 rounded-full border border-white/20">
               <Lightbulb size={12} /> Have a startup idea?
             </span>
-            <h3 className="text-3xl md:text-4xl font-black tracking-tighter mb-3">Apply to IDEAPAD.</h3>
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter mb-3">Apply to IDEAPAD.</h3>
             <p className="text-rose-100/80 text-sm font-medium max-w-md">
               Workspace, mentorship, IP support, funding access and an entire campus that wants you to win.
             </p>

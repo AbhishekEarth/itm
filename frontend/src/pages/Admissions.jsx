@@ -96,12 +96,12 @@ export default function Admissions() {
           <div className="absolute -bottom-20 -left-10 w-96 h-96 rounded-full border border-white/40"></div>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-14 md:py-20 grid lg:grid-cols-12 gap-10 items-end">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 md:py-20 grid lg:grid-cols-12 gap-8 lg:gap-10 items-end">
           <div className="lg:col-span-7">
             <span className="inline-flex items-center gap-2 text-red-200 font-bold tracking-widest text-[10px] uppercase mb-4 px-3 py-1.5 bg-white/10 backdrop-blur rounded-full border border-white/20">
               <Sparkles size={12} /> Admissions 2026 · Now Open
             </span>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter mb-3 leading-[0.95]">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tight sm:tracking-tighter mb-3 leading-[0.95]">
               Begin your <br />
               <span className="text-red-200">ITM journey.</span>
             </h1>
@@ -126,19 +126,19 @@ export default function Admissions() {
 
           {/* Countdown card */}
           <div className="lg:col-span-5">
-            <div className="bg-white/10 backdrop-blur border border-white/20 rounded-3xl p-6">
+            <div className="bg-white/10 backdrop-blur border border-white/20 rounded-3xl p-5 sm:p-6">
               <div className="flex items-center gap-2 mb-3">
                 <Calendar size={14} className="text-amber-300" />
                 <span className="text-[10px] font-black uppercase tracking-widest text-amber-300">Until session starts</span>
               </div>
-              <div className="text-7xl md:text-8xl font-black tracking-[-0.04em] text-white leading-none mb-2">
+              <div className="text-5xl sm:text-7xl md:text-8xl font-black tracking-[-0.04em] text-white leading-none mb-2">
                 {days}
               </div>
               <div className="text-sm font-black uppercase tracking-widest text-rose-100/80">Days to 1 August 2026</div>
               <div className="grid grid-cols-4 gap-2 mt-5 pt-5 border-t border-white/10">
                 {ADMISSION_HIGHLIGHTS.slice(0, 4).map((h) => (
                   <div key={h.label} className="text-center">
-                    <div className="text-xl font-black tracking-tight text-amber-200">{h.value}</div>
+                    <div className="text-base sm:text-xl font-black tracking-tight text-amber-200">{h.value}</div>
                     <div className="text-[8px] uppercase tracking-widest font-black text-rose-100/70 mt-1 leading-tight">{h.label}</div>
                   </div>
                 ))}
@@ -166,14 +166,14 @@ export default function Admissions() {
       </section>
 
       {/* ── QUICK LINKS ──────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-24">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Get Started</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Four ways to begin.
             </h2>
           </div>
@@ -208,7 +208,7 @@ export default function Admissions() {
       </section>
 
       {/* ── ADMISSION CALENDAR — interactive timeline ─────── */}
-      <section className="bg-gray-50 dark:bg-gray-900/30 py-16 md:py-24">
+      <section className="bg-gray-50 dark:bg-gray-900/30 py-12 sm:py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 max-w-2xl mx-auto">
             <div className="flex items-center justify-center gap-3 mb-3">
@@ -216,7 +216,7 @@ export default function Admissions() {
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Admission Calendar</span>
               <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Five stages from April to August.
             </h2>
           </div>

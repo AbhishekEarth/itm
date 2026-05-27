@@ -204,7 +204,7 @@ export default function Header() {
 
       {/* 1. UTILITY BAR — permanent maroon gradient (on-theme, doesn't flip).
             NOTE: no overflow-hidden — the theme dropdown needs to escape below the bar. */}
-      <div className="hidden md:block relative text-white bg-gradient-to-r from-[#2a0101] via-[#800000] to-[#2a0101]">
+      <div className="relative text-white bg-gradient-to-r from-[#2a0101] via-[#800000] to-[#2a0101]">
         {/* shimmer overlay for depth (absolute inset-0, contained naturally) */}
         <div
           aria-hidden
@@ -227,25 +227,47 @@ export default function Header() {
         {/* top + bottom gold hairlines */}
         <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-300/70 to-transparent" />
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-amber-300/40 to-transparent" />
-        <div className="relative w-full px-4 lg:px-8 flex justify-between items-center py-1.5">
-          <div className="flex items-center gap-2 text-[11px] font-medium tracking-wide text-white/85">
-            <span>Developed By</span>
-            <span className="text-white/30">—</span>
-            <span className="text-amber-200">INFINITY CLUB</span>
+        <div className="relative w-full px-3 sm:px-4 lg:px-8 flex justify-between items-center py-1 sm:py-1.5 gap-2">
+          <div className="flex md:hidden items-center gap-1.5 text-[9px] shrink min-w-0 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
+            <a
+              href="#"
+              className="px-1.5 py-0.5 rounded-full border border-white/30 text-white/90 hover:bg-white/10 transition-all font-medium shrink-0"
+            >
+              NAAC
+            </a>
+            <a
+              href="#"
+              className="px-1.5 py-0.5 rounded-full border border-white/30 text-white/90 hover:bg-white/10 transition-all font-medium shrink-0"
+            >
+              NIRF
+            </a>
+            <a
+              href="#"
+              className="px-1.5 py-0.5 rounded-full border border-white/30 text-white/90 hover:bg-white/10 transition-all font-medium shrink-0"
+            >
+              IQAC
+            </a>
+            <a
+              href="#"
+              className="px-1.5 py-0.5 rounded-full border border-white/30 text-white/90 hover:bg-white/10 transition-all font-medium shrink-0 flex items-center gap-1"
+            >
+              <ShieldCheck size={9} strokeWidth={2.4} /> Anti-Ragging
+            </a>
           </div>
-          <div className="flex items-center gap-5 text-[11px]">
-            <a href="#" className="text-white/80 hover:text-white transition flex items-center gap-1.5">
+          <div className="hidden md:block flex-1" />
+          <div className="flex items-center gap-2 sm:gap-5 text-[9px] sm:text-[11px] shrink-0">
+            <a href="#" className="hidden md:flex text-white/80 hover:text-white transition items-center gap-1.5">
               <ShieldCheck size={11} strokeWidth={2.4} /> Anti-Ragging
             </a>
-            <a href="#" className="text-white/80 hover:text-white transition">NIRF</a>
-            <a href="#" className="text-white/80 hover:text-white transition">IQAC</a>
-            <a href="#" className="text-white/80 hover:text-white transition">NAAC A+</a>
-            <span className="text-white/20">|</span>
+            <a href="#" className="hidden md:inline text-white/80 hover:text-white transition">NIRF</a>
+            <a href="#" className="hidden md:inline text-white/80 hover:text-white transition">IQAC</a>
+            <a href="#" className="hidden md:inline text-white/80 hover:text-white transition">NAAC A</a>
+            <span className="hidden md:inline text-white/20">|</span>
             <a
               href="https://lms.itmgoi.in/"
               target="_blank"
               rel="noreferrer"
-              className="px-2.5 py-0.5 rounded-full border border-cyan-300/40 text-cyan-200 hover:bg-cyan-400 hover:text-[#2a0101] hover:border-cyan-400 transition-all font-medium"
+              className="px-2 sm:px-2.5 py-0.5 rounded-full border border-cyan-300/40 text-cyan-200 hover:bg-cyan-400 hover:text-[#2a0101] hover:border-cyan-400 transition-all font-medium"
             >
               LMS
             </a>
@@ -253,17 +275,17 @@ export default function Header() {
               href="http://mis.itmgoi.in/"
               target="_blank"
               rel="noreferrer"
-              className="px-2.5 py-0.5 rounded-full border border-amber-300/40 text-amber-200 hover:bg-amber-300 hover:text-[#2a0101] hover:border-amber-300 transition-all font-medium"
+              className="px-2 sm:px-2.5 py-0.5 rounded-full border border-amber-300/40 text-amber-200 hover:bg-amber-300 hover:text-[#2a0101] hover:border-amber-300 transition-all font-medium"
             >
               MIS
             </a>
-            {/* Light / dark toggle */}
+            {/* Light / dark toggle — hidden on mobile (already in main navbar) */}
             <button
               type="button"
               onClick={toggleTheme}
               aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
               title={theme === "dark" ? "Light mode" : "Dark mode"}
-              className="ml-1 flex items-center justify-center w-7 h-7 rounded-full border border-amber-300/40 text-amber-200 hover:bg-amber-300 hover:text-[#2a0101] hover:border-amber-300 transition-all"
+              className="hidden md:flex ml-1 items-center justify-center w-7 h-7 rounded-full border border-amber-300/40 text-amber-200 hover:bg-amber-300 hover:text-[#2a0101] hover:border-amber-300 transition-all"
             >
               {theme === "dark" ? <Sun size={13} strokeWidth={2.4} /> : <Moon size={13} strokeWidth={2.4} />}
             </button>
@@ -298,12 +320,12 @@ export default function Header() {
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent dark:via-amber-300/40" />
 
         <div
-          className={`relative w-full px-4 lg:px-8 flex items-center justify-between transition-[padding] duration-300 ease-out ${
-            isScrolled ? "py-2.5" : "py-4"
+          className={`relative w-full px-3 sm:px-4 lg:px-8 flex items-center justify-between transition-[padding] duration-300 ease-out ${
+            isScrolled ? "py-2" : "py-2.5 sm:py-4"
           }`}
         >
           {/* LOGO GROUP — pinned to the far left edge */}
-          <div className="flex items-center gap-4 lg:gap-6 shrink-0 min-w-0 mr-auto">
+          <div className="flex items-center gap-2 sm:gap-4 lg:gap-6 shrink-0 min-w-0 mr-auto">
             <Link to="/" className="group relative cursor-pointer flex items-center shrink-0">
               <motion.img
                 whileHover={{ scale: 1.05, rotate: -2 }}
@@ -311,7 +333,7 @@ export default function Header() {
                 src={logo}
                 alt="ITM Logo"
                 className={`relative block object-contain transition-[height] duration-300 ease-out ${
-                  isScrolled ? "h-12 lg:h-14" : "h-14 lg:h-[68px]"
+                  isScrolled ? "h-9 sm:h-12 lg:h-14" : "h-10 sm:h-14 lg:h-[68px]"
                 }`}
               />
             </Link>
@@ -321,12 +343,12 @@ export default function Header() {
                 isScrolled ? "h-10" : "h-12"
               }`}
             />
-            <div className="flex items-center gap-4 lg:gap-5 shrink-0">
+            <div className="hidden sm:flex items-center gap-3 sm:gap-4 lg:gap-5 shrink-0">
               <motion.img
                 whileHover={{ scale: 1.08 }}
                 src={YearsLogo}
                 alt="30 Years"
-                className={`block w-auto object-contain transition-[height] duration-300 ease-out ${
+                className={`hidden md:block w-auto object-contain transition-[height] duration-300 ease-out ${
                   isScrolled ? "h-10 lg:h-12" : "h-12 lg:h-[58px]"
                 }`}
               />
@@ -335,7 +357,7 @@ export default function Header() {
                 src={NAACLogo}
                 alt="NAAC"
                 className={`block w-auto object-contain transition-[height] duration-300 ease-out ${
-                  isScrolled ? "h-10 lg:h-12" : "h-12 lg:h-[58px]"
+                  isScrolled ? "h-9 sm:h-10 lg:h-12" : "h-10 sm:h-12 lg:h-[58px]"
                 }`}
               />
               <motion.img
@@ -343,7 +365,7 @@ export default function Header() {
                 src={NBALogo}
                 alt="NBA Accredited"
                 style={{ mixBlendMode: "multiply" }}
-                className={`block w-auto object-contain transition-[height] duration-300 ease-out bg-transparent ${
+                className={`hidden md:block w-auto object-contain transition-[height] duration-300 ease-out bg-transparent ${
                   isScrolled ? "h-10 lg:h-12" : "h-12 lg:h-[58px]"
                 }`}
               />
@@ -548,28 +570,28 @@ export default function Header() {
           </nav>
 
           {/* MOBILE CONTROLS — pinned to the far right edge */}
-          <div className="xl:hidden flex items-center gap-3 ml-auto">
+          <div className="xl:hidden flex items-center gap-1.5 sm:gap-3 ml-auto shrink-0">
             {/* Light / dark toggle — mobile */}
             <button
               type="button"
               onClick={toggleTheme}
               aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-              className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-300 dark:border-white/30 text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-white/15 transition-colors"
+              className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-slate-300 dark:border-white/30 text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-white/15 transition-colors"
             >
-              {theme === "dark" ? <Sun size={16} strokeWidth={2.4} /> : <Moon size={16} strokeWidth={2.4} />}
+              {theme === "dark" ? <Sun size={14} strokeWidth={2.4} className="sm:!w-4 sm:!h-4" /> : <Moon size={14} strokeWidth={2.4} className="sm:!w-4 sm:!h-4" />}
             </button>
             <Link
               to="/admissions/how-to-apply"
-              className="px-4 py-2 rounded-full text-[11px] font-bold ring-1 shadow-md bg-[#800000] text-white ring-[#800000]/30 dark:bg-white dark:text-[#800000] dark:ring-white/60"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-[11px] font-bold ring-1 shadow-md bg-[#800000] text-white ring-[#800000]/30 dark:bg-white dark:text-[#800000] dark:ring-white/60"
             >
               Apply
             </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 dark:text-white dark:hover:bg-white/15"
+              className="p-1.5 sm:p-2 rounded-lg text-slate-700 hover:bg-slate-100 dark:text-white dark:hover:bg-white/15"
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? <X size={22} className="sm:!w-6 sm:!h-6" /> : <Menu size={22} className="sm:!w-6 sm:!h-6" />}
             </button>
           </div>
         </div>

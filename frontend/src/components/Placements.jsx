@@ -4,13 +4,13 @@ import PlacementData from "./PlacementData";
 
 export default function Placements() {
   return (
-    <section className="relative py-20 md:py-28 bg-gradient-to-b from-white via-rose-50/30 to-white dark:from-[#020617] dark:to-[#020617] overflow-hidden">
+    <section className="relative py-6 sm:py-20 md:py-28 bg-gradient-to-b from-white via-rose-50/30 to-white dark:from-[#020617] dark:to-[#020617] overflow-hidden">
       <div className="absolute top-20 left-0 w-[35vw] h-[35vw] rounded-full bg-gradient-to-br from-rose-200/40 to-transparent blur-3xl pointer-events-none"></div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
 
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-6 mb-6 sm:mb-12">
           <div className="max-w-xl">
             <Reveal>
               <div className="flex items-center gap-3 mb-3">
@@ -21,7 +21,7 @@ export default function Placements() {
               </div>
             </Reveal>
             <Reveal delay={0.2}>
-              <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+              <h2 className="text-xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
                 Our Alumni{" "}
                 <span className="relative inline-block">
                   <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">

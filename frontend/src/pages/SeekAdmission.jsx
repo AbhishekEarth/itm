@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import AdmissionInquiryForm from "../components/AdmissionInquiryForm";
 import {
   FileText,
   Phone,
@@ -924,6 +925,19 @@ export default function SeekAdmission() {
               ></iframe>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── Live inquiry form (Phase 7) ─────────────────────────── */}
+      <section className="py-12 sm:py-16 bg-white dark:bg-[#020617]">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-[#1a0606] dark:text-white">
+              Quick admissions enquiry
+            </h2>
+            <p className="text-sm text-gray-500 mt-2">A counsellor will reach out within 24 hours.</p>
+          </div>
+          <AdmissionInquiryForm />
         </div>
       </section>
     </div>

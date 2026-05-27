@@ -26,7 +26,7 @@ export default function PlacementData() {
 
   return (
     /* Masonry layout without extra padding or footer strips */
-    <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+    <div className="columns-2 md:columns-2 lg:columns-3 gap-2 sm:gap-6 space-y-2 sm:space-y-6">
       {records.map((item) => (
         <motion.div 
           key={item.id} 

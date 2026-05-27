@@ -1,7 +1,10 @@
-import React from "react";
 import DepartmentTemplate from "../components/DepartmentTemplate";
 import { DEPARTMENTS } from "../data/departments_v2";
+import { usePublicDepartment } from "../hooks/usePublicDepartment";
 
 export default function ESHDepartment() {
-  return <DepartmentTemplate dept={DEPARTMENTS.esh} />;
+  const { data, isLoading } = usePublicDepartment("ESH");
+  const dept = data ?? (isLoading ? null : DEPARTMENTS.esh);
+  if (!dept) return null;
+  return <DepartmentTemplate dept={dept} />;
 }

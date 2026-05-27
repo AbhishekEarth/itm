@@ -1,10 +1,33 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import AdminLogin from './pages/AdminLogin';
-import AdminDashboard from './pages/AdminDashboard';
-import AdminFaculty from './pages/AdminFaculty';
-import AdminStudents from './pages/AdminStudents';
+
+// Admin routes are loaded lazily so they don't ship to public visitors.
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const AdminFaculty   = lazy(() => import('./pages/AdminFaculty'));
+const AdminStudents  = lazy(() => import('./pages/AdminStudents'));
+const AdminUsers       = lazy(() => import('./pages/admin/AdminUsers'));
+const AdminSettings    = lazy(() => import('./pages/admin/AdminSettings'));
+const AdminPages       = lazy(() => import('./pages/admin/AdminPages'));
+const AdminMedia       = lazy(() => import('./pages/admin/AdminMedia'));
+const AdminDepartments = lazy(() => import('./pages/admin/AdminDepartments'));
+const AdminPlacements  = lazy(() => import('./pages/admin/AdminPlacements'));
+const AdminResearch    = lazy(() => import('./pages/admin/AdminResearch'));
+const AdminEvents      = lazy(() => import('./pages/admin/AdminEvents'));
+const AdminGallery     = lazy(() => import('./pages/admin/AdminGallery'));
+const AdminLeads       = lazy(() => import('./pages/admin/AdminLeads'));
+const AdminCompliance  = lazy(() => import('./pages/admin/AdminCompliance'));
+const ChangePassword   = lazy(() => import('./pages/admin/ChangePassword'));
+
+function AdminFallback() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#020617] text-xs uppercase tracking-widest text-gray-400">
+      Loading admin…
+    </div>
+  );
+}
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Stats from "./components/Stats";
@@ -81,6 +104,7 @@ import {
   SportsGalleryPage, StudentsGalleryPage, LifeAtITMPage, VideoGalleryPage,
 } from "./pages/GalleryPages";
 import ContactPage from "./pages/ContactPage";
+import OpenPositionsPage from "./pages/OpenPositionsPage";
 
 function RouteShell({ children }) {
   const location = useLocation();
@@ -92,9 +116,13 @@ function RouteShell({ children }) {
   );
 }
 
-function ProtectedRoute({ children }) {
-  const { isAdmin } = useAuth();
-  return isAdmin ? children : <Navigate to="/login" replace />;
+function ProtectedRoute({ children, allowPasswordChange = false }) {
+  const { isAdmin, user } = useAuth();
+  if (!isAdmin) return <Navigate to="/login" replace />;
+  if (user?.must_change_password && !allowPasswordChange) {
+    return <Navigate to="/account/change-password" replace />;
+  }
+  return <Suspense fallback={<AdminFallback />}>{children}</Suspense>;
 }
 
 function StudentRoute({ children }) {
@@ -212,6 +240,18 @@ function App() {
             <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
             <Route path="/admin/faculty" element={<ProtectedRoute><AdminFaculty /></ProtectedRoute>} />
             <Route path="/admin/students" element={<ProtectedRoute><AdminStudents /></ProtectedRoute>} />
+            <Route path="/admin/users" element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
+            <Route path="/admin/settings" element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
+            <Route path="/admin/pages" element={<ProtectedRoute><AdminPages /></ProtectedRoute>} />
+            <Route path="/admin/media" element={<ProtectedRoute><AdminMedia /></ProtectedRoute>} />
+            <Route path="/admin/departments" element={<ProtectedRoute><AdminDepartments /></ProtectedRoute>} />
+            <Route path="/admin/placements-cell" element={<ProtectedRoute><AdminPlacements /></ProtectedRoute>} />
+            <Route path="/admin/research" element={<ProtectedRoute><AdminResearch /></ProtectedRoute>} />
+            <Route path="/admin/events" element={<ProtectedRoute><AdminEvents /></ProtectedRoute>} />
+            <Route path="/admin/gallery" element={<ProtectedRoute><AdminGallery /></ProtectedRoute>} />
+            <Route path="/admin/leads" element={<ProtectedRoute><AdminLeads /></ProtectedRoute>} />
+            <Route path="/admin/compliance" element={<ProtectedRoute><AdminCompliance /></ProtectedRoute>} />
+            <Route path="/account/change-password" element={<ProtectedRoute allowPasswordChange><ChangePassword /></ProtectedRoute>} />
             <Route path="/admin/pac" element={<ProtectedRoute><AdminPACEventForm /></ProtectedRoute>} />
             <Route path="/admin/tap" element={<ProtectedRoute><AdminEventForm /></ProtectedRoute>} />
             <Route path="/admin/placements" element={<ProtectedRoute><AdminPACEventForm /></ProtectedRoute>} />
@@ -253,6 +293,8 @@ function App() {
             <Route path="/appreciation" element={<AppreciationPage />} />
             <Route path="/nirf" element={<NIRFPage />} />
             <Route path="/careers" element={<CareersPage />} />
+            <Route path="/careers/open-positions" element={<OpenPositionsPage />} />
+            <Route path="/careers/open-positions/:positionId" element={<OpenPositionsPage />} />
             <Route path="/jrf" element={<JRFPage />} />
 
             {/* GALLERY (8 routes) */}

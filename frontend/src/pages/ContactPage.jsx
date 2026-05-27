@@ -1,6 +1,7 @@
 import React from "react";
 import { Phone, Mail, MapPin, GraduationCap, Building2, Globe2, Clock, ExternalLink } from "lucide-react";
 import PageShell, { SectionTitle, Card, Prose } from "./_PageShell";
+import ContactForm from "../components/ContactForm";
 
 export default function ContactPage() {
   return (
@@ -12,7 +13,7 @@ export default function ContactPage() {
       chips={["NH-75 Sithouli", "M.P. India", "Open Mon–Sat"]}
     >
       {/* Quick contact cards */}
-      <section className="grid md:grid-cols-3 gap-5">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
         <Card>
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 flex items-center justify-center shadow-md mb-4">
             <GraduationCap size={22} />
@@ -58,10 +59,10 @@ export default function ContactPage() {
       </section>
 
       {/* Address + map block */}
-      <section className="grid lg:grid-cols-2 gap-6">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         <Card className="bg-gradient-to-br from-[#1a0606] to-[#3e0202] text-white border-amber-300/30">
           <MapPin className="text-amber-300 mb-4" size={28} />
-          <h3 className="text-2xl font-black text-white mb-3">Campus Address</h3>
+          <h3 className="text-xl sm:text-2xl font-black text-white mb-3">Campus Address</h3>
           <p className="text-lg font-bold leading-snug text-white/95 mb-6">
             ITM Campus, Opp. Sithouli Railway Station,<br />
             NH-75 Sithouli, Jhansi Road,<br />
@@ -79,7 +80,7 @@ export default function ContactPage() {
           </div>
         </Card>
 
-        <Card className="overflow-hidden p-0 h-[420px]">
+        <Card className="overflow-hidden p-0 h-72 sm:h-96 md:h-[420px]">
           <iframe
             title="ITM Gwalior on Google Maps"
             src="https://www.google.com/maps?q=ITM%20Gwalior%20Sithouli&output=embed"
@@ -88,6 +89,15 @@ export default function ContactPage() {
             referrerPolicy="no-referrer-when-downgrade"
           />
         </Card>
+      </section>
+
+      {/* Live contact form */}
+      <section>
+        <SectionTitle eyebrow="Get in touch" title="Send us a" accent="message." />
+        <div className="grid md:grid-cols-2 gap-6 max-w-5xl">
+          <ContactForm kind="general" />
+          <ContactForm kind="grievance" accent="#92400e" />
+        </div>
       </section>
 
       {/* Online portals */}

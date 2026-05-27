@@ -4,7 +4,8 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import {
   GraduationCap, Users, Calendar, Image, Music,
-  LogOut, ChevronRight, LayoutDashboard, Plus
+  LogOut, ChevronRight, LayoutDashboard, Plus, ShieldCheck,
+  Settings as SettingsIcon, FileText, ImageIcon, Building2, Briefcase, FlaskConical, CalendarDays, Images, Inbox, Scale
 } from 'lucide-react';
 
 function StatCard({ icon: Icon, label, value, color, to }) {
@@ -120,6 +121,17 @@ export default function AdminDashboard() {
             <ActionCard icon={Calendar}      label="TAP Events"    desc="Post upcoming campus drives, internships and talks."     to="/admin/tap"         accent="bg-gradient-to-br from-emerald-500 to-teal-700" />
             <ActionCard icon={Music}         label="PAC Events"    desc="Upload cultural event highlights with gallery images."   to="/admin/pac"         accent="bg-gradient-to-br from-amber-500 to-orange-600" />
             <ActionCard icon={Image}         label="Placements"    desc="Upload recruiter logos shown on the placements page."   to="/admin/placements"  accent="bg-gradient-to-br from-rose-500 to-pink-700" />
+            <ActionCard icon={ShieldCheck}   label="Users & Scopes" desc="Create scoped editors (CS dept, placement cell, etc.)." to="/admin/users"      accent="bg-gradient-to-br from-violet-500 to-fuchsia-700" />
+            <ActionCard icon={FileText}      label="Pages & SEO"   desc="Edit page sections + meta title/description/OG image."  to="/admin/pages"      accent="bg-gradient-to-br from-sky-500 to-blue-700" />
+            <ActionCard icon={SettingsIcon}  label="Site Settings"  desc="Logo, brand color, contact, social, default SEO."        to="/admin/settings"   accent="bg-gradient-to-br from-slate-500 to-slate-700" />
+            <ActionCard icon={ImageIcon}     label="Media Library"  desc="Upload & manage images, PDFs and brochures."             to="/admin/media"      accent="bg-gradient-to-br from-fuchsia-500 to-purple-700" />
+            <ActionCard icon={Building2}     label="Departments"    desc="CS / ECE / IT / CE / ME / MBA / ESH — HoD, faculty, labs." to="/admin/departments" accent="bg-gradient-to-br from-emerald-500 to-teal-700" />
+            <ActionCard icon={Briefcase}     label="Placement Cell" desc="Recruiters, TAP team, services, MoUs, testimonials, events." to="/admin/placements-cell" accent="bg-gradient-to-br from-orange-500 to-red-700" />
+            <ActionCard icon={FlaskConical}  label="Research Suite" desc="Focus areas, publications, books, patents, journal, conferences, FDPs." to="/admin/research" accent="bg-gradient-to-br from-cyan-500 to-blue-700" />
+            <ActionCard icon={CalendarDays}  label="Events & Notices" desc="Events, clubs/cells, notices, ticker announcements."          to="/admin/events"  accent="bg-gradient-to-br from-emerald-500 to-green-700" />
+            <ActionCard icon={Images}        label="Gallery"         desc="Categories + multi-image upload + captions + videos."         to="/admin/gallery" accent="bg-gradient-to-br from-pink-500 to-fuchsia-700" />
+            <ActionCard icon={Inbox}         label="Leads & Inbox"   desc="Admission leads, contact, grievance, job applications."        to="/admin/leads"   accent="bg-gradient-to-br from-yellow-500 to-orange-700" />
+            <ActionCard icon={Scale}         label="Compliance · Alumni · About" desc="NAAC, NIRF, committees, board, officials, alumni." to="/admin/compliance" accent="bg-gradient-to-br from-teal-500 to-cyan-700" />
           </div>
         </div>
 

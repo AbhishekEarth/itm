@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { usePublicEvents, usePublicGallery } from "../hooks/usePublicEvents";
 import {
   HeartHandshake, Leaf, Trophy, Users2, ShieldCheck, Scale,
   Calendar, MapPin, ArrowUpRight, GraduationCap, Briefcase,
@@ -22,10 +23,10 @@ const CELLS = [
 
 export function CellsAndCommittees() {
   return (
-    <section className="relative py-20 md:py-28 bg-[#fbf7f2] dark:bg-[#020617] overflow-hidden">
+    <section className="relative py-10 sm:py-20 md:py-28 bg-[#fbf7f2] dark:bg-[#020617] overflow-hidden">
       <div className="absolute top-20 left-0 w-[28vw] h-[28vw] rounded-full bg-gradient-to-tr from-amber-200/40 to-transparent blur-3xl pointer-events-none" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
           <div className="inline-flex items-center gap-3 mb-3">
             <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full" />
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">
@@ -33,7 +34,7 @@ export function CellsAndCommittees() {
             </span>
             <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full" />
           </div>
-          <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-4">
             Built on{" "}
             <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
               service, sport &amp; quality.
@@ -45,7 +46,7 @@ export function CellsAndCommittees() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-fr">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 auto-rows-fr">
           {CELLS.map((c, i) => (
             <motion.div
               key={c.short}
@@ -58,22 +59,22 @@ export function CellsAndCommittees() {
             >
             <Link
               to={c.to}
-              className="group relative h-full flex flex-col overflow-hidden rounded-3xl bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow p-6"
+              className="group relative h-full flex flex-col overflow-hidden rounded-3xl bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow p-3 sm:p-6"
             >
               <div className={`absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br ${c.accent} opacity-0 group-hover:opacity-25 blur-2xl transition-opacity duration-500`} />
               <div className="relative flex flex-col h-full">
-                <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${c.accent} flex items-center justify-center text-white shadow-md mb-5`}>
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br ${c.accent} flex items-center justify-center text-white shadow-md mb-3 sm:mb-5`}>
                   <c.Icon size={22} strokeWidth={2.1} />
                 </div>
                 <div className="flex items-center gap-2 mb-2">
-                  <h3 className="text-lg font-black tracking-tight text-[#1a0606] dark:text-white leading-tight">
+                  <h3 className="text-sm sm:text-lg font-black tracking-tight text-[#1a0606] dark:text-white leading-tight">
                     {c.title}
                   </h3>
                   <span className="text-[9px] font-black uppercase tracking-widest text-[#800000] bg-rose-50 dark:bg-gray-800 px-2 py-0.5 rounded">
                     {c.short}
                   </span>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium">
+                <p className="text-[11px] sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium line-clamp-2 sm:line-clamp-none">
                   {c.body}
                 </p>
                 <div className="mt-auto pt-6 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] text-[#800000] group-hover:gap-3 transition-all">
@@ -122,11 +123,21 @@ const EVENTS = [
 ];
 
 export function UpcomingEvents() {
+  const { data } = usePublicEvents({ status: "upcoming", limit: 6 });
+  const liveEvents = (data || []).slice(0, 6).map((e) => ({
+    badge: e.type || "Event",
+    title: e.title,
+    when: e.event_date || "TBA",
+    body: e.description || e.location || "",
+    accent: "from-rose-500 to-[#800000]",
+    href: e.registration_url || "#events",
+  }));
+  const items = liveEvents.length ? liveEvents : EVENTS;
   return (
-    <section className="relative py-20 md:py-28 bg-white dark:bg-[#0a0a14] overflow-hidden">
+    <section className="relative py-10 sm:py-20 md:py-28 bg-white dark:bg-[#0a0a14] overflow-hidden">
       <div className="absolute top-0 right-0 w-[35vw] h-[35vw] bg-gradient-to-bl from-rose-100/60 to-transparent blur-2xl rounded-full pointer-events-none" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 md:mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 md:mb-16">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full" />
@@ -134,7 +145,7 @@ export function UpcomingEvents() {
                 What's next on campus
               </span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Upcoming{" "}
               <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
                 events &amp; conferences.
@@ -147,8 +158,8 @@ export function UpcomingEvents() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 auto-rows-fr">
-          {EVENTS.map((e, i) => (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5 auto-rows-fr">
+          {items.map((e, i) => (
             <motion.a
               key={e.title}
               href={e.href}
@@ -162,17 +173,17 @@ export function UpcomingEvents() {
               className="group relative h-full flex flex-col overflow-hidden rounded-3xl border border-rose-50 dark:border-gray-800 bg-gradient-to-br from-white to-rose-50/40 dark:from-gray-900 dark:to-gray-900 shadow-sm hover:shadow-2xl transition-shadow"
             >
               <div className={`h-1.5 w-full bg-gradient-to-r ${e.accent}`} />
-              <div className="relative flex flex-col flex-1 p-7">
-                <div className="flex items-center justify-between mb-5">
+              <div className="relative flex flex-col flex-1 p-3 sm:p-7">
+                <div className="flex items-center justify-between mb-3 sm:mb-5">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-rose-50 dark:bg-gray-800 text-[#800000] dark:text-rose-300 rounded-full text-[9px] font-black uppercase tracking-widest">
                     <Calendar size={10} /> {e.badge}
                   </span>
                   <span className="text-[10px] font-black uppercase tracking-[0.25em] text-amber-700 dark:text-amber-400">{e.when}</span>
                 </div>
-                <h3 className="text-xl md:text-2xl font-black tracking-tight text-[#1a0606] dark:text-white leading-tight mb-3">
+                <h3 className="text-base sm:text-xl md:text-2xl font-black tracking-tight text-[#1a0606] dark:text-white leading-tight mb-2 sm:mb-3">
                   {e.title}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{e.body}</p>
+                <p className="text-[11px] sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium line-clamp-2 sm:line-clamp-none">{e.body}</p>
                 <div className="mt-auto pt-6 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.25em] text-[#800000] group-hover:gap-3 transition-all">
                   <span className="w-6 h-px bg-[#800000]" />
                   Event details
@@ -207,20 +218,20 @@ const QUICK_LINKS = [
 
 export function QuickLinks() {
   return (
-    <section className="relative py-20 md:py-24 bg-[#1a0606] text-white overflow-hidden">
+    <section className="relative py-10 sm:py-20 md:py-24 bg-[#1a0606] text-white overflow-hidden">
       <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
         backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0)",
         backgroundSize: "32px 32px",
       }} />
       <div className="absolute -top-24 -right-24 w-[36vw] h-[36vw] bg-gradient-to-br from-[#800000]/40 to-transparent blur-3xl rounded-full pointer-events-none" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/20 mb-5">
             <span className="text-[9px] font-black uppercase tracking-[0.3em] text-amber-300">
               Important Links
             </span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] leading-[1.05] mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] leading-[1.05] mb-4">
             Everything you might{" "}
             <span className="bg-gradient-to-r from-amber-300 to-rose-300 bg-clip-text text-transparent">
               need in one place.
@@ -236,16 +247,16 @@ export function QuickLinks() {
           {QUICK_LINKS.map((l, i) => {
             const inner = (
               <>
-                <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 ring-1 ring-amber-300/30 shadow-md shrink-0">
+                <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 ring-1 ring-amber-300/30 shadow-md shrink-0">
                   <l.Icon size={18} strokeWidth={2.1} />
                 </div>
-                <span className="flex-1 text-sm font-bold leading-tight text-white/90 group-hover:text-white">
+                <span className="flex-1 text-xs sm:text-sm font-bold leading-tight text-white/90 group-hover:text-white">
                   {l.label}
                 </span>
                 <ArrowUpRight size={14} className="text-white/40 group-hover:text-amber-300 transition-colors" />
               </>
             );
-            const cls = "group relative flex items-center gap-3 p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-amber-300/40 backdrop-blur transition-colors";
+            const cls = "group relative flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-amber-300/40 backdrop-blur transition-colors";
             return (
               <motion.div key={l.label}
                 initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-30px" }}
@@ -278,7 +289,7 @@ const ALUMNI_TILES = [
 
 export function AlumniSection() {
   return (
-    <section className="relative py-20 md:py-28 bg-gradient-to-br from-[#fbf7f2] via-white to-rose-50/40 dark:from-[#020617] dark:via-[#020617] dark:to-[#0a0a14] overflow-hidden">
+    <section className="relative py-10 sm:py-20 md:py-28 bg-gradient-to-br from-[#fbf7f2] via-white to-rose-50/40 dark:from-[#020617] dark:via-[#020617] dark:to-[#0a0a14] overflow-hidden">
       <div className="absolute top-10 left-10 w-[26vw] h-[26vw] bg-gradient-to-br from-amber-100/60 to-transparent blur-3xl rounded-full pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-12 gap-10 items-center">
@@ -290,7 +301,7 @@ export function AlumniSection() {
               Alumni Network
             </span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-5">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-5">
             Once an ITMian,{" "}
             <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
               always an ITMian.
@@ -307,13 +318,13 @@ export function AlumniSection() {
               href="https://www.itmalumni.in/"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 bg-[#800000] hover:bg-[#5c0202] text-white px-5 py-3 rounded-xl font-black text-[11px] tracking-widest uppercase transition-colors shadow-lg shadow-[#800000]/30"
+              className="inline-flex items-center gap-2 bg-[#800000] hover:bg-[#5c0202] text-white px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl font-black text-[11px] tracking-widest uppercase transition-colors shadow-lg shadow-[#800000]/30"
             >
               Visit Alumni Portal <ArrowUpRight size={13} />
             </a>
             <Link
               to="/alumni/speaks"
-              className="inline-flex items-center gap-2 bg-white dark:bg-gray-900 text-[#800000] dark:text-amber-300 border border-[#800000]/20 dark:border-amber-300/30 hover:bg-rose-50 dark:hover:bg-gray-800 px-5 py-3 rounded-xl font-black text-[11px] tracking-widest uppercase transition-colors"
+              className="inline-flex items-center gap-2 bg-white dark:bg-gray-900 text-[#800000] dark:text-amber-300 border border-[#800000]/20 dark:border-amber-300/30 hover:bg-rose-50 dark:hover:bg-gray-800 px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl font-black text-[11px] tracking-widest uppercase transition-colors"
             >
               Alumni Speaks <ArrowUpRight size={13} />
             </Link>
@@ -326,7 +337,7 @@ export function AlumniSection() {
               { num: "300+",  label: "Recruiters" },
             ].map((s) => (
               <div key={s.label}>
-                <div className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-[#800000] to-amber-600 leading-none">{s.num}</div>
+                <div className="text-2xl sm:text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-[#800000] to-amber-600 leading-none">{s.num}</div>
                 <div className="text-[10px] uppercase tracking-widest font-bold text-gray-500 mt-1">{s.label}</div>
               </div>
             ))}
@@ -338,14 +349,14 @@ export function AlumniSection() {
           {ALUMNI_TILES.map((t, i) => {
             const inner = (
               <>
-                <div className="flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 ring-1 ring-amber-300/30 shadow-md">
+                <div className="flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 ring-1 ring-amber-300/30 shadow-md">
                   <t.Icon size={20} strokeWidth={2.1} />
                 </div>
-                <span className="text-sm font-black text-[#1a0606] dark:text-white leading-tight">{t.label}</span>
+                <span className="text-xs sm:text-sm font-black text-[#1a0606] dark:text-white leading-tight">{t.label}</span>
                 <ArrowUpRight size={14} className="absolute top-4 right-4 text-gray-300 group-hover:text-[#800000] dark:group-hover:text-amber-300 transition-colors" />
               </>
             );
-            const cls = "group relative flex flex-col gap-3 p-5 rounded-2xl bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-xl transition-shadow";
+            const cls = "group relative flex flex-col gap-2 sm:gap-3 p-3 sm:p-5 rounded-2xl bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-xl transition-shadow";
             return (
               <motion.div key={t.label}
                 initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-30px" }}
@@ -375,10 +386,23 @@ const GALLERY = [
 ];
 
 export function GalleryPreview() {
+  const { data } = usePublicGallery();
+  const iconMap = {
+    cultural: Sparkles, experts: GraduationCap, infrastructure: Building2,
+    sports: Trophy, students: Users2, life: ImageIcon, videos: Video,
+  };
+  const liveItems = (data || []).map((g) => ({
+    Icon: iconMap[g.slug] || ImageIcon,
+    label: g.label,
+    to: `/gallery/${g.slug}`,
+    tint: `bg-gradient-to-br ${g.accent || 'from-rose-500 to-pink-700'}`,
+    cover: g.cover,
+  }));
+  const items = liveItems.length ? liveItems : GALLERY.map((g) => ({ ...g, tint: g.tint, cover: null }));
   return (
-    <section className="relative py-20 md:py-28 bg-white dark:bg-[#020617] overflow-hidden">
+    <section className="relative py-10 sm:py-20 md:py-28 bg-white dark:bg-[#020617] overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-12">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full" />
@@ -386,7 +410,7 @@ export function GalleryPreview() {
                 Campus Through the Lens
               </span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               The{" "}
               <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
                 ITM gallery.
@@ -399,28 +423,29 @@ export function GalleryPreview() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {GALLERY.map((g, i) => (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+          {items.map((g, i) => (
             <motion.div key={g.label}
               initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-30px" }}
               transition={{ delay: i * 0.05, duration: 0.45 }} whileHover={{ y: -5 }}
             >
             <Link
               to={g.to}
-              className={`group relative aspect-square rounded-3xl overflow-hidden bg-gradient-to-br ${g.tint} shadow-lg hover:shadow-2xl transition-shadow flex`}
+              className={`group relative aspect-square rounded-3xl overflow-hidden ${g.tint?.startsWith('bg-') ? g.tint : `bg-gradient-to-br ${g.tint}`} shadow-lg hover:shadow-2xl transition-shadow flex`}
             >
+              {g.cover && <img src={g.cover} alt="" className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-overlay" />}
               <div className="absolute inset-0 opacity-10" style={{
                 backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.5) 1px, transparent 0)",
                 backgroundSize: "18px 18px",
               }} />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-              <div className="relative h-full flex flex-col justify-between p-5 text-white">
-                <div className="w-11 h-11 rounded-2xl bg-white/20 backdrop-blur ring-1 ring-white/30 flex items-center justify-center">
+              <div className="relative h-full flex flex-col justify-between p-3 sm:p-5 text-white">
+                <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-white/20 backdrop-blur ring-1 ring-white/30 flex items-center justify-center">
                   <g.Icon size={20} strokeWidth={2.2} />
                 </div>
                 <div>
                   <div className="text-[9px] font-black uppercase tracking-[0.25em] text-white/70 mb-1">Gallery</div>
-                  <div className="text-base md:text-lg font-black tracking-tight leading-tight">{g.label}</div>
+                  <div className="text-sm sm:text-base md:text-lg font-black tracking-tight leading-tight">{g.label}</div>
                 </div>
               </div>
               <ArrowUpRight size={14} className="absolute top-5 right-5 text-white/70 group-hover:text-white transition-colors" />
@@ -431,12 +456,12 @@ export function GalleryPreview() {
           {/* "View all" tile */}
           <Link
             to="/gallery"
-            className="group relative aspect-square rounded-3xl bg-[#1a0606] dark:bg-gray-900 border border-[#800000]/30 dark:border-gray-800 flex flex-col items-center justify-center text-center p-5 hover:bg-[#3e0202] transition-colors"
+            className="group relative aspect-square rounded-3xl bg-[#1a0606] dark:bg-gray-900 border border-[#800000]/30 dark:border-gray-800 flex flex-col items-center justify-center text-center p-3 sm:p-5 hover:bg-[#3e0202] transition-colors"
           >
-            <div className="w-11 h-11 rounded-2xl bg-amber-300/20 ring-1 ring-amber-300/40 text-amber-300 flex items-center justify-center mb-3">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-amber-300/20 ring-1 ring-amber-300/40 text-amber-300 flex items-center justify-center mb-2 sm:mb-3">
               <Camera size={20} strokeWidth={2.2} />
             </div>
-            <div className="text-white text-sm font-black tracking-tight leading-tight mb-1">
+            <div className="text-white text-xs sm:text-sm font-black tracking-tight leading-tight mb-1">
               See the full archive
             </div>
             <div className="text-[9px] font-black uppercase tracking-[0.25em] text-amber-300/80">
@@ -454,7 +479,7 @@ export function GalleryPreview() {
    ============================================================ */
 export function ContactSection() {
   return (
-    <section className="relative py-20 md:py-28 bg-gradient-to-br from-[#1a0606] via-[#2a0101] to-[#1a0606] text-white overflow-hidden">
+    <section className="relative py-10 sm:py-20 md:py-28 bg-gradient-to-br from-[#1a0606] via-[#2a0101] to-[#1a0606] text-white overflow-hidden">
       <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
         backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0)",
         backgroundSize: "32px 32px",
@@ -468,7 +493,7 @@ export function ContactSection() {
             <Phone size={11} className="text-amber-300" />
             <span className="text-[9px] font-black uppercase tracking-[0.3em] text-amber-300">Get in touch</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] leading-[1.05] mb-5">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] leading-[1.05] mb-5">
             Visit us.{" "}
             <span className="bg-gradient-to-r from-amber-300 to-rose-300 bg-clip-text text-transparent">
               Call us. Write to us.
@@ -481,25 +506,25 @@ export function ContactSection() {
 
           <div className="flex flex-wrap gap-3">
             <Link to="/contact"
-              className="inline-flex items-center gap-2 bg-amber-300 hover:bg-amber-400 text-[#1a0606] px-5 py-3 rounded-xl font-black text-[11px] tracking-widest uppercase transition-colors shadow-lg">
+              className="inline-flex items-center gap-2 bg-amber-300 hover:bg-amber-400 text-[#1a0606] px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl font-black text-[11px] tracking-widest uppercase transition-colors shadow-lg">
               Full Contact Page <ArrowUpRight size={13} />
             </Link>
             <a href="http://itmgoi.in/OnlineApply_ITMGOI/" target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-2 border border-amber-300/40 hover:bg-amber-300/10 text-amber-300 px-5 py-3 rounded-xl font-black text-[11px] tracking-widest uppercase transition-colors">
+              className="inline-flex items-center gap-2 border border-amber-300/40 hover:bg-amber-300/10 text-amber-300 px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl font-black text-[11px] tracking-widest uppercase transition-colors">
               Online Enquiry <ArrowUpRight size={13} />
             </a>
           </div>
         </div>
 
         {/* Right: tile grid (address, general, admissions, email) */}
-        <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
+        <div className="lg:col-span-7 grid grid-cols-2 gap-3 sm:gap-4">
           {/* Address */}
-          <div className="sm:col-span-2 p-6 rounded-3xl bg-white/5 backdrop-blur border border-white/10">
+          <div className="col-span-2 p-4 sm:p-6 rounded-3xl bg-white/5 backdrop-blur border border-white/10">
             <div className="flex items-center gap-2 mb-3">
               <MapPin size={14} className="text-amber-300" />
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-300">Campus Address</span>
             </div>
-            <p className="text-base md:text-lg font-bold leading-snug text-white/95">
+            <p className="text-sm sm:text-base md:text-lg font-bold leading-snug text-white/95 break-words">
               ITM Campus, Opp. Sithouli Railway Station,<br />
               NH-75 Sithouli, Jhansi Road,<br />
               Gwalior — 475001, Madhya Pradesh, INDIA
@@ -507,24 +532,24 @@ export function ContactSection() {
           </div>
 
           {/* General phones */}
-          <div className="p-6 rounded-3xl bg-white/5 backdrop-blur border border-white/10">
-            <div className="flex items-center gap-2 mb-4">
+          <div className="p-4 sm:p-6 rounded-3xl bg-white/5 backdrop-blur border border-white/10">
+            <div className="flex items-center gap-2 mb-3 sm:mb-4">
               <Phone size={14} className="text-amber-300" />
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-300">General</span>
             </div>
-            <ul className="space-y-2 text-sm font-bold">
+            <ul className="space-y-2 text-xs sm:text-sm font-bold break-all">
               <li><a href="tel:+917512440056" className="hover:text-amber-300 transition-colors">+91-751-2440056</a></li>
               <li><a href="tel:+917512432977" className="hover:text-amber-300 transition-colors">+91-751-2432977</a></li>
             </ul>
           </div>
 
           {/* Admission phones */}
-          <div className="p-6 rounded-3xl bg-white/5 backdrop-blur border border-white/10">
-            <div className="flex items-center gap-2 mb-4">
+          <div className="p-4 sm:p-6 rounded-3xl bg-white/5 backdrop-blur border border-white/10">
+            <div className="flex items-center gap-2 mb-3 sm:mb-4">
               <GraduationCap size={14} className="text-amber-300" />
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-300">Admissions</span>
             </div>
-            <ul className="space-y-2 text-sm font-bold">
+            <ul className="space-y-2 text-xs sm:text-sm font-bold break-all">
               <li><a href="tel:+917773005065" className="hover:text-amber-300 transition-colors">+91-77730 05065</a></li>
               <li><a href="tel:+917773001624" className="hover:text-amber-300 transition-colors">+91-77730 01624</a></li>
               <li><a href="tel:+917773001627" className="hover:text-amber-300 transition-colors">+91-77730 01627</a></li>
@@ -532,13 +557,13 @@ export function ContactSection() {
           </div>
 
           {/* Email */}
-          <div className="sm:col-span-2 p-6 rounded-3xl bg-gradient-to-br from-amber-300/15 to-transparent border border-amber-300/30">
+          <div className="col-span-2 p-4 sm:p-6 rounded-3xl bg-gradient-to-br from-amber-300/15 to-transparent border border-amber-300/30">
             <div className="flex items-center gap-2 mb-3">
               <Mail size={14} className="text-amber-300" />
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-300">Email</span>
             </div>
             <a href="mailto:admission@itmgoi.in"
-              className="text-2xl md:text-3xl font-black tracking-tight text-white hover:text-amber-300 transition-colors break-all">
+              className="text-lg sm:text-2xl md:text-3xl font-black tracking-tight text-white hover:text-amber-300 transition-colors break-all">
               admission@itmgoi.in
             </a>
           </div>

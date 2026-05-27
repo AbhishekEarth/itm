@@ -177,20 +177,37 @@ export default function TapPage() {
   const [activeQuote, setActiveQuote] = useState(0);
   const [events, setEvents] = useState({ upcoming: [], past: [] });
   const [activeEvent, setActiveEvent] = useState(0);
+  const [tap, setTap] = useState(null);
 
-  const speak = INDUSTRY_SPEAK[activeQuote];
-  const nextQuote = () => setActiveQuote((i) => (i + 1) % INDUSTRY_SPEAK.length);
-  const prevQuote = () => setActiveQuote((i) => (i - 1 + INDUSTRY_SPEAK.length) % INDUSTRY_SPEAK.length);
+  // Live data from the CMS public payload — falls back to bundled constants if unavailable.
+  useEffect(() => {
+    axios.get("/api/public/tap").then((r) => setTap(r.data)).catch(() => {});
+  }, []);
+
+  const TAP_VISION_LIVE = tap?.vision ?? TAP_VISION;
+  const TAP_MISSION_LIVE = tap?.mission ?? TAP_MISSION;
+  const TAP_TEAM_LIVE = tap?.team?.length ? tap.team : TAP_TEAM;
+  const TAP_SERVICES_LIVE = TAP_SERVICES; // icons are React components; keep bundled
+  const TAP_MOUS_LIVE = tap?.mous?.length ? tap.mous : TAP_MOUS;
+  const MOU_DOCS_LIVE = tap?.mou_docs?.length ? tap.mou_docs : MOU_DOCS;
+  const INDUSTRY_SPEAK_LIVE = tap?.testimonials?.length
+    ? tap.testimonials.map((t) => ({ ...t, text: t.text || t.quote }))
+    : INDUSTRY_SPEAK;
+  const TOP_RECRUITERS_LIVE = tap?.top_recruiters?.length ? tap.top_recruiters : TOP_RECRUITERS;
+
+  const speak = INDUSTRY_SPEAK_LIVE[activeQuote] ?? INDUSTRY_SPEAK_LIVE[0];
+  const nextQuote = () => setActiveQuote((i) => (i + 1) % INDUSTRY_SPEAK_LIVE.length);
+  const prevQuote = () => setActiveQuote((i) => (i - 1 + INDUSTRY_SPEAK_LIVE.length) % INDUSTRY_SPEAK_LIVE.length);
 
   // Auto-rotate quotes
   useEffect(() => {
     const t = setInterval(nextQuote, 6000);
     return () => clearInterval(t);
-  }, []);
+  }, [INDUSTRY_SPEAK_LIVE.length]);
 
-  // Fetch events from FastAPI backend
+  // Fetch events from FastAPI backend (legacy endpoint — falls back silently if missing)
   useEffect(() => {
-    axios.get("http://localhost:8000/api/events/all")
+    axios.get("/api/events/all")
       .then((r) => setEvents(r.data))
       .catch((e) => console.error("Events fetch failed:", e));
   }, []);
@@ -218,12 +235,12 @@ export default function TapPage() {
           <div className="absolute top-1/3 left-1/3 w-40 h-40 rounded-full bg-white/10 blur-2xl"></div>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-14 md:py-20 grid lg:grid-cols-12 gap-10 items-end">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 md:py-20 grid lg:grid-cols-12 gap-8 lg:gap-10 items-end">
           <div className="lg:col-span-7">
             <span className="inline-flex items-center gap-2 text-red-200 font-bold tracking-widest text-[10px] uppercase mb-4 px-3 py-1.5 bg-white/10 backdrop-blur rounded-full border border-white/20">
               <Sparkles size={12} /> ITM Gwalior · TAP Cell
             </span>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-[-0.04em] leading-[0.95] mb-4">
+            <h1 className="text-2xl sm:text-5xl md:text-7xl font-black tracking-[-0.04em] leading-[0.95] mb-4">
               Training &amp;<br />
               <span className="text-red-200">Placement Cell.</span>
             </h1>
@@ -234,10 +251,10 @@ export default function TapPage() {
             </p>
 
             <div className="flex flex-wrap gap-3">
-              <a href="#contact" className="inline-flex items-center gap-2 bg-white text-[#800000] px-6 py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:scale-[1.02] transition-transform shadow-xl">
+              <a href="#contact" className="inline-flex items-center gap-2 bg-white text-[#800000] px-4 py-2.5 sm:px-6 sm:py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:scale-[1.02] transition-transform shadow-xl">
                 Contact TAP Cell <ArrowRight size={14} />
               </a>
-              <a href="#partners" className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/30 px-6 py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:bg-white/20">
+              <a href="#partners" className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/30 px-4 py-2.5 sm:px-6 sm:py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:bg-white/20">
                 View Recruiters
               </a>
             </div>
@@ -256,9 +273,9 @@ export default function TapPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-5 hover:bg-white/20 transition-colors"
+                className="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 sm:p-5 hover:bg-white/20 transition-colors"
               >
-                <div className="text-3xl md:text-4xl font-black tracking-[-0.04em] leading-none">
+                <div className="text-2xl sm:text-3xl md:text-4xl font-black tracking-[-0.04em] leading-none">
                   <BigNumber value={s.v} suffix={s.s} />
                 </div>
                 <div className="text-[9px] uppercase tracking-widest font-black text-rose-100/80 mt-2">{s.l}</div>
@@ -269,8 +286,8 @@ export default function TapPage() {
       </section>
 
       {/* ─────────── VISION + MISSION + TEAM ─────────── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
-        <div className="grid lg:grid-cols-12 gap-6">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-16 md:py-24">
+        <div className="grid lg:grid-cols-12 gap-4 sm:gap-6">
 
           {/* LEFT: Vision/Mission */}
           <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
@@ -278,15 +295,15 @@ export default function TapPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm p-7"
+              className="relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm p-4 sm:p-7"
             >
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#800000] to-amber-500"></div>
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#800000] to-[#5a0000] text-white flex items-center justify-center mb-5">
+              <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-[#800000] to-[#5a0000] text-white flex items-center justify-center mb-5">
                 <Compass size={20} />
               </div>
               <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] mb-2">Our Vision</div>
               <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">
-                &ldquo;{TAP_VISION}&rdquo;
+                &ldquo;{TAP_VISION_LIVE}&rdquo;
               </p>
             </motion.div>
 
@@ -295,15 +312,15 @@ export default function TapPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm p-7"
+              className="relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm p-4 sm:p-7"
             >
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-[#800000]"></div>
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-700 text-white flex items-center justify-center mb-5">
+              <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-700 text-white flex items-center justify-center mb-5">
                 <Target size={20} />
               </div>
               <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-700 mb-2">Our Mission</div>
               <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">
-                &ldquo;{TAP_MISSION}&rdquo;
+                &ldquo;{TAP_MISSION_LIVE}&rdquo;
               </p>
             </motion.div>
 
@@ -332,7 +349,7 @@ export default function TapPage() {
               The people behind your offer letter.
             </h2>
             <div className="space-y-3">
-              {TAP_TEAM.map((m, i) => (
+              {TAP_TEAM_LIVE.map((m, i) => (
                 <motion.div
                   key={m.name}
                   initial={{ opacity: 0, x: 20 }}
@@ -368,15 +385,15 @@ export default function TapPage() {
       </section>
 
       {/* ─────────── WHAT WE DO ─────────── */}
-      <section className="bg-white dark:bg-gray-900/30 py-16 md:py-24 border-y border-rose-100 dark:border-gray-800">
+      <section className="bg-white dark:bg-gray-900/30 py-8 sm:py-16 md:py-24 border-y border-rose-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-12">
+          <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-12">
             <div className="flex items-center justify-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">What TAP Does</span>
               <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Four pillars of every student&apos;s success.
             </h2>
           </div>
@@ -392,11 +409,11 @@ export default function TapPage() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
                   whileHover={{ y: -6 }}
-                  className="group relative overflow-hidden bg-gradient-to-br from-white to-rose-50/40 dark:from-gray-900 dark:to-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow p-6"
+                  className="group relative overflow-hidden bg-gradient-to-br from-white to-rose-50/40 dark:from-gray-900 dark:to-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow p-3 sm:p-6"
                 >
                   <div className={`absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br ${s.accent} opacity-10 group-hover:opacity-20 blur-2xl transition-opacity`}></div>
                   <div className="relative">
-                    <div className={`w-12 h-12 rounded-2xl ${s.bgClass} ${s.textClass} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}>
+                    <div className={`w-9 h-9 sm:w-12 sm:h-12 rounded-2xl ${s.bgClass} ${s.textClass} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}>
                       <IconComponent size={22} />
                     </div>
                     <h3 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight mb-3 leading-snug">
@@ -413,14 +430,14 @@ export default function TapPage() {
       </section>
 
       {/* ─────────── INDUSTRY MOUS ─────────── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-16 md:py-24">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-6 sm:mb-10">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Industry MoUs</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Backed by the world&apos;s biggest brands.
             </h2>
           </div>
@@ -430,7 +447,7 @@ export default function TapPage() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-4 mb-10">
-          {TAP_MOUS.map((mou, i) => (
+          {TAP_MOUS_LIVE.map((mou, i) => (
             <motion.div
               key={mou.name}
               initial={{ opacity: 0, y: 20 }}
@@ -438,7 +455,7 @@ export default function TapPage() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
               whileHover={{ y: -4 }}
-              className="group relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow p-7"
+              className="group relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow p-4 sm:p-7"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-amber-100 to-transparent rounded-bl-full opacity-50"></div>
               <div className="relative flex items-start gap-5">
@@ -476,7 +493,7 @@ export default function TapPage() {
               </span>
             </div>
             <div className="flex flex-wrap gap-2">
-              {MOU_DOCS.map((d) => (
+              {MOU_DOCS_LIVE.map((d) => (
                 <a key={d.label} href={d.url} target="_blank" rel="noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs font-black tracking-tight px-3 py-2 bg-white dark:bg-gray-800 text-[#800000] rounded-xl border border-rose-100 dark:border-gray-700 hover:bg-[#800000] hover:text-white hover:border-[#800000] transition-colors">
                   <FileDown size={11} /> {d.label}
@@ -495,7 +512,7 @@ export default function TapPage() {
       </section>
 
       {/* ─────────── RECRUITER LOGO SHOWCASE ─────────── */}
-      <section id="partners" className="bg-[#1a0606] text-white py-16 md:py-24 relative overflow-hidden">
+      <section id="partners" className="bg-[#1a0606] text-white py-8 sm:py-16 md:py-24 relative overflow-hidden">
         <div className="absolute inset-0 opacity-5 pointer-events-none"
           style={{
             backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.4) 1px, transparent 0)",
@@ -509,7 +526,7 @@ export default function TapPage() {
               <Briefcase size={12} className="text-amber-300" />
               <span className="text-[10px] font-black uppercase tracking-[0.25em] text-amber-300">150+ Recruiters</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] leading-[1.05] mb-3">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] leading-[1.05] mb-3">
               Where our students{" "}
               <span className="bg-gradient-to-r from-amber-300 to-rose-200 bg-clip-text text-transparent">
                 start their careers.
@@ -522,7 +539,7 @@ export default function TapPage() {
 
           {/* Top brand chips */}
           <div className="flex flex-wrap justify-center gap-2 mb-10">
-            {TOP_RECRUITERS.map((r) => (
+            {TOP_RECRUITERS_LIVE.map((r) => (
               <span key={r} className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur border border-white/20 rounded-full text-xs font-black">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-300"></span>
                 {r}
@@ -576,14 +593,14 @@ export default function TapPage() {
       </section>
 
       {/* ─────────── INDUSTRY SPEAK CAROUSEL ─────────── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-16 md:py-24">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-6 sm:mb-10">
           <div>
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Industry Speak</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               What recruiters say about ITM.
             </h2>
           </div>
@@ -592,7 +609,7 @@ export default function TapPage() {
               <ChevronLeft size={18} />
             </button>
             <span className="text-[10px] font-black uppercase tracking-widest text-gray-500 px-2">
-              {String(activeQuote + 1).padStart(2, "0")} <span className="text-gray-300">/</span> {String(INDUSTRY_SPEAK.length).padStart(2, "0")}
+              {String(activeQuote + 1).padStart(2, "0")} <span className="text-gray-300">/</span> {String(INDUSTRY_SPEAK_LIVE.length).padStart(2, "0")}
             </span>
             <button onClick={nextQuote} className="w-12 h-12 rounded-full border border-rose-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-[#800000] hover:text-white hover:border-[#800000] text-[#800000] flex items-center justify-center transition-all">
               <ChevronRight size={18} />
@@ -600,7 +617,7 @@ export default function TapPage() {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid lg:grid-cols-3 gap-3 sm:gap-6">
           <div className="lg:col-span-2">
             <AnimatePresence mode="wait">
               <motion.div
@@ -609,7 +626,7 @@ export default function TapPage() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -30 }}
                 transition={{ duration: 0.4 }}
-                className="relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-xl p-8 md:p-12"
+                className="relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-xl p-4 sm:p-8 md:p-12"
               >
                 <div className={`absolute -top-20 -right-20 w-72 h-72 rounded-full bg-gradient-to-br ${speak.accent} opacity-10 blur-2xl pointer-events-none`}></div>
                 <Quote size={80} className="absolute top-6 right-6 text-rose-100 -scale-x-100" />
@@ -636,7 +653,7 @@ export default function TapPage() {
           </div>
 
           <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1">
-            {INDUSTRY_SPEAK.map((t, i) => (
+            {INDUSTRY_SPEAK_LIVE.map((t, i) => (
               <button
                 key={t.name + i}
                 onClick={() => setActiveQuote(i)}
@@ -658,7 +675,7 @@ export default function TapPage() {
       </section>
 
       {/* ─────────── UPCOMING TAP EVENTS — always visible ─────────── */}
-      <section id="events" className="bg-gradient-to-b from-[#fbf7f2] to-white dark:bg-gray-900/30 py-16 md:py-24">
+      <section id="events" className="bg-gradient-to-b from-[#fbf7f2] to-white dark:bg-gray-900/30 py-8 sm:py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
           <div className="text-center max-w-2xl mx-auto mb-10">
@@ -669,7 +686,7 @@ export default function TapPage() {
               </span>
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Live · TAP Events</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Upcoming campus drives <br />
               <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
                 and sessions.
@@ -807,14 +824,14 @@ export default function TapPage() {
       </section>
 
       {/* ─────────── PLACEMENT RECORDS ─────────── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-16 md:py-24">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-6 sm:mb-10">
           <div>
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Placement Records</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Real students. Real offers.
             </h2>
           </div>
@@ -826,13 +843,13 @@ export default function TapPage() {
       </section>
 
       {/* ─────────── CTA STRIP ─────────── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-20">
-        <div className="rounded-3xl overflow-hidden bg-gradient-to-br from-[#3e0202] via-[#800000] to-[#5a0000] text-white p-8 md:p-12 grid md:grid-cols-2 gap-8 items-center">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-10 sm:pb-20">
+        <div className="rounded-3xl overflow-hidden bg-gradient-to-br from-[#3e0202] via-[#800000] to-[#5a0000] text-white p-4 sm:p-8 md:p-12 grid md:grid-cols-2 gap-4 sm:gap-8 items-center">
           <div>
             <span className="inline-flex items-center gap-2 text-red-200 font-bold tracking-widest text-[10px] uppercase mb-3 px-3 py-1.5 bg-white/10 rounded-full border border-white/20">
               <Award size={12} /> Hire from ITM
             </span>
-            <h3 className="text-3xl md:text-4xl font-black tracking-tighter mb-3">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter mb-3">
               Recruiter? Let&apos;s talk.
             </h3>
             <p className="text-red-100/80 text-sm font-medium max-w-md">

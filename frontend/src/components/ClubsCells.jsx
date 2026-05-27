@@ -38,11 +38,11 @@ const CLUBS = [
 
 export default function ClubsCells() {
   return (
-    <section id="clubs" className="relative py-20 md:py-28 bg-white dark:bg-[#020617] overflow-hidden">
+    <section id="clubs" className="relative py-8 sm:py-20 md:py-28 bg-white dark:bg-[#020617] overflow-hidden">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-12">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
@@ -50,7 +50,7 @@ export default function ClubsCells() {
                 Student Life
               </span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Find your{" "}
               <span className="relative inline-block">
                 <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
@@ -67,7 +67,7 @@ export default function ClubsCells() {
         </div>
 
         {/* Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-5">
           {CLUBS.map((c, i) => (
             <Link to={c.path} key={c.short}>
               <motion.div
@@ -79,7 +79,7 @@ export default function ClubsCells() {
                 className="group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow h-full"
               >
                 {/* Image */}
-                <div className="relative h-52 overflow-hidden">
+                <div className="relative h-28 sm:h-52 overflow-hidden">
                   <img
                     src={c.image}
                     alt={c.name}
@@ -96,13 +96,13 @@ export default function ClubsCells() {
 
                   <div className="absolute bottom-4 left-5 right-5 text-white">
                     <div className="text-[9px] font-black uppercase tracking-[0.3em] text-white/70 mb-1">Club</div>
-                    <h3 className="text-2xl font-black tracking-[-0.03em] leading-none">{c.name}</h3>
+                    <h3 className="text-sm sm:text-lg lg:text-2xl font-black tracking-[-0.03em] leading-none">{c.name}</h3>
                   </div>
                 </div>
 
                 {/* Body */}
-                <div className="p-6">
-                  <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-4">
+                <div className="p-3 sm:p-5">
+                  <p className="text-[11px] sm:text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-4 line-clamp-2 sm:line-clamp-none">
                     {c.desc}
                   </p>
 

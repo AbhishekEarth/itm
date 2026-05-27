@@ -1,0 +1,61 @@
+name: itmgoi
+
+services:
+  api:
+    build: .
+    container_name: itm-api
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://itm:itm@db:5432/itm
+      REDIS_URL: redis://redis:6379/0
+      UPLOAD_DIR: /app/uploads
+    volumes:
+      - ./:/app
+      - uploads:/app/uploads
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    container_name: itm-db
+    environment:
+      POSTGRES_USER: itm
+      POSTGRES_PASSWORD: itm
+      POSTGRES_DB: itm
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U itm"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: itm-redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  adminer:
+    image: adminer:5
+    container_name: itm-adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  uploads:
