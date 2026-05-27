@@ -34,7 +34,7 @@ const FloatingSidebar = () => {
                      bg-slate-900/90 dark:bg-white/10 backdrop-blur-xl
                      text-slate-300 border border-white/10
                      rounded-full shadow-2xl transition-all duration-300 
-                     hover:w-14 hover:rounded-2xl hover:-translate-x-1"
+                     hover:w-14 hover:rounded-2xl hover:-translate-x-1 active:scale-95"
         >
           {/* Label Tooltip */}
           <span className="absolute right-full mr-4 px-3 py-1 

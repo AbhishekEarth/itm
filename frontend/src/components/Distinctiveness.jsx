@@ -10,13 +10,13 @@ export default function Distinctiveness() {
       {/* Background ornaments */}
       <div className="absolute top-20 right-0 w-[25vw] h-[25vw] rounded-full bg-gradient-to-bl from-rose-200/40 to-transparent blur-2xl pointer-events-none"></div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-3 mb-3">
             <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] dark:text-rose-300">
               Where Art Meets Engineering
             </span>
             <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
@@ -24,10 +24,10 @@ export default function Distinctiveness() {
           <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-5">
             What makes ITM{" "}
             <span className="relative inline-block">
-              <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
+              <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] dark:from-rose-400 dark:to-amber-200 bg-clip-text text-transparent">
                 truly distinctive.
               </span>
-              <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 -z-0 -skew-x-3"></span>
+              <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 dark:bg-amber-500/20 -z-0 -skew-x-3"></span>
             </span>
           </h2>
           <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-medium leading-relaxed">
@@ -45,7 +45,7 @@ export default function Distinctiveness() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: i * 0.07, duration: 0.5 }}
               whileHover={{ y: -8 }}
-              className="group relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow p-6"
+              className="group relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl hover:shadow-rose-950/5 dark:hover:shadow-rose-950/20 transition-all duration-300 ease-out p-6"
             >
               <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-gradient-to-br from-rose-100 to-amber-100 opacity-0 group-hover:opacity-50 blur-2xl transition-opacity duration-700"></div>
 

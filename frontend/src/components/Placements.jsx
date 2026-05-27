@@ -7,7 +7,7 @@ export default function Placements() {
     <section className="relative py-20 md:py-28 bg-gradient-to-b from-white via-rose-50/30 to-white dark:from-[#020617] dark:to-[#020617] overflow-hidden">
       <div className="absolute top-20 left-0 w-[35vw] h-[35vw] rounded-full bg-gradient-to-br from-rose-200/40 to-transparent blur-3xl pointer-events-none"></div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
@@ -15,7 +15,7 @@ export default function Placements() {
             <Reveal>
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] dark:text-rose-300">
                   Career Outcomes
                 </span>
               </div>
@@ -24,10 +24,10 @@ export default function Placements() {
               <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
                 Our Alumni{" "}
                 <span className="relative inline-block">
-                  <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
+                  <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] dark:from-rose-400 dark:to-amber-200 bg-clip-text text-transparent">
                     Network.
                   </span>
-                  <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 -z-0 -skew-x-3"></span>
+                  <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 dark:bg-amber-500/20 -z-0 -skew-x-3"></span>
                 </span>
               </h2>
             </Reveal>

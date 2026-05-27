@@ -52,20 +52,20 @@ export default function Stats() {
       {/* Decorative blurs */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60vw] h-[300px] rounded-full bg-gradient-to-br from-rose-200/30 to-transparent blur-2xl pointer-events-none"></div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] dark:text-rose-300">
                 Numbers don&apos;t lie
               </span>
             </div>
             <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               A campus built on{" "}
-              <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] dark:from-rose-400 dark:to-amber-200 bg-clip-text text-transparent">
                 outcomes.
               </span>
             </h2>
@@ -86,7 +86,7 @@ export default function Stats() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.07, duration: 0.5 }}
               whileHover={{ y: -6 }}
-              className="group relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl transition-shadow p-5"
+              className="group relative overflow-hidden bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm hover:shadow-2xl hover:shadow-rose-950/5 dark:hover:shadow-rose-950/20 transition-all duration-300 ease-out p-5"
             >
               {/* Glow */}
               <div

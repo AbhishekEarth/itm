@@ -16,20 +16,20 @@ export default function DirectorVision() {
     <section className="relative py-20 md:py-28 bg-gradient-to-b from-white via-rose-50/30 to-white dark:from-[#020617] dark:to-[#020617] overflow-hidden">
       <div className="absolute top-0 left-0 w-[25vw] h-[25vw] rounded-full bg-gradient-to-br from-rose-200/40 to-transparent blur-2xl pointer-events-none"></div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-14">
           <div className="inline-flex items-center gap-3 mb-3">
             <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] dark:text-rose-300">
               The ITM Way
             </span>
             <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
           </div>
           <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
             A message from our{" "}
-            <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] dark:from-rose-400 dark:to-amber-200 bg-clip-text text-transparent">
               Director.
             </span>
           </h2>

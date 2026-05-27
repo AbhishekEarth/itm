@@ -25,18 +25,18 @@ export function CellsAndCommittees() {
   return (
     <section className="relative py-20 md:py-28 bg-[#fbf7f2] dark:bg-[#020617] overflow-hidden">
       <div className="absolute top-20 left-0 w-[28vw] h-[28vw] rounded-full bg-gradient-to-tr from-amber-200/40 to-transparent blur-3xl pointer-events-none" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-3 mb-3">
             <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full" />
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] dark:text-rose-300">
               Cells &amp; Committees
             </span>
             <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full" />
           </div>
           <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-4">
             Built on{" "}
-            <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] dark:from-rose-400 dark:to-amber-200 bg-clip-text text-transparent">
               service, sport &amp; quality.
             </span>
           </h2>
@@ -126,18 +126,18 @@ export function UpcomingEvents() {
   return (
     <section className="relative py-20 md:py-28 bg-white dark:bg-[#0a0a14] overflow-hidden">
       <div className="absolute top-0 right-0 w-[35vw] h-[35vw] bg-gradient-to-bl from-rose-100/60 to-transparent blur-2xl rounded-full pointer-events-none" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 md:mb-16">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full" />
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] dark:text-rose-300">
                 What's next on campus
               </span>
             </div>
             <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Upcoming{" "}
-              <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] dark:from-rose-400 dark:to-amber-200 bg-clip-text text-transparent">
                 events &amp; conferences.
               </span>
             </h2>
@@ -282,18 +282,18 @@ export function AlumniSection() {
     <section className="relative py-20 md:py-28 bg-gradient-to-br from-[#fbf7f2] via-white to-rose-50/40 dark:from-[#020617] dark:via-[#020617] dark:to-[#0a0a14] overflow-hidden">
       <div className="absolute top-10 left-10 w-[26vw] h-[26vw] bg-gradient-to-br from-amber-100/60 to-transparent blur-3xl rounded-full pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-12 gap-10 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-10 items-center">
         {/* Left: copy + CTAs */}
         <div className="lg:col-span-5">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full" />
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] dark:text-rose-300">
               Alumni Network
             </span>
           </div>
           <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-5">
             Once an ITMian,{" "}
-            <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] dark:from-rose-400 dark:to-amber-200 bg-clip-text text-transparent">
               always an ITMian.
             </span>
           </h2>
@@ -327,7 +327,7 @@ export function AlumniSection() {
               { num: "300+",  label: "Recruiters" },
             ].map((s) => (
               <div key={s.label}>
-                <div className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-[#800000] to-amber-600 leading-none">{s.num}</div>
+                <div className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-[#800000] to-amber-600 dark:from-rose-400 dark:to-amber-200 leading-none">{s.num}</div>
                 <div className="text-[10px] uppercase tracking-widest font-bold text-gray-500 mt-1">{s.label}</div>
               </div>
             ))}
@@ -378,18 +378,18 @@ const GALLERY = [
 export function GalleryPreview() {
   return (
     <section className="relative py-20 md:py-28 bg-white dark:bg-[#020617] overflow-hidden">
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full" />
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] dark:text-rose-300">
                 Campus Through the Lens
               </span>
             </div>
             <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               The{" "}
-              <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] dark:from-rose-400 dark:to-amber-200 bg-clip-text text-transparent">
                 ITM gallery.
               </span>
             </h2>
@@ -473,7 +473,7 @@ export function ContactSection() {
       }} />
       <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-300/70 to-transparent" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-12 gap-10">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-10">
         {/* Left: heading */}
         <div className="lg:col-span-5">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/20 mb-5">

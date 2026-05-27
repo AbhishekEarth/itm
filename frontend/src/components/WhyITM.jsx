@@ -66,7 +66,7 @@ export default function WhyITM() {
       </div>
       <div className="absolute top-0 right-0 w-[30vw] h-[30vw] bg-gradient-to-br from-[#800000]/30 to-transparent blur-2xl rounded-full pointer-events-none"></div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
@@ -97,7 +97,7 @@ export default function WhyITM() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: i * 0.07, duration: 0.5 }}
               whileHover={{ y: -6 }}
-              className="group relative h-full flex flex-col overflow-hidden rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur border border-white/10 p-7"
+              className="group relative h-full flex flex-col overflow-hidden rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur border border-white/10 hover:border-white/25 hover:shadow-2xl hover:shadow-amber-500/5 transition-all duration-300 ease-out p-7"
             >
               {/* Hover glow */}
               <div

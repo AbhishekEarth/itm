@@ -61,24 +61,24 @@ export default function RecruiterMarquee() {
       <div className="absolute inset-y-0 left-0 w-24 md:w-44 bg-gradient-to-r from-white dark:from-[#020617] to-transparent z-10 pointer-events-none"></div>
       <div className="absolute inset-y-0 right-0 w-24 md:w-44 bg-gradient-to-l from-white dark:from-[#020617] to-transparent z-10 pointer-events-none"></div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] dark:text-rose-300">
                 Top Recruiters
               </span>
             </div>
             <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Where our students{" "}
               <span className="relative inline-block">
-                <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
+                <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] dark:from-rose-400 dark:to-amber-200 bg-clip-text text-transparent">
                   go to work.
                 </span>
-                <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 dark:bg-amber-900/30 -z-0 -skew-x-3"></span>
+                <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 dark:bg-amber-500/20 -z-0 -skew-x-3"></span>
               </span>
             </h2>
             <p className="text-sm text-gray-600 dark:text-gray-400 font-medium leading-relaxed mt-3">

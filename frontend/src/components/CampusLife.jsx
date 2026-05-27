@@ -38,14 +38,14 @@ const campusHighlights = [
 export default function CampusLife() {
   return (
     <section className="py-24 bg-white dark:bg-[#020617] transition-colors duration-500">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header Section */}
         <div className="mb-16">
           <motion.span 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="text-[#800000] dark:text-red-400 font-black uppercase tracking-[0.4em] text-[10px]"
+            className="text-[#800000] dark:text-rose-300 font-black uppercase tracking-[0.4em] text-[10px]"
           >
             Lifestyle
           </motion.span>
@@ -53,10 +53,10 @@ export default function CampusLife() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-4xl md:text-6xl font-black text-[#3e0202] dark:text-white mt-4 tracking-tighter"
+            className="text-4xl md:text-6xl font-black text-[#1a0606] dark:text-white mt-4 tracking-tighter"
           >
             Experience Life at <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#800000] to-red-600">ITM Gwalior.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#800000] to-red-600 dark:from-rose-400 dark:to-amber-200">ITM Gwalior.</span>
           </motion.h2>
         </div>
 
