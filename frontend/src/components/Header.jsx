@@ -312,9 +312,7 @@ export default function Header() {
           {/* LOGO GROUP — pinned to the far left edge */}
           <div className="flex items-center gap-4 lg:gap-6 shrink-0 min-w-0 mr-auto">
             <Link to="/" className="group relative cursor-pointer flex items-center shrink-0">
-              <motion.img
-                whileHover={{ scale: 1.05, rotate: -2 }}
-                transition={{ type: "spring", stiffness: 300, damping: 18 }}
+              <img
                 src={logo}
                 alt="ITM Logo"
                 className={`relative block object-contain transition-[height] duration-300 ease-out ${
