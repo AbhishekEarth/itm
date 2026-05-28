@@ -80,17 +80,23 @@ export default function Hero() {
             className="flex flex-wrap items-center gap-4"
           >
             <motion.button
-              whileHover={{ scale: 1.05, boxShadow: "0 20px 40px -10px rgba(220,38,38,0.6)" }}
+              whileHover={{ 
+                scale: 1.05, 
+                boxShadow: "0 20px 40px -10px rgba(220,38,38,0.6), 0 0 25px rgba(220,38,38,0.5)" 
+              }}
               whileTap={{ scale: 0.97 }}
-              className="bg-gradient-to-r from-[#a30000] to-[#800000] text-white px-9 py-3.5 rounded-xl font-black text-[11px] tracking-widest uppercase shadow-xl shadow-[#800000]/40 cursor-pointer"
+              className="bg-gradient-to-r from-[#a30000] to-[#800000] text-white px-9 py-3.5 rounded-xl font-black text-[11px] tracking-widest uppercase shadow-xl shadow-[#800000]/40 dark:shadow-[0_0_15px_rgba(220,38,38,0.3)] cursor-pointer transition-all duration-300"
             >
               Apply Now 2026
             </motion.button>
 
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 0 20px rgba(255,255,255,0.15)"
+              }}
               whileTap={{ scale: 0.97 }}
-              className="group flex items-center gap-3 px-7 py-3.5 rounded-xl font-black text-[11px] tracking-widest uppercase border-2 border-white/30 bg-white/5 backdrop-blur-sm text-white cursor-pointer hover:bg-white/10"
+              className="group flex items-center gap-3 px-7 py-3.5 rounded-xl font-black text-[11px] tracking-widest uppercase border-2 border-white/30 bg-white/5 backdrop-blur-sm text-white cursor-pointer hover:bg-white/10 dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] transition-all duration-300"
             >
               <span className="flex items-center justify-center w-7 h-7 bg-red-600 text-white rounded-full group-hover:rotate-[360deg] transition-transform duration-700">
                 <span className="ml-0.5 text-[9px]">▶</span>

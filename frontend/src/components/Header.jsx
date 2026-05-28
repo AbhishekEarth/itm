@@ -108,9 +108,9 @@ function DropdownPanel({ open, items, width = "w-64", onItemClick, align = "left
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 6, scale: 0.98 }}
           transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-          className={`absolute top-full mt-3 ${alignmentClass} ${width} bg-white rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.18)] border border-black/5 overflow-hidden z-50`}
+          className={`absolute top-full mt-3 ${alignmentClass} ${width} bg-white dark:bg-slate-950/85 dark:backdrop-blur-xl rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.18)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-black/5 dark:border-white/10 overflow-hidden z-50`}
         >
-          <div className="h-[2px] bg-gradient-to-r from-[#800000] via-red-500 to-[#800000]" />
+          <div className="h-[2px] bg-gradient-to-r from-[#800000] via-red-500 to-[#800000] dark:from-amber-400 dark:via-yellow-300 dark:to-amber-500" />
           <div className="py-2">
             {items.map((item) =>
               item.external ? (
@@ -120,20 +120,20 @@ function DropdownPanel({ open, items, width = "w-64", onItemClick, align = "left
                   target="_blank"
                   rel="noreferrer"
                   onClick={onItemClick}
-                  className="group flex items-center justify-between px-4 py-2.5 text-[13px] font-medium text-gray-700 hover:bg-red-50/70 hover:text-[#800000] transition-colors"
+                  className="group flex items-center justify-between px-4 py-2.5 text-[13px] font-medium text-gray-700 dark:text-slate-100 hover:bg-red-50/70 dark:hover:bg-white/5 hover:text-[#800000] dark:hover:text-amber-300 transition-colors"
                 >
                   <span>{item.label}</span>
-                  <ArrowUpRight size={13} className="text-gray-300 group-hover:text-[#800000] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                  <ArrowUpRight size={13} className="text-gray-300 dark:text-slate-500 group-hover:text-[#800000] dark:group-hover:text-amber-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                 </a>
               ) : (
                 <Link
                   key={item.label}
                   to={item.path}
                   onClick={onItemClick}
-                  className="group flex items-center justify-between px-4 py-2.5 text-[13px] font-medium text-gray-700 hover:bg-red-50/70 hover:text-[#800000] transition-colors"
+                  className="group flex items-center justify-between px-4 py-2.5 text-[13px] font-medium text-gray-700 dark:text-slate-100 hover:bg-red-50/70 dark:hover:bg-white/5 hover:text-[#800000] dark:hover:text-amber-300 transition-colors"
                 >
                   <span>{item.label}</span>
-                  <ChevronDown size={13} className="-rotate-90 text-gray-300 group-hover:text-[#800000] group-hover:translate-x-0.5 transition-all" />
+                  <ChevronDown size={13} className="-rotate-90 text-gray-300 dark:text-slate-500 group-hover:text-[#800000] dark:group-hover:text-amber-300 group-hover:translate-x-0.5 transition-all" />
                 </Link>
               )
             )}
@@ -315,7 +315,7 @@ export default function Header() {
               <img
                 src={logo}
                 alt="ITM Logo"
-                className={`relative block object-contain transition-[height] duration-300 ease-out ${
+                className={`relative block object-contain transition-[height] duration-300 ease-out dark:drop-shadow-[0_0_10px_rgba(239,68,68,0.45)] ${
                   isScrolled ? "h-12 lg:h-14" : "h-14 lg:h-[68px]"
                 }`}
               />
@@ -331,7 +331,7 @@ export default function Header() {
                 whileHover={{ scale: 1.08 }}
                 src={YearsLogo}
                 alt="30 Years"
-                className={`block w-auto object-contain transition-[height] duration-300 ease-out ${
+                className={`block w-auto object-contain transition-[height] duration-300 ease-out dark:drop-shadow-[0_0_8px_rgba(251,191,36,0.35)] ${
                   isScrolled ? "h-10 lg:h-12" : "h-12 lg:h-[58px]"
                 }`}
               />
@@ -339,7 +339,7 @@ export default function Header() {
                 whileHover={{ scale: 1.08 }}
                 src={NAACLogo}
                 alt="NAAC"
-                className={`block w-auto object-contain transition-[height] duration-300 ease-out ${
+                className={`block w-auto object-contain transition-[height] duration-300 ease-out dark:drop-shadow-[0_0_8px_rgba(251,191,36,0.35)] ${
                   isScrolled ? "h-10 lg:h-12" : "h-12 lg:h-[58px]"
                 }`}
               />
@@ -347,7 +347,7 @@ export default function Header() {
                 whileHover={{ scale: 1.08 }}
                 src={NBALogo}
                 alt="NBA Accredited"
-                style={{ mixBlendMode: "multiply" }}
+                style={theme === "dark" ? { mixBlendMode: "normal", filter: "brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,0.5))" } : { mixBlendMode: "multiply" }}
                 className={`block w-auto object-contain transition-[height] duration-300 ease-out bg-transparent ${
                   isScrolled ? "h-10 lg:h-12" : "h-12 lg:h-[58px]"
                 }`}
@@ -543,7 +543,7 @@ export default function Header() {
             {/* CTA — clean white pill */}
             <Link
               to="/admissions/how-to-apply"
-              className="group relative ml-3 inline-flex items-center gap-2 rounded-full bg-white dark:bg-[#0a0e1a] text-[#800000] dark:text-amber-200 pl-5 pr-4 py-2.5 text-[12.5px] font-bold tracking-wide ring-1 ring-white/60 dark:ring-amber-300/50 shadow-[0_10px_30px_-12px_rgba(0,0,0,0.55)] hover:bg-amber-50 hover:ring-amber-200 dark:hover:bg-amber-300 dark:hover:text-[#0a0e1a] transition-colors"
+              className="group relative ml-3 inline-flex items-center gap-2 rounded-full bg-white dark:bg-[#0a0e1a] text-[#800000] dark:text-amber-200 pl-5 pr-4 py-2.5 text-[12.5px] font-bold tracking-wide ring-1 ring-white/60 dark:ring-amber-300/50 shadow-[0_10px_30px_-12px_rgba(0,0,0,0.55)] dark:shadow-[0_0_15px_rgba(251,191,36,0.18)] hover:bg-amber-50 hover:ring-amber-200 dark:hover:bg-amber-300 dark:hover:text-[#0a0e1a] dark:hover:shadow-[0_0_25px_rgba(251,191,36,0.4)] transition-all duration-300"
             >
               <span>Apply Now</span>
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-sky-500 to-blue-700 text-white group-hover:rotate-45 transition-transform duration-300">
@@ -595,10 +595,10 @@ export default function Header() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="xl:hidden bg-white border-t border-gray-100 overflow-hidden shadow-2xl"
+            className="xl:hidden bg-white dark:bg-slate-950 border-t border-gray-100 dark:border-slate-850 overflow-hidden shadow-2xl transition-colors duration-500"
           >
             <div className="flex flex-col p-6 gap-5 text-[14px]">
-              <Link to="/" onClick={() => setMobileMenuOpen(false)} className="font-semibold text-gray-800 hover:text-[#800000]">
+              <Link to="/" onClick={() => setMobileMenuOpen(false)} className="font-semibold text-gray-800 dark:text-slate-100 hover:text-[#800000] dark:hover:text-amber-300">
                 Home
               </Link>
 
@@ -606,7 +606,7 @@ export default function Header() {
               <div>
                 <button
                   onClick={() => setMobileAdmOpen(!mobileAdmOpen)}
-                  className="w-full flex items-center justify-between font-semibold text-gray-800 focus:outline-none"
+                  className="w-full flex items-center justify-between font-semibold text-gray-800 dark:text-slate-100 focus:outline-none"
                 >
                   <span>Admission</span>
                   <ChevronDown className={`w-4 h-4 transition-transform ${mobileAdmOpen ? "rotate-180" : ""}`} />
@@ -619,7 +619,7 @@ export default function Header() {
                       exit={{ height: 0, opacity: 0 }}
                       className="overflow-hidden"
                     >
-                      <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 text-[13px]">
+                      <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 dark:border-amber-500/20 text-[13px]">
                         {ADMISSION_LINKS.map((a) =>
                           a.external ? (
                             <a
@@ -631,7 +631,7 @@ export default function Header() {
                                 setMobileMenuOpen(false);
                                 setMobileAdmOpen(false);
                               }}
-                              className="text-gray-600 hover:text-[#800000] py-1.5 font-medium"
+                              className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium"
                             >
                               {a.label} ↗
                             </a>
@@ -643,7 +643,7 @@ export default function Header() {
                                 setMobileMenuOpen(false);
                                 setMobileAdmOpen(false);
                               }}
-                              className="text-gray-600 hover:text-[#800000] py-1.5 font-medium"
+                              className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium"
                             >
                               {a.label}
                             </Link>
@@ -659,7 +659,7 @@ export default function Header() {
               <div>
                 <button
                   onClick={() => setMobileDeptOpen(!mobileDeptOpen)}
-                  className="w-full flex items-center justify-between font-semibold text-gray-800 focus:outline-none"
+                  className="w-full flex items-center justify-between font-semibold text-gray-800 dark:text-slate-100 focus:outline-none"
                 >
                   <span>Departments</span>
                   <ChevronDown className={`w-4 h-4 transition-transform ${mobileDeptOpen ? "rotate-180" : ""}`} />
@@ -672,7 +672,7 @@ export default function Header() {
                       exit={{ height: 0, opacity: 0 }}
                       className="overflow-hidden"
                     >
-                      <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 text-[13px]">
+                      <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 dark:border-amber-500/20 text-[13px]">
                         {DEPT_LINKS.map((d) => (
                           <Link
                             key={d.path}
@@ -681,7 +681,7 @@ export default function Header() {
                               setMobileMenuOpen(false);
                               setMobileDeptOpen(false);
                             }}
-                            className="text-gray-600 hover:text-[#800000] py-1.5 font-medium"
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium"
                           >
                             {d.label}
                           </Link>
@@ -696,7 +696,7 @@ export default function Header() {
               <div>
                 <button
                   onClick={() => setMobileClubOpen(!mobileClubOpen)}
-                  className="w-full flex items-center justify-between font-semibold text-gray-800 focus:outline-none"
+                  className="w-full flex items-center justify-between font-semibold text-gray-800 dark:text-slate-100 focus:outline-none"
                 >
                   <span>Clubs / Cells</span>
                   <ChevronDown className={`w-4 h-4 transition-transform ${mobileClubOpen ? "rotate-180" : ""}`} />
@@ -709,7 +709,7 @@ export default function Header() {
                       exit={{ height: 0, opacity: 0 }}
                       className="overflow-hidden"
                     >
-                      <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 text-[13px]">
+                      <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 dark:border-amber-500/20 text-[13px]">
                         {CLUB_LINKS.map((d) => (
                           <Link
                             key={d.path}
@@ -718,7 +718,7 @@ export default function Header() {
                               setMobileMenuOpen(false);
                               setMobileClubOpen(false);
                             }}
-                            className="text-gray-600 hover:text-[#800000] py-1.5 font-medium"
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium"
                           >
                             {d.label}
                           </Link>
@@ -729,7 +729,7 @@ export default function Header() {
                 </AnimatePresence>
               </div>
 
-              <Link to="/tap" onClick={() => setMobileMenuOpen(false)} className="font-semibold text-gray-800 hover:text-[#800000]">
+              <Link to="/tap" onClick={() => setMobileMenuOpen(false)} className="font-semibold text-gray-800 dark:text-slate-100 hover:text-[#800000] dark:hover:text-amber-300">
                 Training & Placement
               </Link>
 
@@ -737,7 +737,7 @@ export default function Header() {
               <div>
                 <button
                   onClick={() => setMobileResOpen(!mobileResOpen)}
-                  className="w-full flex items-center justify-between font-semibold text-gray-800 focus:outline-none"
+                  className="w-full flex items-center justify-between font-semibold text-gray-800 dark:text-slate-100 focus:outline-none"
                 >
                   <span>Research</span>
                   <ChevronDown className={`w-4 h-4 transition-transform ${mobileResOpen ? "rotate-180" : ""}`} />
@@ -750,7 +750,7 @@ export default function Header() {
                       exit={{ height: 0, opacity: 0 }}
                       className="overflow-hidden"
                     >
-                      <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 text-[13px]">
+                      <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 dark:border-amber-500/20 text-[13px]">
                         {RESEARCH_LINKS.map((d) => (
                           <Link
                             key={d.path}
@@ -759,7 +759,7 @@ export default function Header() {
                               setMobileMenuOpen(false);
                               setMobileResOpen(false);
                             }}
-                            className="text-gray-600 hover:text-[#800000] py-1.5 font-medium"
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium"
                           >
                             {d.label}
                           </Link>
@@ -774,7 +774,7 @@ export default function Header() {
               <div>
                 <button
                   onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
-                  className="w-full flex items-center justify-between font-semibold text-gray-800 focus:outline-none"
+                  className="w-full flex items-center justify-between font-semibold text-gray-800 dark:text-slate-100 focus:outline-none"
                 >
                   <span>About</span>
                   <ChevronDown className={`w-4 h-4 transition-transform ${mobileAboutOpen ? "rotate-180" : ""}`} />
@@ -782,17 +782,17 @@ export default function Header() {
                 <AnimatePresence>
                   {mobileAboutOpen && (
                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-                      <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 text-[13px]">
+                      <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 dark:border-amber-500/20 text-[13px]">
                         {ABOUT_LINKS.map((a) => a.external ? (
                           <a key={a.label} href={a.href} target="_blank" rel="noreferrer"
                             onClick={() => { setMobileMenuOpen(false); setMobileAboutOpen(false); }}
-                            className="text-gray-600 hover:text-[#800000] py-1.5 font-medium">
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium">
                             {a.label} ↗
                           </a>
                         ) : (
                           <Link key={a.label} to={a.path}
                             onClick={() => { setMobileMenuOpen(false); setMobileAboutOpen(false); }}
-                            className="text-gray-600 hover:text-[#800000] py-1.5 font-medium">
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium">
                             {a.label}
                           </Link>
                         ))}
@@ -806,7 +806,7 @@ export default function Header() {
               <div>
                 <button
                   onClick={() => setMobileAlumniOpen(!mobileAlumniOpen)}
-                  className="w-full flex items-center justify-between font-semibold text-gray-800 focus:outline-none"
+                  className="w-full flex items-center justify-between font-semibold text-gray-800 dark:text-slate-100 focus:outline-none"
                 >
                   <span>Alumni</span>
                   <ChevronDown className={`w-4 h-4 transition-transform ${mobileAlumniOpen ? "rotate-180" : ""}`} />
@@ -814,17 +814,17 @@ export default function Header() {
                 <AnimatePresence>
                   {mobileAlumniOpen && (
                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-                      <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 text-[13px]">
+                      <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 dark:border-amber-500/20 text-[13px]">
                         {ALUMNI_LINKS.map((a) => a.external ? (
                           <a key={a.label} href={a.href} target="_blank" rel="noreferrer"
                             onClick={() => { setMobileMenuOpen(false); setMobileAlumniOpen(false); }}
-                            className="text-gray-600 hover:text-[#800000] py-1.5 font-medium">
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium">
                             {a.label} ↗
                           </a>
                         ) : (
                           <Link key={a.label} to={a.path}
                             onClick={() => { setMobileMenuOpen(false); setMobileAlumniOpen(false); }}
-                            className="text-gray-600 hover:text-[#800000] py-1.5 font-medium">
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium">
                             {a.label}
                           </Link>
                         ))}
@@ -838,7 +838,7 @@ export default function Header() {
               <div>
                 <button
                   onClick={() => setMobileMoreOpen(!mobileMoreOpen)}
-                  className="w-full flex items-center justify-between font-semibold text-gray-800 focus:outline-none"
+                  className="w-full flex items-center justify-between font-semibold text-gray-800 dark:text-slate-100 focus:outline-none"
                 >
                   <span>More — NAAC / Gallery / Contact</span>
                   <ChevronDown className={`w-4 h-4 transition-transform ${mobileMoreOpen ? "rotate-180" : ""}`} />
@@ -846,17 +846,17 @@ export default function Header() {
                 <AnimatePresence>
                   {mobileMoreOpen && (
                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-                      <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 text-[13px]">
+                      <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 dark:border-amber-500/20 text-[13px]">
                         {MORE_LINKS.map((a) => a.external ? (
                           <a key={a.label} href={a.href} target="_blank" rel="noreferrer"
                             onClick={() => { setMobileMenuOpen(false); setMobileMoreOpen(false); }}
-                            className="text-gray-600 hover:text-[#800000] py-1.5 font-medium">
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium">
                             {a.label} ↗
                           </a>
                         ) : (
                           <Link key={a.label} to={a.path}
                             onClick={() => { setMobileMenuOpen(false); setMobileMoreOpen(false); }}
-                            className="text-gray-600 hover:text-[#800000] py-1.5 font-medium">
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium">
                             {a.label}
                           </Link>
                         ))}
@@ -866,16 +866,16 @@ export default function Header() {
                 </AnimatePresence>
               </div>
 
-              <div className="h-px bg-gray-100 my-1" />
-              <div className="grid grid-cols-2 gap-3 text-[12px] text-gray-500">
-                <a href="https://lms.itmgoi.in/" target="_blank" rel="noreferrer" className="hover:text-[#800000]">LMS Portal</a>
-                <a href="http://mis.itmgoi.in/" target="_blank" rel="noreferrer" className="hover:text-[#800000]">MIS Login</a>
-                <a href="https://www.itmgoi.in/anti_ragging.php" target="_blank" rel="noreferrer" className="hover:text-[#800000]">Anti-Ragging</a>
-                <a href="https://onlineapply.itmgoi.in/form_hdfc.php?ok=Apply+Now" target="_blank" rel="noreferrer" className="hover:text-[#800000]">Online Payment</a>
-                <a href="https://www.itmgoi.in/nirf_itm.php" target="_blank" rel="noreferrer" className="hover:text-[#800000]">NIRF</a>
-                <a href="https://www.itmgoi.in/itm_iqac.php" target="_blank" rel="noreferrer" className="hover:text-[#800000]">IQAC</a>
-                <a href="https://www.itmgoi.in/jobs/" target="_blank" rel="noreferrer" className="hover:text-[#800000]">Careers</a>
-                <a href="https://www.itmgoi.in/contact_more.php" target="_blank" rel="noreferrer" className="hover:text-[#800000]">Contact</a>
+              <div className="h-px bg-gray-100 dark:bg-slate-800 my-1" />
+              <div className="grid grid-cols-2 gap-3 text-[12px] text-gray-500 dark:text-slate-400">
+                <a href="https://lms.itmgoi.in/" target="_blank" rel="noreferrer" className="hover:text-[#800000] dark:hover:text-amber-300 transition-colors">LMS Portal</a>
+                <a href="http://mis.itmgoi.in/" target="_blank" rel="noreferrer" className="hover:text-[#800000] dark:hover:text-amber-300 transition-colors">MIS Login</a>
+                <a href="https://www.itmgoi.in/anti_ragging.php" target="_blank" rel="noreferrer" className="hover:text-[#800000] dark:hover:text-amber-300 transition-colors">Anti-Ragging</a>
+                <a href="https://onlineapply.itmgoi.in/form_hdfc.php?ok=Apply+Now" target="_blank" rel="noreferrer" className="hover:text-[#800000] dark:hover:text-amber-300 transition-colors">Online Payment</a>
+                <a href="https://www.itmgoi.in/nirf_itm.php" target="_blank" rel="noreferrer" className="hover:text-[#800000] dark:hover:text-amber-300 transition-colors">NIRF</a>
+                <a href="https://www.itmgoi.in/itm_iqac.php" target="_blank" rel="noreferrer" className="hover:text-[#800000] dark:hover:text-amber-300 transition-colors">IQAC</a>
+                <a href="https://www.itmgoi.in/jobs/" target="_blank" rel="noreferrer" className="hover:text-[#800000] dark:hover:text-amber-300 transition-colors">Careers</a>
+                <a href="https://www.itmgoi.in/contact_more.php" target="_blank" rel="noreferrer" className="hover:text-[#800000] dark:hover:text-amber-300 transition-colors">Contact</a>
               </div>
             </div>
           </motion.div>

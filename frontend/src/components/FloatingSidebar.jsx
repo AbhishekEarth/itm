@@ -34,7 +34,8 @@ const FloatingSidebar = () => {
                      bg-slate-900/90 dark:bg-white/10 backdrop-blur-xl
                      text-slate-300 border border-white/10
                      rounded-full shadow-2xl transition-all duration-300 
-                     hover:w-14 hover:rounded-2xl hover:-translate-x-1 active:scale-95"
+                     hover:w-14 hover:rounded-2xl hover:-translate-x-1 active:scale-95
+                     dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]"
         >
           {/* Label Tooltip */}
           <span className="absolute right-full mr-4 px-3 py-1 
@@ -56,9 +57,10 @@ const FloatingSidebar = () => {
         onClick={scrollToTop}
         className={`flex items-center justify-center w-12 h-12 
                    bg-indigo-600 text-white rounded-full shadow-lg
+                   dark:shadow-[0_0_15px_rgba(99,102,241,0.4)]
                    transition-all duration-500 transform
                    ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}
-                   hover:bg-indigo-500 hover:scale-110 active:scale-95`}
+                   hover:bg-indigo-500 hover:scale-110 dark:hover:shadow-[0_0_25px_rgba(99,102,241,0.6)] active:scale-95`}
       >
         <ChevronUp size={24} />
       </button>

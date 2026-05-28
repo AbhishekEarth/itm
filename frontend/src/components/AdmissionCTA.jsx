@@ -48,7 +48,7 @@ export default function AdmissionCTA() {
               <div className="flex flex-wrap gap-3">
                 <Link
                   to="/admissions/how-to-apply"
-                  className="group inline-flex items-center gap-2 bg-white text-[#800000] px-6 py-4 rounded-full font-black text-[11px] tracking-[0.2em] uppercase shadow-2xl hover:shadow-amber-400/30 hover:scale-[1.02] transition-all"
+                  className="group inline-flex items-center gap-2 bg-white text-[#800000] px-6 py-4 rounded-full font-black text-[11px] tracking-[0.2em] uppercase shadow-2xl hover:shadow-amber-400/30 dark:shadow-[0_0_15px_rgba(255,255,255,0.12)] dark:hover:shadow-[0_0_25px_rgba(255,255,255,0.28)] hover:scale-[1.02] transition-all"
                 >
                   Apply Now
                   <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
@@ -57,13 +57,13 @@ export default function AdmissionCTA() {
                   href="https://onlineapply.itmgoi.in/form_hdfc.php?ok=Apply+Now"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 bg-black/30 backdrop-blur text-white border border-white/30 px-6 py-4 rounded-full font-black text-[11px] tracking-[0.2em] uppercase hover:bg-black/50 transition-colors"
+                  className="inline-flex items-center gap-2 bg-black/30 backdrop-blur text-white border border-white/30 px-6 py-4 rounded-full font-black text-[11px] tracking-[0.2em] uppercase hover:bg-black/50 dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all"
                 >
                   <CreditCard size={14} /> Pay Online
                 </a>
                 <a
                   href="tel:+917773005065"
-                  className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/20 px-6 py-4 rounded-full font-black text-[11px] tracking-[0.2em] uppercase hover:bg-white/20 transition-colors"
+                  className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/20 px-6 py-4 rounded-full font-black text-[11px] tracking-[0.2em] uppercase hover:bg-white/20 dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] transition-all"
                 >
                   <Phone size={14} /> Call Us
                 </a>
