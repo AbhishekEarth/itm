@@ -72,8 +72,10 @@ HOME_SECTIONS = [
             "primary_cta": {"label": "Apply Now 2026", "href": "/admissions/how-to-apply"},
             "secondary_cta": {"label": "Watch Tour", "href": "#campus-tour"},
             "slides": [
-                {"image": "/images/slider1.jpg", "alt": "ITM campus aerial view"},
-                {"image": "/images/slider2.jpg", "alt": "ITM students at convocation"},
+                {"image": "/images/hero/slider1.jpg", "alt": "ITM campus aerial view"},
+                {"image": "/images/hero/slider2.jpg", "alt": "ITM students at convocation"},
+                {"image": "/images/hero/slider3.jpg", "alt": "ITM campus life"},
+                {"image": "/images/hero/slider4.jpg", "alt": "ITM auditorium"},
             ],
             "mini_stats": [
                 {"value": "29+", "label": "Years"},
