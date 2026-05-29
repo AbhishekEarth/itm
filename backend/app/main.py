@@ -17,7 +17,9 @@ from app.core.config import settings
 from app.core.errors import register_exception_handlers
 from app.core.logging import RequestContextMiddleware, configure_logging, log
 from app.core.ratelimit import limiter
+from app.routers import admin_pages as admin_pages_router
 from app.routers import admissions as admissions_router
+from app.routers import analytics as analytics_router
 from app.routers import audit as audit_router
 from app.routers import auth as auth_router
 from app.routers import clubs as clubs_router
@@ -25,10 +27,13 @@ from app.routers import compliance as compliance_router
 from app.routers import departments as departments_router
 from app.routers import health as health_router
 from app.routers import media as media_router
+from app.routers import page_overrides as page_overrides_router
 from app.routers import pages as pages_router
 from app.routers import placements as placements_router
+from app.routers import posts as posts_router
 from app.routers import public as public_router
 from app.routers import research as research_router
+from app.routers import scope_presets as scope_presets_router
 from app.routers import seo as seo_router
 from app.routers import settings as settings_router
 from app.routers import users as users_router
@@ -111,6 +116,13 @@ app.include_router(health_router.router, prefix=settings.API_PREFIX)
 app.include_router(auth_router.router, prefix=settings.API_PREFIX)
 app.include_router(users_router.router, prefix=settings.API_PREFIX)
 app.include_router(users_router.catalog_router, prefix=settings.API_PREFIX)
+app.include_router(scope_presets_router.router, prefix=settings.API_PREFIX)
+app.include_router(admin_pages_router.router, prefix=settings.API_PREFIX)
+app.include_router(page_overrides_router.public_router, prefix=settings.API_PREFIX)
+app.include_router(page_overrides_router.admin_router, prefix=settings.API_PREFIX)
+app.include_router(posts_router.public_router, prefix=settings.API_PREFIX)
+app.include_router(posts_router.admin_router, prefix=settings.API_PREFIX)
+app.include_router(analytics_router.router, prefix=settings.API_PREFIX)
 app.include_router(audit_router.router, prefix=settings.API_PREFIX)
 app.include_router(media_router.router, prefix=settings.API_PREFIX)
 app.include_router(settings_router.router, prefix=settings.API_PREFIX)
