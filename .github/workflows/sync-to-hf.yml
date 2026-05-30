@@ -32,7 +32,7 @@ on:
 
 env:
   HF_SPACE_OWNER: anshul32467
-  HF_SPACE_NAME: itmgwalior
+  HF_SPACE_NAME: ITMGWALIOR
 
 concurrency:
   group: sync-to-hf
