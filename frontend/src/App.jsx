@@ -166,9 +166,10 @@ function HomeContent() {
   );
 }
 
-function ProtectedRoute({ children, allowPasswordChange = false }) {
+function ProtectedRoute({ children, allowPasswordChange = false, adminOnly = false }) {
   const { isAdmin, isEditor, user } = useAuth();
   if (!isAdmin && !isEditor) return <Navigate to="/admin/login" replace />;
+  if (adminOnly && !isAdmin) return <Navigate to="/editor" replace />;
   if (user?.must_change_password && !allowPasswordChange) {
     return <Navigate to="/account/change-password" replace />;
   }
@@ -275,12 +276,12 @@ function AppContent() {
 
           {/* ADMIN & EDITOR */}
           <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/admin" element={<ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>} />
           <Route path="/editor" element={<EditorRoute><EditorDashboard /></EditorRoute>} />
           <Route path="/admin/faculty" element={<ProtectedRoute><AdminFaculty /></ProtectedRoute>} />
           <Route path="/admin/students" element={<ProtectedRoute><AdminStudents /></ProtectedRoute>} />
-          <Route path="/admin/users" element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
-          <Route path="/admin/settings" element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} />
+          <Route path="/admin/users" element={<ProtectedRoute adminOnly><AdminUsers /></ProtectedRoute>} />
+          <Route path="/admin/settings" element={<ProtectedRoute adminOnly><AdminSettings /></ProtectedRoute>} />
           <Route path="/admin/pages" element={<ProtectedRoute><AdminPages /></ProtectedRoute>} />
           <Route path="/admin/pages/visual" element={<ProtectedRoute><AdminPagesList /></ProtectedRoute>} />
           <Route path="/admin/pages/:key/edit" element={<ProtectedRoute><AdminPageEditor /></ProtectedRoute>} />

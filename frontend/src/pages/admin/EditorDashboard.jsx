@@ -106,10 +106,6 @@ export default function EditorDashboard() {
     hasAnyScope(scopePrefix)
   );
 
-  const lockedSections = ALL_SECTIONS.filter(({ scopePrefix }) =>
-    !hasAnyScope(scopePrefix)
-  );
-
   return (
     <AdminLayout>
       {/* Header */}
@@ -164,29 +160,6 @@ export default function EditorDashboard() {
         </div>
       </section>
 
-      {/* Locked sections */}
-      {lockedSections.length > 0 && (
-        <section>
-          <h2 className="text-[11px] font-black uppercase tracking-widest text-gray-400 mb-3">
-            Restricted Sections
-          </h2>
-          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 divide-y divide-gray-100 dark:divide-gray-800">
-            {lockedSections.map(({ icon: Icon, label, scopePrefix }) => (
-              <div key={scopePrefix} className="flex items-center gap-3 px-4 py-3 opacity-50">
-                <Icon size={15} className="text-gray-400 shrink-0" />
-                <span className="text-sm font-medium text-gray-500">{label}</span>
-                <span className="ml-auto text-[10px] font-mono bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded text-gray-400">
-                  {scopePrefix}.*
-                </span>
-                <ShieldOff size={13} className="text-gray-300" />
-              </div>
-            ))}
-          </div>
-          <p className="text-[11px] text-gray-400 mt-2">
-            Ask a super admin to grant you the required scopes to access these sections.
-          </p>
-        </section>
-      )}
     </AdminLayout>
   );
 }
