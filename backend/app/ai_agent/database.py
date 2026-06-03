@@ -1,63 +1,78 @@
-"""ChromaDB vector database integration for RAG pipeline."""
+"""pgvector-backed vector store for RAG pipeline.
+
+Persists to Postgres (Supabase), so embeddings survive Cloud Run cold starts,
+container rotations, and redeploys — unlike the previous ChromaDB-on-/tmp setup.
+
+Keeps the same public interface as the legacy ChromaDB wrapper so callers
+(scrapers, agent, routers) don't need any changes.
+"""
 from __future__ import annotations
 
 import hashlib
+import json
 import logging
-from pathlib import Path
 from typing import Any
 
-import chromadb
-from chromadb.config import Settings as ChromaSettings
 from sentence_transformers import SentenceTransformer
+from sqlalchemy import text
 
 from app.ai_agent.config import settings
+from app.core.database import engine as _engine
 
 logger = logging.getLogger("ai-agent.database")
 
+_VECTOR_DIM = 384  # all-MiniLM-L6-v2 embedding size
+_TABLE = "agent_documents"
+
+_DDL = [
+    "CREATE EXTENSION IF NOT EXISTS vector",
+    f"""CREATE TABLE IF NOT EXISTS {_TABLE} (
+        id TEXT PRIMARY KEY,
+        content TEXT NOT NULL,
+        embedding vector({_VECTOR_DIM}) NOT NULL,
+        metadata JSONB NOT NULL DEFAULT '{{}}'::jsonb,
+        source TEXT,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+    )""",
+    f"CREATE INDEX IF NOT EXISTS {_TABLE}_embedding_idx ON {_TABLE} USING hnsw (embedding vector_cosine_ops)",
+    f"CREATE INDEX IF NOT EXISTS {_TABLE}_source_idx ON {_TABLE} (source)",
+]
+
+
+def _format_vec(vec: list[float]) -> str:
+    """pgvector accepts vectors as '[0.1,0.2,...]' string literals."""
+    return "[" + ",".join(f"{x:.7f}" for x in vec) + "]"
+
 
 class VectorDatabase:
-    """Manages ChromaDB vector store with sentence-transformers embeddings."""
+    """Vector store interface backed by Postgres + pgvector."""
 
     def __init__(self):
-        self._client: chromadb.ClientAPI | None = None
-        self._collection: chromadb.Collection | None = None
         self._embedding_model: SentenceTransformer | None = None
         self._initialized = False
 
     async def initialize(self) -> None:
-        """Initialize ChromaDB client and embedding model."""
+        """Ensure pgvector extension, table and indexes exist."""
         try:
-            persist_dir = Path(settings.CHROMA_PERSIST_DIR)
-            persist_dir.mkdir(parents=True, exist_ok=True)
-
-            self._client = chromadb.PersistentClient(
-                path=str(persist_dir),
-                settings=ChromaSettings(anonymized_telemetry=False),
-            )
-
-            self._collection = self._client.get_or_create_collection(
-                name=settings.CHROMA_COLLECTION_NAME,
-                metadata={"description": "ITM Gwalior institutional documents"},
-            )
-
+            with _engine.begin() as conn:
+                for stmt in _DDL:
+                    conn.execute(text(stmt))
             logger.info(
-                "ChromaDB initialized",
-                extra={"persist_dir": str(persist_dir), "collection": settings.CHROMA_COLLECTION_NAME},
+                "pgvector vector store ready",
+                extra={"table": _TABLE, "dim": _VECTOR_DIM},
             )
             self._initialized = True
         except Exception as e:
-            logger.error("Failed to initialize ChromaDB", exc_info=e)
+            logger.error("Failed to initialize pgvector store", exc_info=e)
             raise
 
     def _get_embedding_model(self) -> SentenceTransformer:
-        """Lazy-load the embedding model."""
         if self._embedding_model is None:
             self._embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL)
         return self._embedding_model
 
-    def _compute_id(self, text: str, source: str = "", chunk_index: int = 0) -> str:
-        """Compute a deterministic ID for a text chunk."""
-        raw = f"{source}:{chunk_index}:{text[:100]}"
+    def _compute_id(self, text_: str, source: str = "", chunk_index: int = 0) -> str:
+        raw = f"{source}:{chunk_index}:{text_[:100]}"
         return hashlib.md5(raw.encode()).hexdigest()
 
     def add_documents(
@@ -67,44 +82,60 @@ class VectorDatabase:
         ids: list[str] | None = None,
         source: str = "",
     ) -> int:
-        """Add documents to the vector store.
-        Called by sync LangChain tools. For async contexts, wrap with asyncio.to_thread()."""
-        if not self._collection:
-            logger.error("ChromaDB not initialized")
+        if not self._initialized:
+            logger.error("Vector store not initialized")
             return 0
-
         if not texts:
             return 0
 
         if metadatas is None:
-            metadatas = [{"source": source}] * len(texts)
+            metadatas = [{"source": source} for _ in texts]
         else:
-            for i, meta in enumerate(metadatas):
-                meta.setdefault("source", source)
+            for m in metadatas:
+                m.setdefault("source", source)
 
         if ids is None:
             ids = [self._compute_id(t, source, i) for i, t in enumerate(texts)]
 
         try:
-            embeddings = self._get_embedding_model().encode(texts, show_progress_bar=False).tolist()
+            embeddings = (
+                self._get_embedding_model()
+                .encode(texts, show_progress_bar=False)
+                .tolist()
+            )
 
-            batch_size = 100
-            total_added = 0
-            for i in range(0, len(texts), batch_size):
-                batch_end = min(i + batch_size, len(texts))
-                self._collection.add(
-                    ids=ids[i:batch_end],
-                    embeddings=embeddings[i:batch_end],
-                    documents=texts[i:batch_end],
-                    metadatas=metadatas[i:batch_end],
-                )
-                total_added += batch_end - i
+            upsert_sql = text(
+                f"""
+                INSERT INTO {_TABLE} (id, content, embedding, metadata, source)
+                VALUES (:id, :content, CAST(:emb AS vector), CAST(:meta AS jsonb), :source)
+                ON CONFLICT (id) DO UPDATE SET
+                    content = EXCLUDED.content,
+                    embedding = EXCLUDED.embedding,
+                    metadata = EXCLUDED.metadata,
+                    source = EXCLUDED.source
+                """
+            )
+
+            total = 0
+            with _engine.begin() as conn:
+                for id_, txt, emb, meta in zip(ids, texts, embeddings, metadatas):
+                    conn.execute(
+                        upsert_sql,
+                        {
+                            "id": id_,
+                            "content": txt,
+                            "emb": _format_vec(emb),
+                            "meta": json.dumps(meta, default=str),
+                            "source": source,
+                        },
+                    )
+                    total += 1
 
             logger.info(
-                "Documents added to vector store",
-                extra={"count": total_added, "source": source},
+                "Documents upserted",
+                extra={"count": total, "source": source},
             )
-            return total_added
+            return total
         except Exception as e:
             logger.error("Failed to add documents", exc_info=e)
             return 0
@@ -115,67 +146,70 @@ class VectorDatabase:
         k: int | None = None,
         filter_metadata: dict[str, str] | None = None,
     ) -> list[dict[str, Any]]:
-        """Search for similar documents in the vector store."""
-        if not self._collection:
-            logger.error("ChromaDB not initialized")
+        if not self._initialized:
+            logger.error("Vector store not initialized")
             return []
 
         k = k or settings.RETRIEVAL_K
 
         try:
-            query_embedding = self._get_embedding_model().encode(query).tolist()
+            q_emb = self._get_embedding_model().encode(query).tolist()
+            q_vec = _format_vec(q_emb)
 
-            where = None
+            params: dict[str, Any] = {"q_vec": q_vec, "k": int(k)}
+            where_clause = ""
             if filter_metadata:
-                where = {k: v for k, v in filter_metadata.items()}
+                conds = []
+                for i, (key, val) in enumerate(filter_metadata.items()):
+                    pk = f"mk_{i}"
+                    pv = f"mv_{i}"
+                    conds.append(f"metadata->>:{pk} = :{pv}")
+                    params[pk] = key
+                    params[pv] = val
+                where_clause = "WHERE " + " AND ".join(conds)
 
-            results = self._collection.query(
-                query_embeddings=[query_embedding],
-                n_results=k,
-                where=where,
-                include=["documents", "metadatas", "distances"],
+            sql = text(
+                f"""
+                SELECT content, metadata, 1.0 - (embedding <=> CAST(:q_vec AS vector)) AS score
+                FROM {_TABLE}
+                {where_clause}
+                ORDER BY embedding <=> CAST(:q_vec AS vector)
+                LIMIT :k
+                """
             )
+            with _engine.connect() as conn:
+                rows = conn.execute(sql, params).fetchall()
 
-            documents: list[str] = results.get("documents", [[]])[0]
-            metadatas: list[dict[str, Any]] = results.get("metadatas", [[]])[0]
-            distances: list[float] = results.get("distances", [[]])[0]
-
-            formatted_results = []
-            for doc, meta, dist in zip(documents, metadatas, distances):
-                formatted_results.append({
-                    "content": doc,
-                    "metadata": meta,
-                    "score": float(1.0 - dist) if dist is not None else 0.0,
-                })
-
-            return formatted_results
+            return [
+                {
+                    "content": r[0],
+                    "metadata": dict(r[1]) if r[1] is not None else {},
+                    "score": float(r[2]),
+                }
+                for r in rows
+            ]
         except Exception as e:
             logger.error("Failed to search vector store", exc_info=e)
             return []
 
     def count_documents(self) -> int:
-        """Count total documents in the collection."""
-        if not self._collection:
+        if not self._initialized:
             return 0
         try:
-            return self._collection.count()
+            with _engine.connect() as conn:
+                r = conn.execute(text(f"SELECT COUNT(*) FROM {_TABLE}")).fetchone()
+                return int(r[0]) if r else 0
         except Exception:
             return 0
 
     def delete_collection(self) -> bool:
-        """Delete and recreate the collection."""
-        if not self._client:
-            return False
         try:
-            self._client.delete_collection(settings.CHROMA_COLLECTION_NAME)
-            self._collection = self._client.create_collection(
-                name=settings.CHROMA_COLLECTION_NAME,
-                metadata={"description": "ITM Gwalior institutional documents"},
-            )
-            logger.info("Collection deleted and recreated")
+            with _engine.begin() as conn:
+                conn.execute(text(f"TRUNCATE TABLE {_TABLE}"))
+            logger.info("Vector store truncated")
             return True
         except Exception as e:
-            logger.error("Failed to delete collection", exc_info=e)
+            logger.error("Failed to truncate vector store", exc_info=e)
             return False
 
     @property
@@ -183,5 +217,4 @@ class VectorDatabase:
         return self._initialized
 
 
-# Singleton instance
 vector_db = VectorDatabase()
