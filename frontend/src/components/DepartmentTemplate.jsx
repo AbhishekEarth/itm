@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import EditableText from "./admin/EditableText";
 import { motion, AnimatePresence, useMotionValue, useTransform, animate, useInView } from "framer-motion";
 import {
   Home,
@@ -31,6 +32,11 @@ import {
 import { DEPT_LIST } from "../data/departments_v2";
 import EmojiToIcon from "./EmojiToIcon";
 import Seo from "./Seo";
+
+// Default profile photo used by every HoD / Faculty tile until the admin
+// uploads a personalised picture via /admin/departments → <Dept> → HoD/Faculty.
+const DEFAULT_PROFILE_PHOTO =
+  "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400&q=80";
 
 function BigNumber({ value, suffix = "" }) {
   const ref = useRef(null);
@@ -69,6 +75,7 @@ const SECTION_ICONS = {
 };
 
 export default function DepartmentTemplate({ dept }) {
+  const pageKey = useLocation().pathname;
   if (!dept) return null;
 
   // Build section list dynamically based on what data exists
@@ -129,7 +136,7 @@ export default function DepartmentTemplate({ dept }) {
       </div>
 
       {/* Compact Hero */}
-      <section className="relative overflow-hidden">
+      <section data-section="dept_hero" className="relative overflow-hidden">
         <div className="absolute inset-0">
           <img src={dept.image} alt={dept.name} className="w-full h-full object-cover" loading="eager" />
           <div className={`absolute inset-0 bg-gradient-to-br from-[#800000] to-[#3e0202] mix-blend-multiply opacity-90`}></div>
@@ -147,12 +154,18 @@ export default function DepartmentTemplate({ dept }) {
                   <EmojiToIcon emoji={dept.icon} size={32} />
                 </span>
                 <div>
-                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-200 mb-1">Department of</div>
-                  <h1 className="text-xl sm:text-3xl md:text-5xl font-black tracking-[-0.04em] leading-[0.95]">{dept.name}</h1>
+                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-200 mb-1">
+                    <EditableText pageKey={pageKey} tkey="dept.eyebrow" as="span" value="Department of">Department of</EditableText>
+                  </div>
+                  <h1 className="text-xl sm:text-3xl md:text-5xl font-black tracking-[-0.04em] leading-[0.95]">
+                    <EditableText pageKey={pageKey} tkey="dept.name" as="span" value={dept.name}>{dept.name}</EditableText>
+                  </h1>
                 </div>
               </div>
               {dept.subtitle && (
-                <p className="text-xs sm:text-sm md:text-base text-white/85 max-w-2xl leading-relaxed font-medium mb-3 sm:mb-4 line-clamp-3 sm:line-clamp-none">{dept.subtitle}</p>
+                <p className="text-xs sm:text-sm md:text-base text-white/85 max-w-2xl leading-relaxed font-medium mb-3 sm:mb-4 line-clamp-3 sm:line-clamp-none">
+                  <EditableText pageKey={pageKey} tkey="dept.subtitle" as="span" multiline value={dept.subtitle}>{dept.subtitle}</EditableText>
+                </p>
               )}
               <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-widest font-black">
                 <span className="px-3 py-1 bg-white/10 backdrop-blur border border-white/20 rounded-full">Est. {dept.established}</span>
@@ -183,21 +196,27 @@ export default function DepartmentTemplate({ dept }) {
       </section>
 
       {/* ─── Main Layout: Sidebar + Content ─── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10 md:py-12">
+      <section data-section="dept_main" className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10 md:py-12">
 
-        {/* Mobile section bar — horizontal scroll */}
-        <div className="lg:hidden mb-4 sm:mb-6 overflow-x-auto -mx-4 px-4 pb-2" style={{ scrollbarWidth: "none" }}>
-          <div className="flex gap-2 w-max">
+        {/* Mobile section bar — wraps so every section (incl. HOD Desk) is tappable. */}
+        <div className="lg:hidden mb-4 sm:mb-6">
+          <div className="flex flex-wrap gap-2">
             {sections.map((s) => {
               const Icon = SECTION_ICONS[s.id] || Info;
+              const isActive = active === s.id;
               return (
-                <button key={s.id} onClick={() => setActive(s.id)}
-                  className={`relative shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-colors ${
-                    active === s.id ? "text-white shadow-md" : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-                  }`}>
-                  {active === s.id && <motion.span layoutId="dept-mobile-pill" className={`absolute inset-0 bg-gradient-to-r from-[#800000] to-[#3e0202] rounded-full`} transition={{ type: "spring", stiffness: 300, damping: 30 }}></motion.span>}
-                  <Icon size={11} className="relative" />
-                  <span className="relative">{s.label}</span>
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => setActive(s.id)}
+                  className={`relative inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-colors ${
+                    isActive
+                      ? "bg-[#800000] text-white shadow-md"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  }`}
+                >
+                  <Icon size={11} />
+                  <span>{s.label}</span>
                 </button>
               );
             })}
@@ -318,7 +337,9 @@ export default function DepartmentTemplate({ dept }) {
                   {/* ── ABOUT ── */}
                   {active === "about" && (
                     <div className="space-y-4 sm:space-y-6">
-                      <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{dept.intro}</p>
+                      <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+                        <EditableText pageKey={pageKey} tkey="dept.intro" as="span" multiline value={dept.intro}>{dept.intro}</EditableText>
+                      </p>
 
                       {/* Feature cards */}
                       {dept.features && (
@@ -383,8 +404,13 @@ export default function DepartmentTemplate({ dept }) {
                       <Quote size={120} className="absolute top-0 right-0 text-rose-50 -scale-x-100 pointer-events-none" />
                       <div className="relative">
                         <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-                          <div className={`w-14 h-14 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-white flex items-center justify-center font-black text-lg sm:text-2xl tracking-tight shadow-xl`}>
-                            {dept.hod.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
+                          <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl overflow-hidden ring-2 ring-rose-100 dark:ring-gray-700 shadow-xl">
+                            <img
+                              src={dept.hod.photo || DEFAULT_PROFILE_PHOTO}
+                              alt={dept.hod.name}
+                              className="w-full h-full object-cover"
+                              loading="lazy"
+                            />
                           </div>
                           <div>
                             <h3 className="font-black text-base sm:text-xl md:text-2xl text-[#1a0606] dark:text-white tracking-tight">{dept.hod.name}</h3>
@@ -508,8 +534,13 @@ export default function DepartmentTemplate({ dept }) {
                         {dept.facultyHighlights.map((f, i) => (
                           <motion.div key={f.name} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
                             className="flex items-center gap-3 p-3 sm:p-4 bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl hover:shadow-md transition-shadow">
-                            <div className={`shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-white flex items-center justify-center font-black text-sm tracking-tight shadow`}>
-                              {f.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
+                            <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden ring-1 ring-rose-100 dark:ring-gray-700 shadow">
+                              <img
+                                src={f.photo || DEFAULT_PROFILE_PHOTO}
+                                alt={f.name}
+                                className="w-full h-full object-cover"
+                                loading="lazy"
+                              />
                             </div>
                             <div className="min-w-0">
                               <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight truncate">{f.name}</h4>
@@ -528,18 +559,41 @@ export default function DepartmentTemplate({ dept }) {
                       <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-4 sm:mb-6">
                         <span className="font-black text-[#800000]">{dept.labs.length}</span> specialised laboratories with industry-grade equipment and software for hands-on learning.
                       </p>
-                      <div className="grid sm:grid-cols-2 gap-3">
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                         {dept.labs.map((lab, i) => (
-                          <motion.div key={lab.name} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }}
-                            className="bg-gradient-to-br from-white to-rose-50/40 dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl p-3 sm:p-5 hover:shadow-md transition-shadow">
-                            <div className="flex items-start gap-3">
-                              <div className="shrink-0 text-[#800000] dark:text-rose-300">
-                                <EmojiToIcon emoji={lab.icon} size={24} />
-                              </div>
-                              <div>
-                                <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{lab.name}</h4>
-                                <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{lab.desc}</p>
-                              </div>
+                          <motion.div
+                            key={lab.name}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.03 }}
+                            className="overflow-hidden bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl hover:shadow-md transition-shadow flex flex-col"
+                          >
+                            {/* Lab image on TOP — full-width banner.
+                                Falls back to a generic lab photo until the
+                                admin uploads a custom one via /admin/departments. */}
+                            <div className="relative h-36 sm:h-40 w-full overflow-hidden bg-gray-100 dark:bg-gray-700">
+                              <img
+                                src={
+                                  lab.photo ||
+                                  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900&q=80"
+                                }
+                                alt={lab.name}
+                                loading="lazy"
+                                className="w-full h-full object-cover"
+                              />
+                              {/* subtle bottom fade so the name below stays
+                                  readable against light images */}
+                              <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black/15 to-transparent pointer-events-none" />
+                            </div>
+
+                            {/* Name + description at the BOTTOM */}
+                            <div className="p-3 sm:p-4 flex-1">
+                              <h4 className="font-black text-sm sm:text-base text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">
+                                {lab.name}
+                              </h4>
+                              <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">
+                                {lab.desc}
+                              </p>
                             </div>
                           </motion.div>
                         ))}

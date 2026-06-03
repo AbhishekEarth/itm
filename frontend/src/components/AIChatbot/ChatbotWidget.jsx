@@ -28,20 +28,24 @@ const ChatbotWidget = () => {
       {/* Chat Panel */}
       <ChatPanel isOpen={isOpen} onClose={handleClose} />
 
-      {/* Floating Button */}
+      {/* Floating Button — on mobile sits ABOVE the FloatingSidebar FAB stack
+          (What's New / WhatsApp / Call / Inquiry / Apply Now). Those buttons
+          live at bottom-4 right-4 and are ~44px tall, so we pad the chatbot
+          another ~60px up on mobile and revert to the original bottom-right
+          corner on sm+ where the FloatingSidebar uses a vertical right rail. */}
       <AnimatePresence>
         <motion.div
           initial={{ scale: 0, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 0.5 }}
-          className="fixed bottom-6 right-6 z-[9999] flex flex-col items-center"
+          className="fixed bottom-20 right-3 sm:bottom-6 sm:right-6 z-[9999] flex flex-col items-center"
         >
-          {/* Label tooltip */}
+          {/* Label tooltip — shown on every viewport so users notice the agent. */}
           <motion.div
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: isOpen ? 0 : 1, y: isOpen ? 5 : 0 }}
             transition={{ delay: isOpen ? 0 : 1.5, duration: 0.3 }}
-            className="mb-2 px-3 py-1.5 bg-[#800000] text-white text-[11px] font-bold tracking-wider rounded-lg shadow-lg shadow-[#800000]/30 whitespace-nowrap pointer-events-none"
+            className="mb-2 px-2.5 py-1 sm:px-3 sm:py-1.5 bg-[#800000] text-white text-[10px] sm:text-[11px] font-bold tracking-wider rounded-lg shadow-lg shadow-[#800000]/30 whitespace-nowrap pointer-events-none"
           >
             <span className="flex items-center gap-1.5">
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

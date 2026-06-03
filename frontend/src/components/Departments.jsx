@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   ArrowUpRight, Sparkles, Code2, Network, RadioTower, Building2,
   BookOpen, Brain, ShieldCheck, Cloud, BarChart3, Wifi, Rocket,
 } from "lucide-react";
+import { usePublicDepartments } from "../hooks/usePublicDepartments";
 
 const DEPARTMENTS = [
   {
@@ -72,9 +73,64 @@ const EMERGING = [
   { name: "IoT",               Icon: Wifi,         path: "/emerging-branches" },
 ];
 
+// Codes treated as "emerging" specialisations — rendered inside the small
+// pill list at the bottom of the Emerging Branches tile rather than as
+// full main-grid cards. Keep `dept.code` matching with the admin form.
+const EMERGING_CODES = new Set(['AIML', 'CYBER', 'CLOUD']);
+
+// Merge the live API list with the bundled card visuals (image, accent, icon).
+// Keys to match on: page_path (the SPA route), or dept code if path is missing.
+function useDepartmentCards() {
+  const { data: liveList } = usePublicDepartments();
+  return useMemo(() => {
+    if (!Array.isArray(liveList) || liveList.length === 0) return DEPARTMENTS;
+    const byPath = new Map(
+      liveList.map((d) => [d.page_path || `/${d.code.toLowerCase()}`, d])
+    );
+    return DEPARTMENTS.map((card) => {
+      const row = byPath.get(card.path);
+      if (!row) return card;
+      const seats = row.intake > 0 ? `${row.intake} seats` : null;
+      // Replace whatever the first "X seats" stat in the bundled card was with
+      // the live value. Keep the other two stats (labs / accent fact) as-is so
+      // the visual rhythm of the card doesn't change.
+      const stats = card.stats.map((s) =>
+        /seats?/i.test(s) && seats ? seats : s
+      );
+      return {
+        ...card,
+        stats,
+        badge: row.badge || card.badge,
+        name: row.name || card.name,
+      };
+    });
+  }, [liveList]);
+}
+
+// Live list for the small chip-pills inside the Emerging Branches tile.
+// If the admin renames "AI & ML" or changes the icon, the chip updates.
+function useEmergingChips() {
+  const { data: liveList } = usePublicDepartments();
+  return useMemo(() => {
+    const live = Array.isArray(liveList)
+      ? liveList.filter((d) => EMERGING_CODES.has((d.code || '').toUpperCase()))
+      : [];
+    if (live.length === 0) return EMERGING;
+    // Merge with the bundled visuals (lucide icon) so each chip keeps a nice icon.
+    const iconByPath = new Map(EMERGING.map((b) => [b.path, b.Icon]));
+    return live.map((d) => ({
+      name: d.short || d.name,
+      Icon: iconByPath.get(d.page_path) || iconByPath.get(`/${d.code.toLowerCase()}`) || Sparkles,
+      path: d.page_path || `/${d.code.toLowerCase()}`,
+    }));
+  }, [liveList]);
+}
+
 export default function Departments() {
+  const cards = useDepartmentCards();
+  const emergingChips = useEmergingChips();
   return (
-    <section id="departments" className="relative py-8 sm:py-20 md:py-28 bg-[#fbf7f2] dark:bg-[#020617] overflow-hidden">
+    <section id="departments" data-section="departments" className="relative py-8 sm:py-20 md:py-28 bg-[#fbf7f2] dark:bg-[#020617] overflow-hidden">
 
       {/* Decorative blurs */}
       <div className="absolute top-20 right-0 w-[40vw] h-[40vw] rounded-full bg-gradient-to-bl from-rose-200/40 to-transparent blur-3xl pointer-events-none"></div>
@@ -96,7 +152,6 @@ export default function Departments() {
                 <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
                   Specialisations.
                 </span>
-                <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 -z-0 -skew-x-3"></span>
               </span>
             </h2>
           </div>
@@ -108,7 +163,7 @@ export default function Departments() {
 
         {/* Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
-          {DEPARTMENTS.map((d, i) => (
+          {cards.map((d, i) => (
             <Link to={d.path} key={d.short}>
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -190,7 +245,7 @@ export default function Departments() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: DEPARTMENTS.length * 0.07, duration: 0.5 }}
+            transition={{ delay: cards.length * 0.07, duration: 0.5 }}
             whileHover={{ y: -8 }}
             className="group relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#1a0606] via-[#3e0202] to-[#800000] text-white border border-rose-300/20 shadow-xl hover:shadow-2xl transition-shadow"
           >
@@ -211,15 +266,15 @@ export default function Departments() {
                 <Rocket size={18} strokeWidth={2.2} className="sm:!w-6 sm:!h-6" />
               </div>
 
-              <h3 className="font-black text-sm sm:text-xl tracking-tight mb-1.5 sm:mb-2">Emerging Branches</h3>
+              <h3 className="font-black text-sm sm:text-xl tracking-tight mb-1.5 sm:mb-2">CSE - Emerging Branches</h3>
               <p className="text-[11px] sm:text-xs text-rose-100/70 leading-relaxed font-medium mb-3 sm:mb-5 line-clamp-2 sm:line-clamp-none">
                 Future-ready B.Tech specialisations under the CSE umbrella.
               </p>
 
               <div className="flex flex-wrap gap-1 sm:gap-1.5 mb-3 sm:mb-6">
-                {EMERGING.map((b) => (
+                {emergingChips.map((b) => (
                   <Link
-                    key={b.name}
+                    key={b.path}
                     to={b.path}
                     onClick={(e) => e.stopPropagation()}
                     className="flex items-center gap-1 sm:gap-1.5 px-1.5 sm:px-2.5 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-black bg-white/10 backdrop-blur text-white border border-white/20 rounded-full hover:bg-white hover:text-[#800000] transition-colors"

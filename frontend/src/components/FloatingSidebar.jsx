@@ -65,10 +65,10 @@ const FloatingSidebar = () => {
 
   const actions = [
     { icon: <Bell size={20} />, label: "What's New", onClick: openNotifications, color: "hover:text-rose-400", badge: true },
-    { icon: <MessageCircle size={20} />, label: "WhatsApp", link: "#", color: "hover:text-green-400" },
-    { icon: <Phone size={20} />, label: "Call Us", link: "#", color: "hover:text-blue-400" },
-    { icon: <Mail size={20} />, label: "Inquiry", link: "#", color: "hover:text-amber-400" },
-    { icon: <GraduationCap size={20} />, label: "Apply Now", link: "#", color: "hover:text-red-400" },
+    { icon: <MessageCircle size={20} />, label: "WhatsApp", link: "https://wa.me/917773005065", color: "hover:text-green-400" },
+    { icon: <Phone size={20} />, label: "Call Us", link: "tel:+917773005065", color: "hover:text-blue-400" },
+    { icon: <Mail size={20} />, label: "Inquiry", link: "/contact", color: "hover:text-amber-400" },
+    { icon: <GraduationCap size={20} />, label: "Apply Now", link: "/admissions/how-to-apply", color: "hover:text-red-400" },
   ];
 
   const scrollToTop = () => {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PageLayout from '../components/PageLayout';
 import SectionHeading from '../components/SectionHeading';
 import Card from '../components/Card';
+import { usePublicDepartment } from '../hooks/usePublicDepartment';
 
 // ─── Dummy Data ──────────────────────────────────────────────────────────────
 const cloudData = {
@@ -27,16 +28,21 @@ const cloudData = {
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function CloudComputingPage() {
   const [activeTab, setActiveTab] = useState('About Department');
+  const { data: live } = usePublicDepartment('CLOUD');
 
   const menuItems = ['About Department', 'Curriculum', 'Laboratories', 'Career Opportunities'];
 
+  const aboutCopy = live?.intro || cloudData.about;
+
   return (
     <PageLayout
-      name={<>Cloud <br /><span className="text-red-200">Computing</span></>}
-      shortName="Cloud"
-      badge="Scale the Future"
-      subtitle="AWS · Azure · DevOps · Kubernetes · Distributed Systems"
-      chips={[['☁️', 'Cloud Native'], ['🏗️', 'Architecture'], ['🚀', 'DevOps'], ['🏆', 'Industry Standard']]}
+      name={
+        live?.name ? <>{live.name}</> : <>Cloud <br /><span className="text-red-200">Computing</span></>
+      }
+      shortName={live?.short || 'Cloud'}
+      badge={live?.badge || 'Scale the Future'}
+      subtitle={live?.subtitle || 'AWS · Azure · DevOps · Kubernetes · Distributed Systems'}
+      chips={live?.chips?.length ? live.chips : [['☁️', 'Cloud Native'], ['🏗️', 'Architecture'], ['🚀', 'DevOps'], ['🏆', 'Industry Standard']]}
       menuItems={menuItems}
       activeTab={activeTab}
       setActiveTab={setActiveTab}
@@ -46,7 +52,7 @@ export default function CloudComputingPage() {
         <Card className="p-4 sm:p-8">
           <SectionHeading>About the Specialization</SectionHeading>
           <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
-            {cloudData.about}
+            {aboutCopy}
           </p>
           <div className="mt-4 sm:mt-8 grid sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="p-3 sm:p-4 bg-red-50 dark:bg-red-900/10 border-l-4 border-[#800000] rounded-r-xl">

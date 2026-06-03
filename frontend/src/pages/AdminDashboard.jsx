@@ -5,8 +5,10 @@ import { useAuth } from '../context/AuthContext';
 import {
   GraduationCap, Users, Calendar, Image, Music,
   LogOut, ChevronRight, LayoutDashboard, Plus, ShieldCheck,
-  Settings as SettingsIcon, FileText, ImageIcon, Building2, Briefcase, FlaskConical, CalendarDays, Images, Inbox, Scale
+  Settings as SettingsIcon, FileText, ImageIcon, Building2, Briefcase, FlaskConical, CalendarDays, Images, Inbox, Scale,
+  FilePlus2
 } from 'lucide-react';
+import AgentKnowledgePanel from '../components/admin/AgentKnowledgePanel';
 
 function StatCard({ icon: Icon, label, value, color, to }) {
   return (
@@ -100,6 +102,9 @@ export default function AdminDashboard() {
           <p className="text-sm text-gray-500 font-medium mt-1">Manage all content for the ITM Gwalior website.</p>
         </div>
 
+        {/* AI Agent knowledge sync — one-click re-index after edits */}
+        <AgentKnowledgePanel />
+
         {/* Stats grid */}
         <div>
           <h2 className="text-[11px] font-black uppercase tracking-widest text-gray-400 mb-4">Overview</h2>
@@ -123,6 +128,7 @@ export default function AdminDashboard() {
             <ActionCard icon={Image}         label="Placements"    desc="Upload recruiter logos shown on the placements page."   to="/admin/placements"  accent="bg-gradient-to-br from-rose-500 to-pink-700" />
             <ActionCard icon={ShieldCheck}   label="Users & Scopes" desc="Create scoped editors (CS dept, placement cell, etc.)." to="/admin/users"      accent="bg-gradient-to-br from-violet-500 to-fuchsia-700" />
             <ActionCard icon={FileText}      label="Pages & SEO"   desc="Edit page sections + meta title/description/OG image."  to="/admin/pages"      accent="bg-gradient-to-br from-sky-500 to-blue-700" />
+            <ActionCard icon={FilePlus2}     label="Create New Page" desc="Add a brand-new page to any section — Departments, About, Clubs, Research, Custom URL." to="/admin/pages/new" accent="bg-gradient-to-br from-amber-500 to-rose-600" />
             <ActionCard icon={SettingsIcon}  label="Site Settings"  desc="Logo, brand color, contact, social, default SEO."        to="/admin/settings"   accent="bg-gradient-to-br from-slate-500 to-slate-700" />
             <ActionCard icon={ImageIcon}     label="Media Library"  desc="Upload & manage images, PDFs and brochures."             to="/admin/media"      accent="bg-gradient-to-br from-fuchsia-500 to-purple-700" />
             <ActionCard icon={Building2}     label="Departments"    desc="CS / ECE / IT / CE / ME / MBA / ESH — HoD, faculty, labs." to="/admin/departments" accent="bg-gradient-to-br from-emerald-500 to-teal-700" />

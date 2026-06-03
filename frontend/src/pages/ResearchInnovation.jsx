@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import EditableText from "../components/admin/EditableText";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Home,
@@ -118,6 +119,7 @@ const IIC_SOCIALS = [
 ];
 
 export default function ResearchInnovation() {
+  const pageKey = useLocation().pathname;
   const [filter, setFilter] = useState("All");
   const filterOpts = ["All", ...new Set(ACTIVITIES.map((a) => a.type))];
   const filtered = filter === "All" ? ACTIVITIES : ACTIVITIES.filter((a) => a.type === filter);
@@ -139,7 +141,7 @@ export default function ResearchInnovation() {
       {/* Sub-nav */}
       <div className="bg-gradient-to-r from-[#3e0202] via-[#800000] to-[#5a0000] text-white">
         <div className="max-w-7xl mx-auto px-2 sm:px-6">
-          <div className="flex overflow-x-auto" style={{ scrollbarWidth: "none" }}>
+          <div className="flex flex-wrap md:flex-nowrap overflow-x-auto" style={{ scrollbarWidth: "none" }}>
             {RESEARCH_SUBNAV.map((item) => (
               <Link key={item.label} to={item.to}>
                 <span className={`relative shrink-0 px-4 md:px-5 py-3.5 inline-flex items-center gap-2 text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] transition-colors ${item.active ? "text-white" : "text-rose-100/70 hover:text-white"}`}>
@@ -153,7 +155,7 @@ export default function ResearchInnovation() {
       </div>
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#3e0202] via-[#800000] to-[#5a0000] text-white">
+      <section data-section="innov_hero" className="relative overflow-hidden bg-gradient-to-br from-[#3e0202] via-[#800000] to-[#5a0000] text-white">
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute -top-10 right-20 w-72 h-72 rounded-full border-2 border-white"></div>
         </div>
@@ -163,11 +165,15 @@ export default function ResearchInnovation() {
               <Rocket size={12} /> IDEAPAD · IIC 8.0 · NISP · EDC
             </span>
             <h1 className="text-2xl sm:text-5xl md:text-7xl font-black tracking-[-0.04em] leading-[0.95] mb-4">
-              Innovation<br /><span className="text-red-200">Ecosystem.</span>
+              <EditableText pageKey={pageKey} tkey="innov.title.line1" as="span" value="Innovation">Innovation</EditableText><br />
+              <EditableText pageKey={pageKey} tkey="innov.title.line2" as="span" value="Ecosystem." className="text-red-200">Ecosystem.</EditableText>
             </h1>
             <p className="text-red-100/80 text-sm sm:text-base max-w-xl leading-relaxed font-medium">
-              Our campus incubator, Innovation Council, NISP Steering Committee and Entrepreneurship Development Cell
-              — one ecosystem turning student ideas into ventures.
+              <EditableText pageKey={pageKey} tkey="innov.intro" as="span" multiline
+                value="Our campus incubator, Innovation Council, NISP Steering Committee and Entrepreneurship Development Cell — one ecosystem turning student ideas into ventures.">
+                Our campus incubator, Innovation Council, NISP Steering Committee and Entrepreneurship Development Cell
+                — one ecosystem turning student ideas into ventures.
+              </EditableText>
             </p>
           </div>
           <div className="lg:col-span-5 grid grid-cols-3 gap-3">

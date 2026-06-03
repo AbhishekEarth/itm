@@ -28,9 +28,11 @@ class AIAgentAPI {
    * @param {function} onToken - Callback for each token
    * @param {function} onDone - Callback when streaming completes
    * @param {function} onError - Callback on error
+   * @param {function} [onSuggestions] - Optional, fires with `[{label, path}]`
+   *   page-link suggestions just before `onDone`.
    * @returns {Promise<void>}
    */
-  async chatStream(message, onToken, onDone, onError) {
+  async chatStream(message, onToken, onDone, onError, onSuggestions) {
     try {
       const response = await fetch(`${this.baseUrl}/chat`, {
         method: 'POST',
@@ -67,6 +69,9 @@ class AIAgentAPI {
               const data = JSON.parse(line.slice(6));
               if (data.token) {
                 onToken(data.token);
+              }
+              if (data.suggestions && typeof onSuggestions === 'function') {
+                onSuggestions(data.suggestions);
               }
               if (data.done) {
                 if (data.session_id) {

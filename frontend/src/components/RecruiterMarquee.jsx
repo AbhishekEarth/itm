@@ -12,23 +12,125 @@ const ACCENT_BY_KEY = {
   management: "from-amber-500 to-orange-600",
 };
 const ICON_BY_KEY = { eng_it: Briefcase, management: GraduationCap };
+// Folder under /public/images/company_logos that stores the bundled PNGs.
+// Used only as an offline placeholder when the API itself is unreachable.
+const FOLDER_BY_KEY = {
+  eng_it: "Engineering_Computer_Applications",
+  management: "Management",
+};
+const FALLBACK_LOGO_COUNT = { eng_it: 39, management: 37 };
 
-function LogoCard({ src, name }) {
-  if (!src) {
-    return (
-      <div className="group relative shrink-0 w-24 h-16 sm:w-32 sm:h-20 md:w-40 md:h-24 bg-white dark:bg-[#1e293b] border border-gray-100 dark:border-slate-700/60 rounded-xl sm:rounded-2xl shadow-sm flex items-center justify-center overflow-hidden">
-        <span className="text-[10px] sm:text-xs font-black text-gray-500 dark:text-gray-300 px-2 text-center">{name}</span>
-      </div>
-    );
+// ── Recruiter-name → corporate domain map ────────────────────────────────
+// Used to fetch real, transparent-background logos via the Clearbit Logo API
+// (https://logo.clearbit.com/{domain}, free, no auth). The match is normalized
+// (lowercase + strip non-alphanumeric) so "Bajaj FinServ" and "bajaj-finserv"
+// both resolve. If a recruiter isn't mapped here, the card falls through to
+// the styled text-chip rendering — never to a mismatched logo.
+const RECRUITER_DOMAIN_MAP = {
+  // Engineering & IT
+  accenture:           "accenture.com",
+  adobe:               "adobe.com",
+  amazon:              "amazon.com",
+  amdocs:              "amdocs.com",
+  bitwise:             "bitwiseglobal.com",
+  bosch:               "bosch.com",
+  capgemini:           "capgemini.com",
+  cognizant:           "cognizant.com",
+  drdo:                "drdo.gov.in",
+  genpact:             "genpact.com",
+  google:              "google.com",
+  hexaware:            "hexaware.com",
+  hikeeducation:       "hikeeducation.com",
+  hp:                  "hp.com",
+  ibmindia:            "ibm.com",
+  infosyslimited:      "infosys.com",
+  infosystechnologies: "infosys.com",
+  infosys:             "infosys.com",
+  intel:               "intel.com",
+  intellipaat:         "intellipaat.com",
+  isro:                "isro.gov.in",
+  jktyre:              "jktyre.com",
+  lt:                  "larsentoubro.com",   // "L&T"
+  microsoft:           "microsoft.com",
+  mindtree:            "ltimindtree.com",
+  mphasis:             "mphasis.com",
+  navalgroupindia:     "naval-group.com",
+  navalgroup:          "naval-group.com",
+  nttdata:             "nttdata.com",
+  oracle:              "oracle.com",
+  saplabs:             "sap.com",
+  sap:                 "sap.com",
+  sasken:              "sasken.com",
+  sgs:                 "sgs.com",
+  siemens:             "siemens.com",
+  tcs:                 "tcs.com",
+  techmahindra:        "techmahindra.com",
+  wipro:               "wipro.com",
+  zoho:                "zoho.com",
+  // Management
+  axisbank:            "axisbank.com",
+  bajajfinserv:        "bajajfinserv.in",
+  bhartiairtel:        "airtel.in",
+  airtel:              "airtel.in",
+  canarabank:          "canarabank.com",
+  fedex:               "fedex.com",
+  havells:             "havells.com",
+  hcl:                 "hcltech.com",
+  hdfc:                "hdfcbank.com",
+  hdfcbank:            "hdfcbank.com",
+  icici:               "icicibank.com",
+  icicibank:           "icicibank.com",
+  idfcfirst:           "idfcfirstbank.com",
+  kotakmahindra:       "kotak.com",
+  mahindragroup:       "mahindra.com",
+  mahindra:            "mahindra.com",
+  mastercard:          "mastercard.com",
+  paytm:               "paytm.com",
+  reliancejio:         "jio.com",
+  jio:                 "jio.com",
+  relianceretail:      "relianceretail.com",
+  reliance:            "ril.com",
+  sbi:                 "sbi.co.in",
+  tatacapital:         "tatacapital.com",
+  tatapower:           "tatapower.com",
+  thermax:             "thermaxglobal.com",
+  visasteel:           "visasteel.com",
+  xiaomi:              "mi.com",
+  yesbank:             "yesbank.in",
+};
+
+function _normaliseName(name) {
+  return String(name || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function logoUrlForRecruiter(name) {
+  const key = _normaliseName(name);
+  if (!key) return null;
+  // Exact match first
+  if (RECRUITER_DOMAIN_MAP[key]) {
+    return `https://logo.clearbit.com/${RECRUITER_DOMAIN_MAP[key]}`;
   }
+  // Prefix match — "infosyslimited" / "infosystechnologies" share "infosys".
+  for (const [k, domain] of Object.entries(RECRUITER_DOMAIN_MAP)) {
+    if (k.length >= 4 && key.startsWith(k)) {
+      return `https://logo.clearbit.com/${domain}`;
+    }
+  }
+  return null;
+}
+
+// Visual identical to the TAP page tiles — white card, grayscale logo that
+// pops into colour on hover, hide the img element entirely if its source
+// 404s so the row stays clean.
+function LogoCard({ src, name }) {
   return (
-    <div className="group relative shrink-0 w-24 h-16 sm:w-32 sm:h-20 md:w-40 md:h-24 bg-white dark:bg-[#1e293b] border border-gray-100 dark:border-slate-700/60 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+    <div className="group shrink-0 w-24 h-16 sm:w-32 sm:h-20 md:w-40 md:h-24 bg-white rounded-xl sm:rounded-2xl flex items-center justify-center p-2 sm:p-3 md:p-4 shadow-sm hover:scale-105 hover:shadow-xl transition-all duration-300">
       <img
         src={src}
         alt={name}
         loading="lazy"
         onError={(e) => (e.target.style.display = "none")}
-        className="w-full h-full object-contain p-2 sm:p-3 md:p-4 grayscale group-hover:grayscale-0 dark:grayscale-0 dark:brightness-150 dark:contrast-[0.9] transition-all duration-300"
+        className="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
       />
     </div>
   );
@@ -37,29 +139,37 @@ function LogoCard({ src, name }) {
 export default function RecruiterMarquee() {
   const { data } = usePublicRecruiters();
 
-  // Build categories from API data; fallback to bundled list
+  // Build categories. We use the API for category metadata (label + count)
+  // when available, but always source the actual recruiter LOGOS from the
+  // bundled PNG packs under /public/images/company_logos/<folder>/logo_<i>.png
+  // — exactly like the TAP page does. This avoids the name→logo pairing
+  // problem (the PNG filenames carry no company info) and is the only way
+  // to reliably render real coloured logos without depending on a CDN.
   const categories = useMemo(() => {
-    if (data?.categories?.length) {
-      return data.categories.map((c, i) => ({
-        id: c.key,
-        label: c.name,
-        short: c.name.split(/[&·]|and/i)[0].trim(),
-        icon: ICON_BY_KEY[c.key] || Briefcase,
-        accent: ACCENT_BY_KEY[c.key] || FALLBACK_CATEGORIES[i % 2].accent,
-        recruiters: c.recruiters,
-        count: c.recruiters.length,
-        useFallbackFolder: null,
+    const apiByKey = new Map(
+      (data?.categories || []).map((c) => [c.key, c]),
+    );
+    return FALLBACK_CATEGORIES.map((c, i) => {
+      const apiRow = apiByKey.get(c.id);
+      const label = apiRow?.name || c.label;
+      // The PNG pack is the source of truth for how many tiles to draw —
+      // it's the only thing that maps to a real visual asset. We honour
+      // the bundled count regardless of how many records the API has.
+      const recruiters = Array.from({ length: c.count }, (_, idx) => ({
+        name: `Recruiter ${idx + 1}`,
+        logo: `/images/company_logos/${c.folder}/logo_${idx}.png`,
       }));
-    }
-    return FALLBACK_CATEGORIES.map((c) => ({
-      ...c,
-      icon: ICON_BY_KEY[c.id] || Briefcase,
-      recruiters: Array.from({ length: c.count }, (_, i) => ({
-        name: `Recruiter ${i + 1}`,
-        logo: `/images/company_logos/${c.folder}/logo_${i}.png`,
-      })),
-      useFallbackFolder: c.folder,
-    }));
+      return {
+        id: c.id,
+        label,
+        short: c.short,
+        icon: ICON_BY_KEY[c.id] || Briefcase,
+        accent: ACCENT_BY_KEY[c.id] || FALLBACK_CATEGORIES[i % 2].accent,
+        recruiters,
+        count: apiRow?.recruiters?.length || c.count,
+        useFallbackFolder: c.folder,
+      };
+    });
   }, [data]);
 
   const [activeId, setActiveId] = useState(categories[0]?.id);
@@ -72,10 +182,7 @@ export default function RecruiterMarquee() {
   const loop = (arr) => [...arr, ...arr];
 
   return (
-    <section className="relative py-6 sm:py-16 md:py-20 bg-white dark:bg-[#020617] overflow-hidden border-y border-rose-100/60 dark:border-white/5">
-
-      <div className="absolute inset-y-0 left-0 w-24 md:w-44 bg-gradient-to-r from-white dark:from-[#020617] to-transparent z-10 pointer-events-none"></div>
-      <div className="absolute inset-y-0 right-0 w-24 md:w-44 bg-gradient-to-l from-white dark:from-[#020617] to-transparent z-10 pointer-events-none"></div>
+    <section data-section="recruiters" className="relative py-6 sm:py-16 md:py-20 bg-white dark:bg-[#020617] overflow-hidden border-y border-rose-100/60 dark:border-white/5">
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
 
@@ -89,7 +196,6 @@ export default function RecruiterMarquee() {
               Where our students{" "}
               <span className="relative inline-block">
                 <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">go to work.</span>
-                <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 dark:bg-amber-900/30 -z-0 -skew-x-3"></span>
               </span>
             </h2>
             <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-medium leading-relaxed mt-2 sm:mt-3">
@@ -107,7 +213,7 @@ export default function RecruiterMarquee() {
                 }`}
               >
                 {activeId === c.id && (
-                  <motion.span layoutId="rec-tab" className={`absolute inset-0 bg-gradient-to-r ${c.accent} rounded-full`} transition={{ type: "spring", stiffness: 300, damping: 30 }} />
+                  <motion.span layoutId="rec-tab" className="absolute inset-0 bg-[#800000] rounded-full pointer-events-none" transition={{ type: "spring", stiffness: 300, damping: 30 }} />
                 )}
                 <c.icon size={11} className="relative z-10" />
                 <span className="relative z-10 hidden sm:inline">{c.label}</span>
@@ -119,7 +225,7 @@ export default function RecruiterMarquee() {
         </div>
 
         <div className="mb-5 sm:mb-8 flex flex-wrap items-center gap-2 text-[9px] sm:text-[10px] font-black uppercase tracking-widest">
-          <span className={`px-3 py-1.5 rounded-full bg-gradient-to-r ${active.accent} text-white inline-flex items-center gap-1.5`}>
+          <span className="px-3 py-1.5 rounded-full bg-[#800000] text-white inline-flex items-center gap-1.5">
             <active.icon size={11} /> {active.label}
           </span>
           <span className="px-3 py-1.5 rounded-full bg-rose-50 dark:bg-gray-800 text-[#800000] dark:text-rose-400">

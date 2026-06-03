@@ -2,11 +2,12 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
-  ArrowLeft, Building2, Plus, Save, Trash2, X,
+  ArrowLeft, Building2, Plus, Save, Trash2, X, ImagePlus,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { departmentsApi } from '../../api/departments';
 import { errorMessage } from '../../api/client';
+import MediaPicker, { MediaThumb } from '../../components/admin/MediaPicker';
 
 const SUBTABS = [
   { key: 'overview', label: 'Overview' },
@@ -27,6 +28,53 @@ function Field({ label, value, onChange, type = 'text', textarea, rows = 3, ...r
         ? <textarea rows={rows} value={value ?? ''} onChange={(e) => onChange(e.target.value)} className={Cls} {...rest} />
         : <input type={type} value={value ?? ''} onChange={(e) => onChange(e.target.value)} className={Cls} {...rest} />}
     </label>
+  );
+}
+
+/**
+ * Image picker — wraps the existing MediaPicker so the admin can upload OR
+ * pick an existing asset for a single row field. Persists the media row's id
+ * (e.g. `photo_id`) and shows a thumbnail of the live URL.
+ *
+ *   <ImageField label="Lab image" value={row.photo_id} preview={row.photo_url}
+ *               onChange={(picked) => updateRow({ photo_id: picked?.id || null })} />
+ */
+function ImageField({ label, value, preview, onChange, folder = 'departments/labs' }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="block text-xs">
+      <span className="block font-bold text-gray-500 mb-1">{label}</span>
+      <div className="flex items-center gap-2">
+        <MediaThumb
+          media={preview ? { public_url: preview } : null}
+          size="h-14 w-14"
+        />
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="text-xs px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-1.5"
+        >
+          <ImagePlus size={12} /> {value ? 'Change' : 'Upload / pick'}
+        </button>
+        {value ? (
+          <button
+            type="button"
+            onClick={() => onChange(null)}
+            className="text-xs px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-red-50 dark:hover:bg-red-900/20 text-gray-500 hover:text-red-600 flex items-center gap-1.5"
+            title="Remove image"
+          >
+            <Trash2 size={12} /> Clear
+          </button>
+        ) : null}
+        {value ? <span className="text-[10px] text-gray-400">#{value}</span> : null}
+      </div>
+      <MediaPicker
+        open={open}
+        onClose={() => setOpen(false)}
+        onPick={(picked) => onChange(picked)}
+        folder={folder}
+      />
+    </div>
   );
 }
 
@@ -159,6 +207,11 @@ function OverviewTab({ dept, onSaved }) {
 }
 
 // ── HoD tab ─────────────────────────────────────────────────────────
+// Default profile photo used when no admin upload exists yet — same one
+// rendered on the public-facing dept pages, so admin previews stay accurate.
+const DEFAULT_HOD_PHOTO =
+  "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400&q=80";
+
 function HodTab({ dept, onSaved }) {
   const initial = dept.hod ?? {};
   const [form, setForm] = useState({
@@ -168,16 +221,22 @@ function HodTab({ dept, onSaved }) {
     message_md: initial.message_md ?? '',
     phone: initial.phone ?? '',
     email: initial.email ?? '',
+    photo_id: initial.photo_id ?? null,
+    photo_url: initial.photo_url ?? '',
   });
   const [saving, setSaving] = useState(false);
   const [ok, setOk] = useState(false);
   const [err, setErr] = useState('');
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   const save = async (e) => {
     e.preventDefault();
     setErr(''); setOk(false); setSaving(true);
     try {
-      await departmentsApi.upsertHod(dept.code, form);
+      // Don't send the response-only `photo_url` field back — the schema only
+      // accepts `photo_id`. The resolver re-derives the URL on the next GET.
+      const { photo_url, ...payload } = form;
+      await departmentsApi.upsertHod(dept.code, payload);
       const refreshed = await departmentsApi.get(dept.code);
       onSaved(refreshed);
       setOk(true);
@@ -190,7 +249,45 @@ function HodTab({ dept, onSaved }) {
   };
 
   return (
-    <form onSubmit={save} className="space-y-3 max-w-2xl">
+    <form onSubmit={save} className="space-y-4 max-w-2xl">
+      {/* Photo preview + upload — default placeholder until admin uploads one */}
+      <div className="flex items-center gap-4 p-4 bg-gradient-to-br from-rose-50/60 to-amber-50/40 dark:from-gray-800 dark:to-gray-800 border border-rose-100 dark:border-gray-700 rounded-2xl">
+        <div className="shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden ring-2 ring-white dark:ring-gray-700 shadow-md bg-gray-200">
+          <img
+            src={form.photo_url || DEFAULT_HOD_PHOTO}
+            alt={form.name || 'HoD'}
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+        <div className="flex-1">
+          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[#800000] dark:text-rose-300 mb-1">
+            HoD Photo
+          </div>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+            A default placeholder photo is shown until you upload one — change it any time.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => setPickerOpen(true)}
+              className="text-xs px-3 py-1.5 rounded-lg bg-[#800000] text-white font-black uppercase tracking-widest flex items-center gap-1.5 hover:bg-[#5a0000]"
+            >
+              <ImagePlus size={12} /> {form.photo_id ? 'Change photo' : 'Upload photo'}
+            </button>
+            {form.photo_id ? (
+              <button
+                type="button"
+                onClick={() => setForm({ ...form, photo_id: null, photo_url: '' })}
+                className="text-xs px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-red-50 dark:hover:bg-red-900/20 text-gray-500 hover:text-red-600 flex items-center gap-1.5"
+              >
+                <Trash2 size={12} /> Remove
+              </button>
+            ) : null}
+          </div>
+        </div>
+      </div>
+
       <div className="grid sm:grid-cols-2 gap-3">
         <Field label="Name" value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
         <Field label="Role" value={form.role} onChange={(v) => setForm({ ...form, role: v })} />
@@ -207,6 +304,16 @@ function HodTab({ dept, onSaved }) {
         {ok && <span className="text-xs text-emerald-600 font-semibold">Saved.</span>}
         {err && <span className="text-xs text-red-600 font-semibold">{err}</span>}
       </div>
+
+      <MediaPicker
+        open={pickerOpen}
+        onClose={() => setPickerOpen(false)}
+        folder={`departments/${(dept.code || '').toLowerCase()}/hod`}
+        onPick={(picked) => {
+          setForm({ ...form, photo_id: picked.id, photo_url: picked.public_url });
+          setPickerOpen(false);
+        }}
+      />
     </form>
   );
 }
@@ -271,11 +378,24 @@ function ListTab({ dept, kind, columns, defaults, apiNs, onChanged }) {
             )}
             {items.map((it) => (
               <tr key={it.id}>
-                {columns.map((c) => (
-                  <td key={c.key} className="px-3 py-2 text-xs text-gray-700 dark:text-gray-300">
-                    {String(it[c.key] ?? '')}
-                  </td>
-                ))}
+                {columns.map((c) => {
+                  if (c.type === 'image') {
+                    const url = it[c.previewKey || 'photo_url'];
+                    return (
+                      <td key={c.key} className="px-3 py-2">
+                        <MediaThumb
+                          media={url ? { public_url: url } : null}
+                          size="h-10 w-10"
+                        />
+                      </td>
+                    );
+                  }
+                  return (
+                    <td key={c.key} className="px-3 py-2 text-xs text-gray-700 dark:text-gray-300">
+                      {String(it[c.key] ?? '')}
+                    </td>
+                  );
+                })}
                 <td className="px-3 py-2 text-right">
                   <button onClick={() => setEditing(it)} className="text-xs text-[#800000] font-semibold mr-2">edit</button>
                   <button onClick={() => remove(it)} className="text-xs text-gray-400 hover:text-red-600">
@@ -295,16 +415,38 @@ function ListTab({ dept, kind, columns, defaults, apiNs, onChanged }) {
           <Plus size={12} /> Add new
         </summary>
         <form onSubmit={create} className="mt-3 grid sm:grid-cols-2 gap-3">
-          {columns.map((c) => (
-            <Field
-              key={c.key}
-              label={c.label}
-              value={draft[c.key] ?? ''}
-              onChange={(v) => setDraft({ ...draft, [c.key]: v })}
-              textarea={c.textarea}
-              rows={c.rows}
-            />
-          ))}
+          {columns.map((c) => {
+            if (c.type === 'image') {
+              const previewKey = c.previewKey || 'photo_url';
+              return (
+                <div key={c.key} className="sm:col-span-2">
+                  <ImageField
+                    label={c.label}
+                    value={draft[c.key] ?? null}
+                    preview={draft[previewKey] || ''}
+                    folder={c.folder}
+                    onChange={(picked) =>
+                      setDraft({
+                        ...draft,
+                        [c.key]: picked?.id ?? null,
+                        [previewKey]: picked?.public_url ?? '',
+                      })
+                    }
+                  />
+                </div>
+              );
+            }
+            return (
+              <Field
+                key={c.key}
+                label={c.label}
+                value={draft[c.key] ?? ''}
+                onChange={(v) => setDraft({ ...draft, [c.key]: v })}
+                textarea={c.textarea}
+                rows={c.rows}
+              />
+            );
+          })}
           <div className="sm:col-span-2">
             <button disabled={busy} className="bg-[#800000] text-white text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-lg flex items-center gap-1.5">
               <Plus size={12} /> {busy ? 'Adding…' : 'Add'}
@@ -324,16 +466,37 @@ function ListTab({ dept, kind, columns, defaults, apiNs, onChanged }) {
               </button>
             </div>
             <div className="grid gap-3">
-              {columns.map((c) => (
-                <Field
-                  key={c.key}
-                  label={c.label}
-                  value={editing[c.key] ?? ''}
-                  onChange={(v) => setEditing({ ...editing, [c.key]: v })}
-                  textarea={c.textarea}
-                  rows={c.rows}
-                />
-              ))}
+              {columns.map((c) => {
+                if (c.type === 'image') {
+                  const previewKey = c.previewKey || 'photo_url';
+                  return (
+                    <ImageField
+                      key={c.key}
+                      label={c.label}
+                      value={editing[c.key] ?? null}
+                      preview={editing[previewKey] || ''}
+                      folder={c.folder}
+                      onChange={(picked) =>
+                        setEditing({
+                          ...editing,
+                          [c.key]: picked?.id ?? null,
+                          [previewKey]: picked?.public_url ?? '',
+                        })
+                      }
+                    />
+                  );
+                }
+                return (
+                  <Field
+                    key={c.key}
+                    label={c.label}
+                    value={editing[c.key] ?? ''}
+                    onChange={(v) => setEditing({ ...editing, [c.key]: v })}
+                    textarea={c.textarea}
+                    rows={c.rows}
+                  />
+                );
+              })}
             </div>
             <div className="mt-4 flex gap-2">
               <button disabled={busy} className="bg-[#800000] text-white text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-lg flex items-center gap-1.5">
@@ -344,6 +507,209 @@ function ListTab({ dept, kind, columns, defaults, apiNs, onChanged }) {
           </form>
         </div>
       )}
+    </div>
+  );
+}
+
+// ── Labs tab — card grid with per-row Upload Image button ─────────────
+function LabsTab({ dept, qc, activeCode }) {
+  const [items, setItems] = useState(() => dept.laboratories ?? []);
+  const [picker, setPicker] = useState(null); // { labId | 'new' }
+  const [draft, setDraft] = useState({ name: '', icon: '', description: '' });
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState('');
+  const folder = `departments/${(dept.code || '').toLowerCase()}/labs`;
+
+  const reload = async () => {
+    try {
+      const list = await departmentsApi.labs.list(dept.code);
+      setItems(list);
+      qc.invalidateQueries({ queryKey: ['public-department', activeCode] });
+    } catch (e) {
+      setErr(errorMessage(e));
+    }
+  };
+
+  // Only send fields LaboratoryIn accepts — strips response-only keys like
+  // id / department_id / photo_url so the backend Pydantic validator doesn't
+  // reject the body with "extra fields".
+  const writableLab = (l) => ({
+    name: l.name ?? '',
+    icon: l.icon ?? null,
+    description: l.description ?? null,
+    tools: l.tools ?? null,
+    photo_id: l.photo_id ?? null,
+    sort_order: l.sort_order ?? 0,
+  });
+
+  const updateLab = async (lab, patch) => {
+    setErr(''); setBusy(true);
+    try {
+      await departmentsApi.labs.update(dept.code, lab.id, { ...writableLab(lab), ...patch });
+      await reload();
+    } catch (e) { setErr(errorMessage(e)); }
+    finally { setBusy(false); }
+  };
+
+  const removeLab = async (lab) => {
+    if (!window.confirm(`Delete "${lab.name}"?`)) return;
+    await departmentsApi.labs.delete(dept.code, lab.id);
+    await reload();
+  };
+
+  const createLab = async (e) => {
+    e?.preventDefault?.();
+    if (!draft.name?.trim()) return;
+    setErr(''); setBusy(true);
+    try {
+      await departmentsApi.labs.create(dept.code, { ...draft, sort_order: items.length, is_active: true });
+      setDraft({ name: '', icon: '', description: '' });
+      await reload();
+    } catch (e2) { setErr(errorMessage(e2)); }
+    finally { setBusy(false); }
+  };
+
+  return (
+    <div className="space-y-5">
+      {err && <div className="text-xs text-red-600 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg px-3 py-2">{err}</div>}
+
+      {/* Quick-add bar */}
+      <form onSubmit={createLab} className="bg-gradient-to-br from-rose-50/60 to-amber-50/40 dark:from-gray-800 dark:to-gray-800 border border-rose-100 dark:border-gray-700 rounded-2xl p-4">
+        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[#800000] mb-2 flex items-center gap-1.5">
+          <Plus size={11} /> Add a new lab
+        </div>
+        <div className="grid sm:grid-cols-[1fr_120px_2fr_auto] gap-2">
+          <input
+            value={draft.name}
+            onChange={(e) => setDraft({ ...draft, name: e.target.value })}
+            placeholder="Lab name (e.g. VLSI Lab)"
+            className="px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg dark:bg-gray-900 focus:outline-none focus:border-[#800000]"
+          />
+          <input
+            value={draft.icon}
+            onChange={(e) => setDraft({ ...draft, icon: e.target.value })}
+            placeholder="Icon (emoji)"
+            className="px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg dark:bg-gray-900 focus:outline-none focus:border-[#800000]"
+          />
+          <input
+            value={draft.description}
+            onChange={(e) => setDraft({ ...draft, description: e.target.value })}
+            placeholder="Short description"
+            className="px-3 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg dark:bg-gray-900 focus:outline-none focus:border-[#800000]"
+          />
+          <button
+            disabled={busy || !draft.name.trim()}
+            className="bg-[#800000] text-white text-xs font-black uppercase tracking-widest px-4 py-2 rounded-lg disabled:opacity-40 flex items-center gap-1.5"
+          >
+            <Plus size={12} /> Add
+          </button>
+        </div>
+        <p className="text-[10px] text-gray-500 mt-2">
+          You'll be able to <strong>upload an image</strong> for the new lab right after adding it.
+        </p>
+      </form>
+
+      {/* Lab cards — each with its own Upload Image button */}
+      {items.length === 0 ? (
+        <div className="text-center py-12 text-gray-400 text-sm">No labs yet. Add one above to get started.</div>
+      ) : (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {items.map((lab) => (
+            <div
+              key={lab.id}
+              className="group relative overflow-hidden bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl hover:shadow-md transition-shadow"
+            >
+              {/* Image area or empty-state with prominent upload CTA */}
+              {lab.photo_url ? (
+                <div className="relative h-32 w-full bg-gray-50 dark:bg-gray-800">
+                  <img
+                    src={lab.photo_url}
+                    alt={lab.name}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setPicker({ labId: lab.id })}
+                    className="absolute top-2 right-2 px-2.5 py-1 rounded-lg bg-white/95 backdrop-blur text-[10px] font-black uppercase tracking-widest text-[#800000] shadow-md hover:bg-white flex items-center gap-1"
+                  >
+                    <ImagePlus size={11} /> Change
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => updateLab(lab, { photo_id: null })}
+                    title="Remove image"
+                    className="absolute top-2 right-[88px] w-7 h-7 rounded-lg bg-white/95 backdrop-blur text-gray-500 hover:text-red-600 shadow-md flex items-center justify-center"
+                  >
+                    <Trash2 size={11} />
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setPicker({ labId: lab.id })}
+                  className="relative h-32 w-full bg-gradient-to-br from-rose-50 to-amber-50 dark:from-gray-800 dark:to-gray-800 border-b-2 border-dashed border-rose-300 dark:border-gray-700 flex flex-col items-center justify-center gap-1 hover:from-rose-100 hover:to-amber-100 dark:hover:from-gray-700 transition-colors"
+                >
+                  <div className="w-9 h-9 rounded-full bg-[#800000] text-white flex items-center justify-center shadow-md">
+                    <ImagePlus size={16} />
+                  </div>
+                  <span className="text-[11px] font-black uppercase tracking-widest text-[#800000]">Upload Image</span>
+                  <span className="text-[9px] text-gray-500">JPEG, PNG · up to 4 MB</span>
+                </button>
+              )}
+
+              {/* Body — inline editable name / icon / description */}
+              <div className="p-3 space-y-2">
+                <div className="flex items-start gap-2">
+                  <input
+                    value={lab.icon || ''}
+                    onChange={(e) => setItems((cur) => cur.map((x) => x.id === lab.id ? { ...x, icon: e.target.value } : x))}
+                    onBlur={() => updateLab(lab, { icon: lab.icon })}
+                    placeholder="🧪"
+                    className="w-9 px-1 py-1 text-center text-base border border-gray-200 dark:border-gray-700 rounded dark:bg-gray-800 focus:outline-none focus:border-[#800000]"
+                  />
+                  <input
+                    value={lab.name || ''}
+                    onChange={(e) => setItems((cur) => cur.map((x) => x.id === lab.id ? { ...x, name: e.target.value } : x))}
+                    onBlur={() => updateLab(lab, { name: lab.name })}
+                    className="flex-1 px-2 py-1 text-sm font-black border border-gray-200 dark:border-gray-700 rounded dark:bg-gray-800 focus:outline-none focus:border-[#800000]"
+                  />
+                </div>
+                <textarea
+                  rows={2}
+                  value={lab.description || ''}
+                  onChange={(e) => setItems((cur) => cur.map((x) => x.id === lab.id ? { ...x, description: e.target.value } : x))}
+                  onBlur={() => updateLab(lab, { description: lab.description })}
+                  placeholder="Short description shown on the public dept page."
+                  className="w-full px-2 py-1 text-xs border border-gray-200 dark:border-gray-700 rounded dark:bg-gray-800 focus:outline-none focus:border-[#800000]"
+                />
+                <div className="flex items-center justify-between pt-1">
+                  <span className="text-[9px] text-gray-400">#{lab.id} · {dept.code}</span>
+                  <button
+                    type="button"
+                    onClick={() => removeLab(lab)}
+                    className="text-[10px] text-gray-400 hover:text-red-600 flex items-center gap-1"
+                  >
+                    <Trash2 size={11} /> Delete lab
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <MediaPicker
+        open={!!picker}
+        onClose={() => setPicker(null)}
+        folder={folder}
+        onPick={async (picked) => {
+          const labId = picker?.labId;
+          setPicker(null);
+          const lab = items.find((x) => x.id === labId);
+          if (!lab) return;
+          await updateLab(lab, { photo_id: picked.id });
+        }}
+      />
     </div>
   );
 }
@@ -380,6 +746,10 @@ export default function AdminDepartments() {
     qc.setQueryData(['admin-department', activeCode], updated);
     qc.invalidateQueries({ queryKey: ['admin-departments-list'] });
     qc.invalidateQueries({ queryKey: ['public-department', activeCode] });
+    // Homepage Departments grid + any sitewide list reads also need to refresh
+    // so an admin edit of CSE intake updates the home tile immediately, not on
+    // next browser refresh.
+    qc.invalidateQueries({ queryKey: ['public-departments'] });
   };
 
   return (
@@ -410,15 +780,22 @@ export default function AdminDepartments() {
         {visibleDepts.length > 0 && (
           <>
             <div className="mb-4 flex flex-wrap gap-1.5">
-              {visibleDepts.map((d) => (
-                <button
-                  key={d.code}
-                  onClick={() => { setCode(d.code); setTab('overview'); }}
-                  className={`text-[11px] font-black uppercase tracking-widest px-3 py-1.5 rounded ${activeCode === d.code ? 'bg-[#800000] text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-600'}`}
-                >
-                  {d.code} · {d.short_name}
-                </button>
-              ))}
+              {visibleDepts.map((d) => {
+                const isActive = activeCode === d.code;
+                const label = d.short_name && d.short_name !== d.code
+                  ? `${d.code} · ${d.short_name}`
+                  : d.code;
+                return (
+                  <button
+                    key={d.code}
+                    onClick={() => { setCode(d.code); setTab('overview'); }}
+                    title={d.name}
+                    className={`text-[11px] font-black uppercase tracking-widest px-3 py-1.5 rounded ${isActive ? 'bg-[#800000] text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
             </div>
 
             {dept && (
@@ -450,10 +827,11 @@ export default function AdminDepartments() {
                   ))}
                 </div>
 
-                {tab === 'overview' && <OverviewTab dept={dept} onSaved={onSaved} />}
-                {tab === 'hod' && <HodTab dept={dept} onSaved={onSaved} />}
+                {tab === 'overview' && <OverviewTab key={`overview-${dept.code}`} dept={dept} onSaved={onSaved} />}
+                {tab === 'hod' && <HodTab key={`hod-${dept.code}`} dept={dept} onSaved={onSaved} />}
                 {tab === 'faculty' && (
                   <ListTab
+                    key={`faculty-${dept.code}`}
                     dept={{ ...dept, faculty: dept.faculty || [] }}
                     kind="faculty"
                     columns={[
@@ -468,21 +846,16 @@ export default function AdminDepartments() {
                   />
                 )}
                 {tab === 'labs' && (
-                  <ListTab
-                    dept={{ ...dept, labs: dept.laboratories || [] }}
-                    kind="labs"
-                    columns={[
-                      { key: 'name', label: 'Name' },
-                      { key: 'icon', label: 'Icon' },
-                      { key: 'description', label: 'Description', textarea: true, rows: 2 },
-                    ]}
-                    defaults={{ name: '', icon: '', description: '', sort_order: 0, is_active: true }}
-                    apiNs={departmentsApi.labs}
-                    onChanged={() => qc.invalidateQueries({ queryKey: ['public-department', activeCode] })}
+                  <LabsTab
+                    key={`labs-${dept.code}`}
+                    dept={dept}
+                    qc={qc}
+                    activeCode={activeCode}
                   />
                 )}
                 {tab === 'partners' && (
                   <ListTab
+                    key={`partners-${dept.code}`}
                     dept={{ ...dept, partners: dept.industry_partners || [] }}
                     kind="partners"
                     columns={[
@@ -497,6 +870,7 @@ export default function AdminDepartments() {
                 )}
                 {tab === 'projects' && (
                   <ListTab
+                    key={`projects-${dept.code}`}
                     dept={{ ...dept, projects: dept.student_projects || [] }}
                     kind="projects"
                     columns={[
@@ -511,6 +885,7 @@ export default function AdminDepartments() {
                 )}
                 {tab === 'awards' && (
                   <ListTab
+                    key={`awards-${dept.code}`}
                     dept={{ ...dept, awards: dept.student_awards || [] }}
                     kind="awards"
                     columns={[

@@ -56,7 +56,6 @@ export default function ClubsCells() {
                 <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
                   tribe.
                 </span>
-                <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 -z-0 -skew-x-3"></span>
               </span>
             </h2>
           </div>

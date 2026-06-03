@@ -29,6 +29,7 @@ export const publicApi = {
     const p = path.startsWith('/') ? path : `/${path}`;
     return api.get(`/public/page${p}`).then((r) => r.data);
   },
+  pages: () => api.get('/public/pages').then((r) => r.data),
   home: () => api.get('/public/home').then((r) => r.data),
   settings: () => api.get('/public/settings').then((r) => r.data),
 };

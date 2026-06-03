@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PageLayout from '../components/PageLayout';
 import SectionHeading from '../components/SectionHeading';
 import Card from '../components/Card';
+import { usePublicDepartment } from '../hooks/usePublicDepartment';
 
 // ─── Dummy Data ──────────────────────────────────────────────────────────────
 const aimlData = {
@@ -27,16 +28,25 @@ const aimlData = {
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function AIMLPage() {
   const [activeTab, setActiveTab] = useState('About Department');
+  const { data: live } = usePublicDepartment('AIML');
 
   const menuItems = ['About Department', 'Curriculum', 'Laboratories', 'Career Opportunities'];
 
+  const aboutCopy = live?.intro || aimlData.about;
+
   return (
     <PageLayout
-      name={<>Artificial Intelligence &<br /><span className="text-red-200">Machine Learning</span></>}
-      shortName="AI-ML"
-      badge="Specialization Excellence"
-      subtitle="Building the brain of tomorrow's machines · Deep Learning · Computer Vision · Robotics"
-      chips={[['🤖', 'AI-ML Focused'], ['🧠', 'Neural Nets'], ['⚙️', 'Automation'], ['🏆', 'Industry Standard']]}
+      name={
+        live?.name ? (
+          <>{live.name}</>
+        ) : (
+          <>Artificial Intelligence &<br /><span className="text-red-200">Machine Learning</span></>
+        )
+      }
+      shortName={live?.short || 'AI-ML'}
+      badge={live?.badge || 'Specialization Excellence'}
+      subtitle={live?.subtitle || "Building the brain of tomorrow's machines · Deep Learning · Computer Vision · Robotics"}
+      chips={live?.chips?.length ? live.chips : [['🤖', 'AI-ML Focused'], ['🧠', 'Neural Nets'], ['⚙️', 'Automation'], ['🏆', 'Industry Standard']]}
       menuItems={menuItems}
       activeTab={activeTab}
       setActiveTab={setActiveTab}
@@ -46,7 +56,7 @@ export default function AIMLPage() {
         <Card className="p-4 sm:p-8">
           <SectionHeading>About the Specialization</SectionHeading>
           <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
-            {aimlData.about}
+            {aboutCopy}
           </p>
           <div className="mt-4 sm:mt-8 grid sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="p-3 sm:p-4 bg-red-50 dark:bg-red-900/10 border-l-4 border-[#800000] rounded-r-xl">

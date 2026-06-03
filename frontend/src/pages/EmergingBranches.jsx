@@ -2,6 +2,22 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PageLayout from '../components/PageLayout';
 import Card from '../components/Card';
+import { usePublicDepartment } from '../hooks/usePublicDepartment';
+
+// Bundled defaults for the CSE-Emerging HoD. Used until the admin uploads a
+// custom photo / writes their own message via /admin/departments → AIML → HoD.
+const EMERGING_HOD_DEFAULTS = {
+  name: 'Dr. Deepak Gupta',
+  role: 'Coordinator · CSE Emerging Branches',
+  qualification: 'Ph.D · Computer Science & Engineering',
+  message:
+    "Welcome to the CSE Emerging Branches cell at ITM Gwalior. The technologies of tomorrow — Artificial Intelligence, Data Science, Cyber Security, Cloud Computing and the Internet of Things — are reshaping every industry, and our specialised B.Tech tracks are designed to put you at the forefront of that change. We blend a strong computer-science foundation with hands-on labs, industry-grade tooling, and project-based learning so that every graduate leaves with both a deep technical edge and the confidence to build, secure and scale real-world systems. Step in with curiosity — we'll equip you with the rest.",
+};
+
+// Default profile photo used until the admin uploads a personalised picture
+// via /admin/departments → AIML → HoD Profile → Upload photo.
+const DEFAULT_HOD_PHOTO =
+  "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400&q=80";
 
 // ─── Branch Data ──────────────────────────────────────────────────────────────
 const branches = [
@@ -202,6 +218,18 @@ function BranchCard({ branch, isExpanded, onToggle }) {
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function EmergingBranches() {
   const [expandedBranch, setExpandedBranch] = useState(null);
+  // CSE-Emerging HoD lives on the AIML department row in the DB. The admin
+  // edits Dr. Deepak Gupta's name, photo, message etc. via /admin/departments
+  // → AIML → HoD Profile, and this page picks the live values up automatically.
+  const { data: aiml } = usePublicDepartment('AIML');
+  const hodFromApi = aiml?.hod;
+  const hod = {
+    name:    hodFromApi?.name          || EMERGING_HOD_DEFAULTS.name,
+    role:    hodFromApi?.role          || EMERGING_HOD_DEFAULTS.role,
+    qual:    hodFromApi?.qualification || EMERGING_HOD_DEFAULTS.qualification,
+    message: hodFromApi?.message       || EMERGING_HOD_DEFAULTS.message,
+    photo:   hodFromApi?.photo         || DEFAULT_HOD_PHOTO,
+  };
 
   const toggleBranch = (id) => {
     setExpandedBranch(expandedBranch === id ? null : id);
@@ -209,19 +237,61 @@ export default function EmergingBranches() {
 
   return (
     <PageLayout
-      name={<>Emerging<br /><span className="text-red-200">Branches</span></>}
-      shortName="Emerging"
-      badge="Future-Ready Programs"
-      subtitle="Explore our cutting-edge specializations designed for the technologies of tomorrow. Choose your path in Data Science, IoT, AI & ML, or Cyber Security."
-      chips={[['🚀', '4 Specializations'], ['🎓', 'Industry-Aligned'], ['💡', 'Innovation-Driven'], ['🏆', 'AICTE Approved']]}
+      name={<>CSE — Emerging<br /><span className="text-red-200">Branches</span></>}
+      shortName="CSE-Emerging"
+      badge="Future-Ready Programs · Under CSE Umbrella"
+      subtitle="Explore our cutting-edge specializations designed for the technologies of tomorrow. Choose your path in Data Science, IoT, AI & ML, Cyber Security or Cloud Computing — all delivered under the Department of Computer Science & Engineering."
+      chips={[['🚀', '5 Specializations'], ['🎓', 'Industry-Aligned'], ['💡', 'Innovation-Driven'], ['🏆', 'AICTE Approved']]}
       menuItems={[]} // No sidebar for overview
     >
+      {/* HoD's Desk — Coordinator for CSE Emerging Branches */}
+      <Card className="overflow-hidden !mb-4 sm:!mb-6">
+        <div className="relative bg-gradient-to-br from-[#1a0606] via-[#3e0202] to-[#800000] text-white p-4 sm:p-6 md:p-8">
+          <div className="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-amber-500/20 blur-3xl pointer-events-none" />
+          <div className="relative flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+            <div className="shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden shadow-xl ring-2 ring-amber-200/50 bg-gray-200">
+              <img
+                src={hod.photo}
+                alt={hod.name}
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <div className="flex-1 min-w-0">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-400/20 border border-amber-300/30 text-amber-200 text-[9px] font-black uppercase tracking-[0.25em] mb-2">
+                🎓 HoD's Desk
+              </span>
+              <h3 className="text-lg sm:text-2xl font-black tracking-tight mb-0.5">
+                {hod.name}
+              </h3>
+              <p className="text-amber-200/90 text-[11px] sm:text-xs font-black uppercase tracking-widest mb-1">
+                {hod.role}
+              </p>
+              <p className="text-rose-100/80 text-[11px] sm:text-xs font-medium">
+                {hod.qual}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="p-4 sm:p-6 md:p-8 bg-white dark:bg-gray-900">
+          <div className="text-[10px] font-black uppercase tracking-[0.25em] text-[#800000] dark:text-rose-300 mb-3">
+            Message from the HoD
+          </div>
+          <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">
+            "{hod.message}"
+          </p>
+          <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium mt-3">
+            — <span className="font-black text-[#1a0606] dark:text-white">{hod.name}</span>, {hod.role}
+          </p>
+        </div>
+      </Card>
+
       {/* Branch Cards List */}
       <div className="space-y-3 sm:space-y-6">
         {branches.map((branch) => (
-          <BranchCard 
-            key={branch.id} 
-            branch={branch} 
+          <BranchCard
+            key={branch.id}
+            branch={branch}
             isExpanded={expandedBranch === branch.id}
             onToggle={() => toggleBranch(branch.id)}
           />
@@ -236,7 +306,7 @@ export default function EmergingBranches() {
           </div>
           <div className="flex-1 text-center md:text-left">
             <h3 className="text-base sm:text-xl font-black text-[#0b2a4a] dark:text-white tracking-tight mb-2">
-              Why Choose Emerging Branches?
+              Why Choose CSE — Emerging Branches?
             </h3>
             <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-medium leading-relaxed line-clamp-3 sm:line-clamp-none">
               Our emerging branch programs are designed in collaboration with industry leaders to ensure you gain 

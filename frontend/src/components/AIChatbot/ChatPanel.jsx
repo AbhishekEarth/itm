@@ -102,7 +102,7 @@ const ChatPanel = ({ onClose, isOpen }) => {
           const updated = [...prev];
           const lastMsg = updated[updated.length - 1];
           if (lastMsg.role === 'assistant' && (!lastMsg.content || !lastMsg.content.trim())) {
-            lastMsg.content = "I'm sorry, I couldn't find the specific information for that query. Please check the website at https://itm-gwalior.vercel.app for more details.";
+            lastMsg.content = "I'm sorry, I couldn't find the specific information for that query. Please check the website for more details.";
           }
           return updated;
         });
@@ -117,6 +117,17 @@ const ChatPanel = ({ onClose, isOpen }) => {
             isError: true,
             content: "I encountered an error connecting to the server. Please check your network or try again later.",
           };
+          return updated;
+        });
+      },
+      // onSuggestions — page-link chips rendered below the message bubble
+      (suggestions) => {
+        setMessages(prev => {
+          const updated = [...prev];
+          const last = updated[updated.length - 1];
+          if (last?.role === 'assistant') {
+            updated[updated.length - 1] = { ...last, suggestions };
+          }
           return updated;
         });
       }
@@ -145,8 +156,10 @@ const ChatPanel = ({ onClose, isOpen }) => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="fixed bottom-24 right-20 w-[360px] sm:w-[420px] h-[700px] max-h-[85vh] 
-            bg-white/95 dark:bg-gray-900/95 backdrop-blur-3xl 
+          className="fixed inset-x-3 top-[88px] bottom-40
+            sm:inset-x-auto sm:top-auto sm:bottom-24 sm:right-20
+            sm:w-[420px] sm:h-[700px] sm:max-h-[85vh]
+            bg-white/95 dark:bg-gray-900/95 backdrop-blur-3xl
             rounded-2xl shadow-2xl shadow-black/10 dark:shadow-black/40
             border border-rose-100/50 dark:border-gray-700/50
             flex flex-col overflow-hidden z-[9999]"

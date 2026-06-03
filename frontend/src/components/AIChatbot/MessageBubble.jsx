@@ -1,7 +1,57 @@
 import React, { memo, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
+// Rotating maroon/amber palette for the suggestion chips. Each chip picks a
+// gradient by stable index so successive chips stay distinguishable.
+const CHIP_PALETTE = [
+  'from-rose-500 to-[#800000] hover:from-rose-600 hover:to-[#5a0000]',
+  'from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600',
+  'from-emerald-400 to-teal-600 hover:from-emerald-500 hover:to-teal-700',
+  'from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700',
+  'from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700',
+];
+
+function SuggestionChips({ suggestions }) {
+  if (!suggestions?.length) return null;
+  return (
+    <div className="mt-2 max-w-full">
+      <div className="flex items-center gap-1.5 mb-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-[#800000] dark:text-rose-300">
+        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 015.656 5.656l-3 3a4 4 0 01-5.656-5.656M10.172 13.828a4 4 0 01-5.656-5.656l3-3a4 4 0 015.656 5.656" />
+        </svg>
+        Useful Pages
+      </div>
+      <div className="flex flex-wrap gap-1.5">
+        {suggestions.map((s, i) => {
+          const accent = CHIP_PALETTE[i % CHIP_PALETTE.length];
+          return (
+            <Link
+              key={`${s.path}-${i}`}
+              to={s.path}
+              className={`group inline-flex items-center gap-1.5 pl-3 pr-2 py-1.5 rounded-full
+                bg-gradient-to-br ${accent}
+                text-white text-[11px] font-bold tracking-wide
+                shadow-sm shadow-rose-900/15
+                transition-all duration-200
+                hover:shadow-md hover:-translate-y-0.5 active:scale-95
+                ring-1 ring-white/30`}
+            >
+              <span className="truncate max-w-[160px]">{s.label}</span>
+              <span className="flex items-center justify-center w-4 h-4 rounded-full bg-white/25 group-hover:bg-white/40 transition-colors">
+                <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 const UserAvatar = () => (
   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-emerald-500/20 ring-2 ring-emerald-200/50">
@@ -166,6 +216,11 @@ const MessageBubble = ({ message, index = 0 }) => {
             )}
           </div>
           
+          {/* Page-link chips — shown only on assistant messages with suggestions */}
+          {!isUser && !isError && message.suggestions?.length > 0 && (
+            <SuggestionChips suggestions={message.suggestions} />
+          )}
+
           {/* Metadata Row: Time and Actions */}
           <div className={`flex items-center gap-3 mt-1.5 px-1 ${isUser ? 'flex-row-reverse' : ''}`}>
             <p className={`text-[10px] font-medium tracking-wide ${isUser ? 'text-gray-400' : 'text-gray-400 dark:text-gray-500'}`}>

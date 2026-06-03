@@ -2,11 +2,12 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
+  "_comment_rewrites": "Backend = Cloud Run service in asia-south1 (Mumbai). If you redeploy under a new service name, update the URL on lines below.",
   "rewrites": [
     { "source": "/sitemap.xml", "destination": "/api/public/sitemap.xml" },
     { "source": "/robots.txt",  "destination": "/api/public/robots.txt"  },
-    { "source": "/api/:path*",  "destination": "https://anshul32467-itmgwalior.hf.space/api/:path*" },
-    { "source": "/uploads/:path*", "destination": "https://anshul32467-itmgwalior.hf.space/uploads/:path*" },
+    { "source": "/api/:path*",  "destination": "https://itm-production-backend-719701893212.asia-south1.run.app/api/:path*" },
+    { "source": "/uploads/:path*", "destination": "https://itm-production-backend-719701893212.asia-south1.run.app/uploads/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [

@@ -81,7 +81,24 @@ async function performRefresh() {
 }
 
 api.interceptors.response.use(
-  (r) => r,
+  (r) => {
+    // Vercel's SPA-fallback rewrite (and any reverse proxy 404) sends back
+    // HTML with status 200. axios happily resolves and downstream code that
+    // expects an array/object iterates the HTML string → React render crash.
+    // Treat any non-JSON response on a JSON-expecting request as an error so
+    // react-query stores it under `error` and components fall back cleanly.
+    const ct = String(r.headers?.['content-type'] || '').toLowerCase();
+    const wantsJson = !r.config?.responseType || r.config.responseType === 'json';
+    if (wantsJson && typeof r.data === 'string' && !ct.includes('application/json')) {
+      return Promise.reject(
+        Object.assign(new Error('Backend unavailable (non-JSON response)'), {
+          response: r,
+          isNonJson: true,
+        })
+      );
+    }
+    return r;
+  },
   async (error) => {
     const original = error.config;
     if (

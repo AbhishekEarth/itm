@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PageLayout from '../components/PageLayout';
 import SectionHeading from '../components/SectionHeading';
 import Card from '../components/Card';
+import { usePublicDepartment } from '../hooks/usePublicDepartment';
 
 // ─── Dummy Data ──────────────────────────────────────────────────────────────
 const cyberData = {
@@ -27,16 +28,21 @@ const cyberData = {
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function CyberSecurityPage() {
   const [activeTab, setActiveTab] = useState('About Department');
+  const { data: live } = usePublicDepartment('CYBER');
 
   const menuItems = ['About Department', 'Curriculum', 'Laboratories', 'Career Opportunities'];
 
+  const aboutCopy = live?.intro || cyberData.about;
+
   return (
     <PageLayout
-      name={<>Cyber <br /><span className="text-red-200">Security</span></>}
-      shortName="CyberSec"
-      badge="Defending the Future"
-      subtitle="Ethical Hacking · Cryptography · Digital Forensics · Network Defense"
-      chips={[['🛡️', 'Security Focused'], ['🔑', 'Cryptography'], ['🕵️', 'Ethical Hacking'], ['🏆', 'Industry Standard']]}
+      name={
+        live?.name ? <>{live.name}</> : <>Cyber <br /><span className="text-red-200">Security</span></>
+      }
+      shortName={live?.short || 'CyberSec'}
+      badge={live?.badge || 'Defending the Future'}
+      subtitle={live?.subtitle || 'Ethical Hacking · Cryptography · Digital Forensics · Network Defense'}
+      chips={live?.chips?.length ? live.chips : [['🛡️', 'Security Focused'], ['🔑', 'Cryptography'], ['🕵️', 'Ethical Hacking'], ['🏆', 'Industry Standard']]}
       menuItems={menuItems}
       activeTab={activeTab}
       setActiveTab={setActiveTab}
@@ -46,7 +52,7 @@ export default function CyberSecurityPage() {
         <Card className="p-4 sm:p-8">
           <SectionHeading>About the Specialization</SectionHeading>
           <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
-            {cyberData.about}
+            {aboutCopy}
           </p>
           <div className="mt-4 sm:mt-8 grid sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="p-3 sm:p-4 bg-red-50 dark:bg-red-900/10 border-l-4 border-[#800000] rounded-r-xl">

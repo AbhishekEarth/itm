@@ -106,9 +106,6 @@ export default function AdminLogin() {
           </button>
         </form>
 
-        <p className="text-center text-red-200/50 text-xs mt-6 font-medium">
-          Default: admin / admin123
-        </p>
       </div>
     </div>
   );
