@@ -154,7 +154,7 @@ class APIDataScraper(BaseScraper):
         code = dept.get("code") or dept.get("short") or ""
         name = dept.get("name") or code
         sub_path = dept.get("subPath") or f"/{code.lower()}"
-        site = "https://itm-gwalior.vercel.app"
+        site = "https://www.itmgoi.in"
         url = f"{site}{sub_path}"
 
         # Overview
@@ -293,7 +293,7 @@ class APIDataScraper(BaseScraper):
                 if text and len(text) > 20:
                     chunks.append({
                         "text": text,
-                        "metadata": {"category": category, "source": f"api:{label}", "url": f"https://itm-gwalior.vercel.app"},
+                        "metadata": {"category": category, "source": f"api:{label}", "url": f"https://www.itmgoi.in"},
                     })
         elif isinstance(data, dict):
             # Single object or wrapped response
@@ -304,14 +304,14 @@ class APIDataScraper(BaseScraper):
                     if text and len(text) > 20:
                         chunks.append({
                             "text": text,
-                            "metadata": {"category": category, "source": f"api:{label}", "url": f"https://itm-gwalior.vercel.app"},
+                            "metadata": {"category": category, "source": f"api:{label}", "url": f"https://www.itmgoi.in"},
                         })
             else:
                 text = self._item_to_text(items, label)
                 if text and len(text) > 20:
                     chunks.append({
                         "text": text,
-                        "metadata": {"category": category, "source": f"api:{label}", "url": f"https://itm-gwalior.vercel.app"},
+                        "metadata": {"category": category, "source": f"api:{label}", "url": f"https://www.itmgoi.in"},
                     })
 
         return chunks

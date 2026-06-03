@@ -43,7 +43,7 @@ class StaticDataScraper(BaseScraper):
         )
         results.append({
             "text": director_text,
-            "metadata": {"category": "general", "source": "itm_data:director", "url": "https://itm-gwalior.vercel.app/about/director-message"},
+            "metadata": {"category": "general", "source": "itm_data:director", "url": "https://www.itmgoi.in/about/director-message"},
         })
 
         officials_text = (
@@ -73,7 +73,7 @@ class StaticDataScraper(BaseScraper):
         )
         results.append({
             "text": officials_text,
-            "metadata": {"category": "general", "source": "itm_data:officials", "url": "https://itm-gwalior.vercel.app/about/officials"},
+            "metadata": {"category": "general", "source": "itm_data:officials", "url": "https://www.itmgoi.in/about/officials"},
         })
 
         # ── Institute Info ────────────────────────────────────────────
@@ -103,7 +103,7 @@ class StaticDataScraper(BaseScraper):
         )
         results.append({
             "text": institute_text,
-            "metadata": {"category": "general", "source": "itm_data:institute", "url": "https://itm-gwalior.vercel.app/about"},
+            "metadata": {"category": "general", "source": "itm_data:institute", "url": "https://www.itmgoi.in/about"},
         })
 
         # ── Vision & Mission ──────────────────────────────────────────
@@ -127,7 +127,7 @@ class StaticDataScraper(BaseScraper):
         )
         results.append({
             "text": vision_text,
-            "metadata": {"category": "general", "source": "itm_data:vision", "url": "https://itm-gwalior.vercel.app/about/mission-vision"},
+            "metadata": {"category": "general", "source": "itm_data:vision", "url": "https://www.itmgoi.in/about/mission-vision"},
         })
 
         # ── Achievements ──────────────────────────────────────────────
@@ -142,7 +142,7 @@ class StaticDataScraper(BaseScraper):
         )
         results.append({
             "text": achievements_text,
-            "metadata": {"category": "general", "source": "itm_data:achievements", "url": "https://itm-gwalior.vercel.app/about"},
+            "metadata": {"category": "general", "source": "itm_data:achievements", "url": "https://www.itmgoi.in/about"},
         })
 
         # ── Facilities ────────────────────────────────────────────────
@@ -160,7 +160,7 @@ class StaticDataScraper(BaseScraper):
         )
         results.append({
             "text": facilities_text,
-            "metadata": {"category": "general", "source": "itm_data:facilities", "url": "https://itm-gwalior.vercel.app/about/infrastructure"},
+            "metadata": {"category": "general", "source": "itm_data:facilities", "url": "https://www.itmgoi.in/about/infrastructure"},
         })
 
         # ── Campus Buildings ──────────────────────────────────────────
@@ -177,7 +177,7 @@ class StaticDataScraper(BaseScraper):
         )
         results.append({
             "text": buildings_text,
-            "metadata": {"category": "general", "source": "itm_data:buildings", "url": "https://itm-gwalior.vercel.app/about/infrastructure"},
+            "metadata": {"category": "general", "source": "itm_data:buildings", "url": "https://www.itmgoi.in/about/infrastructure"},
         })
 
         # ── Distinctiveness ───────────────────────────────────────────
@@ -199,7 +199,7 @@ class StaticDataScraper(BaseScraper):
         )
         results.append({
             "text": distinctiveness_text,
-            "metadata": {"category": "general", "source": "itm_data:distinctiveness", "url": "https://itm-gwalior.vercel.app/about/distinctiveness"},
+            "metadata": {"category": "general", "source": "itm_data:distinctiveness", "url": "https://www.itmgoi.in/about/distinctiveness"},
         })
 
         # ── B.Tech Admission Requirements & Eligibility ───────────────
@@ -244,7 +244,7 @@ class StaticDataScraper(BaseScraper):
         )
         results.append({
             "text": btech_admission_text,
-            "metadata": {"category": "admissions", "source": "itm_data:btech_admission", "url": "https://itm-gwalior.vercel.app/admissions/ug"},
+            "metadata": {"category": "admissions", "source": "itm_data:btech_admission", "url": "https://www.itmgoi.in/admissions/ug"},
         })
 
         # ── M.Tech Admission Requirements ─────────────────────────────
@@ -271,7 +271,7 @@ class StaticDataScraper(BaseScraper):
         )
         results.append({
             "text": mtech_admission_text,
-            "metadata": {"category": "admissions", "source": "itm_data:mtech_admission", "url": "https://itm-gwalior.vercel.app/admissions/pg"},
+            "metadata": {"category": "admissions", "source": "itm_data:mtech_admission", "url": "https://www.itmgoi.in/admissions/pg"},
         })
 
         # ── MBA / MCA Admission Requirements ──────────────────────────
@@ -292,7 +292,7 @@ class StaticDataScraper(BaseScraper):
         )
         results.append({
             "text": pg_admission_text,
-            "metadata": {"category": "admissions", "source": "itm_data:mba_mca_admission", "url": "https://itm-gwalior.vercel.app/admissions/pg"},
+            "metadata": {"category": "admissions", "source": "itm_data:mba_mca_admission", "url": "https://www.itmgoi.in/admissions/pg"},
         })
 
         # ── BBA / BCA Admission Requirements ──────────────────────────
@@ -312,7 +312,7 @@ class StaticDataScraper(BaseScraper):
         )
         results.append({
             "text": ug_other_text,
-            "metadata": {"category": "admissions", "source": "itm_data:bba_bca_admission", "url": "https://itm-gwalior.vercel.app/admissions/ug"},
+            "metadata": {"category": "admissions", "source": "itm_data:bba_bca_admission", "url": "https://www.itmgoi.in/admissions/ug"},
         })
 
         # ── Fee Structure ─────────────────────────────────────────────
@@ -338,7 +338,7 @@ class StaticDataScraper(BaseScraper):
         )
         results.append({
             "text": fee_text,
-            "metadata": {"category": "fees", "source": "itm_data:fees", "url": "https://itm-gwalior.vercel.app/admissions"},
+            "metadata": {"category": "fees", "source": "itm_data:fees", "url": "https://www.itmgoi.in/admissions"},
         })
 
         # ── Hostel & Campus Life ──────────────────────────────────────
@@ -356,7 +356,7 @@ class StaticDataScraper(BaseScraper):
         )
         results.append({
             "text": hostel_text,
-            "metadata": {"category": "hostel", "source": "itm_data:hostel", "url": "https://itm-gwalior.vercel.app/about/infrastructure"},
+            "metadata": {"category": "hostel", "source": "itm_data:hostel", "url": "https://www.itmgoi.in/about/infrastructure"},
         })
 
         # ── Contact Info ──────────────────────────────────────────────
@@ -368,12 +368,12 @@ class StaticDataScraper(BaseScraper):
             "**Phone:** +91-751-2440056, +91-751-2432977\n"
             "**Admission Helpline:** +91-7773005065, +91-7773001624, +91-7773001627\n"
             "**Email:** admission@itmgoi.in\n"
-            "**Website:** https://itm-gwalior.vercel.app\n"
+            "**Website:** https://www.itmgoi.in\n"
             "**Legacy Website:** https://www.itmgoi.in"
         )
         results.append({
             "text": contact_text,
-            "metadata": {"category": "contact_info", "source": "itm_data:contact", "url": "https://itm-gwalior.vercel.app/contact"},
+            "metadata": {"category": "contact_info", "source": "itm_data:contact", "url": "https://www.itmgoi.in/contact"},
         })
 
         logger.info(f"Static data indexed: {len(results)} documents")

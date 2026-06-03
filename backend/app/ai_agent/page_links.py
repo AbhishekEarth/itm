@@ -232,7 +232,7 @@ def format_links_markdown(
 
     ``site_root`` is prepended to each path. Pass an empty string when the
     chatbot is embedded inside the SPA — React Router will handle the relative
-    URL natively. Pass a full origin like ``https://itm-gwalior.vercel.app``
+    URL natively. Pass a full origin like ``https://www.itmgoi.in``
     when responses might be consumed outside the app.
     """
     links = suggest_links(question, category, limit=limit)

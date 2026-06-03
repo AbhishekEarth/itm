@@ -216,7 +216,7 @@ Based ONLY on the above data, write a helpful, well-formatted Markdown response 
 - Include relevant links if available.
 - Use bullet points and headings for readability.
 - Do NOT invent any information not present in the data above.
-- If the data doesn't contain enough information, mention that and suggest visiting https://itm-gwalior.vercel.app"""
+- If the data doesn't contain enough information, mention that and suggest visiting https://www.itmgoi.in"""
 
 CHAT_PROMPT_TEMPLATE = """The user sent this message:
 
