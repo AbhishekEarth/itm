@@ -25,10 +25,19 @@ SCOPES: tuple[ScopeDef, ...] = (
     ScopeDef("dept.me", "Mechanical Department", "Edit ME Department"),
     ScopeDef("dept.mba", "MBA Department", "Edit MBA Department + specialisations + consultancy"),
     ScopeDef("dept.esh", "ESH Department", "Edit Engineering Sciences & Humanities"),
-    # emerging branches
-    ScopeDef("emerging.aiml", "AI / ML page", "Edit AI-ML page"),
-    ScopeDef("emerging.cyber", "Cyber Security page", "Edit Cyber Security page"),
-    ScopeDef("emerging.cloud", "Cloud Computing page", "Edit Cloud Computing page"),
+    # emerging branches — seeded as proper Department rows so they share the
+    # same dept.* scope pattern as CSE/IT/ECE. The legacy `emerging.*` keys
+    # below remain for backwards compatibility with older grants.
+    ScopeDef("dept.aiml", "AI & ML Department", "Edit AI & ML (emerging branch) department page"),
+    ScopeDef("dept.cyber", "Cyber Security Department", "Edit Cyber Security (emerging branch) department page"),
+    ScopeDef("dept.cloud", "Cloud Computing Department", "Edit Cloud Computing (emerging branch) department page"),
+    ScopeDef("dept.data", "Data Science Department", "Edit Data Science (CSE specialisation) department page"),
+    ScopeDef("dept.mca", "MCA Programme", "Edit MCA programme page"),
+    ScopeDef("dept.bba", "BBA Programme", "Edit BBA programme page"),
+    ScopeDef("dept.bca", "BCA Programme", "Edit BCA programme page"),
+    ScopeDef("emerging.aiml", "AI / ML page (legacy)", "Edit AI-ML page (use dept.aiml instead)"),
+    ScopeDef("emerging.cyber", "Cyber Security page (legacy)", "Edit Cyber Security page (use dept.cyber instead)"),
+    ScopeDef("emerging.cloud", "Cloud Computing page (legacy)", "Edit Cloud Computing page (use dept.cloud instead)"),
     ScopeDef("library", "Central Library", "Edit Library page"),
     # admissions
     ScopeDef("admissions.content", "Admissions Content", "Programmes, fees, FAQs, counsellors, timeline"),
@@ -72,6 +81,10 @@ SCOPES: tuple[ScopeDef, ...] = (
     ScopeDef("notices", "Notices & Announcements", "Notice board"),
     ScopeDef("forms.contact", "Contact Inbox", "Contact form submissions"),
     ScopeDef("forms.grievance", "Grievance Inbox", "Grievance form submissions"),
+    # cross-cutting (Phase 1 additions)
+    ScopeDef("seo.edit", "SEO / Meta", "Per-page title, description, og:image, canonical, robots, schema"),
+    ScopeDef("analytics.view", "Analytics", "Read admin analytics summary"),
+    ScopeDef("blog.posts", "Blog Posts", "Create, edit, and publish blog posts"),
     # system
     ScopeDef("users.manage", "Manage Users", "Create/edit/disable editors (super-admin)"),
     ScopeDef("audit.read", "Audit Log", "Read audit log"),

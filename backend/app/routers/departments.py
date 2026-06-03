@@ -138,8 +138,8 @@ def _dept_out(db: Session, dept: Department) -> DepartmentOut:
         faculty=[_faculty_out(db, f) for f in dept.faculty if f.is_active],
         laboratories=[_lab_out(db, l) for l in dept.laboratories if l.is_active],
         industry_partners=[_partner_out(db, p) for p in dept.industry_partners],
-        student_projects=[_project_out(p) for p in dept.student_projects],
-        student_awards=[_award_out(a) for a in dept.student_awards],
+        student_projects=[_project_out(db, p) for p in dept.student_projects],
+        student_awards=[_award_out(db, a) for a in dept.student_awards],
     )
 
 

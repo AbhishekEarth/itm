@@ -1,0 +1,63 @@
+# Google Cloud Build — builds the image and deploys to Cloud Run.
+#
+# Wire this up once via:
+#   gcloud builds triggers create github \
+#       --repo-name=ITM_Production_Backend \
+#       --repo-owner=ITMGWALIOR \
+#       --branch-pattern=^main$ \
+#       --build-config=cloudbuild.yaml \
+#       --region=asia-south1
+#
+# After that, every push to `main` deploys automatically.
+#
+# Env vars / secrets are NOT set here — manage them on the Cloud Run
+# service itself so secrets never appear in build logs.
+
+substitutions:
+  _REGION: asia-south1
+  _SERVICE: itmgoi-backend
+  _REPO: itmgoi
+  _IMAGE: backend
+
+steps:
+  # 1. Build the image, tagging with both the commit SHA and `latest`.
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/${_IMAGE}:${SHORT_SHA}
+      - -t
+      - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/${_IMAGE}:latest
+      - .
+
+  # 2. Push both tags to Artifact Registry.
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - --all-tags
+      - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/${_IMAGE}
+
+  # 3. Deploy to Cloud Run. --quiet skips the y/n prompt.
+  #    Env vars are kept on the service (set them once in the console),
+  #    so we use --update-image only — the rest of the config stays.
+  - id: deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_SERVICE}
+      - --image=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/${_IMAGE}:${SHORT_SHA}
+      - --region=${_REGION}
+      - --platform=managed
+      - --quiet
+
+images:
+  - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/${_IMAGE}:${SHORT_SHA}
+  - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/${_IMAGE}:latest
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: E2_HIGHCPU_8

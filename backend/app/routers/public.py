@@ -90,6 +90,22 @@ def _resolve_media_url(db: Session, media_id: int | None) -> str | None:
     return asset.public_url if asset and asset.is_active else None
 
 
+@router.get("/pages")
+def public_pages(response: Response, db: Session = Depends(get_db)):
+    """Lightweight list of every published page — used by the header
+    navigation to surface admin-created pages under the matching dropdown
+    (e.g. a row at ``/about/leadership`` shows up inside the About menu).
+    """
+    _cache(response, 60)
+    rows = db.scalars(
+        select(Page).where(Page.is_published.is_(True)).order_by(Page.path)
+    ).all()
+    return [
+        {"key": p.key, "path": p.path, "title": p.title}
+        for p in rows
+    ]
+
+
 @router.get("/page/{path:path}")
 def public_page(path: str, response: Response, db: Session = Depends(get_db)):
     """Returns metadata + active sections for the page at `path`. Path is URL-decoded."""
@@ -847,8 +863,13 @@ def public_research_patents(response: Response, db: Session = Depends(get_db)):
 
 @router.get("/departments")
 def public_departments(response: Response, db: Session = Depends(get_db)):
-    """Lightweight list for header / footer / sitemap rendering."""
-    _cache(response, 300)
+    """Lightweight list for header / footer / sitemap / homepage card grid.
+
+    Includes the editable per-department numbers (intake, faculty count, badge)
+    so the homepage Departments grid stays in sync with the admin form — no more
+    hard-coded "240 seats" strings drifting from the database.
+    """
+    _cache(response, 60)
     rows = db.scalars(
         select(Department).where(Department.is_published.is_(True)).order_by(Department.code)
     ).all()
@@ -860,6 +881,12 @@ def public_departments(response: Response, db: Session = Depends(get_db)):
             "icon": d.icon,
             "page_path": d.page_path,
             "image": _media(db, d.image_id) or d.image_url,
+            "intake": d.intake or 0,
+            "established": d.established_year,
+            "faculty_count": d.faculty_count or 0,
+            "badge": d.badge,
+            "labs_count": len([l for l in d.laboratories if l.is_active]),
+            "accreditations": d.accreditations or [],
         }
         for d in rows
     ]

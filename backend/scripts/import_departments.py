@@ -64,6 +64,12 @@ SCOPE_FOR_CODE = {
     "ME": "dept.me",
     "MBA": "dept.mba",
     "ESH": "dept.esh",
+    # Emerging-branch B.Tech specialisations — seeded separately via
+    # scripts/seed_emerging_branches.py but also handled here in case they're
+    # pulled in via departments_v2.js later.
+    "AIML": "dept.aiml",
+    "CYBER": "dept.cyber",
+    "CLOUD": "dept.cloud",
 }
 
 

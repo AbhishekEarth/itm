@@ -1,6 +1,8 @@
 """ITM Gwalior FastAPI application."""
 from __future__ import annotations
 
+import asyncio
+import sys
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -13,11 +15,19 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 
+# Force UTF-8 for stdout/stderr (fixes UnicodeEncodeError on Windows with emoji/logging).
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 from app.core.config import settings
 from app.core.errors import register_exception_handlers
 from app.core.logging import RequestContextMiddleware, configure_logging, log
 from app.core.ratelimit import limiter
+from app.routers import admin_pages as admin_pages_router
 from app.routers import admissions as admissions_router
+from app.routers import analytics as analytics_router
 from app.routers import audit as audit_router
 from app.routers import auth as auth_router
 from app.routers import clubs as clubs_router
@@ -25,13 +35,30 @@ from app.routers import compliance as compliance_router
 from app.routers import departments as departments_router
 from app.routers import health as health_router
 from app.routers import media as media_router
+from app.routers import page_overrides as page_overrides_router
 from app.routers import pages as pages_router
 from app.routers import placements as placements_router
+from app.routers import posts as posts_router
 from app.routers import public as public_router
 from app.routers import research as research_router
+from app.routers import scope_presets as scope_presets_router
 from app.routers import seo as seo_router
 from app.routers import settings as settings_router
 from app.routers import users as users_router
+
+# AI Agent / Chatbot
+_AI_AGENT_AVAILABLE = True
+try:
+    from app.ai_agent.database import vector_db
+    from app.ai_agent.agent import assistant
+    from app.ai_agent.routers import chat as ai_chat_router
+    from app.ai_agent.routers import data as ai_data_router
+    from app.ai_agent.routers import manage as ai_manage_router
+except Exception as _ai_import_err:  # noqa: BLE001
+    _AI_AGENT_AVAILABLE = False
+    log.warning("ai_agent.import_failed", error=str(_ai_import_err)) if False else None
+    # Defer logging until configure_logging() runs in lifespan.
+    _ai_import_error_message = str(_ai_import_err)
 
 
 @asynccontextmanager
@@ -44,6 +71,66 @@ async def lifespan(_: FastAPI):
         storage=settings.STORAGE_BACKEND,
     )
     Path(settings.UPLOAD_DIR).mkdir(parents=True, exist_ok=True)
+
+    # Bring up the AI agent — non-blocking. If deps are missing we log and skip.
+    if not _AI_AGENT_AVAILABLE:
+        log.warning("ai_agent.disabled", reason=_ai_import_error_message)
+    else:
+        try:
+            await vector_db.initialize()
+            doc_count = vector_db.count_documents()
+            log.info("ai_agent.chroma_ready", documents=doc_count)
+
+            async def _auto_index():
+                """Background task: index static data + backend API JSON."""
+                try:
+                    from app.ai_agent.scrapers.static_data import StaticDataScraper
+                    from app.ai_agent.scrapers.api_data import APIDataScraper
+
+                    total_chunks = 0
+                    try:
+                        static = StaticDataScraper()
+                        static_results = await static.scrape()
+                        if static_results:
+                            texts = [r["text"] for r in static_results]
+                            metadatas = [r["metadata"] for r in static_results]
+                            added = await asyncio.to_thread(
+                                vector_db.add_documents, texts, metadatas, None, "static_data"
+                            )
+                            total_chunks += added
+                            log.info("ai_agent.indexed_static_data", chunks=added)
+                    except Exception as e:  # noqa: BLE001
+                        log.warning("ai_agent.static_data_index_failed", error=str(e))
+
+                    try:
+                        api_scraper = APIDataScraper()
+                        api_results = await api_scraper.scrape()
+                        if api_results:
+                            texts = [r["text"] for r in api_results]
+                            metadatas = [r["metadata"] for r in api_results]
+                            added = await asyncio.to_thread(
+                                vector_db.add_documents, texts, metadatas, None, "api_data"
+                            )
+                            total_chunks += added
+                            log.info("ai_agent.indexed_api_data", chunks=added)
+                    except Exception as e:  # noqa: BLE001
+                        log.warning("ai_agent.api_data_index_failed", error=str(e))
+
+                    log.info("ai_agent.auto_index_complete", total_chunks=total_chunks)
+                except Exception as e:  # noqa: BLE001
+                    log.warning("ai_agent.auto_index_error", error=str(e))
+
+            task = asyncio.create_task(_auto_index())
+            _._auto_index_task = task  # retain ref so GC doesn't cancel it
+        except Exception as e:  # noqa: BLE001
+            log.warning("ai_agent.chroma_init_failed", error=str(e))
+
+        try:
+            await assistant.initialize()
+            log.info("ai_agent.assistant_ready")
+        except Exception as e:  # noqa: BLE001
+            log.warning("ai_agent.assistant_init_failed", error=str(e))
+
     yield
     log.info("app.stopping")
 
@@ -111,6 +198,13 @@ app.include_router(health_router.router, prefix=settings.API_PREFIX)
 app.include_router(auth_router.router, prefix=settings.API_PREFIX)
 app.include_router(users_router.router, prefix=settings.API_PREFIX)
 app.include_router(users_router.catalog_router, prefix=settings.API_PREFIX)
+app.include_router(scope_presets_router.router, prefix=settings.API_PREFIX)
+app.include_router(admin_pages_router.router, prefix=settings.API_PREFIX)
+app.include_router(page_overrides_router.public_router, prefix=settings.API_PREFIX)
+app.include_router(page_overrides_router.admin_router, prefix=settings.API_PREFIX)
+app.include_router(posts_router.public_router, prefix=settings.API_PREFIX)
+app.include_router(posts_router.admin_router, prefix=settings.API_PREFIX)
+app.include_router(analytics_router.router, prefix=settings.API_PREFIX)
 app.include_router(audit_router.router, prefix=settings.API_PREFIX)
 app.include_router(media_router.router, prefix=settings.API_PREFIX)
 app.include_router(settings_router.router, prefix=settings.API_PREFIX)
@@ -123,6 +217,12 @@ app.include_router(admissions_router.router, prefix=settings.API_PREFIX)
 app.include_router(compliance_router.router, prefix=settings.API_PREFIX)
 app.include_router(public_router.router, prefix=settings.API_PREFIX)
 app.include_router(seo_router.router, prefix=settings.API_PREFIX)
+
+# AI Agent endpoints — mounted under /api/ai/{chat,data,manage}
+if _AI_AGENT_AVAILABLE:
+    app.include_router(ai_chat_router.router, prefix=settings.API_PREFIX + "/ai")
+    app.include_router(ai_data_router.router, prefix=settings.API_PREFIX + "/ai")
+    app.include_router(ai_manage_router.router, prefix=settings.API_PREFIX + "/ai")
 
 # Serve uploaded media in development; nginx handles this in production.
 if settings.STORAGE_BACKEND == "local":

@@ -14,6 +14,11 @@ if settings.is_postgres:
         pool_size=settings.DB_POOL_SIZE,
         max_overflow=settings.DB_MAX_OVERFLOW,
     )
+    # Supabase's transaction-mode pooler (port 6543, host contains "pooler")
+    # multiplexes statements across backends and rejects PREPARE. psycopg3
+    # auto-prepares after the 5th identical query — disable that.
+    if "pooler" in settings.DATABASE_URL:
+        _engine_kwargs["connect_args"] = {"prepare_threshold": None}
 elif settings.is_sqlite:
     _engine_kwargs["connect_args"] = {"check_same_thread": False}
 
