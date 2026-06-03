@@ -15,10 +15,13 @@ from app.ai_agent.scrapers.base import BaseScraper
 
 logger = logging.getLogger("ai-agent.api-data")
 
-# Backend API base URLs to try (local dev first, then production)
+# Backend API base URLs to try. The first entry hits the service on its own
+# localhost (works inside Cloud Run where gunicorn binds 8080, and inside the
+# Hugging Face Space which used 7860). Fall back to the well-known dev port.
 BACKEND_URLS = [
+    "http://localhost:8080",
+    "http://localhost:7860",
     "http://localhost:8000",
-    "https://anshul32467-itmgwalior.hf.space",
 ]
 
 # Public API endpoints to fetch data from. Tuned to match the actual public
