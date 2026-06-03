@@ -34,7 +34,7 @@ langchain==0.3.27
 langchain-core==0.3.78
 langchain-community==0.3.31
 langchain-chroma==0.2.3
-langchain-nvidia-ai-endpoints==0.3.21
+langchain-nvidia-ai-endpoints==0.3.19
 beautifulsoup4>=4.12.3
 lxml>=5.0.0
 PyPDF2==3.0.1
