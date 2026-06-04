@@ -1,14 +1,19 @@
 import { useRef, useState } from 'react';
 import { useEditMode } from '../../context/EditModeContext';
-import { Pencil, Link2, Upload, X, RotateCcw } from 'lucide-react';
+import { mediaApi } from '../../api/cms';
+import { errorMessage } from '../../api/client';
+import { Pencil, Link2, Upload, X, RotateCcw, Loader2 } from 'lucide-react';
 
-const MAX_UPLOAD_BYTES = 1.8 * 1024 * 1024; // keep data URLs under the localStorage budget
+// Cap at 10 MB — matches backend MAX_UPLOAD_MB_IMAGE. R2 (not the override blob)
+// stores the actual bytes, so we are not bound by JSON-payload size anymore.
+const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
 
 /*
- * Click-to-replace image. Renders an <img> whose src is the local override (if
- * any) or the provided `src`. In edit mode an overlay button opens a small panel
- * to paste an image URL or upload a file (stored inline as a data URL, since
- * persistence is local-only). Saves to the page's media overrides.
+ * Click-to-replace image. Renders an <img> whose src is the page-override URL
+ * (if any) or the provided `src`. In edit mode an overlay button opens a panel
+ * to paste an image URL or upload a file — uploads go through /api/media to
+ * Cloudflare R2 and only the resulting public URL is stored in the override
+ * blob (small string, no JSON-size limits).
  */
 export default function EditableImage({
   pageKey,
@@ -23,11 +28,16 @@ export default function EditableImage({
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState('');
   const [err, setErr] = useState('');
+  const [uploading, setUploading] = useState(false);
   const fileRef = useRef(null);
 
   const effectiveSrc = getImage(pageKey, tkey, src);
 
-  const onFile = (file) => {
+  // Folder name derived from pageKey so images for /me land under "page/me/",
+  // /about/director under "page/about-director/", etc. Keeps R2 organised.
+  const overrideFolder = `page${(pageKey || '/').replace(/\//g, '-')}`.replace(/-+$/, '') || 'page';
+
+  const onFile = async (file) => {
     setErr('');
     if (!file) return;
     if (!file.type.startsWith('image/')) {
@@ -35,15 +45,23 @@ export default function EditableImage({
       return;
     }
     if (file.size > MAX_UPLOAD_BYTES) {
-      setErr('Image is too large (max ~1.8 MB). Paste a URL instead.');
+      setErr('Image is too large (max 10 MB).');
       return;
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImage(pageKey, tkey, reader.result);
+    setUploading(true);
+    try {
+      const created = await mediaApi.upload(file, { folder: overrideFolder, alt });
+      if (!created?.public_url) {
+        setErr('Upload returned no URL — check your permissions.');
+        return;
+      }
+      setImage(pageKey, tkey, created.public_url);
       setOpen(false);
-    };
-    reader.readAsDataURL(file);
+    } catch (e) {
+      setErr(errorMessage(e) || 'Upload failed. Check console for details.');
+    } finally {
+      setUploading(false);
+    }
   };
 
   const img = <img src={effectiveSrc} alt={alt} className={className} {...imgProps} />;
@@ -111,10 +129,19 @@ export default function EditableImage({
           {/* Upload */}
           <button
             type="button"
+            disabled={uploading}
             onClick={() => fileRef.current?.click()}
-            className="w-full flex items-center justify-center gap-2 text-xs font-bold px-3 py-2 rounded-lg border border-dashed border-gray-300 dark:border-white/15 text-gray-600 dark:text-gray-300 hover:border-violet-400 hover:text-violet-600 transition-colors"
+            className="w-full flex items-center justify-center gap-2 text-xs font-bold px-3 py-2 rounded-lg border border-dashed border-gray-300 dark:border-white/15 text-gray-600 dark:text-gray-300 hover:border-violet-400 hover:text-violet-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Upload size={13} /> Upload from device
+            {uploading ? (
+              <>
+                <Loader2 size={13} className="animate-spin" /> Uploading to R2…
+              </>
+            ) : (
+              <>
+                <Upload size={13} /> Upload from device
+              </>
+            )}
           </button>
           <input
             ref={fileRef}
