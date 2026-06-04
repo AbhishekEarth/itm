@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
@@ -44,12 +44,68 @@ function ActionCard({ icon: Icon, label, desc, to, accent }) {
   );
 }
 
+// Cards as data, each tagged with its scope prefix. Admins see everything; an
+// editor with scopes ['dept.me','gallery'] sees only cards whose prefix is
+// matched by one of their scopes (i.e. dept.* + gallery here).
+const STAT_CARDS = [
+  { key: 'faculty',    icon: GraduationCap, label: 'Faculty Members',  to: '/admin/faculty',    color: 'bg-gradient-to-br from-[#800000] to-[#3e0202]',  scopePrefix: 'faculty', statKey: 'faculty'   },
+  { key: 'students',   icon: Users,         label: 'Students',         to: '/admin/students',   color: 'bg-gradient-to-br from-indigo-500 to-indigo-700', scopePrefix: 'students', statKey: 'students' },
+  { key: 'tap',        icon: Calendar,      label: 'TAP Events',       to: '/admin/tap',        color: 'bg-gradient-to-br from-emerald-500 to-teal-700',  scopePrefix: 'placements', statKey: 'events' },
+  { key: 'pac',        icon: Music,         label: 'PAC Events',       to: '/admin/pac',        color: 'bg-gradient-to-br from-amber-500 to-orange-600',  scopePrefix: 'events', statKey: 'pac'      },
+  { key: 'placements', icon: Image,         label: 'Placement Logos',  to: '/admin/placements', color: 'bg-gradient-to-br from-rose-500 to-pink-700',     scopePrefix: 'placements', statKey: 'placements' },
+];
+
+const ACTION_CARDS = [
+  { key: 'faculty',          icon: GraduationCap, label: 'Faculty',                 desc: 'Add, view and remove faculty members by department.',      to: '/admin/faculty',          accent: 'bg-gradient-to-br from-[#800000] to-[#3e0202]',   scopePrefix: 'faculty' },
+  { key: 'students',         icon: Users,         label: 'Students',                desc: 'Register students, filter by year and department.',         to: '/admin/students',         accent: 'bg-gradient-to-br from-indigo-500 to-indigo-700', scopePrefix: 'students' },
+  { key: 'tap',              icon: Calendar,      label: 'TAP Events',              desc: 'Post upcoming campus drives, internships and talks.',       to: '/admin/tap',              accent: 'bg-gradient-to-br from-emerald-500 to-teal-700',  scopePrefix: 'placements' },
+  { key: 'pac',              icon: Music,         label: 'PAC Events',              desc: 'Upload cultural event highlights with gallery images.',     to: '/admin/pac',              accent: 'bg-gradient-to-br from-amber-500 to-orange-600',  scopePrefix: 'events' },
+  { key: 'placements',       icon: Image,         label: 'Placements',              desc: 'Upload recruiter logos shown on the placements page.',     to: '/admin/placements',       accent: 'bg-gradient-to-br from-rose-500 to-pink-700',     scopePrefix: 'placements' },
+  { key: 'users',            icon: ShieldCheck,   label: 'Users & Scopes',          desc: 'Create scoped editors (CS dept, placement cell, etc.).',   to: '/admin/users',            accent: 'bg-gradient-to-br from-violet-500 to-fuchsia-700', adminOnly: true },
+  { key: 'pages',            icon: FileText,      label: 'Pages & SEO',             desc: 'Edit page sections + meta title/description/OG image.',    to: '/admin/pages',            accent: 'bg-gradient-to-br from-sky-500 to-blue-700',      scopePrefix: 'site' },
+  { key: 'pages-new',        icon: FilePlus2,     label: 'Create New Page',         desc: 'Add a brand-new page to any section.',                     to: '/admin/pages/new',        accent: 'bg-gradient-to-br from-amber-500 to-rose-600',    scopePrefix: 'site' },
+  { key: 'settings',         icon: SettingsIcon,  label: 'Site Settings',           desc: 'Logo, brand color, contact, social, default SEO.',         to: '/admin/settings',         accent: 'bg-gradient-to-br from-slate-500 to-slate-700',   adminOnly: true },
+  { key: 'media',            icon: ImageIcon,     label: 'Media Library',           desc: 'Upload & manage images, PDFs and brochures.',              to: '/admin/media',            accent: 'bg-gradient-to-br from-fuchsia-500 to-purple-700', scopePrefix: 'gallery' },
+  { key: 'departments',      icon: Building2,     label: 'Departments',             desc: 'CS / ECE / IT / CE / ME / MBA / ESH — HoD, faculty, labs.', to: '/admin/departments',      accent: 'bg-gradient-to-br from-emerald-500 to-teal-700',  scopePrefix: 'dept' },
+  { key: 'placements-cell',  icon: Briefcase,     label: 'Placement Cell',          desc: 'Recruiters, TAP team, services, MoUs, testimonials, events.', to: '/admin/placements-cell', accent: 'bg-gradient-to-br from-orange-500 to-red-700',    scopePrefix: 'placements' },
+  { key: 'research',         icon: FlaskConical,  label: 'Research Suite',          desc: 'Focus areas, publications, books, patents, journal, conferences, FDPs.', to: '/admin/research',  accent: 'bg-gradient-to-br from-cyan-500 to-blue-700',     scopePrefix: 'research' },
+  { key: 'events',           icon: CalendarDays,  label: 'Events & Notices',        desc: 'Events, clubs/cells, notices, ticker announcements.',      to: '/admin/events',           accent: 'bg-gradient-to-br from-emerald-500 to-green-700', scopePrefix: 'events' },
+  { key: 'gallery',          icon: Images,        label: 'Gallery',                 desc: 'Categories + multi-image upload + captions + videos.',    to: '/admin/gallery',          accent: 'bg-gradient-to-br from-pink-500 to-fuchsia-700',  scopePrefix: 'gallery' },
+  { key: 'leads',            icon: Inbox,         label: 'Leads & Inbox',           desc: 'Admission leads, contact, grievance, job applications.',  to: '/admin/leads',            accent: 'bg-gradient-to-br from-yellow-500 to-orange-700', scopePrefix: 'admissions' },
+  { key: 'compliance',       icon: Scale,         label: 'Compliance · Alumni · About', desc: 'NAAC, NIRF, committees, board, officials, alumni.',  to: '/admin/compliance',       accent: 'bg-gradient-to-br from-teal-500 to-cyan-700',     scopePrefix: 'compliance' },
+];
+
 export default function AdminDashboard() {
-  const { logout, token } = useAuth();
+  const { logout, token, isAdmin, isEditor, scopes } = useAuth();
   const navigate = useNavigate();
   const [stats, setStats] = useState({});
 
+  // Admins see every card; editors see only cards matching their scopes
+  // (same matching as the sidebar: scope === prefix OR scope.startsWith(prefix + '.')).
+  const hasAnyScope = useMemo(() => {
+    return (prefix) => {
+      if (isAdmin) return true;
+      if (!prefix) return false;
+      return (scopes || []).some((s) => s === prefix || s.startsWith(prefix + '.'));
+    };
+  }, [isAdmin, scopes]);
+
+  const visibleStatCards = useMemo(
+    () => STAT_CARDS.filter((c) => isAdmin || hasAnyScope(c.scopePrefix)),
+    [isAdmin, hasAnyScope]
+  );
+
+  const visibleActionCards = useMemo(
+    () => ACTION_CARDS.filter((c) => {
+      if (c.adminOnly) return isAdmin;
+      if (isAdmin) return true;
+      return hasAnyScope(c.scopePrefix);
+    }),
+    [isAdmin, hasAnyScope]
+  );
+
   useEffect(() => {
+    if (!isAdmin) return; // editors don't need global stats counts
     const headers = { Authorization: `Bearer ${token}` };
     Promise.all([
       axios.get('/api/faculty/', { headers }).catch(() => ({ data: [] })),
@@ -66,7 +122,7 @@ export default function AdminDashboard() {
         placements: pl.data.length,
       });
     });
-  }, [token]);
+  }, [token, isAdmin]);
 
   const handleLogout = () => {
     logout();
@@ -99,46 +155,60 @@ export default function AdminDashboard() {
         {/* Hero */}
         <div>
           <h1 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">Dashboard</h1>
-          <p className="text-sm text-gray-500 font-medium mt-1">Manage all content for the ITM Gwalior website.</p>
+          <p className="text-sm text-gray-500 font-medium mt-1">
+            {isAdmin
+              ? 'Manage all content for the ITM Gwalior website.'
+              : 'Edit the sections you have access to.'}
+          </p>
         </div>
 
-        {/* AI Agent knowledge sync — one-click re-index after edits */}
-        <AgentKnowledgePanel />
+        {/* AI Agent knowledge sync — admin-only (global reindex affects whole site) */}
+        {isAdmin && <AgentKnowledgePanel />}
 
-        {/* Stats grid */}
-        <div>
-          <h2 className="text-[11px] font-black uppercase tracking-widest text-gray-400 mb-4">Overview</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <StatCard icon={GraduationCap} label="Faculty Members"  value={stats.faculty}     color="bg-gradient-to-br from-[#800000] to-[#3e0202]" to="/admin/faculty" />
-            <StatCard icon={Users}         label="Students"          value={stats.students}    color="bg-gradient-to-br from-indigo-500 to-indigo-700"  to="/admin/students" />
-            <StatCard icon={Calendar}      label="TAP Events"        value={stats.events}      color="bg-gradient-to-br from-emerald-500 to-teal-700"    to="/admin/tap" />
-            <StatCard icon={Music}         label="PAC Events"        value={stats.pac}         color="bg-gradient-to-br from-amber-500 to-orange-600"    to="/admin/pac" />
-            <StatCard icon={Image}         label="Placement Logos"   value={stats.placements}  color="bg-gradient-to-br from-rose-500 to-pink-700"       to="/admin/placements" />
+        {/* Stats grid — admins only; editors don't need global counts */}
+        {isAdmin && visibleStatCards.length > 0 && (
+          <div>
+            <h2 className="text-[11px] font-black uppercase tracking-widest text-gray-400 mb-4">Overview</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {visibleStatCards.map((c) => (
+                <StatCard
+                  key={c.key}
+                  icon={c.icon}
+                  label={c.label}
+                  value={stats[c.statKey]}
+                  color={c.color}
+                  to={c.to}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Quick actions */}
+        {/* Quick actions — filtered by scope */}
         <div>
-          <h2 className="text-[11px] font-black uppercase tracking-widest text-gray-400 mb-4">Manage Sections</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <ActionCard icon={GraduationCap} label="Faculty"       desc="Add, view and remove faculty members by department."     to="/admin/faculty"     accent="bg-gradient-to-br from-[#800000] to-[#3e0202]" />
-            <ActionCard icon={Users}         label="Students"      desc="Register students, filter by year and department."       to="/admin/students"    accent="bg-gradient-to-br from-indigo-500 to-indigo-700" />
-            <ActionCard icon={Calendar}      label="TAP Events"    desc="Post upcoming campus drives, internships and talks."     to="/admin/tap"         accent="bg-gradient-to-br from-emerald-500 to-teal-700" />
-            <ActionCard icon={Music}         label="PAC Events"    desc="Upload cultural event highlights with gallery images."   to="/admin/pac"         accent="bg-gradient-to-br from-amber-500 to-orange-600" />
-            <ActionCard icon={Image}         label="Placements"    desc="Upload recruiter logos shown on the placements page."   to="/admin/placements"  accent="bg-gradient-to-br from-rose-500 to-pink-700" />
-            <ActionCard icon={ShieldCheck}   label="Users & Scopes" desc="Create scoped editors (CS dept, placement cell, etc.)." to="/admin/users"      accent="bg-gradient-to-br from-violet-500 to-fuchsia-700" />
-            <ActionCard icon={FileText}      label="Pages & SEO"   desc="Edit page sections + meta title/description/OG image."  to="/admin/pages"      accent="bg-gradient-to-br from-sky-500 to-blue-700" />
-            <ActionCard icon={FilePlus2}     label="Create New Page" desc="Add a brand-new page to any section — Departments, About, Clubs, Research, Custom URL." to="/admin/pages/new" accent="bg-gradient-to-br from-amber-500 to-rose-600" />
-            <ActionCard icon={SettingsIcon}  label="Site Settings"  desc="Logo, brand color, contact, social, default SEO."        to="/admin/settings"   accent="bg-gradient-to-br from-slate-500 to-slate-700" />
-            <ActionCard icon={ImageIcon}     label="Media Library"  desc="Upload & manage images, PDFs and brochures."             to="/admin/media"      accent="bg-gradient-to-br from-fuchsia-500 to-purple-700" />
-            <ActionCard icon={Building2}     label="Departments"    desc="CS / ECE / IT / CE / ME / MBA / ESH — HoD, faculty, labs." to="/admin/departments" accent="bg-gradient-to-br from-emerald-500 to-teal-700" />
-            <ActionCard icon={Briefcase}     label="Placement Cell" desc="Recruiters, TAP team, services, MoUs, testimonials, events." to="/admin/placements-cell" accent="bg-gradient-to-br from-orange-500 to-red-700" />
-            <ActionCard icon={FlaskConical}  label="Research Suite" desc="Focus areas, publications, books, patents, journal, conferences, FDPs." to="/admin/research" accent="bg-gradient-to-br from-cyan-500 to-blue-700" />
-            <ActionCard icon={CalendarDays}  label="Events & Notices" desc="Events, clubs/cells, notices, ticker announcements."          to="/admin/events"  accent="bg-gradient-to-br from-emerald-500 to-green-700" />
-            <ActionCard icon={Images}        label="Gallery"         desc="Categories + multi-image upload + captions + videos."         to="/admin/gallery" accent="bg-gradient-to-br from-pink-500 to-fuchsia-700" />
-            <ActionCard icon={Inbox}         label="Leads & Inbox"   desc="Admission leads, contact, grievance, job applications."        to="/admin/leads"   accent="bg-gradient-to-br from-yellow-500 to-orange-700" />
-            <ActionCard icon={Scale}         label="Compliance · Alumni · About" desc="NAAC, NIRF, committees, board, officials, alumni." to="/admin/compliance" accent="bg-gradient-to-br from-teal-500 to-cyan-700" />
-          </div>
+          <h2 className="text-[11px] font-black uppercase tracking-widest text-gray-400 mb-4">
+            {isAdmin ? 'Manage Sections' : 'Your Sections'}
+          </h2>
+          {visibleActionCards.length === 0 ? (
+            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-dashed border-gray-200 dark:border-gray-700 p-8 text-center">
+              <p className="text-sm text-gray-500 font-medium">
+                You don't have access to any sections yet. Ask a super admin to grant you scopes.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {visibleActionCards.map((c) => (
+                <ActionCard
+                  key={c.key}
+                  icon={c.icon}
+                  label={c.label}
+                  desc={c.desc}
+                  to={c.to}
+                  accent={c.accent}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
       </main>
