@@ -64,22 +64,6 @@ export const UG_PROGRAMS = [
     deptPath: "/cyber-security",
   },
   {
-    id: "btech-iot",
-    code: "B.TECH",
-    name: "CS Engineering — Internet of Things",
-    short: "IoT",
-    seats: 60,
-    duration: "4 Years",
-    semesters: 8,
-    eligibility: "10+2 with PCM (Min. 45% Gen / 40% SC/ST/OBC)",
-    selection: "JEE Main or 12th merit via DTE Bhopal counselling",
-    accent: "from-teal-500 to-cyan-700",
-    icon: "Globe",
-    tags: ["Emerging Tech", "Embedded + Cloud"],
-    careers: ["IoT Engineer", "Embedded Systems", "Edge Computing", "Robotics"],
-    deptPath: "/department/cse/iot",
-  },
-  {
     id: "btech-it",
     code: "B.TECH",
     name: "Information Technology",
@@ -148,7 +132,7 @@ export const UG_PROGRAMS = [
     code: "B.TECH",
     name: "Chemical Engineering",
     short: "ChE",
-    seats: 30,
+    seats: 15,
     duration: "4 Years",
     semesters: 8,
     eligibility: "10+2 with PCM (Min. 45% Gen / 40% SC/ST/OBC)",
@@ -347,7 +331,7 @@ export const COUNSELLORS = [
     icon: "🔬",
   },
   {
-    programme: "MCA Admissions",
+    programme: "MCA/BCA Admissions",
     name: "Mrs. Archana Tomar",
     phone: "+91-9755285163",
     email: "admission@itmgoi.in",
@@ -361,7 +345,7 @@ export const COUNSELLORS = [
     icon: "📈",
   },
   {
-    programme: "MBA Admissions",
+    programme: "BBA Admissions",
     name: "Dr. Prashant Sharma",
     phone: "+91-9977213188",
     email: "admission@itmgoi.in",
@@ -409,9 +393,8 @@ export const SELECTION_PROCESS = [
 
 // Quota mix (DTE M.P. counselling) — approximations from public DTE info
 export const QUOTAS = [
-  { name: "Madhya Pradesh State", pct: 85, note: "DTE Bhopal counselling on JEE / 12th merit" },
-  { name: "All India Quota (AIQ)", pct: 10, note: "Open to candidates from other states via DTE" },
-  { name: "Management / Institute", pct: 5, note: "Direct admission for vacant seats" },
+  { name: "Madhya Pradesh State", pct: 95, note: "DTE Bhopal counselling on JEE / 12th merit" },
+  { name: "All India Quota (AIQ)", pct: 5, note: "Open to candidates from other states via DTE" },
 ];
 
 // Approximate fee components — student must verify with admission office for final figures

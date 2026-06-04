@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   ArrowUpRight, Sparkles, Code2, Network, RadioTower, Building2,
-  BookOpen, Brain, ShieldCheck, Cloud, BarChart3, Wifi, Rocket,
+  BookOpen, Brain, ShieldCheck, Cloud, BarChart3, Rocket,
 } from "lucide-react";
 import { usePublicDepartments } from "../hooks/usePublicDepartments";
 
@@ -70,7 +70,6 @@ const EMERGING = [
   { name: "Cyber Security",    Icon: ShieldCheck,  path: "/cyber-security" },
   { name: "Cloud Computing",   Icon: Cloud,        path: "/cloud-computing" },
   { name: "Data Science",      Icon: BarChart3,    path: "/emerging-branches" },
-  { name: "IoT",               Icon: Wifi,         path: "/emerging-branches" },
 ];
 
 // Codes treated as "emerging" specialisations — rendered inside the small

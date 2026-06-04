@@ -42,7 +42,6 @@ import {
   ADMISSION_FAQ,
   SELECTION_PROCESS,
   QUOTAS,
-  FEE_COMPONENTS,
   UG_PROGRAMS,
   PG_PROGRAMS,
 } from "../data/admissions_data";
@@ -80,6 +79,18 @@ function ProgramIcon({ name, size = 28, className = "", wrapClass = "" }) {
   return <Icon size={size} className={className} strokeWidth={1.8} />;
 }
 
+// ─── Programme-wise fee detail cards ─────────────────────────────────
+// Drop the matching image file at `frontend/public/images/fees/<id>.jpeg`
+// to enable a programme. Cards with `image: null` show a placeholder.
+const PROGRAMME_FEE_CARDS = [
+  { id: "btech", label: "B.Tech", image: "/images/fees/btech.jpeg" },
+  { id: "bba",   label: "BBA",    image: null },
+  { id: "bca",   label: "BCA",    image: null },
+  { id: "mtech", label: "M.Tech", image: null },
+  { id: "mca",   label: "MCA",    image: "/images/fees/mca.jpeg" },
+  { id: "mba",   label: "MBA",    image: "/images/fees/mba.jpeg" },
+];
+
 // ─── Eligibility wizard logic ────────────────────────────────────────
 function matchPrograms({ level, stream, percent, category }) {
   const minPct = category === "general" ? 45 : 40;
@@ -108,18 +119,9 @@ export default function SeekAdmission() {
   const [wiz, setWiz] = useState({ level: "UG", stream: "PCM", percent: 75, category: "general" });
   const matches = useMemo(() => matchPrograms(wiz), [wiz]);
 
-  // Fee estimator state
-  const [feeChoice, setFeeChoice] = useState({ programme: "btech", hostel: true, years: 4 });
-  const feeTotal = useMemo(() => {
-    const programme = feeChoice.programme;
-    const tuitionPerYear = programme === "btech" ? 95000 : 80000;
-    const hostelPerYear = feeChoice.hostel ? 65000 : 0;
-    const examPerYear = 8000;
-    const oneTime = 10000;
-    return tuitionPerYear * feeChoice.years + hostelPerYear * feeChoice.years + examPerYear * feeChoice.years + oneTime;
-  }, [feeChoice]);
-
-  const formatINR = (n) => `₹ ${n.toLocaleString("en-IN")}`;
+  // Fee viewer state
+  const [feeProgramme, setFeeProgramme] = useState("btech");
+  const activeFeeCard = PROGRAMME_FEE_CARDS.find((p) => p.id === feeProgramme);
 
   const programmes = ["All", ...new Set(COUNSELLORS.map((c) => c.programme))];
   const filteredCounsellors =
@@ -262,7 +264,7 @@ export default function SeekAdmission() {
                 <div className="flex flex-col gap-2">
                   {wiz.level === "UG"
                     ? [
-                        { id: "PCM", label: "10+2 with Physics, Chem, Math" },
+                        { id: "PCM", label: "10+2 with Physics, Chemistry, Math" },
                         { id: "any-stream", label: "10+2 any stream (BBA / BCA)" },
                       ].map((s) => (
                         <button
@@ -294,28 +296,6 @@ export default function SeekAdmission() {
                           <div className="text-sm font-black text-[#1a0606] dark:text-white">{s.label}</div>
                         </button>
                       ))}
-                </div>
-              </div>
-
-              {/* Percent slider */}
-              <div className="mb-6">
-                <div className="flex items-center justify-between mb-3">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-[#800000]">
-                    {wiz.level === "UG" ? "Class 12th %" : "Graduation %"}
-                  </label>
-                  <span className="text-2xl font-black tracking-tighter text-[#800000]">{wiz.percent}%</span>
-                </div>
-                <input
-                  type="range"
-                  min="30"
-                  max="100"
-                  value={wiz.percent}
-                  onChange={(e) => setWiz({ ...wiz, percent: Number(e.target.value) })}
-                  className="w-full accent-[#800000]"
-                />
-                <div className="flex justify-between text-[9px] uppercase tracking-widest font-bold text-gray-400 mt-1">
-                  <span>30%</span>
-                  <span>100%</span>
                 </div>
               </div>
 
@@ -615,107 +595,77 @@ export default function SeekAdmission() {
         </AnimatePresence>
       </section>
 
-      {/* ─────────── FEE ESTIMATOR ─────────── */}
+      {/* ─────────── FEE DETAILS BY PROGRAMME ─────────── */}
       <section id="fees" className="bg-gray-50 dark:bg-gray-900/30 py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 max-w-2xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-50 dark:bg-gray-800 border border-amber-200 dark:border-gray-700 mb-3">
               <Calculator size={12} className="text-amber-700 dark:text-amber-400" />
               <span className="text-[10px] font-black uppercase tracking-[0.25em] text-amber-700">
-                Fee Estimator
+                Fee Details 2026-27
               </span>
             </div>
             <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
-              Plan your total spend in 10 seconds.
+              Fee structure by programme.
             </h2>
             <p className="text-xs text-gray-500 mt-3 font-medium">
-              Indicative figures · final fees vary by programme & year · confirm with admission office.
+              Pick a programme to view its complete 2026-27 fee breakdown.
             </p>
           </div>
 
           <div className="grid lg:grid-cols-12 gap-6">
-            <div className="lg:col-span-5">
-              <div className="bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-xl p-7">
-
-                <div className="mb-5">
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-[#800000] mb-3">
-                    Programme
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { id: "btech", label: "B.Tech" },
-                      { id: "mtech", label: "M.Tech" },
-                      { id: "mba", label: "MBA" },
-                    ].map((p) => (
-                      <button
-                        key={p.id}
-                        onClick={() => setFeeChoice({ ...feeChoice, programme: p.id, years: p.id === "btech" ? 4 : 2 })}
-                        className={`py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition ${
-                          feeChoice.programme === p.id ? "bg-[#800000] text-white shadow" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                        }`}
-                      >{p.label}</button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mb-5">
-                  <label className="block text-[10px] font-black uppercase tracking-widest text-[#800000] mb-3">
-                    Duration · {feeChoice.years} years
-                  </label>
-                  <input
-                    type="range"
-                    min={feeChoice.programme === "btech" ? 3 : 1}
-                    max={feeChoice.programme === "btech" ? 4 : 2}
-                    value={feeChoice.years}
-                    onChange={(e) => setFeeChoice({ ...feeChoice, years: Number(e.target.value) })}
-                    className="w-full accent-[#800000]"
-                  />
-                </div>
-
-                <label className="flex items-center gap-3 p-3 bg-rose-50 dark:bg-gray-800 rounded-2xl cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={feeChoice.hostel}
-                    onChange={(e) => setFeeChoice({ ...feeChoice, hostel: e.target.checked })}
-                    className="w-5 h-5 accent-[#800000]"
-                  />
-                  <div className="flex-1">
-                    <div className="text-sm font-black text-[#1a0606] dark:text-white">Include hostel + mess</div>
-                    <div className="text-[10px] text-gray-500 font-medium">₹ 65,000 / year</div>
-                  </div>
+            <div className="lg:col-span-4">
+              <div className="bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-xl p-6 lg:sticky lg:top-32">
+                <label className="block text-[10px] font-black uppercase tracking-widest text-[#800000] mb-4">
+                  Programme
                 </label>
+                <div className="grid grid-cols-3 gap-2.5">
+                  {PROGRAMME_FEE_CARDS.map((p) => (
+                    <button
+                      key={p.id}
+                      onClick={() => setFeeProgramme(p.id)}
+                      className={`py-5 rounded-2xl text-xs font-black uppercase tracking-widest transition border-2 ${
+                        feeProgramme === p.id
+                          ? "bg-[#800000] text-white border-[#800000] shadow-lg"
+                          : "bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-transparent hover:border-[#800000]/30 hover:bg-rose-50 dark:hover:bg-gray-700"
+                      }`}
+                    >{p.label}</button>
+                  ))}
+                </div>
+                <p className="text-[10px] text-gray-500 mt-5 font-medium leading-relaxed">
+                  Figures are for the 2026-27 session. For the most current structure, contact the admission office.
+                </p>
               </div>
             </div>
 
-            <div className="lg:col-span-7">
-              <div className="relative overflow-hidden bg-gradient-to-br from-[#1a0606] via-[#3e0202] to-[#800000] text-white rounded-3xl shadow-2xl p-8">
-                <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-amber-500/30 blur-2xl"></div>
-
-                <div className="relative">
-                  <div className="text-[10px] font-black uppercase tracking-widest text-amber-300 mb-2">Estimated Total</div>
-                  <div className="text-5xl md:text-6xl font-black tracking-[-0.04em] mb-1">
-                    {formatINR(feeTotal)}
+            <div className="lg:col-span-8">
+              <div className="relative overflow-hidden bg-gradient-to-br from-[#1a0606] via-[#3e0202] to-[#800000] text-white rounded-3xl shadow-2xl p-4 sm:p-6 min-h-[500px] flex items-center justify-center">
+                <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full bg-amber-500/30 blur-2xl pointer-events-none"></div>
+                {activeFeeCard?.image ? (
+                  <img
+                    src={activeFeeCard.image}
+                    alt={`${activeFeeCard.label} fee details for 2026-27`}
+                    className="relative w-full max-w-[760px] rounded-2xl shadow-2xl bg-white"
+                  />
+                ) : (
+                  <div className="relative text-center p-8 max-w-md">
+                    <div className="text-6xl mb-4">📄</div>
+                    <div className="text-[10px] font-black uppercase tracking-widest text-amber-300 mb-2">
+                      {activeFeeCard?.label} · Fee Details
+                    </div>
+                    <h3 className="text-2xl font-black tracking-tight mb-3">Available on request</h3>
+                    <p className="text-sm text-rose-100/80 font-medium leading-relaxed mb-5">
+                      The detailed fee brochure for {activeFeeCard?.label} is shared by the admission office.
+                      Call or write to us and we&apos;ll send it across.
+                    </p>
+                    <a
+                      href="tel:+917773005065"
+                      className="inline-flex items-center gap-2 px-5 py-3 bg-white text-[#800000] rounded-full text-[11px] font-black uppercase tracking-widest hover:scale-[1.03] transition"
+                    >
+                      Call Admissions
+                    </a>
                   </div>
-                  <div className="text-xs text-rose-100/70 font-medium mb-6">
-                    Over {feeChoice.years} year{feeChoice.years > 1 ? "s" : ""} ·{" "}
-                    {feeChoice.hostel ? "with" : "without"} hostel · indicative
-                  </div>
-
-                  <div className="space-y-2.5 pt-6 border-t border-white/10">
-                    {FEE_COMPONENTS.map((c) => (
-                      <div key={c.item} className="flex items-center justify-between text-sm">
-                        <span className="text-rose-100/80 font-medium">{c.item}</span>
-                        <span className="font-black text-amber-200 tracking-tight">
-                          {feeChoice.programme === "btech" ? c.btech : feeChoice.programme === "mtech" ? c.mtech : c.mba}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-6 inline-flex items-center gap-2 px-3 py-2 bg-white/10 rounded-full text-[10px] uppercase tracking-widest font-black text-amber-300">
-                    💡 Scholarships can cover up to 100% — check eligibility
-                  </div>
-                </div>
+                )}
               </div>
             </div>
           </div>

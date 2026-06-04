@@ -123,7 +123,7 @@ const STREAM_GROUPS = {
   all: { label: "All Programmes", filter: () => true, accent: "from-rose-500 to-[#800000]" },
   computing: {
     label: "Computing & IT",
-    filter: (p) => ["btech-cse", "btech-aiml", "btech-ds", "btech-cy", "btech-iot", "btech-it", "bca"].includes(p.id),
+    filter: (p) => ["btech-cse", "btech-aiml", "btech-ds", "btech-cy", "btech-it", "bca"].includes(p.id),
     accent: "from-indigo-500 to-violet-700",
   },
   core: {

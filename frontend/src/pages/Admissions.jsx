@@ -15,10 +15,7 @@ import {
   ChevronLeft,
   Compass,
   Calendar,
-  TrendingUp,
-  Award,
   CheckCircle2,
-  Briefcase,
 } from "lucide-react";
 import {
   UG_PROGRAMS,
@@ -34,7 +31,7 @@ function recommend({ level, interest }) {
   const all = level === "UG" ? UG_PROGRAMS : PG_PROGRAMS;
   if (level === "UG") {
     const map = {
-      computing: ["btech-cse", "btech-aiml", "btech-ds", "btech-cy", "btech-iot", "btech-it", "bca"],
+      computing: ["btech-cse", "btech-aiml", "btech-ds", "btech-cy", "btech-it", "bca"],
       core: ["btech-ece", "btech-me", "btech-ce", "btech-che"],
       business: ["bba"],
     };
@@ -65,9 +62,6 @@ const TIMELINE = [
 
 const FAST_FACTS = [
   { value: "DTE Bhopal", label: "Counselling Authority", icon: Compass },
-  { value: "₹0", label: "Application Fee", icon: TrendingUp },
-  { value: "30 min", label: "Application Time", icon: Briefcase },
-  { value: "24h", label: "Reply Window", icon: Award },
 ];
 
 export default function Admissions() {
@@ -146,7 +140,7 @@ export default function Admissions() {
               <div className="text-5xl sm:text-7xl md:text-8xl font-black tracking-[-0.04em] text-white leading-none mb-2">
                 {days}
               </div>
-              <div className="text-sm font-black uppercase tracking-widest text-rose-100/80">Days to 1 August 2026</div>
+              <div className="text-sm font-black uppercase tracking-widest text-rose-100/80">Days to 17 August 2026</div>
               <div className="grid grid-cols-4 gap-2 mt-5 pt-5 border-t border-white/10">
                 {ADMISSION_HIGHLIGHTS.slice(0, 4).map((h) => (
                   <div key={h.label} className="text-center">
@@ -162,7 +156,7 @@ export default function Admissions() {
 
       {/* ── FAST FACTS RIBBON ────────────────────────────── */}
       <section className="border-y border-rose-100 dark:border-gray-800 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4 divide-x divide-rose-100 dark:divide-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-center">
           {FAST_FACTS.map((f) => (
             <div key={f.label} className="p-5 flex items-center gap-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#800000] to-[#5a0000] text-white flex items-center justify-center shrink-0">
@@ -386,7 +380,7 @@ export default function Admissions() {
                 {wiz.step === 2 && (
                   <div className="grid sm:grid-cols-3 gap-3">
                     {[
-                      { id: "computing", label: "Computing & Software", desc: "CSE, IT, AI/ML, Data Science, Cyber, IoT, MCA", icon: "💻" },
+                      { id: "computing", label: "Computing & Software", desc: "CSE, IT, AI/ML, Data Science, Cyber, MCA", icon: "💻" },
                       { id: "core", label: "Core Engineering", desc: "ECE, Mechanical, Civil, Chemical, VLSI", icon: "⚙️" },
                       { id: "business", label: "Business & Management", desc: "BBA, MBA (Marketing/Finance/HR)", icon: "📈" },
                     ].map((o) => (

@@ -33,17 +33,6 @@ const branches = [
     path: '/department/cse/data-science',
   },
   {
-    id: 'iot',
-    name: 'Internet of Things',
-    icon: '🌐',
-    color: 'from-cyan-500 to-teal-600',
-    shadowColor: 'shadow-teal-900/30',
-    description: 'Explore the interconnected world of smart devices and systems. Build expertise in sensor networks, embedded systems, cloud computing, and IoT application development.',
-    highlights: ['Embedded Systems & Sensors', 'IoT Protocols & Communication', 'Edge & Cloud Computing', 'Smart City Applications', 'Industrial IoT', 'Wearable Technology'],
-    career: ['IoT Developer', 'Embedded Systems Engineer', 'IoT Solutions Architect', 'Smart Systems Designer', 'Automation Engineer'],
-    path: '/department/cse/iot',
-  },
-  {
     id: 'aiml',
     name: 'AI & Machine Learning',
     icon: '🤖',

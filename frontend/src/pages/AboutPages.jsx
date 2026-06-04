@@ -325,7 +325,6 @@ export function DirectorMessagePage() {
 const UG_PROGRAMMES = [
   { spec: "Computer Science Engineering",           seats: 240, dur: "4 years" },
   { spec: "CSE — AI & Machine Learning",             seats: 90,  dur: "4 years" },
-  { spec: "CSE — IoT",                                seats: 60,  dur: "4 years" },
   { spec: "CSE — Data Science",                       seats: 90,  dur: "4 years" },
   { spec: "CSE — Cyber Security",                    seats: 30,  dur: "4 years" },
   { spec: "Information Technology",                  seats: 120, dur: "4 years" },
