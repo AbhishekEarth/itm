@@ -41,7 +41,11 @@ function splitHeadline(text) {
 
 export default function Hero() {
   const { data } = usePublicHome();
-  const hero = data?.sections?.hero?.payload ?? FALLBACK_HERO;
+  // Defensive merge: API may return `payload: {}` for a freshly-seeded hero
+  // section with no edits yet. `??` would let that empty object through and
+  // every text field would render undefined. Spread the fallback first so
+  // any API field present takes precedence, but the rest stay populated.
+  const hero = { ...FALLBACK_HERO, ...(data?.sections?.hero?.payload ?? {}) };
 
   const slides = useMemo(() => {
     const fromApi = (hero.slides || []).map(resolveImage).filter(Boolean);
