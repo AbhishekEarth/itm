@@ -412,7 +412,7 @@ export const ADMISSION_FAQ = [
   },
   {
     q: "Does ITM Gwalior accept management quota / direct admission?",
-    a: "Yes, a percentage of seats are filled through the institute-level off-campus process for students who did not appear in the state counselling. Contact the admission cell for the current quota and process.",
+    a: "No.",
   },
   {
     q: "Is hostel accommodation available?",
@@ -423,7 +423,7 @@ export const ADMISSION_FAQ = [
     a: "Yes. Merit scholarships, MP state scholarships (post-matric), and category-based scholarships are available. Submit income/category certificates with your application.",
   },
   {
-    q: "What is the average package and top recruiters?",
+    q: "Who is our top recruiters?",
     a: "ITM Gwalior has a 90%+ placement rate with recruiters like TCS, Infosys, Wipro, Capgemini, Cognizant, and many engineering and product companies. Visit the TAP page for full records.",
   },
   {

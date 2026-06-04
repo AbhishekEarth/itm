@@ -6,7 +6,7 @@ import { usePublicPagesList } from "../hooks/usePublicPagesList";
 
 const logo = "/images/ITMGOILogo.png";
 const NAACLogo = "/images/NAACLogo.png";
-const NBALogo = "/images/NBALogo.png";
+const NBALogo = "/images/NBALogo.jpeg";
 const YearsLogo = "/images/30years.png";
 
 const DEPT_LINKS = [
