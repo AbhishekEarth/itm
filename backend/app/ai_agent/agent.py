@@ -44,12 +44,12 @@ _GREETING_PATTERNS = [
 ]
 
 _GREETING_RESPONSES = {
-    "default": "## 👋 Hello! Welcome to ITM Gwalior Assistant!\n\nI'm here to help you with:\n- **Admissions** & **Fee Structure**\n- **Faculty** & **Departments**\n- **Placements** & **Training**\n- **Courses** & **Syllabus**\n- **Hostel** & **Campus Life**\n- **LMS/ERP** & **Examinations**\n- **Events** & **Notices**\n\nHow can I assist you today? 😊",
+    "default": "## 👋 Hi! I'm Saathi — your ITM Gwalior assistant!\n\nI'm here to help you with:\n- **Admissions** & **Fee Structure**\n- **Faculty** & **Departments**\n- **Placements** & **Training**\n- **Courses** & **Syllabus**\n- **Hostel** & **Campus Life**\n- **LMS/ERP** & **Examinations**\n- **Events** & **Notices**\n\nHow can I assist you today? 😊",
     "thanks": "You're welcome! 😊 Feel free to ask if you need any more help with ITM Gwalior information.",
     "bye": "Goodbye! 👋 Have a great day! Feel free to come back anytime you need help with ITM Gwalior.",
-    "morning": "Good Morning! 🌅 Welcome to ITM Gwalior Assistant. How can I help you today?",
-    "afternoon": "Good Afternoon! ☀️ Welcome to ITM Gwalior Assistant. How can I help you today?",
-    "evening": "Good Evening! 🌇 Welcome to ITM Gwalior Assistant. How can I help you today?",
+    "morning": "Good Morning! 🌅 I'm Saathi, your ITM Gwalior assistant. How can I help you today?",
+    "afternoon": "Good Afternoon! ☀️ I'm Saathi, your ITM Gwalior assistant. How can I help you today?",
+    "evening": "Good Evening! 🌇 I'm Saathi, your ITM Gwalior assistant. How can I help you today?",
 }
 
 

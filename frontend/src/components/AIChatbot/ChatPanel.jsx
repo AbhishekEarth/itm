@@ -7,7 +7,7 @@ import { aiAgentAPI } from '../../api/ai-agent';
 
 const WELCOME_MESSAGE = {
   role: 'assistant',
-  content: `## 🏛️ Welcome to ITM Gwalior Assistant!
+  content: `## 🏛️ Hi, I'm Saathi — your ITM Gwalior assistant!
 
 I'm here to help you with information about:
 - **Admissions** & **Fee Structure**
@@ -200,7 +200,7 @@ const ChatPanel = ({ onClose, isOpen }) => {
                 <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-400 border-2 border-white rounded-full shadow-sm" />
               </div>
               <div>
-                <h3 className="font-bold text-white text-sm tracking-wide">ITM Assistant</h3>
+                <h3 className="font-bold text-white text-sm tracking-wide">Saathi</h3>
                 <p className="text-[11px] text-rose-200 font-medium flex items-center gap-1.5">
                   <span className="relative flex h-1.5 w-1.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
