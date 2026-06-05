@@ -16,8 +16,9 @@ const EMERGING_HOD_DEFAULTS = {
 
 // Default profile photo used until the admin uploads a personalised picture
 // via /admin/departments → AIML → HoD Profile → Upload photo.
+// Inline SVG silhouette — no external network call.
 const DEFAULT_HOD_PHOTO =
-  "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400&q=80";
+  "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f3f4f6'/%3E%3Ccircle cx='100' cy='80' r='32' fill='%239ca3af'/%3E%3Cpath d='M 40 200 C 40 140 70 130 100 130 C 130 130 160 140 160 200 Z' fill='%239ca3af'/%3E%3C/svg%3E";
 
 // ─── Branch Data ──────────────────────────────────────────────────────────────
 const branches = [
