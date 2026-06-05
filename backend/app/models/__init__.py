@@ -70,6 +70,7 @@ from app.models.research import (
 )
 from app.models.scope_preset import ScopePreset
 from app.models.user import AuditLog, LoginAttempt, RefreshToken, Scope, User, UserScope
+from app.models.whats_new import WhatsNewUpdate
 
 __all__ = [
     "AdmissionCounsellor",
@@ -143,4 +144,5 @@ __all__ = [
     "User",
     "UserScope",
     "Video",
+    "WhatsNewUpdate",
 ]

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   MessageCircle, Phone, Mail, GraduationCap, ChevronUp, Sparkles, X, Bell,
   Megaphone, Trophy, CalendarDays, BookOpen,
@@ -336,13 +337,13 @@ const FloatingSidebar = () => {
 
         {/* Footer */}
         <div className="px-4 py-3 border-t border-gray-100 dark:border-white/10 bg-gray-50 dark:bg-white/[0.03]">
-          <button
-            type="button"
+          <Link
+            to="/whats-new"
             onClick={() => setNotifOpen(false)}
-            className="w-full text-center text-[10px] font-black uppercase tracking-[0.25em] text-[#800000] dark:text-rose-300 hover:text-[#5a0000] transition-colors"
+            className="block w-full text-center text-[10px] font-black uppercase tracking-[0.25em] text-[#800000] dark:text-rose-300 hover:text-[#5a0000] transition-colors"
           >
             View all updates →
-          </button>
+          </Link>
         </div>
       </aside>
     </>

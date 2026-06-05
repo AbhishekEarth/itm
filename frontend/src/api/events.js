@@ -20,6 +20,7 @@ export const clubsApi = {
 export const eventsApi = crud('/events');
 export const noticesApi = crud('/notices');
 export const announcementsApi = crud('/announcements');
+export const whatsNewApi = crud('/whats-new');
 
 export const galleryApi = {
   listCategories: () => api.get('/gallery/categories').then((r) => r.data),
@@ -47,4 +48,5 @@ export const publicEventsApi = {
   gallery: () => api.get('/public/gallery').then((r) => r.data),
   galleryCategory: (slug) => api.get(`/public/gallery/${slug}`).then((r) => r.data),
   videos: (params = {}) => api.get('/public/videos', { params }).then((r) => r.data),
+  whatsNew: (params = {}) => api.get('/public/whats-new', { params }).then((r) => r.data),
 };

@@ -45,6 +45,7 @@ from app.routers import scope_presets as scope_presets_router
 from app.routers import seo as seo_router
 from app.routers import settings as settings_router
 from app.routers import users as users_router
+from app.routers import whats_new as whats_new_router
 
 # AI Agent / Chatbot
 _AI_AGENT_AVAILABLE = True
@@ -213,6 +214,8 @@ app.include_router(departments_router.router, prefix=settings.API_PREFIX)
 app.include_router(placements_router.router, prefix=settings.API_PREFIX)
 app.include_router(research_router.router, prefix=settings.API_PREFIX)
 app.include_router(clubs_router.router, prefix=settings.API_PREFIX)
+app.include_router(whats_new_router.router, prefix=settings.API_PREFIX)
+app.include_router(whats_new_router.public_router, prefix=settings.API_PREFIX)
 app.include_router(admissions_router.router, prefix=settings.API_PREFIX)
 app.include_router(compliance_router.router, prefix=settings.API_PREFIX)
 app.include_router(public_router.router, prefix=settings.API_PREFIX)

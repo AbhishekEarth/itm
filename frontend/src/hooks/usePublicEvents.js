@@ -41,3 +41,11 @@ export function usePublicClubs(params = {}) {
     staleTime: 5 * 60_000,
   });
 }
+
+export function usePublicWhatsNew(params = {}) {
+  return useQuery({
+    queryKey: ['public-whats-new', params],
+    queryFn: () => publicEventsApi.whatsNew(params),
+    staleTime: 60_000,
+  });
+}

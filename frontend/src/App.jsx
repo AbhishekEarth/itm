@@ -28,6 +28,7 @@ const AdminEvents      = lazy(() => import('./pages/admin/AdminEvents'));
 const AdminGallery     = lazy(() => import('./pages/admin/AdminGallery'));
 const AdminLeads       = lazy(() => import('./pages/admin/AdminLeads'));
 const AdminCompliance  = lazy(() => import('./pages/admin/AdminCompliance'));
+const AdminWhatsNew    = lazy(() => import('./pages/admin/AdminWhatsNew'));
 const ChangePassword   = lazy(() => import('./pages/admin/ChangePassword'));
 
 function AdminFallback() {
@@ -117,6 +118,7 @@ import ContactPage from "./pages/ContactPage";
 import OpenPositionsPage from "./pages/OpenPositionsPage";
 import DynamicPage from "./pages/DynamicPage";
 import QSiGauge from "./pages/QSiGauge";
+import WhatsNew from "./pages/WhatsNew";
 
 // Home page layout blocks — order/visibility are editable in live edit mode.
 const HOME_SECTIONS = [
@@ -276,6 +278,9 @@ function AppContent() {
           {/* QS i-gauge — hidden internal route, no nav entry */}
           <Route path="/qsi-gauge" element={<QSiGauge />} />
 
+          {/* What's New — public page (linked from FloatingSidebar drawer) */}
+          <Route path="/whats-new" element={<WhatsNew />} />
+
           {/* AUTH */}
           <Route path="/login" element={<Login />} />
           <Route path="/student/dashboard" element={<StudentRoute><StudentDashboard /></StudentRoute>} />
@@ -299,6 +304,7 @@ function AppContent() {
           <Route path="/admin/research" element={<ProtectedRoute><AdminResearch /></ProtectedRoute>} />
           <Route path="/admin/events" element={<ProtectedRoute><AdminEvents /></ProtectedRoute>} />
           <Route path="/admin/gallery" element={<ProtectedRoute><AdminGallery /></ProtectedRoute>} />
+          <Route path="/admin/whats-new" element={<ProtectedRoute><AdminWhatsNew /></ProtectedRoute>} />
           <Route path="/admin/leads" element={<ProtectedRoute><AdminLeads /></ProtectedRoute>} />
           <Route path="/admin/compliance" element={<ProtectedRoute><AdminCompliance /></ProtectedRoute>} />
           <Route path="/account/change-password" element={<ProtectedRoute allowPasswordChange><ChangePassword /></ProtectedRoute>} />

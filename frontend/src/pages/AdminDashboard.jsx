@@ -6,7 +6,7 @@ import {
   GraduationCap, Users, Calendar, Image, Music,
   LogOut, ChevronRight, LayoutDashboard, Plus, ShieldCheck,
   Settings as SettingsIcon, FileText, ImageIcon, Building2, Briefcase, FlaskConical, CalendarDays, Images, Inbox, Scale,
-  FilePlus2
+  FilePlus2, Bell
 } from 'lucide-react';
 import AgentKnowledgePanel from '../components/admin/AgentKnowledgePanel';
 
@@ -70,6 +70,7 @@ const ACTION_CARDS = [
   { key: 'placements-cell',  icon: Briefcase,     label: 'Placement Cell',          desc: 'Recruiters, TAP team, services, MoUs, testimonials, events.', to: '/admin/placements-cell', accent: 'bg-gradient-to-br from-orange-500 to-red-700',    scopePrefix: 'placements' },
   { key: 'research',         icon: FlaskConical,  label: 'Research Suite',          desc: 'Focus areas, publications, books, patents, journal, conferences, FDPs.', to: '/admin/research',  accent: 'bg-gradient-to-br from-cyan-500 to-blue-700',     scopePrefix: 'research' },
   { key: 'events',           icon: CalendarDays,  label: 'Events & Notices',        desc: 'Events, clubs/cells, notices, ticker announcements.',      to: '/admin/events',           accent: 'bg-gradient-to-br from-emerald-500 to-green-700', scopePrefix: 'events' },
+  { key: 'whats-new',        icon: Bell,          label: "What's New",              desc: 'Photo updates surfaced on /whats-new and the sidebar drawer.', to: '/admin/whats-new',    accent: 'bg-gradient-to-br from-rose-500 to-[#800000]',    scopePrefix: 'notices' },
   { key: 'gallery',          icon: Images,        label: 'Gallery',                 desc: 'Categories + multi-image upload + captions + videos.',    to: '/admin/gallery',          accent: 'bg-gradient-to-br from-pink-500 to-fuchsia-700',  scopePrefix: 'gallery' },
   { key: 'leads',            icon: Inbox,         label: 'Leads & Inbox',           desc: 'Admission leads, contact, grievance, job applications.',  to: '/admin/leads',            accent: 'bg-gradient-to-br from-yellow-500 to-orange-700', scopePrefix: 'admissions' },
   { key: 'compliance',       icon: Scale,         label: 'Compliance · Alumni · About', desc: 'NAAC, NIRF, committees, board, officials, alumni.',  to: '/admin/compliance',       accent: 'bg-gradient-to-br from-teal-500 to-cyan-700',     scopePrefix: 'compliance' },
