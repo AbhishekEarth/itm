@@ -8,6 +8,7 @@
     { "source": "/robots.txt",  "destination": "/api/public/robots.txt"  },
     { "source": "/api/:path*",  "destination": "https://itm-production-backend-719701893212.asia-south1.run.app/api/:path*" },
     { "source": "/uploads/:path*", "destination": "https://itm-production-backend-719701893212.asia-south1.run.app/uploads/:path*" },
+    { "source": "/QSi_gauge/:path*", "destination": "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/QSi_gauge/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [

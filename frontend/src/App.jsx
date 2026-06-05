@@ -116,6 +116,7 @@ import {
 import ContactPage from "./pages/ContactPage";
 import OpenPositionsPage from "./pages/OpenPositionsPage";
 import DynamicPage from "./pages/DynamicPage";
+import QSiGauge from "./pages/QSiGauge";
 
 // Home page layout blocks — order/visibility are editable in live edit mode.
 const HOME_SECTIONS = [
@@ -271,6 +272,9 @@ function AppContent() {
           <Route path="/central-library" element={<CentralLibrary />} />
           <Route path="/emerging-branches" element={<EmergingBranches />} />
           <Route path="/department" element={<DepartmentPage />} />
+
+          {/* QS i-gauge — hidden internal route, no nav entry */}
+          <Route path="/qsi-gauge" element={<QSiGauge />} />
 
           {/* AUTH */}
           <Route path="/login" element={<Login />} />
