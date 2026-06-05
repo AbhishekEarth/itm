@@ -63,8 +63,17 @@ const FloatingSidebar = () => {
     setMobileOpen(false);
   };
 
+  const freshCount = NOTIFICATIONS.filter((n) => n.fresh).length;
+
   const actions = [
-    { icon: <Bell size={20} />, label: "What's New", onClick: openNotifications, color: "hover:text-rose-400", badge: true },
+    {
+      icon: <Bell size={22} className="animate-wiggle" strokeWidth={2.4} />,
+      label: "What's New",
+      onClick: openNotifications,
+      color: "text-white",
+      featured: true,
+      count: freshCount,
+    },
     { icon: <MessageCircle size={20} />, label: "WhatsApp", link: "https://wa.me/917773005065", color: "hover:text-green-400" },
     { icon: <Phone size={20} />, label: "Call Us", link: "tel:+917773005065", color: "hover:text-blue-400" },
     { icon: <Mail size={20} />, label: "Inquiry", link: "/contact", color: "hover:text-amber-400" },
@@ -75,34 +84,65 @@ const FloatingSidebar = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const renderActionInner = (action) => (
-    <>
-      <span className="absolute right-full mr-4 px-3 py-1
-                       bg-slate-900 text-white text-[10px] font-bold tracking-widest uppercase
-                       rounded-md opacity-0 -translate-x-2
-                       group-hover:opacity-100 group-hover:translate-x-0
-                       transition-all duration-200 pointer-events-none whitespace-nowrap">
-        {action.label}
-      </span>
+  const renderActionInner = (action) => {
+    if (action.featured) {
+      return (
+        <>
+          {/* Outward ping ring — draws the eye */}
+          <span className="absolute inset-0 rounded-full bg-rose-400/60 animate-ping" />
 
-      <div className={`transition-colors duration-300 ${action.color}`}>
-        {action.icon}
-      </div>
+          {/* "NEW · N" chip — always visible, sits to the left of the button */}
+          <span className="absolute right-full mr-3 flex items-center gap-1 px-2 py-1
+                           bg-gradient-to-r from-amber-300 to-amber-400 text-[#3e0202]
+                           text-[9px] font-black uppercase tracking-[0.18em]
+                           rounded-md shadow-lg whitespace-nowrap select-none
+                           ring-1 ring-amber-200/80">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-rose-600 animate-pulse" />
+            {action.count > 0 ? `${action.count} New` : "New"}
+          </span>
 
-      {action.badge && (
-        <span className="absolute top-1 right-1 flex items-center justify-center w-2.5 h-2.5">
-          <span className="absolute inset-0 rounded-full bg-rose-500 animate-ping opacity-75" />
-          <span className="relative inline-block w-2 h-2 rounded-full bg-rose-500" />
+          <div className={`relative ${action.color}`}>
+            {action.icon}
+          </div>
+        </>
+      );
+    }
+    return (
+      <>
+        <span className="absolute right-full mr-4 px-3 py-1
+                         bg-slate-900 text-white text-[10px] font-bold tracking-widest uppercase
+                         rounded-md opacity-0 -translate-x-2
+                         group-hover:opacity-100 group-hover:translate-x-0
+                         transition-all duration-200 pointer-events-none whitespace-nowrap">
+          {action.label}
         </span>
-      )}
-    </>
-  );
 
-  const desktopBtnClass = `group relative flex items-center justify-center w-12 h-12
-                           bg-slate-900/90 dark:bg-white/10 backdrop-blur-xl
-                           text-slate-300 border border-white/10
-                           rounded-full shadow-2xl transition-all duration-300
-                           hover:w-14 hover:rounded-2xl hover:-translate-x-1`;
+        <div className={`transition-colors duration-300 ${action.color}`}>
+          {action.icon}
+        </div>
+
+        {action.badge && (
+          <span className="absolute top-1 right-1 flex items-center justify-center w-2.5 h-2.5">
+            <span className="absolute inset-0 rounded-full bg-rose-500 animate-ping opacity-75" />
+            <span className="relative inline-block w-2 h-2 rounded-full bg-rose-500" />
+          </span>
+        )}
+      </>
+    );
+  };
+
+  const desktopBtnClass = (action) => action.featured
+    ? `group relative flex items-center justify-center w-14 h-14
+       bg-gradient-to-br from-[#a30000] via-[#800000] to-[#3e0202]
+       text-white border-2 border-amber-300/60
+       rounded-full shadow-2xl animate-glow-pulse
+       transition-transform duration-300
+       hover:scale-110 active:scale-95`
+    : `group relative flex items-center justify-center w-12 h-12
+       bg-slate-900/90 dark:bg-white/10 backdrop-blur-xl
+       text-slate-300 border border-white/10
+       rounded-full shadow-2xl transition-all duration-300
+       hover:w-14 hover:rounded-2xl hover:-translate-x-1`;
 
   return (
     <>
@@ -110,11 +150,11 @@ const FloatingSidebar = () => {
       <div className="hidden sm:flex fixed right-4 top-1/2 -translate-y-1/2 z-[100] flex-col gap-4 items-end">
         {actions.map((action, index) =>
           action.onClick ? (
-            <button key={index} type="button" onClick={action.onClick} className={desktopBtnClass}>
+            <button key={index} type="button" onClick={action.onClick} className={desktopBtnClass(action)}>
               {renderActionInner(action)}
             </button>
           ) : (
-            <a key={index} href={action.link} className={desktopBtnClass}>
+            <a key={index} href={action.link} className={desktopBtnClass(action)}>
               {renderActionInner(action)}
             </a>
           )
@@ -135,21 +175,30 @@ const FloatingSidebar = () => {
       {/* MOBILE — single FAB bottom-right that expands the actions */}
       <div className="sm:hidden fixed bottom-4 right-4 z-[100] flex flex-col items-end gap-3">
         {actions.map((action, index) => {
-          const pillClass = `relative flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full
-                       bg-slate-900/95 dark:bg-white/10 backdrop-blur-xl
+          const pillBase = `relative flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full
                        text-white text-[11px] font-bold tracking-widest uppercase
-                       border border-white/10 shadow-2xl
-                       transition-all duration-300
-                       ${mobileOpen
-                          ? 'opacity-100 translate-y-0 pointer-events-auto'
-                          : 'opacity-0 translate-y-4 pointer-events-none'}`;
+                       shadow-2xl transition-all duration-300`;
+          const pillVisibility = mobileOpen
+            ? 'opacity-100 translate-y-0 pointer-events-auto'
+            : 'opacity-0 translate-y-4 pointer-events-none';
+          const pillSkin = action.featured
+            ? `bg-gradient-to-r from-[#a30000] via-[#800000] to-[#3e0202]
+               border-2 border-amber-300/60 ring-2 ring-rose-400/30 animate-glow-pulse`
+            : `bg-slate-900/95 dark:bg-white/10 backdrop-blur-xl
+               border border-white/10`;
+          const pillClass = `${pillBase} ${pillSkin} ${pillVisibility}`;
           const inner = (
             <>
-              <span className={`flex items-center justify-center w-7 h-7 rounded-full bg-white/10 ${action.color}`}>
+              <span className={`flex items-center justify-center w-7 h-7 rounded-full ${action.featured ? 'bg-amber-300/20' : 'bg-white/10'} ${action.color}`}>
                 {action.icon}
               </span>
               {action.label}
-              {action.badge && (
+              {action.featured && (
+                <span className="ml-1 px-1.5 py-0.5 rounded-md bg-amber-300 text-[#3e0202] text-[8px] font-black tracking-[0.18em]">
+                  {action.count > 0 ? `${action.count} NEW` : "NEW"}
+                </span>
+              )}
+              {action.badge && !action.featured && (
                 <span className="flex items-center justify-center w-2 h-2 ml-1">
                   <span className="absolute w-2 h-2 rounded-full bg-rose-500 animate-ping opacity-75" />
                   <span className="relative w-1.5 h-1.5 rounded-full bg-rose-500" />

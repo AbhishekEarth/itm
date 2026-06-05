@@ -268,10 +268,10 @@ export default function TapPage() {
           {/* Animated stats grid */}
           <div className="lg:col-span-5 grid grid-cols-2 gap-3">
             {[
-              { v: 150, s: "+", l: "Recruiting Partners" },
-              { v: 80, s: "%+", l: "Placement Rate" },
-              { v: 45, s: "d", l: "Internship Programme" },
-              { v: 100, s: "%", l: "Placement Goal" },
+              { v: 91, s: "%", l: "Eligible Students Placed" },
+              { v: 45, s: " LPA", l: "Highest Package" },
+              { v: 6, s: " LPA", l: "Average Package" },
+              { v: 800, s: "+", l: "Companies Visited" },
             ].map((s, i) => (
               <motion.div
                 key={s.l}
