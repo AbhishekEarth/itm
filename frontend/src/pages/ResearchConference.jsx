@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import EditableText from "../components/admin/EditableText";
+import { usePublicConferences } from "../hooks/usePublicResearch";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Home,
@@ -74,6 +75,21 @@ const BROCHURE_URL = "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/C
 export default function ResearchConference() {
   const pageKey = useLocation().pathname;
   const [tab, setTab] = useState("about");
+  const { data: live } = usePublicConferences();
+  // The API returns multiple conferences — show the most recent one in the
+  // hero. Fall back to the bundled CONF block if nothing seeded yet.
+  const liveConf = live?.conferences?.[0];
+  const CONF_LIVE = liveConf
+    ? {
+        ...CONF,
+        name: liveConf.name || CONF.name,
+        theme: liveConf.theme || CONF.theme,
+        venue: liveConf.location || CONF.venue,
+        // dates aren't a single field on the API; keep bundled "dates" string
+        // until an admin adds start/end fields. Fall through to bundled.
+      }
+    : CONF;
+  const BROCHURE_LIVE = liveConf?.brochure || BROCHURE_URL;
 
   return (
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">
@@ -115,24 +131,24 @@ export default function ResearchConference() {
             <Sparkles size={12} /> Flagship Event · Hybrid Mode
           </span>
           <h1 className="text-2xl sm:text-5xl md:text-7xl font-black tracking-[-0.04em] leading-[0.95] mb-4">
-            <EditableText pageKey={pageKey} tkey="conf.title" as="span" value={CONF.name}>{CONF.name}</EditableText>
+            <EditableText pageKey={pageKey} tkey="conf.title" as="span" value={CONF_LIVE.name}>{CONF_LIVE.name}</EditableText>
           </h1>
           <p className="text-base md:text-xl text-rose-100/80 max-w-3xl leading-relaxed font-medium italic mb-6">
-            &ldquo;<EditableText pageKey={pageKey} tkey="conf.theme" as="span" multiline value={CONF.theme}>{CONF.theme}</EditableText>&rdquo;
+            &ldquo;<EditableText pageKey={pageKey} tkey="conf.theme" as="span" multiline value={CONF_LIVE.theme}>{CONF_LIVE.theme}</EditableText>&rdquo;
           </p>
           <div className="flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur border border-white/20 rounded-full text-xs font-black">
-              <Calendar size={12} /> {CONF.dates}
+              <Calendar size={12} /> {CONF_LIVE.dates}
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-300 text-[#1a0606] rounded-full text-xs font-black">
-              Early Bird · {CONF.earlyBird}
+              Early Bird · {CONF_LIVE.earlyBird}
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur border border-white/20 rounded-full text-xs font-black">
               <MapPin size={12} /> Gwalior, MP
             </span>
           </div>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href={`mailto:${CONF.submissionEmail}`} className="inline-flex items-center gap-2 bg-white text-[#800000] px-4 py-2.5 sm:px-6 sm:py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:scale-[1.02] transition-transform shadow-xl">
+            <a href={`mailto:${CONF_LIVE.submissionEmail}`} className="inline-flex items-center gap-2 bg-white text-[#800000] px-4 py-2.5 sm:px-6 sm:py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:scale-[1.02] transition-transform shadow-xl">
               Submit a paper <ArrowRight size={14} />
             </a>
             <a href="tel:+919977213188" className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/30 px-4 py-2.5 sm:px-6 sm:py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:bg-white/20">
@@ -168,16 +184,16 @@ export default function ResearchConference() {
                 <div className="space-y-5">
                   <div>
                     <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2 flex items-center gap-1.5"><MapPin size={11} /> Venue</div>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 font-medium leading-relaxed">{CONF.venue}</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 font-medium leading-relaxed">{CONF_LIVE.venue}</p>
                   </div>
                   <div>
                     <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2 flex items-center gap-1.5"><Users size={11} /> Organising Department</div>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 font-bold leading-relaxed">{CONF.organisingDept}</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 font-bold leading-relaxed">{CONF_LIVE.organisingDept}</p>
                   </div>
                   <div>
                     <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2 flex items-center gap-1.5"><Award size={11} /> Associated Bodies</div>
                     <div className="flex flex-wrap gap-2">
-                      {CONF.associatedBodies.map((b) => (
+                      {CONF_LIVE.associatedBodies.map((b) => (
                         <span key={b} className="text-[10px] font-black px-2.5 py-1 bg-rose-50 dark:bg-gray-800 text-[#800000] rounded-full">{b}</span>
                       ))}
                     </div>
@@ -186,13 +202,13 @@ export default function ResearchConference() {
               </div>
               <div className="bg-gradient-to-br from-amber-300 to-amber-500 text-[#1a0606] rounded-3xl p-4 sm:p-7 shadow-xl">
                 <div className="text-[10px] uppercase tracking-widest font-black mb-2">Paper Submission</div>
-                <a href={`mailto:${CONF.submissionEmail}`} className="text-base font-black break-all hover:underline mb-5 block">{CONF.submissionEmail}</a>
+                <a href={`mailto:${CONF_LIVE.submissionEmail}`} className="text-base font-black break-all hover:underline mb-5 block">{CONF_LIVE.submissionEmail}</a>
                 <div className="border-t border-[#1a0606]/20 pt-4">
                   <div className="text-[10px] uppercase tracking-widest font-black mb-1">Early Bird Deadline</div>
-                  <div className="text-2xl font-black tracking-tight">{CONF.earlyBird}</div>
+                  <div className="text-2xl font-black tracking-tight">{CONF_LIVE.earlyBird}</div>
                 </div>
                 <div className="border-t border-[#1a0606]/20 pt-4 mt-4">
-                  <a href={BROCHURE_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-[#1a0606] text-amber-300 px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-black transition-colors">
+                  <a href={BROCHURE_LIVE} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-[#1a0606] text-amber-300 px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-black transition-colors">
                     <ExternalLink size={11} /> Download Brochure PDF
                   </a>
                 </div>
@@ -288,8 +304,8 @@ export default function ResearchConference() {
             </p>
           </div>
           <div className="flex flex-col gap-3">
-            <a href={`mailto:${CONF.submissionEmail}`} className="bg-amber-300 text-[#1a0606] text-center font-black text-xs tracking-widest px-6 py-4 rounded-2xl hover:scale-[1.02] transition-transform inline-flex items-center justify-center gap-2">
-              <Mail size={13} /> Submit Paper · {CONF.submissionEmail}
+            <a href={`mailto:${CONF_LIVE.submissionEmail}`} className="bg-amber-300 text-[#1a0606] text-center font-black text-xs tracking-widest px-6 py-4 rounded-2xl hover:scale-[1.02] transition-transform inline-flex items-center justify-center gap-2">
+              <Mail size={13} /> Submit Paper · {CONF_LIVE.submissionEmail}
             </a>
             <a href="tel:+919977213188" className="bg-black/30 backdrop-blur text-white border border-white/30 text-center font-black text-xs tracking-widest px-6 py-4 rounded-2xl hover:bg-black/50 transition-colors inline-flex items-center justify-center gap-2">
               <Phone size={13} /> Call Dr. Prashant Sharma · +91-9977213188

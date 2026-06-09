@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import EditableText from "../components/admin/EditableText";
 import { motion } from "framer-motion";
+import { usePublicJournal } from "../hooks/usePublicResearch";
 import {
   Home,
   ChevronRight as Crumb,
@@ -69,6 +70,17 @@ const VOLUMES = [
 
 export default function ResearchJournal() {
   const pageKey = useLocation().pathname;
+  const { data: live } = usePublicJournal();
+  // API issues: { volume, issue, year, theme, cover, url }
+  // Fall back to bundled VOLUMES when admin hasn't seeded the DB.
+  const VOLUMES_LIVE = live?.issues?.length
+    ? live.issues.map((j, i) => ({
+        label: j.volume && j.issue ? `Vol ${j.volume}, Issue ${j.issue}` : (j.theme || `Issue ${i + 1}`),
+        period: j.theme || (j.year ? String(j.year) : ""),
+        url: j.url,
+        latest: i === 0,
+      }))
+    : VOLUMES;
   return (
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">
 
@@ -207,8 +219,8 @@ export default function ResearchJournal() {
           </h2>
         </div>
         <div className="grid sm:grid-cols-3 gap-4">
-          {VOLUMES.map((v) => (
-            <a key={v.label} href="https://iijisem.com" target="_blank" rel="noreferrer"
+          {VOLUMES_LIVE.map((v) => (
+            <a key={v.label} href={v.url || "https://iijisem.com"} target="_blank" rel="noreferrer"
               className={`group relative overflow-hidden rounded-3xl p-3 sm:p-6 hover:shadow-2xl transition-shadow ${v.latest ? "bg-gradient-to-br from-[#3e0202] to-[#800000] text-white" : "bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800"}`}>
               {v.latest && <span className="absolute top-4 right-4 text-[9px] uppercase tracking-widest font-black px-2 py-0.5 bg-amber-300 text-[#1a0606] rounded">Latest</span>}
               <Layers size={22} className={`mb-3 ${v.latest ? "text-amber-300" : "text-[#800000]"}`} />

@@ -193,13 +193,13 @@ export default function ResearchRDCell() {
   const RESEARCH_AREAS_LIVE = live?.focus_areas?.length ? live.focus_areas : RESEARCH_AREAS;
   const PUBLICATIONS_LIVE = live?.publications?.length
     ? live.publications.map((p) => ({ year: p.year, count: p.count, url: p.url }))
-    : PUBLICATIONS_LIVE;
+    : PUBLICATIONS;
   const BOOKS_LIVE = live?.books?.length
     ? live.books.map((b) => ({ year: b.year, url: b.url }))
-    : BOOKS_LIVE;
+    : BOOKS;
   const DOCUMENTS_LIVE = live?.policies?.length
-    ? live.policies.map((p) => ({ ...p, icon: DOCUMENTS_LIVE.find((d) => d.title === p.title)?.icon || Shield }))
-    : DOCUMENTS_LIVE;
+    ? live.policies.map((p) => ({ ...p, icon: DOCUMENTS.find((d) => d.title === p.title)?.icon || Shield }))
+    : DOCUMENTS;
 
   return (
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">

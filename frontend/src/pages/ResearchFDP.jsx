@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import EditableText from "../components/admin/EditableText";
+import { usePublicFdps } from "../hooks/usePublicResearch";
 import { motion } from "framer-motion";
 import {
   Home,
@@ -71,6 +72,19 @@ const FDP_BANNER = "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/Con
 
 export default function ResearchFDP() {
   const pageKey = useLocation().pathname;
+  const { data: live } = usePublicFdps();
+  // Show the most recent FDP from API; fall through to the bundled FDP block.
+  const liveFdp = live?.fdps?.[0];
+  const FDP_LIVE = liveFdp
+    ? {
+        ...FDP,
+        title: liveFdp.title || FDP.title,
+        mode: liveFdp.mode || FDP.mode,
+        description: liveFdp.description || FDP.description,
+      }
+    : FDP;
+  const FDP_DOC_LIVE = liveFdp?.brochure || FDP_DOC_URL;
+  const FDP_BANNER_LIVE = liveFdp?.banner || FDP_BANNER;
   return (
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">
 
@@ -108,27 +122,27 @@ export default function ResearchFDP() {
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-14 md:py-20">
           <span className="inline-flex items-center gap-2 text-red-200 font-bold tracking-widest text-[10px] uppercase mb-4 px-3 py-1.5 bg-white/10 backdrop-blur rounded-full border border-white/20">
-            <Sparkles size={12} /> {FDP.type} · {FDP.mode}
+            <Sparkles size={12} /> {FDP_LIVE.type} · {FDP_LIVE.mode}
           </span>
           <h1 className="text-xl sm:text-4xl md:text-6xl font-black tracking-[-0.04em] leading-[1] mb-4 max-w-4xl">
-            <EditableText pageKey={pageKey} tkey="fdp.title" as="span" value={FDP.title}>{FDP.title}</EditableText>
+            <EditableText pageKey={pageKey} tkey="fdp.title" as="span" value={FDP_LIVE.title}>{FDP_LIVE.title}</EditableText>
           </h1>
           <div className="flex flex-wrap gap-2 mb-7">
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur border border-white/20 rounded-full text-xs font-black">
-              <Calendar size={12} /> {FDP.dates}
+              <Calendar size={12} /> {FDP_LIVE.dates}
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-300 text-[#1a0606] rounded-full text-xs font-black">
-              Fee · {FDP.fee}
+              Fee · {FDP_LIVE.fee}
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur border border-white/20 rounded-full text-xs font-black">
-              Deadline · {FDP.deadline}
+              Deadline · {FDP_LIVE.deadline}
             </span>
           </div>
           <div className="flex flex-wrap gap-3">
-            <a href={FDP.registrationLink} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-white text-[#800000] px-4 py-2.5 sm:px-6 sm:py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:scale-[1.02] transition-transform shadow-xl">
+            <a href={FDP_LIVE.registrationLink} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-white text-[#800000] px-4 py-2.5 sm:px-6 sm:py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:scale-[1.02] transition-transform shadow-xl">
               Register Now <ExternalLink size={13} />
             </a>
-            <a href={`tel:${FDP.convenor.phone.replace(/[^+\d]/g, "")}`} className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/30 px-4 py-2.5 sm:px-6 sm:py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:bg-white/20">
+            <a href={`tel:${FDP_LIVE.convenor.phone.replace(/[^+\d]/g, "")}`} className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/30 px-4 py-2.5 sm:px-6 sm:py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:bg-white/20">
               <Phone size={13} /> Call Convenor
             </a>
           </div>
@@ -152,9 +166,9 @@ export default function ResearchFDP() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-gradient-to-br from-rose-50/40 dark:from-gray-900 to-white dark:to-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-4 sm:p-7">
             <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2 flex items-center gap-1.5"><Briefcase size={11} /> Organising Department</div>
-            <h3 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight leading-snug">{FDP.department}</h3>
+            <h3 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight leading-snug">{FDP_LIVE.department}</h3>
           </div>
-          <a href={FDP_DOC_URL} target="_blank" rel="noreferrer"
+          <a href={FDP_DOC_LIVE} target="_blank" rel="noreferrer"
             className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-4 sm:p-7 hover:shadow-xl transition-shadow flex flex-col justify-between group">
             <div>
               <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2 flex items-center gap-1.5"><ArrowUpRight size={11} /> Official Brochure</div>
@@ -165,7 +179,7 @@ export default function ResearchFDP() {
               Download PDF <ArrowUpRight size={11} />
             </div>
           </a>
-          {[FDP.convenor, FDP.coordinator].map((person) => (
+          {[FDP_LIVE.convenor, FDP_LIVE.coordinator].map((person) => (
             <div key={person.name} className="bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-4 sm:p-7 hover:shadow-xl transition-shadow">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-[#800000] to-[#5a0000] text-white flex items-center justify-center font-black text-sm">
@@ -198,7 +212,7 @@ export default function ResearchFDP() {
             </h2>
           </div>
           <div className="space-y-3 max-w-3xl mx-auto">
-            {FDP.modules.map((m, i) => (
+            {FDP_LIVE.modules.map((m, i) => (
               <motion.div key={m} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
                 className="flex items-center gap-4 p-5 bg-gradient-to-br from-rose-50/40 dark:from-gray-900 to-white dark:to-gray-900 border border-rose-50 dark:border-gray-800 rounded-2xl hover:shadow-md transition-shadow">
                 <span className="shrink-0 w-9 h-9 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-[#800000] to-[#5a0000] text-white flex items-center justify-center font-black text-sm tracking-tight">
@@ -228,7 +242,7 @@ export default function ResearchFDP() {
           </h2>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {FDP.resourcePersons.map((p, i) => (
+          {FDP_LIVE.resourcePersons.map((p, i) => (
             <motion.div key={p.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} whileHover={{ y: -4 }}
               className="relative overflow-hidden bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-3 sm:p-6 hover:shadow-xl transition-shadow">
               <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${p.accent}`}></div>
@@ -257,7 +271,7 @@ export default function ResearchFDP() {
             </h2>
           </div>
           <div className="mb-4 rounded-2xl overflow-hidden max-h-64">
-            <img src={FDP_BANNER} alt="FDP Official Banner" className="w-full h-full object-cover" />
+            <img src={FDP_BANNER_LIVE} alt="FDP Official Banner" className="w-full h-full object-cover" />
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {FDP_GALLERY.map((src, i) => (
@@ -282,10 +296,10 @@ export default function ResearchFDP() {
             </p>
           </div>
           <div className="flex flex-col gap-3">
-            <a href={FDP.registrationLink} target="_blank" rel="noreferrer" className="bg-amber-300 text-[#1a0606] text-center font-black text-xs tracking-widest px-6 py-4 rounded-2xl hover:scale-[1.02] transition-transform inline-flex items-center justify-center gap-2">
+            <a href={FDP_LIVE.registrationLink} target="_blank" rel="noreferrer" className="bg-amber-300 text-[#1a0606] text-center font-black text-xs tracking-widest px-6 py-4 rounded-2xl hover:scale-[1.02] transition-transform inline-flex items-center justify-center gap-2">
               Register on Google Forms <ExternalLink size={13} />
             </a>
-            <a href={`tel:${FDP.convenor.phone.replace(/[^+\d]/g, "")}`} className="bg-black/30 backdrop-blur text-white border border-white/30 text-center font-black text-xs tracking-widest px-6 py-4 rounded-2xl hover:bg-black/50 transition-colors inline-flex items-center justify-center gap-2">
+            <a href={`tel:${FDP_LIVE.convenor.phone.replace(/[^+\d]/g, "")}`} className="bg-black/30 backdrop-blur text-white border border-white/30 text-center font-black text-xs tracking-widest px-6 py-4 rounded-2xl hover:bg-black/50 transition-colors inline-flex items-center justify-center gap-2">
               <Phone size={13} /> Call Dr. Divya Sharma
             </a>
           </div>
