@@ -11,7 +11,7 @@ const CLUBS = [
     desc: "Music, dance, drama and stagecraft — the home of KRONOS, Maharathi and our biggest cultural productions.",
     accent: "from-rose-500 to-[#800000]",
     path: "/pac",
-    image: "https://www.itmgoi.in/include/gallery/PAC/6.jpg",
+    image: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/include/gallery/PAC_pics/Baasan_1.jpg",
     tags: ["50+ Members", "Annual Production", "₹5L Grant"],
   },
   {
@@ -20,8 +20,8 @@ const CLUBS = [
     Icon: Camera,
     desc: "Visual storytellers capturing campus life, events and the streets of Gwalior. Regular exhibits and workshops.",
     accent: "from-amber-500 to-orange-600",
-    path: "#",
-    image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=900&q=80",
+    path: "/clubs",
+    image: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/include/gallery/cultural_gallery/cultural_events/_DSC2435.jpg",
     tags: ["Weekly Walks", "Print Studio", "Exhibits"],
   },
   {
@@ -30,8 +30,8 @@ const CLUBS = [
     Icon: Code2,
     desc: "Competitive programming, hackathons, open-source sprints and weekend project hacks across all years.",
     accent: "from-indigo-500 to-violet-700",
-    path: "#",
-    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=900&q=80",
+    path: "/clubs",
+    image: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/CSE_Lab4.jpg",
     tags: ["Hackathons", "ICPC Prep", "Mentor Network"],
   },
 ];

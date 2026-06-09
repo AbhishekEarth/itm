@@ -120,29 +120,29 @@ const PUBLICATIONS = [
 ];
 
 const BOOKS = [
-  { year: "2023-24", url: "https://www.itmgoi.in/IQAC/docs/DocswithoutDigi/Book_2023-2024.pdf" },
-  { year: "2022-23", url: "https://www.itmgoi.in/IQAC/docs/DocswithoutDigi/Book_2022-2023.pdf" },
-  { year: "2021-22", url: "https://www.itmgoi.in/IQAC/docs/DocswithoutDigi/Book_2021-2022.pdf" },
-  { year: "2019-20", url: "https://www.itmgoi.in/IQAC/docs/DocswithoutDigi/Book_2019-2020.pdf" },
+  { year: "2023-24", url: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/docs/DocswithoutDigi/Book_2023-2024.pdf" },
+  { year: "2022-23", url: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/docs/DocswithoutDigi/Book_2022-2023.pdf" },
+  { year: "2021-22", url: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/docs/DocswithoutDigi/Book_2021-2022.pdf" },
+  { year: "2019-20", url: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/docs/DocswithoutDigi/Book_2019-2020.pdf" },
 ];
 
 const DOCUMENTS = [
   {
     title: "Research Promotion Policy",
     desc: "Institutional policy governing research grants, sabbatical & IPR support.",
-    url: "https://www.itmgoi.in/NAAC/docs/policies/Research%20Promotion%20Policy.pdf",
+    url: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/NAAC/docs/policies/Research%20Promotion%20Policy.pdf",
     icon: Shield,
   },
   {
     title: "Research Grants Received",
     desc: "Detailed list of grants received over the past five years.",
-    url: "https://www.itmgoi.in/IQAC/docs/DocswithoutDigi/Research_Grants.pdf",
+    url: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/docs/DocswithoutDigi/Research_Grants.pdf",
     icon: Briefcase,
   },
   {
     title: "List of IPR 2019-2024",
     desc: "Patents, copyrights and design registrations filed and secured.",
-    url: "https://www.itmgoi.in/IQAC/docs/DocswithoutDigi/List_of_IPR_2019-2024.pdf",
+    url: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/docs/DocswithoutDigi/List_of_IPR_2019-2024.pdf",
     icon: FileText,
   },
   {
@@ -154,15 +154,15 @@ const DOCUMENTS = [
 ];
 
 const RESEARCH_GALLERY = [1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32].map(
-  (n) => `https://www.itmgoi.in/include/gallery/Research_gallery/${n}.jpg`
+  (n) => `https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/include/gallery/Research_gallery/${n}.jpg`
 );
 
 const BOOK_COVERS = Array.from({ length: 22 }, (_, i) =>
-  `https://www.itmgoi.in/include/gallery/Book_Cover/${i + 1}.jpg`
+  `https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/include/gallery/Book_Cover/${i + 1}.jpg`
 );
 
 const RESEARCH_PAPERS = Array.from({ length: 8 }, (_, i) =>
-  `https://www.itmgoi.in/include/gallery/Book_Cover/Research/${i + 1}.jpg`
+  `https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/include/gallery/Book_Cover/Research/${i + 1}.jpg`
 );
 
 function BigNumber({ value, suffix = "" }) {

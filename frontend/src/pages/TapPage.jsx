@@ -43,7 +43,7 @@ const TAP_TEAM = [
     phone: "+91-9691973919",
     initials: "AC",
     accent: "from-rose-500 to-[#800000]",
-    photo: "https://www.itmgoi.in/assets2/images/Arpit_Singh.jpg",
+    photo: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/Arpit_Singh.jpg",
   },
   {
     name: "Mrs. Shikha Sharma",
@@ -52,7 +52,7 @@ const TAP_TEAM = [
     phone: "+91-9229333335",
     initials: "SS",
     accent: "from-amber-500 to-orange-600",
-    photo: "https://www.itmgoi.in/assets2/images/Shikha_Sharma.jpg",
+    photo: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/Shikha_Sharma.jpg",
   },
 ];
 
@@ -95,44 +95,44 @@ const TAP_MOUS = [
   {
     name: "EduSkills Foundation",
     logo: "🎓",
-    logo_img: "https://www.itmgoi.in/assets2/images/LOGO_EduSkills.png",
+    logo_img: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/LOGO_EduSkills.png",
     desc: "Digital skills expansion in networking, cyber security, cloud computing, automation and RPA. ITM ranked #35 nationally in EduSkills Virtual Internship Rankings 2024.",
     tags: ["Networking", "Cyber Security", "Cloud", "RPA"],
   },
   {
     name: "AWS Academy",
     logo: "☁️",
-    logo_img: "https://www.itmgoi.in/assets2/images/aws.jpg",
+    logo_img: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/aws.jpg",
     desc: "Authorised AWS Academy — cloud computing, machine learning and data analytics training with AWS-recognised certifications.",
     tags: ["AWS Cloud", "ML", "Data Analytics"],
   },
   {
     name: "Microsoft Learn",
     logo: "🪟",
-    logo_img: "https://www.itmgoi.in/assets2/images/ms.jpg",
+    logo_img: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/ms.jpg",
     desc: "Center of Excellence (May 2024 – April 2025). Programmes in AI, cyber security and green skills with Microsoft certifications.",
     tags: ["AI", "Cyber Security", "Green Skills"],
   },
   {
     name: "Bajaj FinServ",
     logo: "💼",
-    logo_img: "https://www.itmgoi.in/assets2/images/mou.jpg",
+    logo_img: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/mou.jpg",
     desc: "Certificate Programme in Banking, Finance and Insurance (CPBFI) — industry-driven curriculum and guaranteed interview pipeline.",
     tags: ["BFSI", "Certified"],
   },
 ];
 
 const MOU_DOCS = [
-  { label: "MoU 2023–2024", url: "https://www.itmgoi.in/IQAC/docs/Website_UpdateDec2024/MoU_2023-2024.pdf" },
-  { label: "MoU 2022–2023", url: "https://www.itmgoi.in/IQAC/docs/Website_UpdateDec2024/MoU_2022-2023.pdf" },
-  { label: "MoU 2021–2022", url: "https://www.itmgoi.in/IQAC/docs/Website_UpdateDec2024/MoU_2021-2022.pdf" },
-  { label: "MoU 2020–2021", url: "https://www.itmgoi.in/IQAC/docs/Website_UpdateDec2024/MoU_2020-2021.pdf" },
-  { label: "MoU 2019–2020", url: "https://www.itmgoi.in/IQAC/docs/Website_UpdateDec2024/MoU_2019-2020.pdf" },
+  { label: "MoU 2023–2024", url: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/docs/Website_UpdateDec2024/MoU_2023-2024.pdf" },
+  { label: "MoU 2022–2023", url: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/docs/Website_UpdateDec2024/MoU_2022-2023.pdf" },
+  { label: "MoU 2021–2022", url: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/docs/Website_UpdateDec2024/MoU_2021-2022.pdf" },
+  { label: "MoU 2020–2021", url: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/docs/Website_UpdateDec2024/MoU_2020-2021.pdf" },
+  { label: "MoU 2019–2020", url: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/docs/Website_UpdateDec2024/MoU_2019-2020.pdf" },
 ];
 
 const TAP_SHOWCASE = [
-  { src: "https://www.itmgoi.in/assets2/images/ITM_Gwalior_Major_Recruiter.jpg", alt: "Major Recruiters at ITM Gwalior" },
-  { src: "https://www.itmgoi.in/assets2/images/itm_gwalior_placement.jpg", alt: "ITM Gwalior Placement Drive" },
+  { src: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/ITM_Gwalior_Major_Recruiter.jpg", alt: "Major Recruiters at ITM Gwalior" },
+  { src: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/itm_gwalior_placement.jpg", alt: "ITM Gwalior Placement Drive" },
 ];
 
 const INDUSTRY_SPEAK = [

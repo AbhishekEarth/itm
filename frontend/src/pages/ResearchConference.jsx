@@ -67,9 +67,9 @@ const CONF_GALLERY = [
   "111A8872.JPG", "111A8907.JPG", "111A8914.JPG", "111A8920.JPG",
   "111A8958.JPG", "111A8963.JPG", "111A8974.JPG", "111A9014.JPG",
   "111A9033.JPG", "111A9041.JPG", "111A9049.JPG",
-].map((f) => `https://www.itmgoi.in/include/gallery/Conference_Pics/${f}`);
+].map((f) => `https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/include/gallery/Conference_Pics/${f}`);
 
-const BROCHURE_URL = "https://www.itmgoi.in/IQAC/Conf_FDP/Brochure_International_Conference.pdf";
+const BROCHURE_URL = "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/Conf_FDP/Brochure_International_Conference.pdf";
 
 export default function ResearchConference() {
   const pageKey = useLocation().pathname;

@@ -42,10 +42,10 @@ const ACHIEVEMENTS = [
 ];
 
 const GALLERY_ACHIEVEMENTS = Array.from({ length: 24 }, (_, i) =>
-  `https://www.itmgoi.in/include/gallery/Sport_Cell_Achivements_photo/${i + 1}.jpg`
+  `https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/include/gallery/Sport_Cell_Achivements_photo/${i + 1}.jpg`
 );
 const GALLERY_ACTIVITIES = ["Sp7","Sp8","Sp9","Sp10","Sp11","Sp12","Sp13","Sp14","Sp15","Sp16","Sp17","Sp18","Sp19","Sp20"].map(
-  (f) => `https://www.itmgoi.in/include/gallery/Club_photos/${f}.jpg`
+  (f) => `https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/include/gallery/Club_photos/${f}.jpg`
 );
 const GALLERY = [...GALLERY_ACHIEVEMENTS, ...GALLERY_ACTIVITIES];
 

@@ -63,7 +63,7 @@ export const departmentsData = {
       },
       hod: {
         title: "HoD Desk",
-        name: "Dr. Rishi Soni",
+        name: "Dr. Pradeep Yadav",
         designation: "Professor & Head",
         message: [
           'I warmly welcome you to the Department of Computer Science & Engineering. We pride ourselves on providing pioneering visionaries of tomorrow, conducting cutting-edge research, and leading a wide range of initiatives that affirm the transformative power of computing and informatics.',
@@ -105,8 +105,8 @@ export const departmentsData = {
         ]
       },
       faculty: [
-        { sno: 1,  name: 'Dr. Rishi Soni',               qual: 'Ph.D',   desig: 'Professor',           exp: '28+ Years' },
-        { sno: 2,  name: 'Dr. Pradeep Yadav',             qual: 'Ph.D',   desig: 'Associate Professor', exp: '26+ Years' },
+        { sno: 1,  name: 'Dr. Pradeep Yadav',             qual: 'Ph.D',   desig: 'Professor & HoD',     exp: '26+ Years' },
+        { sno: 2,  name: 'Dr. Rishi Soni',                qual: 'Ph.D',   desig: 'Professor',           exp: '28+ Years' },
         { sno: 3,  name: 'Dr. Deepak Omprakash Gupta',    qual: 'Ph.D',   desig: 'Associate Professor', exp: '2+ Years'  },
       ]
     }

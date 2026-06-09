@@ -43,7 +43,7 @@ const VOLUMES = [
 ];
 
 const GALLERY = Array.from({ length: 20 }, (_, i) =>
-  `https://www.itmgoi.in/include/gallery/NSS_19to23/NSS/nss${i + 1}.jpg`
+  `https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/include/gallery/NSS_19to23/NSS/nss${i + 1}.jpg`
 );
 
 export default function NSSPage() {

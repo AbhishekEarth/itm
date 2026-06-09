@@ -4,35 +4,35 @@ import { useLocation } from "react-router-dom";
 import EditableText from "./admin/EditableText";
 
 const campusHighlights = [
-  { 
-    title: "Techno-Cultural Fest", 
-    subtitle: "KRONOS", // Reverted
-    size: "md:col-span-2 md:row-span-2", 
-    image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2070&auto=format&fit=crop",
+  {
+    title: "Techno-Cultural Fest",
+    subtitle: "KRONOS",
+    size: "md:col-span-2 md:row-span-2",
+    image: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/Happy_campus.jpg",
   },
-  { 
-    title: "Central Library", 
-    subtitle: "Knowledge Hub", // Reverted
-    size: "md:col-span-1 md:row-span-1", 
-    image: "https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=2030&auto=format&fit=crop",
+  {
+    title: "Central Library",
+    subtitle: "Knowledge Hub",
+    size: "md:col-span-1 md:row-span-1",
+    image: "/images/lib_group_photo.png",
   },
-  { 
-    title: "Sports Arena", 
-    subtitle: "Champions", // Reverted
-    size: "md:col-span-1 md:row-span-2", 
-    image: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?q=80&w=2069&auto=format&fit=crop",
+  {
+    title: "Sports Arena",
+    subtitle: "Champions",
+    size: "md:col-span-1 md:row-span-2",
+    image: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/Sports.jpg",
   },
-  { 
-    title: "Innovation Lab", 
-    subtitle: "R&D", // Reverted
-    size: "md:col-span-1 md:row-span-1", 
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop",
+  {
+    title: "Innovation Lab",
+    subtitle: "R&D",
+    size: "md:col-span-1 md:row-span-1",
+    image: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/CSE_Lab2.jpg",
   },
-  { 
-    title: "Student Cafeteria", 
-    subtitle: "Eat & Chill", // Reverted
-    size: "md:col-span-2 md:row-span-1", 
-    image: "https://images.unsplash.com/photo-1567521464027-f127ff144326?q=80&w=2070&auto=format&fit=crop",
+  {
+    title: "Placement Drive",
+    subtitle: "TAP Cell",
+    size: "md:col-span-2 md:row-span-1",
+    image: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/itm_gwalior_placement.jpg",
   },
 ];
 

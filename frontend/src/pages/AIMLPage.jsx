@@ -4,24 +4,26 @@ import SectionHeading from '../components/SectionHeading';
 import Card from '../components/Card';
 import { usePublicDepartment } from '../hooks/usePublicDepartment';
 
-// ─── Dummy Data ──────────────────────────────────────────────────────────────
+// B.Tech CSE — AI & Machine Learning specialisation (90 seats · 4 years · RGPV affiliated).
+// Curriculum, labs and career outcomes aligned with ITM Gwalior's CSE department and Microsoft / AWS Academy partnerships.
 const aimlData = {
-  about: "Artificial Intelligence and Machine Learning (AI-ML) is a sub-field of Computer Science that focuses on creating systems capable of performing tasks that typically require human intelligence. This includes learning, reasoning, problem-solving, perception, and language understanding. At ITM, our AIML program is designed to create future-ready engineers who can build autonomous systems, intelligent agents, and data-driven solutions.",
+  about: "B.Tech in Computer Science & Engineering with specialisation in Artificial Intelligence and Machine Learning is offered under the CSE umbrella at ITM Gwalior with an intake of 90 seats, affiliated to RGPV Bhopal. The programme builds on the department's NBA-accredited CSE foundation and our partnerships with Microsoft (AI · Green Skills) and AWS Academy (ML · Data Analytics) to prepare students for industry-ready AI engineering, applied ML research and entrepreneurial product development.",
   curriculum: [
-    { sem: 'Sem III & IV', subjects: ['Mathematics for Machine Learning', 'Data Structures & Algorithms', 'Python for AI', 'Statistical Methods'] },
-    { sem: 'Sem V & VI', subjects: ['Neural Networks', 'Computer Vision', 'Natural Language Processing', 'Pattern Recognition'] },
-    { sem: 'Sem VII & VIII', subjects: ['Deep Learning', 'Reinforcement Learning', 'AI Ethics', 'Major Project (AI focused)'] },
+    { sem: 'Sem III & IV', subjects: ['Mathematics for Machine Learning', 'Data Structures & Algorithms', 'Python Programming', 'Probability & Statistics', 'Discrete Mathematics'] },
+    { sem: 'Sem V & VI', subjects: ['Introduction to AI', 'Machine Learning', 'Database Management Systems', 'Computer Networks', 'Operating Systems'] },
+    { sem: 'Sem VII & VIII', subjects: ['Deep Learning', 'Natural Language Processing', 'Computer Vision', 'AI Ethics & Responsible AI', 'Major Project — AI/ML Domain'] },
   ],
   labs: [
-    { name: 'NVIDIA AI Lab', equipment: 'High-end GPUs (A100/RTX 4090), CUDA Toolkit, TensorRT' },
-    { name: 'Robotics & Vision Lab', equipment: 'Industrial Robots, 3D Cameras, LiDAR Sensors, OpenCV Integration' },
-    { name: 'Data Intelligence Lab', equipment: 'Apache Spark, Hadoop, Jupyter Notebooks Cluster, Cloud AI Tools' },
+    { name: 'AI & ML Lab (Python)', equipment: 'Python · TensorFlow · PyTorch · scikit-learn · Jupyter · GPU-enabled workstations' },
+    { name: 'Data Science Lab', equipment: 'Pandas · NumPy · Matplotlib · SQL · MongoDB · Power BI · Tableau' },
+    { name: 'Cloud & AWS Academy Lab', equipment: 'AWS Educate · SageMaker · Azure ML Studio · Google Colab Pro' },
+    { name: 'Project Lab', equipment: 'IoT kits, Raspberry Pi, Arduino, OpenCV cameras for AI vision projects' },
   ],
   careers: [
-    { role: 'AI Engineer', description: 'Design and implement AI models and systems.' },
-    { role: 'ML Researcher', description: 'Develop new algorithms and push the boundaries of ML.' },
-    { role: 'Data Scientist', description: 'Analyze large datasets to extract actionable insights.' },
-    { role: 'Robotics Specialist', description: 'Integrate AI with physical hardware for automation.' },
+    { role: 'AI / ML Engineer', description: 'Build, train and deploy models for vision, NLP and recommender systems at product companies.' },
+    { role: 'Data Scientist / Analyst', description: 'Apply ML on real-world datasets across BFSI, healthcare, retail and analytics consulting.' },
+    { role: 'Research Associate', description: 'Pursue M.Tech / MS / PhD in AI/ML at IITs, IIITs and global universities — strong GATE pipeline.' },
+    { role: 'AI Product Builder', description: 'Found or join early-stage startups solving problems with applied AI — supported by ITM IIC & EDP Cell.' },
   ],
 };
 
@@ -61,11 +63,11 @@ export default function AIMLPage() {
           <div className="mt-4 sm:mt-8 grid sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="p-3 sm:p-4 bg-red-50 dark:bg-red-900/10 border-l-4 border-[#800000] rounded-r-xl">
               <h4 className="font-black text-[#800000] dark:text-red-400 text-xs uppercase mb-1">Vision</h4>
-              <p className="text-[11px] text-gray-600 dark:text-gray-400 font-bold">To lead the world in intelligent system development and ethical AI implementation.</p>
+              <p className="text-[11px] text-gray-600 dark:text-gray-400 font-bold">Nurturing AI-ML graduates who are technologically proficient, research-competent and socially accountable.</p>
             </div>
             <div className="p-3 sm:p-4 bg-gray-50 dark:bg-gray-800 border-l-4 border-gray-400 rounded-r-xl">
               <h4 className="font-black text-gray-700 dark:text-gray-300 text-xs uppercase mb-1">Mission</h4>
-              <p className="text-[11px] text-gray-600 dark:text-gray-400 font-bold">Empowering students with deep technical roots and innovative problem-solving skills.</p>
+              <p className="text-[11px] text-gray-600 dark:text-gray-400 font-bold">Deliver outcome-based AI/ML education through project-based learning, industry MoUs and ABCAS continuous assessment.</p>
             </div>
           </div>
         </Card>

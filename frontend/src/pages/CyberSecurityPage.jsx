@@ -4,24 +4,26 @@ import SectionHeading from '../components/SectionHeading';
 import Card from '../components/Card';
 import { usePublicDepartment } from '../hooks/usePublicDepartment';
 
-// ─── Dummy Data ──────────────────────────────────────────────────────────────
+// B.Tech CSE — Cyber Security specialisation (30 seats · 4 years · RGPV affiliated).
+// Aligned with ITM Gwalior's Microsoft Cyber Security and EduSkills Cybersecurity tracks.
 const cyberData = {
-  about: "Cyber Security is the practice of protecting systems, networks, and programs from digital attacks. These cyberattacks are usually aimed at accessing, changing, or destroying sensitive information; extorting money from users; or interrupting normal business processes. At ITM, we train students in defensive and offensive security strategies to secure the digital frontier.",
+  about: "B.Tech in Computer Science & Engineering with specialisation in Cyber Security is offered at ITM Gwalior with an intake of 30 seats, affiliated to RGPV Bhopal. The programme leverages ITM's Microsoft partnership (Cyber Security track) and EduSkills Foundation (Networking · Cybersecurity · Industry 4.0) to deliver hands-on training in defensive and ethical-offensive security, preparing students for SOC roles, security engineering, audit and digital forensics.",
   curriculum: [
-    { sem: 'Sem III & IV', subjects: ['Foundations of Cyber Security', 'Data Structures', 'Network Protocols', 'Discrete Mathematics'] },
-    { sem: 'Sem V & VI', subjects: ['Cryptography', 'Ethical Hacking', 'Digital Forensics', 'Web Application Security'] },
-    { sem: 'Sem VII & VIII', subjects: ['Cloud Security', 'Blockchain Technology', 'Security Compliance & Laws', 'Major Project (Security focused)'] },
+    { sem: 'Sem III & IV', subjects: ['Operating Systems', 'Computer Networks', 'Discrete Mathematics', 'Data Structures', 'Database Management Systems'] },
+    { sem: 'Sem V & VI', subjects: ['Foundations of Cyber Security', 'Cryptography & Network Security', 'Ethical Hacking & Pen-Testing', 'Web Application Security', 'Linux System Administration'] },
+    { sem: 'Sem VII & VIII', subjects: ['Cloud & Mobile Security', 'Digital Forensics & Incident Response', 'Security Audit, Compliance & Laws (DPDP, IT Act)', 'Blockchain Fundamentals', 'Major Project — Security Domain'] },
   ],
   labs: [
-    { name: 'Red Team Ops Lab', equipment: 'Kali Linux Workstations, Metasploit Framework, Burp Suite Enterprise' },
-    { name: 'Forensics & Recovery Lab', equipment: 'EnCase, FTK Imager, Write Blockers, Logic Analyzers' },
-    { name: 'Network Defense Lab', equipment: 'Cisco Firewalls, IDS/IPS Systems, SIEM (Splunk/ELK Stack) Cluster' },
+    { name: 'Information Security Lab', equipment: 'Kali Linux · Wireshark · Nmap · Metasploit · OWASP ZAP · Burp Suite (Community)' },
+    { name: 'Networking & Cloud Lab', equipment: 'Cisco Packet Tracer · GNS3 · Firewall configuration · IDS/IPS with Snort' },
+    { name: 'Forensics Lab', equipment: 'Autopsy · Volatility · FTK Imager · Wireshark forensics workflows' },
+    { name: 'Project Lab', equipment: 'Vulnerable VM lab environment for CTF, secure-coding and red-team exercises' },
   ],
   careers: [
-    { role: 'Security Analyst', description: 'Monitor and respond to security incidents in a SOC environment.' },
-    { role: 'Ethical Hacker', description: 'Perform penetration testing to identify and fix vulnerabilities.' },
-    { role: 'Security Architect', description: 'Design secure network and system infrastructures.' },
-    { role: 'Forensic Investigator', description: 'Analyze digital evidence to trace cyber crimes.' },
+    { role: 'Security Analyst (SOC)', description: 'Monitor, triage and respond to incidents in security operations centres at MNCs and BFSI.' },
+    { role: 'Penetration Tester', description: 'Run authorised offensive engagements for product firms, consulting and bug-bounty platforms.' },
+    { role: 'Security Engineer / DFIR', description: 'Build secure systems, automate detection, lead digital forensics and incident response.' },
+    { role: 'Higher Studies / Certs', description: 'CEH, CompTIA Security+, OSCP, M.Tech in Information Security, GATE-CSE pipeline.' },
   ],
 };
 
@@ -57,11 +59,11 @@ export default function CyberSecurityPage() {
           <div className="mt-4 sm:mt-8 grid sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="p-3 sm:p-4 bg-red-50 dark:bg-red-900/10 border-l-4 border-[#800000] rounded-r-xl">
               <h4 className="font-black text-[#800000] dark:text-red-400 text-xs uppercase mb-1">Vision</h4>
-              <p className="text-[11px] text-gray-600 dark:text-gray-400 font-bold">To create a resilient digital world by empowering the next generation of security experts.</p>
+              <p className="text-[11px] text-gray-600 dark:text-gray-400 font-bold">Build ethically-trained security professionals who protect systems, data and citizens of a digital India.</p>
             </div>
             <div className="p-3 sm:p-4 bg-gray-50 dark:bg-gray-800 border-l-4 border-gray-400 rounded-r-xl">
               <h4 className="font-black text-gray-700 dark:text-gray-300 text-xs uppercase mb-1">Mission</h4>
-              <p className="text-[11px] text-gray-600 dark:text-gray-400 font-bold">Providing hands-on training in offensive and defensive paradigms of cyber security.</p>
+              <p className="text-[11px] text-gray-600 dark:text-gray-400 font-bold">Deliver hands-on offensive and defensive security training through Microsoft Cyber and EduSkills tracks.</p>
             </div>
           </div>
         </Card>

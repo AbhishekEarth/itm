@@ -64,10 +64,10 @@ const HIGHLIGHTS = [
 ];
 
 const FDP_GALLERY = Array.from({ length: 8 }, (_, i) =>
-  `https://www.itmgoi.in/include/gallery/fdp_Pics/fdp_0${i + 1}.jpeg`
+  `https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/include/gallery/fdp_Pics/fdp_0${i + 1}.jpg`
 );
-const FDP_DOC_URL = "https://www.itmgoi.in/IQAC/Conf_FDP/National_FDP_ITM.pdf";
-const FDP_BANNER = "https://www.itmgoi.in/IQAC/Conf_FDP/Fdp.jpg";
+const FDP_DOC_URL = "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/Conf_FDP/National_FDP_ITM.pdf";
+const FDP_BANNER = "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/Conf_FDP/Fdp.jpg";
 
 export default function ResearchFDP() {
   const pageKey = useLocation().pathname;

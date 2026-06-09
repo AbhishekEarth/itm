@@ -17,7 +17,7 @@ const DEPARTMENTS = [
     badge: "NBA Accredited",
     path: "/cs",
     stats: ["240 seats", "9 labs", "Top 1%"],
-    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=900&q=80",
+    image: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/CSE_Lab1.jpg",
   },
   {
     name: "Information Technology",
@@ -28,7 +28,7 @@ const DEPARTMENTS = [
     badge: "AICTE Approved",
     path: "/it",
     stats: ["120 seats", "Cloud lab", "RGPV"],
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80",
+    image: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/Department_Computer_Lab.jpg",
   },
   {
     name: "Electronics & Communication",
@@ -39,7 +39,7 @@ const DEPARTMENTS = [
     badge: "VLSI Lab",
     path: "/ece",
     stats: ["60 seats", "Cadence", "Est. 1997"],
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80",
+    image: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/CSE_Lab3.jpg",
   },
   {
     name: "Civil Engineering",
@@ -50,7 +50,7 @@ const DEPARTMENTS = [
     badge: "Est. 1997",
     path: "/ce",
     stats: ["30 seats", "BIM lab", "Govt jobs"],
-    image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80",
+    image: "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/Workshop_on_Econometrics.jpg",
   },
   {
     name: "Central Library",
@@ -61,7 +61,7 @@ const DEPARTMENTS = [
     badge: "Knowledge Hub",
     path: "/library",
     stats: ["64K books", "E-journals", "24×7 lab"],
-    image: "https://images.unsplash.com/photo-1568667256549-094345857637?w=900&q=80",
+    image: "/images/lib_group_photo.png",
   },
 ];
 

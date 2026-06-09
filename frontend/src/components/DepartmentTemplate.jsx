@@ -576,7 +576,7 @@ export default function DepartmentTemplate({ dept }) {
                               <img
                                 src={
                                   lab.photo ||
-                                  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900&q=80"
+                                  "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/CSE_Lab2.jpg"
                                 }
                                 alt={lab.name}
                                 loading="lazy"

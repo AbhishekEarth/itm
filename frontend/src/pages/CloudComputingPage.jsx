@@ -4,24 +4,26 @@ import SectionHeading from '../components/SectionHeading';
 import Card from '../components/Card';
 import { usePublicDepartment } from '../hooks/usePublicDepartment';
 
-// ─── Dummy Data ──────────────────────────────────────────────────────────────
+// B.Tech CSE — Cloud Computing specialisation, delivered through ITM's
+// AWS Academy Membership and Microsoft / EduSkills cloud tracks. 4 years · RGPV affiliated.
 const cloudData = {
-  about: "Cloud Computing is the on-demand delivery of IT resources over the internet with pay-as-you-go pricing. Instead of buying, owning, and maintaining physical data centers and servers, you can access technology services, such as computing power, storage, and databases. Our program focuses on AWS, Azure, and Google Cloud platforms to prepare students for the distributed future.",
+  about: "B.Tech in Computer Science & Engineering with specialisation in Cloud Computing is offered under the CSE umbrella at ITM Gwalior, affiliated to RGPV Bhopal. The programme is backed by ITM's AWS Academy Membership, Microsoft (AI · Cyber · Green Skills) partnership and EduSkills Foundation (Cloud Computing, Automation, Industry 4.0) — exposing every student to real-world cloud labs from Year 2 onwards through industry-recognised certifications.",
   curriculum: [
-    { sem: 'Sem III & IV', subjects: ['Introduction to Cloud', 'Virtualization Technologies', 'Linux Administration', 'Computer Networks'] },
-    { sem: 'Sem V & VI', subjects: ['Cloud Architecture', 'DevOps & SRE', 'Serverless Computing', 'Containerization (Docker/K8s)'] },
-    { sem: 'Sem VII & VIII', subjects: ['Cloud Security', 'Big Data on Cloud', 'Cloud Migration Strategies', 'Major Project (Cloud focused)'] },
+    { sem: 'Sem III & IV', subjects: ['Operating Systems', 'Computer Networks', 'Linux & Shell Scripting', 'Database Management Systems', 'Python for DevOps'] },
+    { sem: 'Sem V & VI', subjects: ['Cloud Computing Fundamentals', 'Virtualization & Containers', 'AWS Cloud Foundations (AWS Academy)', 'Web Technologies', 'Distributed Systems'] },
+    { sem: 'Sem VII & VIII', subjects: ['Cloud Architecture & Microservices', 'DevOps & CI/CD', 'Cloud Security & Compliance', 'Big Data on Cloud', 'Major Project — Cloud-native System'] },
   ],
   labs: [
-    { name: 'Cloud Infrastructure Lab', equipment: 'AWS Academy Access, Azure Dev Tools, OpenStack Private Cloud' },
-    { name: 'DevOps & Automation Lab', equipment: 'Jenkins, Terraform, Ansible, Docker Hub, Kubernetes Cluster' },
-    { name: 'Storage & DB Lab', equipment: 'MongoDB, Redis, AWS S3 Interface, SQL & NoSQL Distributed Systems' },
+    { name: 'Networking & Cloud Lab', equipment: 'Cisco networking equipment · AWS Academy console · Azure Dev Tools' },
+    { name: 'AWS Academy Lab', equipment: 'AWS Educate sandbox · EC2 · S3 · Lambda · CloudWatch · RDS' },
+    { name: 'DevOps Lab', equipment: 'Git · Jenkins · Docker · Kubernetes (Minikube) · Ansible · Terraform' },
+    { name: 'Project Lab', equipment: 'Linux workstations, container infra, micro-services prototyping' },
   ],
   careers: [
-    { role: 'Cloud Architect', description: 'Design complex cloud infrastructures and solutions.' },
-    { role: 'DevOps Engineer', description: 'Automate deployment pipelines and manage infrastructure.' },
-    { role: 'Cloud Consultant', description: 'Advise organizations on cloud migration and cost optimization.' },
-    { role: 'SRE Specialist', description: 'Ensure the reliability and scalability of cloud systems.' },
+    { role: 'Cloud Engineer', description: 'Build and operate cloud workloads on AWS, Azure or GCP at MNCs and product firms.' },
+    { role: 'DevOps / SRE Engineer', description: 'Automate CI/CD pipelines, monitor reliability and run production cloud systems.' },
+    { role: 'Cloud Solutions Consultant', description: 'Advise enterprises on cloud migration, cost optimisation and architecture reviews.' },
+    { role: 'Higher Studies / Certs', description: 'AWS Solutions Architect, Azure Administrator, GATE-CSE and M.Tech in distributed systems.' },
   ],
 };
 
@@ -57,11 +59,11 @@ export default function CloudComputingPage() {
           <div className="mt-4 sm:mt-8 grid sm:grid-cols-2 gap-3 sm:gap-4">
             <div className="p-3 sm:p-4 bg-red-50 dark:bg-red-900/10 border-l-4 border-[#800000] rounded-r-xl">
               <h4 className="font-black text-[#800000] dark:text-red-400 text-xs uppercase mb-1">Vision</h4>
-              <p className="text-[11px] text-gray-600 dark:text-gray-400 font-bold">To empower students to build and manage the world's most scalable and reliable digital infrastructures.</p>
+              <p className="text-[11px] text-gray-600 dark:text-gray-400 font-bold">Prepare cloud-native engineers ready for industry, research and entrepreneurship in distributed systems.</p>
             </div>
             <div className="p-3 sm:p-4 bg-gray-50 dark:bg-gray-800 border-l-4 border-gray-400 rounded-r-xl">
               <h4 className="font-black text-gray-700 dark:text-gray-300 text-xs uppercase mb-1">Mission</h4>
-              <p className="text-[11px] text-gray-600 dark:text-gray-400 font-bold">Integrating deep cloud concepts with practical DevOps and automation skills.</p>
+              <p className="text-[11px] text-gray-600 dark:text-gray-400 font-bold">Deliver hands-on cloud, DevOps and security training through AWS Academy and Microsoft / EduSkills partnerships.</p>
             </div>
           </div>
         </Card>

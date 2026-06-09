@@ -36,9 +36,9 @@ const TEAM = [
 ];
 
 const GALLERY = [
-  ...Array.from({ length: 4 }, (_, i) => `https://www.itmgoi.in/include/gallery/IIC_TEAM/uba${i + 1}.jpg`),
-  ...Array.from({ length: 5 }, (_, i) => `https://www.itmgoi.in/include/gallery/Best_practice1/${76 + i}.jpg`),
-  ...Array.from({ length: 8 }, (_, i) => `https://www.itmgoi.in/include/gallery/Best_practice1/${85 + i}.jpg`),
+  ...Array.from({ length: 4 }, (_, i) => `https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/include/gallery/IIC_TEAM/uba${i + 1}.jpg`),
+  ...Array.from({ length: 5 }, (_, i) => `https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/include/gallery/Best_practice1/${76 + i}.jpg`),
+  ...Array.from({ length: 8 }, (_, i) => `https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/include/gallery/Best_practice1/${85 + i}.jpg`),
 ];
 
 export default function UBAPage() {
