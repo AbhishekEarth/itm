@@ -1,39 +1,122 @@
-# Changelog - abhishek Branch Optimizations & Polishes
+# Changelog — `abhishek` Branch
 
-This changelog summarizes all visual, performance, accessibility, and repository cleanliness changes completed on the `abhishek` branch in a concise, one-line format.
+All changes made to the `abhishek` branch of the ITM Gwalior frontend.
 
-## Repository & Dependency Cleanups
-- **node_modules Untracking:** Ignored and completely removed the massive committed `node_modules/` folder from Git tracking (reducing repo size while preserving local builds).
-- **backend/.venv Untracking:** Excluded the heavy Python virtual environment `.venv/` directory from Git tracking to ensure lightweight commits.
-- **Duplicate Assets Deletion:** Deleted duplicate loose files `30 years.png` and `WhatsApp Image 2026-05-21 at 12.39.59 PM.jpeg` from the repository root.
+---
 
-## Performance & Image Optimizations
-- **LazyImage Helper:** Created a high-performance, intersection-observer-driven `<LazyImage />` component with custom shimmer skeleton placeholders.
-- **Branding Logos Migration:** Transformed `Header.jsx` branding graphics to local optimized WebP logos (`ITMGOILogo.webp`, `NAACLogo.webp`).
-- **Partner Logos Transition:** Migrated over 70 partner marquee recruiter logos in `RecruiterMarquee.jsx` and `TapPage.jsx` to lightweight `.webp` formats.
-- **Visual Page Assets Polish:** Upgraded image source assets in `PACPage.jsx` and `CentralLibrary.jsx` to load optimized local WebP assets.
-- **Static Assets Refactoring:** Excluded binary images from Git pushes to bypass remote RPC curls while preserving local asset loading.
+## [2026-06-10] — Performance & Production Readiness Sprint
 
-## Layout & Dropdown Alignment Fixes
-- **Stack Layering Bug:** Increased the header wrapper layer index to `z-[200]` to guarantee dropdown panels float above the floating sidebar widgets.
-- **Dropdown Bounds Realignment:** Added responsive alignment rules (`left-0` for left links, `right-0` for right links) to stop dropdowns from clipping.
-- **Spacing Grid Harmonization:** Standardized padding wrappers (`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`) consistently across all 13 sections.
+### 🔀 Merge & Integration
+- **Resolved 16 merge conflicts** between `abhishek` and `origin/main`
+  - Files resolved: `AdmissionCTA`, `CampusLife`, `ClubsCells`, `Departments`, `DirectorVision`, `Distinctiveness`, `FloatingSidebar`, `Header`, `Hero`, `HomeExtras`, `Placements`, `RecruiterMarquee`, `Stats`, `Testimonials`, `WhyITM`, `PACPage`
+- **Installed `@tanstack/react-query`** — new dependency added by `main`
 
-## WCAG Accessibility & Premium Detailing
-- **Dark Mode Gradient Contrast:** Added Glowing Golden-Rose gradients (`dark:from-rose-400 dark:to-amber-200`) to low-contrast headings.
-- **Stats Gradient Polish:** Polished the outcomes heading in `Stats.jsx` with highly visible glowing typography in dark mode.
-- **Director Message Contrast:** Upgraded the director vision heading in `DirectorVision.jsx` to be WCAG-compliant in dark mode.
-- **Academic Specialties Contrast:** Redesigned heading typography inside `Departments.jsx` to support high-contrast glowing elements.
-- **Pillars Timeline Contrast:** Enhanced heading contrast ratios in `Distinctiveness.jsx` to maintain perfect dark mode visibility.
-- **Alumni Network Contrast:** Polished header and numeric success counter gradients in `HomeExtras.jsx` (Alumni Section).
-- **Student Life Contrast:** Redesigned student life heading span gradient inside `ClubsCells.jsx` for readability.
-- **Carousel success Contrast:** Upgraded headings in `Testimonials.jsx` to be accessible and glowing in dark mode.
-- **Bento Experience Contrast:** Enhanced text span gradients inside `CampusLife.jsx` to adapt to dark background modes.
-- **Upcoming Events Contrast:** Polished the event header text gradient inside `HomeExtras.jsx` (Events Section).
-- **Category Labels Contrast:** Upgraded category tags (e.g. "Lifestyle", "Student Life", "Alumni Success") to use soft readable rose-300 in dark mode.
+---
 
-## Micro-Animations & Depth Transitions
-- **Theme Snapping Smoothness:** Applied 500ms ease transition fades to eliminate snapping during theme switches.
-- **Cards Bezier Scaling:** Polished hover scales on grid cards with smooth cubic bezier curves (`hover:-translate-y-2 hover:scale-[1.01]`).
-- **Cards Glow Shadows:** Integrated ambient color-glowing drop shadows (`dark:hover:shadow-rose-950/20`) on card hover states.
-- **Sidebar Action Feedback:** Implemented premium interactive scales (`active:scale-95`) on floating action sidebar widgets.
+### ⚡ Performance — Bundle Size
+
+- **Route-level code splitting** (`App.jsx`)
+  - Converted all 60+ static page imports to `React.lazy()` dynamic imports
+  - Main bundle: **1,833 kB → 967 kB (−47%)**
+
+- **Vite manual chunk splitting** (`vite.config.js`)
+  - `vendor-react`, `vendor-motion`, `vendor-icons`, `vendor-query` — vendor libs cached independently
+  - `chunk-admin` — Admin pages (only downloaded on admin login)
+  - `chunk-departments`, `chunk-research`, `chunk-about`, `chunk-gallery`, `chunk-admissions` — domain chunks
+
+---
+
+### ⚡ Performance — Network Requests
+
+- **React Query global config** (`main.jsx`)
+  - `retry: 0` — stops hammering offline backend
+  - `staleTime: 5 min` — shared cache across components
+  - `gcTime: 10 min`, `refetchOnWindowFocus: false`, `refetchOnReconnect: false`
+  - **Result: 620 requests → ~20 on initial load**
+
+---
+
+### ⚡ Performance — Images
+
+- **Batch WebP conversion** (`scripts/convert-images.mjs`) — new script using `sharp`
+  - 196 images converted — **9.3 MB → 3.3 MB (−64%)**
+- **Hero slider re-compression** — slider6–10: **avg 900 kB → 200 kB each**
+- **ITMGOILogo.png → WebP** — **350 kB → 32 kB (−91%)**
+- **Hero component** — `fetchpriority="high"` on slide 0, all 10 slides as WebP, `width`/`height` attrs
+- **Local image paths** — Bulk replaced `.jpg`/`.png` refs in `SeekAdmission`, `Login`, `QSiGauge`, `Onboarding`, `index.html`
+
+---
+
+### ⚡ Performance — HTML & Loading
+
+- **`index.html`** — Preload hero image, non-blocking fonts, deferred GA, preconnect + dns-prefetch
+
+---
+
+### ⚡ Performance — Animations
+
+- **`whileInView` on below-fold sections** — `Stats`, `WhyITM`, `Distinctiveness`, `Placements`, `Testimonials`, `DirectorVision`, `RecruiterMarquee`, `CampusLife`, `AdmissionCTA`, `ClubsCells`
+  - Animations fire only when section enters viewport — reduces initial paint cost
+
+---
+
+### 🛡️ Reliability
+
+- **`ErrorBoundary` component** (`components/ErrorBoundary.jsx`) — new
+  - Catches render errors, logs to console with section name + stack trace
+  - Wrapped around all 18 home sections in `App.jsx`
+  - Fixes silent failure / empty console problem
+
+---
+
+### 🏭 Production Readiness
+
+- **Environment variables**
+  - `.env.development` — dev mode (Vite proxy handles `/api/*`)
+  - `.env.production` — `VITE_API_URL=https://api.itmgoi.in`
+
+- **Removed hardcoded `localhost:8000`** (7 occurrences → 0)
+  - `PACPage.jsx` — relative `/api/` paths
+  - `PlacementData.jsx` — `import.meta.env.VITE_API_URL`
+  - `TapPage.jsx` — `import.meta.env.VITE_API_URL`
+
+- **`.gitignore`** — `node_modules/` untracked, `.env.local` ignored
+
+---
+
+### 📦 Dependencies Added
+
+| Package | Type | Reason |
+|---|---|---|
+| `@tanstack/react-query` | dep | CMS data fetching |
+| `sharp` | devDep | Image conversion script |
+
+---
+
+### 📁 New Files
+
+| File | Purpose |
+|---|---|
+| `frontend/scripts/convert-images.mjs` | Batch WebP conversion |
+| `frontend/src/components/ErrorBoundary.jsx` | Section-level error isolation |
+| `frontend/.env.development` | Dev environment config |
+| `frontend/.env.production` | Production environment template |
+| `frontend/public/images/ITMGOILogo.webp` | Optimized logo |
+| `frontend/src/assets/slider1.webp` | Optimized fallback slider |
+| `frontend/src/assets/slider2.webp` | Optimized fallback slider |
+| `frontend/public/images/hero/slider*.webp` | All 10 hero slides as WebP |
+
+---
+
+## Summary
+
+| Metric | Before | After |
+|---|---|---|
+| Main JS bundle | 1,833 kB | 967 kB (−47%) |
+| API requests on load | 620 | ~20 (−97%) |
+| Image weight (converted) | 9.3 MB | 3.3 MB (−64%) |
+| ITM logo | 350 kB | 32 kB (−91%) |
+| Scripting time (dev) | 4,247 ms | 2,390 ms (−44%) |
+| Total page time (dev) | 10.84 s | 8.58 s (−21%) |
+| Hardcoded `localhost:8000` | 7 | 0 |
+| Console errors | Silent | Visible with section name |

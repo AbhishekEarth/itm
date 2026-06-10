@@ -31,7 +31,7 @@ export default function PACPage() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/pac/all");
+        const response = await fetch("/api/pac/all");
         if (response.ok) {
           const data = await response.json();
           setDynamicEvents(data);
@@ -46,7 +46,7 @@ export default function PACPage() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this event and its photos?")) {
       try {
-        const response = await fetch(`http://localhost:8000/api/pac/delete/${id}`, {
+        const response = await fetch(`/api/pac/delete/${id}`, {
           method: 'DELETE',
         });
         if (response.ok) {
@@ -131,7 +131,7 @@ export default function PACPage() {
       : event.date;
 
     const eventImages = isDynamic 
-      ? event.images.map(img => `http://localhost:8000${img.image_url}`)
+      ? event.images.map(img => img.image_url)
       : event.images;
 
     return (

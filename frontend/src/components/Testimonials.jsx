@@ -112,7 +112,7 @@ export default function Testimonials() {
               <motion.div
                 key={t.name}
                 initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -30 }}
                 transition={{ duration: 0.4 }}
                 className="relative overflow-hidden bg-white dark:bg-gray-900 rounded-2xl sm:rounded-3xl border border-rose-50 dark:border-gray-800 shadow-xl p-4 sm:p-8 md:p-12"

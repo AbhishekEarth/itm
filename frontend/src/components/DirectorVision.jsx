@@ -181,7 +181,7 @@ export default function DirectorVision() {
                     <motion.div
                       key="vision"
                       initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      whileInView={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.3 }}
                     >
@@ -198,7 +198,7 @@ export default function DirectorVision() {
                     <motion.div
                       key="mission"
                       initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      whileInView={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.3 }}
                     >
@@ -222,7 +222,7 @@ export default function DirectorVision() {
                     <motion.div
                       key="values"
                       initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      whileInView={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.3 }}
                       className="space-y-2 sm:space-y-3 max-h-[200px] sm:max-h-[400px] overflow-y-auto pr-2"

@@ -717,7 +717,7 @@ export default function TapPage() {
                       className="grid md:grid-cols-2 gap-0"
                     >
                       <div className="relative aspect-video md:aspect-auto md:min-h-[400px] overflow-hidden bg-gray-100 dark:bg-gray-800">
-                        <img src={`http://localhost:8000${e.image_url}`} alt={e.title} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                        <img src={`${import.meta.env.VITE_API_URL || ""}${e.image_url}`} alt={e.title} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                         <div className="absolute top-4 left-4 inline-flex items-center gap-2 bg-emerald-500 text-white px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">
                           <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
                           Upcoming
@@ -770,7 +770,7 @@ export default function TapPage() {
                       }`}
                     >
                       <div className="aspect-video bg-gray-100 dark:bg-gray-800">
-                        <img src={`http://localhost:8000${e.image_url}`} alt={e.title} className="w-full h-full object-cover" loading="lazy" />
+                        <img src={`${import.meta.env.VITE_API_URL || ""}${e.image_url}`} alt={e.title} className="w-full h-full object-cover" loading="lazy" />
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                       <div className="absolute bottom-2 left-2 right-2 text-white">
@@ -809,7 +809,7 @@ export default function TapPage() {
                 {events.past.map((e) => (
                   <div key={e.id} className="bg-white dark:bg-gray-900 rounded-2xl border border-rose-50 dark:border-gray-800 overflow-hidden hover:shadow-md transition-shadow group">
                     <div className="aspect-video bg-gray-100 dark:bg-gray-800 overflow-hidden">
-                      <img src={`http://localhost:8000${e.image_url}`} alt={e.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" loading="lazy" />
+                      <img src={`${import.meta.env.VITE_API_URL || ""}${e.image_url}`} alt={e.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" loading="lazy" />
                     </div>
                     <div className="p-3">
                       <div className="flex items-center gap-1.5 mb-1">
