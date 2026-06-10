@@ -674,7 +674,7 @@ export default function Header() {
             exit={{ height: 0, opacity: 0 }}
             className="xl:hidden bg-white dark:bg-slate-950 border-t border-gray-100 dark:border-slate-850 overflow-hidden shadow-2xl transition-colors duration-500"
           >
-            <div className="flex flex-col p-6 gap-5 text-[14px]">
+            <div className="flex flex-col p-6 pb-safe gap-5 text-[14px]">
               <Link to="/" onClick={() => setMobileMenuOpen(false)} className="font-semibold text-gray-800 dark:text-slate-100 hover:text-[#800000] dark:hover:text-amber-300">
                 Home
               </Link>
@@ -708,7 +708,7 @@ export default function Header() {
                                 setMobileMenuOpen(false);
                                 setMobileAdmOpen(false);
                               }}
-                              className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium"
+                              className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-2.5 font-medium text-[14px]"
                             >
                               {a.label} ↗
                             </a>
@@ -720,7 +720,7 @@ export default function Header() {
                                 setMobileMenuOpen(false);
                                 setMobileAdmOpen(false);
                               }}
-                              className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium"
+                              className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-2.5 font-medium text-[14px]"
                             >
                               {a.label}
                             </Link>
@@ -758,7 +758,7 @@ export default function Header() {
                               setMobileMenuOpen(false);
                               setMobileDeptOpen(false);
                             }}
-                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium"
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-2.5 font-medium text-[14px]"
                           >
                             {d.label}
                           </Link>
@@ -795,7 +795,7 @@ export default function Header() {
                               setMobileMenuOpen(false);
                               setMobileClubOpen(false);
                             }}
-                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium"
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-2.5 font-medium text-[14px]"
                           >
                             {d.label}
                           </Link>
@@ -836,7 +836,7 @@ export default function Header() {
                               setMobileMenuOpen(false);
                               setMobileResOpen(false);
                             }}
-                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium"
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-2.5 font-medium text-[14px]"
                           >
                             {d.label}
                           </Link>
@@ -863,13 +863,13 @@ export default function Header() {
                         {aboutLinks.map((a) => a.external ? (
                           <a key={a.label} href={a.href} target="_blank" rel="noreferrer"
                             onClick={() => { setMobileMenuOpen(false); setMobileAboutOpen(false); }}
-                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium">
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-2.5 font-medium text-[14px]">
                             {a.label} ↗
                           </a>
                         ) : (
                           <Link key={a.label} to={a.path}
                             onClick={() => { setMobileMenuOpen(false); setMobileAboutOpen(false); }}
-                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium">
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-2.5 font-medium text-[14px]">
                             {a.label}
                           </Link>
                         ))}
@@ -895,13 +895,13 @@ export default function Header() {
                         {alumniLinks.map((a) => a.external ? (
                           <a key={a.label} href={a.href} target="_blank" rel="noreferrer"
                             onClick={() => { setMobileMenuOpen(false); setMobileAlumniOpen(false); }}
-                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium">
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-2.5 font-medium text-[14px]">
                             {a.label} ↗
                           </a>
                         ) : (
                           <Link key={a.label} to={a.path}
                             onClick={() => { setMobileMenuOpen(false); setMobileAlumniOpen(false); }}
-                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium">
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-2.5 font-medium text-[14px]">
                             {a.label}
                           </Link>
                         ))}
@@ -927,13 +927,13 @@ export default function Header() {
                         {moreLinks.map((a) => a.external ? (
                           <a key={a.label} href={a.href} target="_blank" rel="noreferrer"
                             onClick={() => { setMobileMenuOpen(false); setMobileMoreOpen(false); }}
-                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium">
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-2.5 font-medium text-[14px]">
                             {a.label} ↗
                           </a>
                         ) : (
                           <Link key={a.label} to={a.path}
                             onClick={() => { setMobileMenuOpen(false); setMobileMoreOpen(false); }}
-                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium">
+                            className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-2.5 font-medium text-[14px]">
                             {a.label}
                           </Link>
                         ))}

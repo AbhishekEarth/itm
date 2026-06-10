@@ -331,7 +331,7 @@ export function AlumniSection() {
             </Link>
           </div>
 
-          <div className="mt-8 grid grid-cols-3 gap-6 border-t border-rose-100 dark:border-gray-800 pt-6 max-w-md">
+          <div className="mt-8 grid grid-cols-3 gap-3 sm:gap-6 border-t border-rose-100 dark:border-gray-800 pt-6 max-w-md">
             {[
               { num: "30K+",  label: "Alumni" },
               { num: "3",      label: "Chapters" },

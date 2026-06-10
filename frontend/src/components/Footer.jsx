@@ -97,7 +97,7 @@ const SOCIALS = [
 export default function Footer() {
   const pageKey = useLocation().pathname;
   return (
-    <footer data-section="footer" className="relative bg-[#0a0a14] text-white pt-8 sm:pt-20 pb-6 sm:pb-10 px-4 sm:px-6 overflow-hidden">
+    <footer data-section="footer" className="relative bg-[#0a0a14] text-white pt-8 sm:pt-20 pb-6 sm:pb-10 px-4 sm:px-6 pb-safe overflow-hidden">
 
       {/* Decorative glows */}
       <div className="absolute top-0 right-0 w-[30vw] h-[30vw] bg-[#800000]/20 blur-2xl rounded-full pointer-events-none"></div>
@@ -217,13 +217,13 @@ export default function Footer() {
               <h4 className="text-amber-300 font-black uppercase tracking-[0.22em] text-[9px] sm:text-[10px] mb-2.5 sm:mb-5">
                 {sec.title}
               </h4>
-              <ul className="space-y-1.5 sm:space-y-2.5">
+              <ul className="space-y-2 sm:space-y-2.5">
                 {sec.links.map((l) =>
                   l.to ? (
                     <li key={l.label}>
                       <Link
                         to={l.to}
-                        className="group inline-flex items-center gap-1.5 text-gray-400 hover:text-white text-[11px] sm:text-[13px] font-medium transition-colors"
+                        className="group inline-flex items-center gap-1.5 py-1.5 sm:py-0 text-gray-400 hover:text-white text-[12px] sm:text-[13px] font-medium transition-colors"
                       >
                         {l.label}
                         <ArrowUpRight size={10} className="opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -235,7 +235,7 @@ export default function Footer() {
                         href={l.href}
                         target={l.external ? "_blank" : undefined}
                         rel={l.external ? "noreferrer" : undefined}
-                        className="group inline-flex items-center gap-1.5 text-gray-400 hover:text-white text-[11px] sm:text-[13px] font-medium transition-colors"
+                        className="group inline-flex items-center gap-1.5 py-1.5 sm:py-0 text-gray-400 hover:text-white text-[12px] sm:text-[13px] font-medium transition-colors"
                       >
                         {l.label}
                         {l.external && <ArrowUpRight size={10} className="opacity-50" />}
