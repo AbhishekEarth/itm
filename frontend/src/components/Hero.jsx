@@ -2,10 +2,25 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { usePublicHome } from "../hooks/usePublicPage";
 import Seo from "./Seo";
-import slider1 from "../assets/slider1.jpg";
-import slider2 from "../assets/slider2.jpg";
+import slider1 from "../assets/slider1.webp";
+import slider2 from "../assets/slider2.webp";
 
-const FALLBACK_IMAGES = [slider1, slider2];
+// Public hero folder — all 10 slides pre-converted to WebP.
+// These are served directly by the browser (not bundled into JS).
+const PUBLIC_SLIDES = [
+  "/images/hero/slider1.webp",
+  "/images/hero/slider2.webp",
+  "/images/hero/slider3.webp",
+  "/images/hero/slider4.webp",
+  "/images/hero/slider5.webp",
+  "/images/hero/slider6.webp",
+  "/images/hero/slider7.webp",
+  "/images/hero/slider8.webp",
+  "/images/hero/slider9.webp",
+  "/images/hero/slider10.webp",
+];
+
+const FALLBACK_IMAGES = PUBLIC_SLIDES;
 
 const FALLBACK_HERO = {
   headline: "Think Big. Think Beyond.",
@@ -89,8 +104,11 @@ export default function Hero() {
             key={`${src}-${i}`}
             src={src}
             alt=""
+            width={1920}
+            height={1080}
             loading={i === 0 ? "eager" : "lazy"}
-            decoding="async"
+            fetchpriority={i === 0 ? "high" : "low"}
+            decoding={i === 0 ? "sync" : "async"}
             className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 ${
               i === currentIndex ? "opacity-100" : "opacity-0"
             }`}
