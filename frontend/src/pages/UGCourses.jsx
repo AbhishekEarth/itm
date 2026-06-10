@@ -433,24 +433,24 @@ export default function UGCourses() {
                 <div className="lg:col-span-5 space-y-3">
 
                   {/* Massive seat count */}
-                  <div className="bg-white/15 backdrop-blur border border-white/20 rounded-3xl p-7">
-                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-white/70 mb-2">Annual Intake</div>
-                    <div className="text-7xl md:text-8xl font-black tracking-[-0.05em] leading-none">
+                  <div className="bg-white/15 backdrop-blur border border-white/20 rounded-3xl p-5 sm:p-7">
+                    <div className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.3em] text-white/70 mb-2">Annual Intake</div>
+                    <div className="text-5xl sm:text-7xl md:text-8xl font-black tracking-[-0.05em] leading-none">
                       <BigNumber value={active.seats} />
                     </div>
-                    <div className="text-xs mt-2 text-white/80 font-bold">sanctioned seats per academic year</div>
+                    <div className="text-[10px] sm:text-xs mt-1 sm:mt-2 text-white/80 font-bold">sanctioned seats per academic year</div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-5">
-                      <Clock size={16} className="text-amber-300 mb-2" />
-                      <div className="text-3xl font-black tracking-[-0.04em] leading-none">{active.duration.split(" ")[0]}Y</div>
-                      <div className="text-[9px] uppercase tracking-widest font-black text-white/70 mt-1">{active.semesters} Semesters</div>
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                    <div className="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 sm:p-5">
+                      <Clock size={16} className="text-amber-300 mb-1 sm:mb-2 w-4 h-4 sm:w-5 sm:h-5" />
+                      <div className="text-2xl sm:text-3xl font-black tracking-[-0.04em] leading-none">{active.duration.split(" ")[0]}Y</div>
+                      <div className="text-[8px] sm:text-[9px] uppercase tracking-widest font-black text-white/70 mt-1">{active.semesters} Semesters</div>
                     </div>
-                    <div className="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-5">
-                      <Briefcase size={16} className="text-amber-300 mb-2" />
-                      <div className="text-3xl font-black tracking-[-0.04em] leading-none">{active.careers.length}</div>
-                      <div className="text-[9px] uppercase tracking-widest font-black text-white/70 mt-1">Career Tracks</div>
+                    <div className="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-4 sm:p-5">
+                      <Briefcase size={16} className="text-amber-300 mb-1 sm:mb-2 w-4 h-4 sm:w-5 sm:h-5" />
+                      <div className="text-2xl sm:text-3xl font-black tracking-[-0.04em] leading-none">{active.careers.length}</div>
+                      <div className="text-[8px] sm:text-[9px] uppercase tracking-widest font-black text-white/70 mt-1">Career Tracks</div>
                     </div>
                   </div>
 
