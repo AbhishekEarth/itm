@@ -97,6 +97,7 @@ const QSiGauge           = lazy(() => import('./pages/QSiGauge'));
 const WhatsNew           = lazy(() => import('./pages/WhatsNew'));
 
 // ─── Always-visible home components (kept eager — they ARE the homepage) ─────
+import ErrorBoundary from './components/ErrorBoundary';
 import Header          from './components/Header';
 import Hero            from './components/Hero';
 import Stats           from './components/Stats';
@@ -203,24 +204,24 @@ const VideoGalleryPage    = lazy(() => import('./pages/GalleryPages').then(m => 
 
 // ─── Home sections ────────────────────────────────────────────────────────────
 const HOME_SECTIONS = [
-  { key: 'hero',          label: 'Hero',                node: <Hero /> },
-  { key: 'stats',         label: 'Stats',               node: <Stats /> },
-  { key: 'director',      label: "Director's Vision",   node: <DirectorVision /> },
-  { key: 'why-itm',       label: 'Why ITM',             node: <WhyITM /> },
-  { key: 'schools',       label: 'Departments',         node: <section id="schools"><Departments /></section> },
-  { key: 'distinct',      label: 'Distinctiveness',     node: <Distinctiveness /> },
-  { key: 'recruiters',    label: 'Recruiter Marquee',   node: <RecruiterMarquee /> },
-  { key: 'campus-life',   label: 'Campus Life',         node: <CampusLife /> },
-  { key: 'clubs',         label: 'Clubs & Cells',       node: <section id="clubs"><ClubsCells /></section> },
-  { key: 'cells',         label: 'Cells & Committees',  node: <section id="cells"><CellsAndCommittees /></section> },
-  { key: 'placements',    label: 'Placements',          node: <Placements /> },
-  { key: 'events',        label: 'Upcoming Events',     node: <section id="events"><UpcomingEvents /></section> },
-  { key: 'testimonials',  label: 'Testimonials',        node: <Testimonials /> },
-  { key: 'alumni',        label: 'Alumni',              node: <section id="alumni"><AlumniSection /></section> },
-  { key: 'gallery',       label: 'Gallery',             node: <section id="gallery"><GalleryPreview /></section> },
-  { key: 'quick-links',   label: 'Quick Links',         node: <QuickLinks /> },
-  { key: 'admission-cta', label: 'Admission CTA',       node: <AdmissionCTA /> },
-  { key: 'contact',       label: 'Contact',             node: <section id="contact"><ContactSection /></section> },
+  { key: 'hero',          label: 'Hero',                node: <ErrorBoundary name="Hero"><Hero /></ErrorBoundary> },
+  { key: 'stats',         label: 'Stats',               node: <ErrorBoundary name="Stats"><Stats /></ErrorBoundary> },
+  { key: 'director',      label: "Director's Vision",   node: <ErrorBoundary name="DirectorVision"><DirectorVision /></ErrorBoundary> },
+  { key: 'why-itm',       label: 'Why ITM',             node: <ErrorBoundary name="WhyITM"><WhyITM /></ErrorBoundary> },
+  { key: 'schools',       label: 'Departments',         node: <section id="schools"><ErrorBoundary name="Departments"><Departments /></ErrorBoundary></section> },
+  { key: 'distinct',      label: 'Distinctiveness',     node: <ErrorBoundary name="Distinctiveness"><Distinctiveness /></ErrorBoundary> },
+  { key: 'recruiters',    label: 'Recruiter Marquee',   node: <ErrorBoundary name="RecruiterMarquee"><RecruiterMarquee /></ErrorBoundary> },
+  { key: 'campus-life',   label: 'Campus Life',         node: <ErrorBoundary name="CampusLife"><CampusLife /></ErrorBoundary> },
+  { key: 'clubs',         label: 'Clubs & Cells',       node: <section id="clubs"><ErrorBoundary name="ClubsCells"><ClubsCells /></ErrorBoundary></section> },
+  { key: 'cells',         label: 'Cells & Committees',  node: <section id="cells"><ErrorBoundary name="CellsAndCommittees"><CellsAndCommittees /></ErrorBoundary></section> },
+  { key: 'placements',    label: 'Placements',          node: <ErrorBoundary name="Placements"><Placements /></ErrorBoundary> },
+  { key: 'events',        label: 'Upcoming Events',     node: <section id="events"><ErrorBoundary name="UpcomingEvents"><UpcomingEvents /></ErrorBoundary></section> },
+  { key: 'testimonials',  label: 'Testimonials',        node: <ErrorBoundary name="Testimonials"><Testimonials /></ErrorBoundary> },
+  { key: 'alumni',        label: 'Alumni',              node: <section id="alumni"><ErrorBoundary name="AlumniSection"><AlumniSection /></ErrorBoundary></section> },
+  { key: 'gallery',       label: 'Gallery',             node: <section id="gallery"><ErrorBoundary name="GalleryPreview"><GalleryPreview /></ErrorBoundary></section> },
+  { key: 'quick-links',   label: 'Quick Links',         node: <ErrorBoundary name="QuickLinks"><QuickLinks /></ErrorBoundary> },
+  { key: 'admission-cta', label: 'Admission CTA',       node: <ErrorBoundary name="AdmissionCTA"><AdmissionCTA /></ErrorBoundary> },
+  { key: 'contact',       label: 'Contact',             node: <section id="contact"><ErrorBoundary name="ContactSection"><ContactSection /></ErrorBoundary></section> },
 ];
 
 function HomeContent() {
