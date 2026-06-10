@@ -38,7 +38,7 @@ const ChatbotWidget = () => {
           initial={{ scale: 0, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 0.5 }}
-          className="fixed bottom-20 right-3 sm:bottom-6 sm:right-6 z-[9999] flex flex-col items-center"
+          className="fixed bottom-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-[9999] flex flex-col items-center"
         >
           {/* Label tooltip — shown on every viewport so users notice the agent. */}
           <motion.div

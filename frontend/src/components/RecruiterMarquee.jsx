@@ -200,7 +200,7 @@ export default function RecruiterMarquee() {
             <h2 className="text-xl sm:text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Where our students{" "}
               <span className="relative inline-block">
-                <span className="relative z-10 bg-gradient-to-br from-[#800000] to-[#3e0202] dark:from-rose-400 dark:to-amber-200 bg-clip-text text-transparent">
+                <span className="relative z-10 text-[#800000] dark:text-amber-400">
                   go to work.
                 </span>
                 <span className="absolute inset-x-0 bottom-1 h-3 bg-amber-200/60 dark:bg-amber-500/20 -z-0 -skew-x-3"></span>
