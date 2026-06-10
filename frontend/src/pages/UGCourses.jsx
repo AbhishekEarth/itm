@@ -330,17 +330,17 @@ export default function UGCourses() {
               {/* Prev / Next arrows — positioned OUTSIDE the card frame */}
               <button
                 onClick={prev}
-                className="absolute -left-5 md:-left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white dark:bg-gray-900 border-2 border-rose-100 dark:border-gray-700 text-[#800000] flex items-center justify-center hover:bg-[#800000] hover:text-white hover:border-[#800000] transition-colors shadow-lg"
+                className="absolute -left-2 sm:-left-5 md:-left-6 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white dark:bg-gray-900 border-2 border-rose-100 dark:border-gray-700 text-[#800000] flex items-center justify-center hover:bg-[#800000] hover:text-white hover:border-[#800000] transition-colors shadow-lg"
                 title="Previous"
               >
-                <ChevronLeft size={20} />
+                <ChevronLeft size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
               <button
                 onClick={next}
-                className="absolute -right-5 md:-right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-white dark:bg-gray-900 border-2 border-rose-100 dark:border-gray-700 text-[#800000] flex items-center justify-center hover:bg-[#800000] hover:text-white hover:border-[#800000] transition-colors shadow-lg"
+                className="absolute -right-2 sm:-right-5 md:-right-6 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white dark:bg-gray-900 border-2 border-rose-100 dark:border-gray-700 text-[#800000] flex items-center justify-center hover:bg-[#800000] hover:text-white hover:border-[#800000] transition-colors shadow-lg"
                 title="Next"
               >
-                <ChevronRight size={20} />
+                <ChevronRight size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
 
               <div className="relative overflow-hidden rounded-[2.5rem] shadow-2xl">
