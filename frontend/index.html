@@ -2,29 +2,62 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/images/ITMGOILogo.png" />
+    <link rel="icon" type="image/webp" href="/images/ITMGOILogo.webp" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="b2y6tBSRosjHHXN8uIatAnMUKhGrV1LLqVUMsJw-b4s" />
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C6RMNDSJ66"></script>
+
+    <!-- ── DNS / connection hints ─────────────────────────────────────────── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://logo.clearbit.com" />
+
+    <!-- ── Preload first hero image (LCP) ────────────────────────────────── -->
+    <link rel="preload" as="image" href="/images/hero/slider1.webp" fetchpriority="high" />
+
+    <!-- ── Google Fonts with font-display:swap (non-blocking) ────────────── -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      />
+    </noscript>
+
+    <!-- ── Google Analytics (deferred so it doesn't block render) ─────────── -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-C6RMNDSJ66');
+      // Defer GA until the page is interactive to avoid blocking LCP
+      window.addEventListener('load', function () {
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-C6RMNDSJ66';
+        s.async = true;
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', 'G-C6RMNDSJ66');
+      });
     </script>
-    <title>ITM Gwalior — Engineering & Management Institute</title>
+
+    <title>ITM Gwalior — Engineering &amp; Management Institute</title>
     <meta name="description" content="Pursue engineering or management at ITM Gwalior — NAAC-A, 1500+ recruiters, 98% placement, central India's most trusted institute." />
     <meta name="robots" content="index,follow" />
-    <meta property="og:title" content="ITM Gwalior — Engineering & Management Institute" />
-    <meta property="og:description" content="Premier engineering & management institute in Gwalior, MP." />
+    <meta property="og:title" content="ITM Gwalior — Engineering &amp; Management Institute" />
+    <meta property="og:description" content="Premier engineering &amp; management institute in Gwalior, MP." />
     <meta property="og:image" content="/images/ITMGOILogo.png" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ITM Gwalior" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="sitemap" type="application/xml" href="/api/public/sitemap.xml" />
+
+    <!-- ── No-flash dark mode ────────────────────────────────────────────── -->
     <script>
-      // Apply the saved light/dark choice before React mounts (no flash).
       (function () {
         try {
           if (localStorage.getItem('theme') === 'dark') {
