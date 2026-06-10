@@ -83,12 +83,12 @@ function ProgramIcon({ name, size = 28, className = "", wrapClass = "" }) {
 // Drop the matching image file at `frontend/public/images/fees/<id>.jpeg`
 // to enable a programme. Cards with `image: null` show a placeholder.
 const PROGRAMME_FEE_CARDS = [
-  { id: "btech", label: "B.Tech", image: "/images/fees/btech.jpeg" },
+  { id: "btech", label: "B.Tech", image: "/images/fees/btech.webp" },
   { id: "bba",   label: "BBA",    image: null },
   { id: "bca",   label: "BCA",    image: null },
   { id: "mtech", label: "M.Tech", image: null },
-  { id: "mca",   label: "MCA",    image: "/images/fees/mca.jpeg" },
-  { id: "mba",   label: "MBA",    image: "/images/fees/mba.jpeg" },
+  { id: "mca",   label: "MCA",    image: "/images/fees/mca.webp" },
+  { id: "mba",   label: "MBA",    image: "/images/fees/mba.webp" },
 ];
 
 // ─── Eligibility wizard logic ────────────────────────────────────────

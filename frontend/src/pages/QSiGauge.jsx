@@ -180,7 +180,7 @@ export default function QSiGauge() {
       <div className="relative max-w-5xl mx-auto">
         <div className="text-center mb-8">
           <Link to="/">
-            <img src="/images/ITMGOILogo.png" alt="ITM Logo" className="h-12 mx-auto mb-3 drop-shadow-lg" />
+            <img src="/images/ITMGOILogo.webp" alt="ITM Logo" className="h-12 mx-auto mb-3 drop-shadow-lg" />
           </Link>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-rose-100 text-[10px] font-bold uppercase tracking-widest mb-3">
             <ShieldCheck size={12} />

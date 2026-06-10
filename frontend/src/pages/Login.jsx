@@ -51,7 +51,7 @@ export default function Login() {
 
         <div className="text-center mb-8">
           <Link to="/">
-            <img src="/images/ITMGOILogo.png" alt="ITM Logo" className="h-14 mx-auto mb-4 drop-shadow-lg" />
+            <img src="/images/ITMGOILogo.webp" alt="ITM Logo" className="h-14 mx-auto mb-4 drop-shadow-lg" />
           </Link>
           <h1 className="text-2xl font-black text-white tracking-tight">ITM Gwalior Portal</h1>
           <p className="text-red-200/60 text-sm mt-1">Sign in to your account</p>

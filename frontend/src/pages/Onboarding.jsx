@@ -129,7 +129,7 @@ export default function Onboarding() {
 
       {/* ── HERO ─────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#3e0202] via-[#6b0000] to-[#800000] text-white py-24 md:py-36">
-        <div className="absolute inset-0 bg-[url('/images/hero1.jpg')] bg-cover bg-center opacity-10" />
+        <div className="absolute inset-0 bg-[url('/images/hero1.webp')] bg-cover bg-center opacity-10" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#800000]/60 to-[#3e0202]" />
 
         <div className="relative max-w-5xl mx-auto px-6 text-center">

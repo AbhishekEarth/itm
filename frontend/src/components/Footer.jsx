@@ -4,7 +4,7 @@ import EditableText from "./admin/EditableText";
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Mail, Phone, MapPin, ArrowUpRight, Send } from "lucide-react";
 
-const logo = "/images/ITMGOILogo.png";
+const logo = "/images/ITMGOILogo.webp";
 
 const SECTIONS = [
   {
