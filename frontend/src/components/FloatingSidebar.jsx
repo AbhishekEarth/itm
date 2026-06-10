@@ -176,7 +176,7 @@ const FloatingSidebar = () => {
       </div>
 
       {/* MOBILE — single FAB bottom-right that expands the actions */}
-      <div className="sm:hidden fixed bottom-4 right-4 z-[100] flex flex-col items-end gap-3">
+      <div className="sm:hidden fixed bottom-4 right-4 z-[100] flex flex-col items-end gap-3 pointer-events-none">
         {actions.map((action, index) => {
           const pillBase = `relative flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full
                        text-white text-[11px] font-bold tracking-widest uppercase
@@ -238,7 +238,7 @@ const FloatingSidebar = () => {
           className={`flex items-center justify-center w-11 h-11 rounded-full
                      bg-indigo-600 text-white shadow-lg
                      transition-all duration-500
-                     ${isVisible && !mobileOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}
+                     ${isVisible && !mobileOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'}`}
         >
           <ChevronUp size={20} />
         </button>
@@ -247,7 +247,7 @@ const FloatingSidebar = () => {
         <button
           onClick={() => setMobileOpen((v) => !v)}
           aria-label={mobileOpen ? "Close quick actions" : "Open quick actions"}
-          className={`relative flex items-center justify-center w-11 h-11 rounded-full
+          className={`pointer-events-auto relative flex items-center justify-center w-11 h-11 rounded-full
                      bg-gradient-to-br from-[#a30000] to-[#800000] text-white shadow-2xl
                      ring-2 ring-amber-300/40 transition-all duration-300
                      active:scale-95`}
