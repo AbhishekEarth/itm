@@ -102,11 +102,29 @@
   .glass {
     @apply bg-white/70 backdrop-blur-lg border border-white/20 shadow-xl;
   }
-  
+
   .glass-dark {
     @apply bg-gray-900/80 backdrop-blur-lg border border-gray-700/50 shadow-xl;
   }
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+ * Dark-mode rescue for hard-coded maroon text colours.
+ *
+ * Hundreds of components use Tailwind arbitrary values like text-[#800000]
+ * for headings, eyebrows and accents. On the dark background (#020617) these
+ * deep maroons read as near-black and become invisible. We promote them to
+ * lighter rose tones in dark mode, matching the existing rose-300/rose-400
+ * palette used elsewhere. Borders/backgrounds with the same hex are left
+ * alone — only text colour is affected.
+ * ────────────────────────────────────────────────────────────────────────── */
+html.dark .text-\[\#800000\] { color: #fda4af; }   /* rose-300 */
+html.dark .text-\[\#1a0606\] { color: #f1f5f9; }   /* near-white for headlines */
+html.dark .text-\[\#3e0202\] { color: #fda4af; }
+html.dark .text-\[\#5a0000\] { color: #fda4af; }
+html.dark .text-\[\#a30000\] { color: #fda4af; }
+html.dark .group:hover .group-hover\:text-\[\#800000\] { color: #fda4af; }
+html.dark .hover\:text-\[\#800000\]:hover { color: #fda4af; }
 .animated-border-glow {
   position: relative;
   transition: all 0.3s ease;

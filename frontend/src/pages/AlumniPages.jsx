@@ -1,10 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 import {
   Users2, HeartHandshake, Award, MapPin, Quote, ExternalLink,
   ArrowUpRight, Sparkles,
 } from "lucide-react";
 import PageShell, { SectionTitle, Card, Prose, FactRow } from "./_PageShell";
+import { publicComplianceApi } from "../api/compliance";
 
 /* ============================================================
    ALUMNI SPEAKS — testimonials grouped by year
@@ -55,6 +57,27 @@ const TESTIMONIALS = [
 ];
 
 export function AlumniSpeaksPage() {
+  const { data: live } = useQuery({
+    queryKey: ["public-alumni-speaks"],
+    queryFn: publicComplianceApi.alumniSpeaks,
+  });
+  // Group live alumni by batch_year; if API returns nothing, fall back to bundled.
+  const liveGroups = (() => {
+    if (!live || !live.length) return null;
+    const by = new Map();
+    for (const a of live) {
+      const year = String(a.batch_year || "Recent");
+      if (!by.has(year)) by.set(year, []);
+      by.get(year).push({
+        name: a.name, batch: a.programme_code || "—",
+        company: a.company || a.current_role || "",
+        quote: a.quote || "",
+      });
+    }
+    return [...by.entries()].sort((a, b) => b[0].localeCompare(a[0]))
+      .map(([year, items]) => ({ year, items }));
+  })();
+  const groups = liveGroups || TESTIMONIALS;
   return (
     <PageShell
       eyebrow="Alumni Speaks"
@@ -63,18 +86,18 @@ export function AlumniSpeaksPage() {
       intro="Eighteen years of graduate voices from across batches, branches and companies. The recurring theme: TAP Cell mentorship and the values that hold up long after graduation."
       chips={["30K+ alumni", "Across 6 batches", "Microsoft · Infy · TCS · MS-equivalents"]}
     >
-      {TESTIMONIALS.map((batch) => (
+      {groups.map((batch) => (
         <section key={batch.year}>
           <SectionTitle eyebrow={`Class of ${batch.year}`} title={`Alumni Speaks · `} accent={batch.year} />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
             {batch.items.map((t, i) => (
               <motion.div key={t.name + i}
                 initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-30px" }}
-                className="bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 p-6 hover:shadow-xl transition-shadow"
+                className="bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 p-3 sm:p-6 hover:shadow-xl transition-shadow"
               >
-                <Quote className="text-[#800000]/30 dark:text-amber-300/30 mb-3" size={28} />
-                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic mb-5">"{t.quote}"</p>
-                <div className="pt-4 border-t border-rose-50 dark:border-gray-800">
+                <Quote className="text-[#800000]/30 dark:text-amber-300/30 mb-2 sm:mb-3" size={28} />
+                <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic mb-3 sm:mb-5 line-clamp-4 sm:line-clamp-none">"{t.quote}"</p>
+                <div className="pt-3 sm:pt-4 border-t border-rose-50 dark:border-gray-800">
                   <div className="font-black text-base text-[#1a0606] dark:text-white">{t.name}</div>
                   <div className="text-xs text-gray-500 dark:text-gray-400 font-bold mt-0.5">
                     {t.batch} · {t.company}
@@ -88,12 +111,12 @@ export function AlumniSpeaksPage() {
 
       <Card className="text-center bg-gradient-to-br from-[#fbf7f2] to-rose-50/40 dark:from-gray-900 dark:to-gray-900">
         <Sparkles className="mx-auto text-[#800000] dark:text-amber-300 mb-3" size={28} />
-        <h3 className="text-2xl font-black text-[#1a0606] dark:text-white mb-2">Share your story.</h3>
-        <p className="text-sm text-gray-600 dark:text-gray-400 font-medium mb-5 max-w-lg mx-auto">
+        <h3 className="text-xl sm:text-2xl font-black text-[#1a0606] dark:text-white mb-2">Share your story.</h3>
+        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-medium mb-4 sm:mb-5 max-w-lg mx-auto">
           We're always collecting alumni testimonials. Reach out to the Alumni Cell with your quote
           and we'll feature you in the next class chronicle.
         </p>
-        <a href="mailto:alumni@itmgoi.in" className="inline-flex items-center gap-2 bg-[#800000] hover:bg-[#5c0202] text-white px-5 py-3 rounded-xl font-black text-[11px] tracking-widest uppercase">
+        <a href="mailto:alumni@itmgoi.in" className="inline-flex items-center gap-2 bg-[#800000] hover:bg-[#5c0202] text-white px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl font-black text-[11px] tracking-widest uppercase">
           alumni@itmgoi.in
         </a>
       </Card>
@@ -113,23 +136,23 @@ export function MentorshipPage() {
       intro="The ITM Alumni Mentorship Program pairs current students with graduates working at top tech, finance and management companies. Career advice, interview prep, mock screens and a friendly second opinion when you need one."
       chips={["1:1 matching", "Six-month cycles", "Online + in-person"]}
     >
-      <section className="grid lg:grid-cols-3 gap-5">
+      <section className="grid lg:grid-cols-3 gap-3 sm:gap-5">
         <Card>
-          <div className="w-12 h-12 rounded-2xl bg-rose-500/15 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300 flex items-center justify-center mb-4">
+          <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-2xl bg-rose-500/15 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300 flex items-center justify-center mb-3 sm:mb-4">
             <Users2 size={22} />
           </div>
           <h3 className="font-black text-lg text-[#1a0606] dark:text-white mb-2">Get matched</h3>
           <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium">Tell us your goal — career switch, FAANG prep, founder track. We match you with an alumnus in that exact lane.</p>
         </Card>
         <Card>
-          <div className="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300 flex items-center justify-center mb-4">
+          <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-2xl bg-amber-500/15 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300 flex items-center justify-center mb-3 sm:mb-4">
             <HeartHandshake size={22} />
           </div>
           <h3 className="font-black text-lg text-[#1a0606] dark:text-white mb-2">Meet regularly</h3>
           <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium">Bi-monthly online calls or quarterly in-person meets at the chapter nearest your mentor.</p>
         </Card>
         <Card>
-          <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300 flex items-center justify-center mb-4">
+          <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-2xl bg-emerald-500/15 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300 flex items-center justify-center mb-3 sm:mb-4">
             <Award size={22} />
           </div>
           <h3 className="font-black text-lg text-[#1a0606] dark:text-white mb-2">Graduate forward</h3>
@@ -138,9 +161,9 @@ export function MentorshipPage() {
       </section>
 
       <Card className="bg-gradient-to-br from-[#1a0606] to-[#3e0202] text-white border-amber-300/30 text-center">
-        <h3 className="text-3xl font-black text-white mb-2">Apply for mentorship.</h3>
-        <p className="text-rose-100/80 font-medium mb-5 max-w-lg mx-auto">Open to all current students. Three intakes per year — write to the Alumni Cell to be matched in the next cycle.</p>
-        <a href="mailto:alumni@itmgoi.in" className="inline-flex items-center gap-2 bg-amber-300 hover:bg-amber-400 text-[#1a0606] px-5 py-3 rounded-xl font-black text-[11px] tracking-widest uppercase">
+        <h3 className="text-xl sm:text-3xl font-black text-white mb-2">Apply for mentorship.</h3>
+        <p className="text-xs sm:text-base text-rose-100/80 font-medium mb-4 sm:mb-5 max-w-lg mx-auto">Open to all current students. Three intakes per year — write to the Alumni Cell to be matched in the next cycle.</p>
+        <a href="mailto:alumni@itmgoi.in" className="inline-flex items-center gap-2 bg-amber-300 hover:bg-amber-400 text-[#1a0606] px-4 py-2.5 sm:px-5 sm:py-3 rounded-xl font-black text-[11px] tracking-widest uppercase">
           Email Alumni Cell <ArrowUpRight size={13} />
         </a>
       </Card>
@@ -159,10 +182,10 @@ export function MembershipPage() {
       accentTitle="for life."
       intro="A one-time membership that keeps you on the Alumni roster — invitations to meets, networking access, mentorship opportunities and a permanent place in the institute's events calendar."
     >
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-3 sm:gap-6">
         <Card>
           <Award className="text-[#800000] dark:text-amber-300 mb-3" size={28} />
-          <h3 className="text-xl font-black text-[#1a0606] dark:text-white mb-3">What you get</h3>
+          <h3 className="text-lg sm:text-xl font-black text-[#1a0606] dark:text-white mb-2 sm:mb-3">What you get</h3>
           <ul className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium space-y-2">
             <li>· Lifetime membership card (digital + physical).</li>
             <li>· Invitations to every alumni meet across all 3 chapters.</li>
@@ -174,7 +197,7 @@ export function MembershipPage() {
         </Card>
         <Card>
           <Sparkles className="text-[#800000] dark:text-amber-300 mb-3" size={28} />
-          <h3 className="text-xl font-black text-[#1a0606] dark:text-white mb-3">How to join</h3>
+          <h3 className="text-lg sm:text-xl font-black text-[#1a0606] dark:text-white mb-2 sm:mb-3">How to join</h3>
           <Prose>
             <p>
               Open to anyone who completed any UG or PG programme at ITM Gwalior. Sign up via the
@@ -202,20 +225,32 @@ const CHAPTERS = [
 ];
 
 export function ChaptersPage() {
+  const { data: live } = useQuery({
+    queryKey: ["public-alumni-chapters"],
+    queryFn: publicComplianceApi.alumniChapters,
+  });
+  const chapters = (live && live.length
+    ? live.map((c) => ({
+        city: c.city,
+        body: c.notes
+          ? c.notes
+          : `${c.coordinator ? `Coordinator: ${c.coordinator}. ` : ""}${c.members_count ? `${c.members_count}+ alumni.` : ""}${c.contact_email ? ` Reach ${c.contact_email}.` : ""}`.trim() || "Active chapter — reach out to the Alumni Cell for the next meet.",
+      }))
+    : CHAPTERS);
   return (
     <PageShell
       eyebrow="Alumni Chapters"
-      title="Three cities."
+      title={`${chapters.length} cities.`}
       accentTitle="One ITM."
-      intro="Active chapters in Delhi NCR, Bengaluru and on the Gwalior campus — each with its own meeting cadence, organising committee and signature events."
-      chips={["3 chapters", "Quarterly + monthly meets", "Annual Gwalior day"]}
+      intro="Active chapters across India — each with its own meeting cadence, organising committee and signature events."
+      chips={[`${chapters.length} chapters`, "Quarterly + monthly meets", "Annual Gwalior day"]}
     >
-      <div className="grid md:grid-cols-3 gap-5">
-        {CHAPTERS.map((c) => (
+      <div className="grid md:grid-cols-3 gap-3 sm:gap-5">
+        {chapters.map((c) => (
           <Card key={c.city}>
             <MapPin className="text-[#800000] dark:text-amber-300 mb-3" size={24} />
-            <h3 className="text-xl font-black text-[#1a0606] dark:text-white mb-2">{c.city}</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{c.body}</p>
+            <h3 className="text-lg sm:text-xl font-black text-[#1a0606] dark:text-white mb-1.5 sm:mb-2">{c.city}</h3>
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{c.body}</p>
           </Card>
         ))}
       </div>

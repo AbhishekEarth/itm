@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu, X, ChevronDown, ArrowUpRight, ShieldCheck, Sun, Moon } from "lucide-react";
+import { usePublicPagesList } from "../hooks/usePublicPagesList";
 
 const logo = "/images/ITMGOILogo.webp";
 const NAACLogo = "/images/NAACLogo.webp";
@@ -16,7 +17,7 @@ const DEPT_LINKS = [
   { label: "Civil Engineering", path: "/ce" },
   { label: "MBA · Management", path: "/mba" },
   { label: "Engineering Sciences & Humanities", path: "/esh" },
-  { label: "Emerging Branches", path: "/emerging-branches" },
+  { label: "CSE - Emerging Branches", path: "/emerging-branches" },
   { label: "Central Library", path: "/library" },
 ];
 
@@ -144,6 +145,23 @@ function DropdownPanel({ open, items, width = "w-64", onItemClick, align = "left
   );
 }
 
+// Merge admin-created pages into a static menu by URL prefix. Each entry in
+// `extras` is the same shape the dropdown expects: { label, path }. We dedupe
+// by path so a hard-coded link wins over a CMS one if the admin happens to
+// reuse the same URL.
+function mergeMenu(staticItems, extras) {
+  if (!extras?.length) return staticItems;
+  const seen = new Set(staticItems.map((i) => i.path));
+  const out = [...staticItems];
+  for (const e of extras) {
+    if (!seen.has(e.path)) {
+      out.push(e);
+      seen.add(e.path);
+    }
+  }
+  return out;
+}
+
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -169,6 +187,43 @@ export default function Header() {
   const aboutRef = useRef(null);
   const alumniRef = useRef(null);
   const moreRef = useRef(null);
+
+  // ── Inject admin-created pages into the matching dropdown ─────────
+  // Pages with path starting with /about/* go in About, /departments/* in
+  // Departments, /cells/* in Clubs, /research/* in Research, /admissions/*
+  // in Admissions, /alumni/* in Alumni, /gallery/* and everything else in More.
+  // Custom-URL pages (no prefix) land in More so they're still reachable.
+  const { data: livePages = [] } = usePublicPagesList();
+  const hardcodedPaths = useMemo(() => {
+    const all = [
+      ...DEPT_LINKS, ...CLUB_LINKS, ...ABOUT_LINKS, ...ALUMNI_LINKS,
+      ...MORE_LINKS, ...RESEARCH_LINKS, ...ADMISSION_LINKS,
+    ];
+    return new Set(all.map((i) => i.path));
+  }, []);
+  const extrasByMenu = useMemo(() => {
+    const buckets = { dept: [], club: [], about: [], alumni: [], more: [], research: [], admission: [] };
+    for (const p of livePages) {
+      // Skip if the path matches an existing hard-coded route (avoid duplicates).
+      if (hardcodedPaths.has(p.path)) continue;
+      const item = { label: p.title, path: p.path };
+      if      (p.path.startsWith("/departments")) buckets.dept.push(item);
+      else if (p.path.startsWith("/cells"))       buckets.club.push(item);
+      else if (p.path.startsWith("/about"))       buckets.about.push(item);
+      else if (p.path.startsWith("/alumni"))      buckets.alumni.push(item);
+      else if (p.path.startsWith("/research"))    buckets.research.push(item);
+      else if (p.path.startsWith("/admissions"))  buckets.admission.push(item);
+      else                                        buckets.more.push(item);
+    }
+    return buckets;
+  }, [livePages, hardcodedPaths]);
+  const deptLinks      = useMemo(() => mergeMenu(DEPT_LINKS,      extrasByMenu.dept),      [extrasByMenu]);
+  const clubLinks      = useMemo(() => mergeMenu(CLUB_LINKS,      extrasByMenu.club),      [extrasByMenu]);
+  const aboutLinks     = useMemo(() => mergeMenu(ABOUT_LINKS,     extrasByMenu.about),     [extrasByMenu]);
+  const alumniLinks    = useMemo(() => mergeMenu(ALUMNI_LINKS,    extrasByMenu.alumni),    [extrasByMenu]);
+  const moreLinks      = useMemo(() => mergeMenu(MORE_LINKS,      extrasByMenu.more),      [extrasByMenu]);
+  const researchLinks  = useMemo(() => mergeMenu(RESEARCH_LINKS,  extrasByMenu.research),  [extrasByMenu]);
+  const admissionLinks = useMemo(() => mergeMenu(ADMISSION_LINKS, extrasByMenu.admission), [extrasByMenu]);
 
   // Theme state — simple light/dark; persisted in localStorage.
   const [theme, setTheme] = useState(() => {
@@ -211,7 +266,7 @@ export default function Header() {
 
       {/* 1. UTILITY BAR — permanent maroon gradient (on-theme, doesn't flip).
             NOTE: no overflow-hidden — the theme dropdown needs to escape below the bar. */}
-      <div className="hidden md:block relative text-white bg-gradient-to-r from-[#2a0101] via-[#800000] to-[#2a0101]">
+      <div className="relative text-white bg-gradient-to-r from-[#2a0101] via-[#800000] to-[#2a0101]">
         {/* shimmer overlay for depth (absolute inset-0, contained naturally) */}
         <div
           aria-hidden
@@ -234,25 +289,47 @@ export default function Header() {
         {/* top + bottom gold hairlines */}
         <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-300/70 to-transparent" />
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-amber-300/40 to-transparent" />
-        <div className="relative w-full px-4 lg:px-8 flex justify-between items-center py-1.5">
-          <div className="flex items-center gap-2 text-[11px] font-medium tracking-wide text-white/85">
-            <span>Developed By</span>
-            <span className="text-white/30">—</span>
-            <span className="text-amber-200">INFINITY CLUB</span>
+        <div className="relative w-full px-3 sm:px-4 lg:px-8 flex justify-between items-center py-1 sm:py-1.5 gap-2">
+          <div className="flex md:hidden items-center gap-1.5 text-[9px] shrink min-w-0 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
+            <Link
+              to="/naac"
+              className="px-1.5 py-0.5 rounded-full border border-white/30 text-white/90 hover:bg-white/10 transition-all font-medium shrink-0"
+            >
+              NAAC
+            </Link>
+            <Link
+              to="/nirf"
+              className="px-1.5 py-0.5 rounded-full border border-white/30 text-white/90 hover:bg-white/10 transition-all font-medium shrink-0"
+            >
+              NIRF
+            </Link>
+            <Link
+              to="/iqac"
+              className="px-1.5 py-0.5 rounded-full border border-white/30 text-white/90 hover:bg-white/10 transition-all font-medium shrink-0"
+            >
+              IQAC
+            </Link>
+            <Link
+              to="/anti-ragging"
+              className="px-1.5 py-0.5 rounded-full border border-white/30 text-white/90 hover:bg-white/10 transition-all font-medium shrink-0 flex items-center gap-1"
+            >
+              <ShieldCheck size={9} strokeWidth={2.4} /> Anti-Ragging
+            </Link>
           </div>
-          <div className="flex items-center gap-5 text-[11px]">
-            <a href="#" className="text-white/80 hover:text-white transition flex items-center gap-1.5">
+          <div className="hidden md:block flex-1" />
+          <div className="flex items-center gap-2 sm:gap-5 text-[9px] sm:text-[11px] shrink-0">
+            <Link to="/anti-ragging" className="hidden md:flex text-white/80 hover:text-white transition items-center gap-1.5">
               <ShieldCheck size={11} strokeWidth={2.4} /> Anti-Ragging
-            </a>
-            <a href="#" className="text-white/80 hover:text-white transition">NIRF</a>
-            <a href="#" className="text-white/80 hover:text-white transition">IQAC</a>
-            <a href="#" className="text-white/80 hover:text-white transition">NAAC A+</a>
-            <span className="text-white/20">|</span>
+            </Link>
+            <Link to="/nirf" className="hidden md:inline text-white/80 hover:text-white transition">NIRF</Link>
+            <Link to="/iqac" className="hidden md:inline text-white/80 hover:text-white transition">IQAC</Link>
+            <Link to="/naac" className="hidden md:inline text-white/80 hover:text-white transition">NAAC A</Link>
+            <span className="hidden md:inline text-white/20">|</span>
             <a
               href="https://lms.itmgoi.in/"
               target="_blank"
               rel="noreferrer"
-              className="px-2.5 py-0.5 rounded-full border border-cyan-300/40 text-cyan-200 hover:bg-cyan-400 hover:text-[#2a0101] hover:border-cyan-400 transition-all font-medium"
+              className="px-2 sm:px-2.5 py-0.5 rounded-full border border-cyan-300/40 text-cyan-200 hover:bg-cyan-400 hover:text-[#2a0101] hover:border-cyan-400 transition-all font-medium"
             >
               LMS
             </a>
@@ -260,17 +337,17 @@ export default function Header() {
               href="http://mis.itmgoi.in/"
               target="_blank"
               rel="noreferrer"
-              className="px-2.5 py-0.5 rounded-full border border-amber-300/40 text-amber-200 hover:bg-amber-300 hover:text-[#2a0101] hover:border-amber-300 transition-all font-medium"
+              className="px-2 sm:px-2.5 py-0.5 rounded-full border border-amber-300/40 text-amber-200 hover:bg-amber-300 hover:text-[#2a0101] hover:border-amber-300 transition-all font-medium"
             >
               MIS
             </a>
-            {/* Light / dark toggle */}
+            {/* Light / dark toggle — hidden on mobile (already in main navbar) */}
             <button
               type="button"
               onClick={toggleTheme}
               aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
               title={theme === "dark" ? "Light mode" : "Dark mode"}
-              className="ml-1 flex items-center justify-center w-7 h-7 rounded-full border border-amber-300/40 text-amber-200 hover:bg-amber-300 hover:text-[#2a0101] hover:border-amber-300 transition-all"
+              className="hidden md:flex ml-1 items-center justify-center w-7 h-7 rounded-full border border-amber-300/40 text-amber-200 hover:bg-amber-300 hover:text-[#2a0101] hover:border-amber-300 transition-all"
             >
               {theme === "dark" ? <Sun size={13} strokeWidth={2.4} /> : <Moon size={13} strokeWidth={2.4} />}
             </button>
@@ -305,18 +382,18 @@ export default function Header() {
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent dark:via-amber-300/40" />
 
         <div
-          className={`relative w-full px-4 lg:px-8 flex items-center justify-between transition-[padding] duration-300 ease-out ${
-            isScrolled ? "py-2.5" : "py-4"
+          className={`relative w-full px-3 sm:px-4 lg:px-8 flex items-center justify-between transition-[padding] duration-300 ease-out ${
+            isScrolled ? "py-2" : "py-2.5 sm:py-4"
           }`}
         >
           {/* LOGO GROUP — pinned to the far left edge */}
-          <div className="flex items-center gap-4 lg:gap-6 shrink-0 min-w-0 mr-auto">
+          <div className="flex items-center gap-2 sm:gap-4 lg:gap-6 shrink-0 min-w-0 mr-auto">
             <Link to="/" className="group relative cursor-pointer flex items-center shrink-0">
               <img
                 src={logo}
                 alt="ITM Logo"
                 className={`relative block object-contain transition-[height] duration-300 ease-out dark:drop-shadow-[0_0_10px_rgba(239,68,68,0.45)] ${
-                  isScrolled ? "h-12 lg:h-14" : "h-14 lg:h-[68px]"
+                  isScrolled ? "h-9 sm:h-12 lg:h-14" : "h-10 sm:h-14 lg:h-[68px]"
                 }`}
               />
             </Link>
@@ -326,12 +403,12 @@ export default function Header() {
                 isScrolled ? "h-10" : "h-12"
               }`}
             />
-            <div className="flex items-center gap-4 lg:gap-5 shrink-0">
+            <div className="hidden sm:flex items-center gap-3 sm:gap-4 lg:gap-5 shrink-0">
               <motion.img
                 whileHover={{ scale: 1.08 }}
                 src={YearsLogo}
                 alt="30 Years"
-                className={`block w-auto object-contain transition-[height] duration-300 ease-out dark:drop-shadow-[0_0_8px_rgba(251,191,36,0.35)] ${
+                className={`hidden md:block w-auto object-contain transition-[height] duration-300 ease-out dark:drop-shadow-[0_0_8px_rgba(251,191,36,0.35)] ${
                   isScrolled ? "h-10 lg:h-12" : "h-12 lg:h-[58px]"
                 }`}
               />
@@ -340,7 +417,7 @@ export default function Header() {
                 src={NAACLogo}
                 alt="NAAC"
                 className={`block w-auto object-contain transition-[height] duration-300 ease-out dark:drop-shadow-[0_0_8px_rgba(251,191,36,0.35)] ${
-                  isScrolled ? "h-10 lg:h-12" : "h-12 lg:h-[58px]"
+                  isScrolled ? "h-9 sm:h-10 lg:h-12" : "h-10 sm:h-12 lg:h-[58px]"
                 }`}
               />
               <motion.img
@@ -348,7 +425,7 @@ export default function Header() {
                 src={NBALogo}
                 alt="NBA Accredited"
                 style={theme === "dark" ? { mixBlendMode: "normal", filter: "brightness(0) invert(1) drop-shadow(0 0 8px rgba(255,255,255,0.5))" } : { mixBlendMode: "multiply" }}
-                className={`block w-auto object-contain transition-[height] duration-300 ease-out bg-transparent ${
+                className={`hidden md:block w-auto object-contain transition-[height] duration-300 ease-out bg-transparent ${
                   isScrolled ? "h-10 lg:h-12" : "h-12 lg:h-[58px]"
                 }`}
               />
@@ -398,7 +475,7 @@ export default function Header() {
                 About
                 <ChevronDown size={12} strokeWidth={2.5} className={`transition-transform duration-200 ${aboutOpen ? "rotate-180" : ""}`} />
               </button>
-              <DropdownPanel open={aboutOpen} items={ABOUT_LINKS} width="w-72" onItemClick={() => setAboutOpen(false)} />
+              <DropdownPanel open={aboutOpen} items={aboutLinks} width="w-72" onItemClick={() => setAboutOpen(false)} />
             </div>
 
             {/* Admissions */}
@@ -422,7 +499,7 @@ export default function Header() {
                 Admission
                 <ChevronDown size={12} strokeWidth={2.5} className={`transition-transform duration-200 ${admOpen ? "rotate-180" : ""}`} />
               </Link>
-              <DropdownPanel open={admOpen} items={ADMISSION_LINKS} width="w-64" onItemClick={() => setAdmOpen(false)} />
+              <DropdownPanel open={admOpen} items={admissionLinks} width="w-64" onItemClick={() => setAdmOpen(false)} />
             </div>
 
             {/* Departments */}
@@ -446,7 +523,7 @@ export default function Header() {
                 Departments
                 <ChevronDown size={12} strokeWidth={2.5} className={`transition-transform duration-200 ${deptOpen ? "rotate-180" : ""}`} />
               </button>
-              <DropdownPanel open={deptOpen} items={DEPT_LINKS} width="w-60" onItemClick={() => setDeptOpen(false)} />
+              <DropdownPanel open={deptOpen} items={deptLinks} width="w-60" onItemClick={() => setDeptOpen(false)} />
             </div>
 
             {/* Research */}
@@ -470,7 +547,7 @@ export default function Header() {
                 Research
                 <ChevronDown size={12} strokeWidth={2.5} className={`transition-transform duration-200 ${resOpen ? "rotate-180" : ""}`} />
               </Link>
-              <DropdownPanel open={resOpen} items={RESEARCH_LINKS} width="w-72" onItemClick={() => setResOpen(false)} />
+              <DropdownPanel open={resOpen} items={researchLinks} width="w-72" onItemClick={() => setResOpen(false)} />
             </div>
 
             {/* Clubs */}
@@ -494,7 +571,7 @@ export default function Header() {
                 Clubs
                 <ChevronDown size={12} strokeWidth={2.5} className={`transition-transform duration-200 ${clubOpen ? "rotate-180" : ""}`} />
               </button>
-              <DropdownPanel open={clubOpen} items={CLUB_LINKS} width="w-72" onItemClick={() => setClubOpen(false)} />
+              <DropdownPanel open={clubOpen} items={clubLinks} width="w-72" onItemClick={() => setClubOpen(false)} />
             </div>
 
             {/* Alumni */}
@@ -515,7 +592,7 @@ export default function Header() {
                 Alumni
                 <ChevronDown size={12} strokeWidth={2.5} className={`transition-transform duration-200 ${alumniOpen ? "rotate-180" : ""}`} />
               </button>
-              <DropdownPanel open={alumniOpen} items={ALUMNI_LINKS} width="w-72" onItemClick={() => setAlumniOpen(false)} align="right" />
+              <DropdownPanel open={alumniOpen} items={alumniLinks} width="w-72" onItemClick={() => setAlumniOpen(false)} align="right" />
             </div>
 
             {/* More — NAAC / Gallery / Compliance / Careers / Contact */}
@@ -536,7 +613,7 @@ export default function Header() {
                 More
                 <ChevronDown size={12} strokeWidth={2.5} className={`transition-transform duration-200 ${moreOpen ? "rotate-180" : ""}`} />
               </button>
-              <DropdownPanel open={moreOpen} items={MORE_LINKS} width="w-72" onItemClick={() => setMoreOpen(false)} align="right" />
+              <DropdownPanel open={moreOpen} items={moreLinks} width="w-72" onItemClick={() => setMoreOpen(false)} align="right" />
             </div>
             </div>
 
@@ -553,28 +630,28 @@ export default function Header() {
           </nav>
 
           {/* MOBILE CONTROLS — pinned to the far right edge */}
-          <div className="xl:hidden flex items-center gap-3 ml-auto">
+          <div className="xl:hidden flex items-center gap-1.5 sm:gap-3 ml-auto shrink-0">
             {/* Light / dark toggle — mobile */}
             <button
               type="button"
               onClick={toggleTheme}
               aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-              className="flex items-center justify-center w-9 h-9 rounded-full border border-slate-300 dark:border-white/30 text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-white/15 transition-colors"
+              className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-slate-300 dark:border-white/30 text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-white/15 transition-colors"
             >
-              {theme === "dark" ? <Sun size={16} strokeWidth={2.4} /> : <Moon size={16} strokeWidth={2.4} />}
+              {theme === "dark" ? <Sun size={14} strokeWidth={2.4} className="sm:!w-4 sm:!h-4" /> : <Moon size={14} strokeWidth={2.4} className="sm:!w-4 sm:!h-4" />}
             </button>
             <Link
               to="/admissions/how-to-apply"
-              className="px-4 py-2 rounded-full text-[11px] font-bold ring-1 shadow-md bg-[#800000] text-white ring-[#800000]/30 dark:bg-white dark:text-[#800000] dark:ring-white/60"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-[11px] font-bold ring-1 shadow-md bg-[#800000] text-white ring-[#800000]/30 dark:bg-white dark:text-[#800000] dark:ring-white/60"
             >
               Apply
             </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 dark:text-white dark:hover:bg-white/15"
+              className="p-1.5 sm:p-2 rounded-lg text-slate-700 hover:bg-slate-100 dark:text-white dark:hover:bg-white/15"
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? <X size={22} className="sm:!w-6 sm:!h-6" /> : <Menu size={22} className="sm:!w-6 sm:!h-6" />}
             </button>
           </div>
         </div>
@@ -620,7 +697,7 @@ export default function Header() {
                       className="overflow-hidden"
                     >
                       <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 dark:border-amber-500/20 text-[13px]">
-                        {ADMISSION_LINKS.map((a) =>
+                        {admissionLinks.map((a) =>
                           a.external ? (
                             <a
                               key={a.label}
@@ -673,7 +750,7 @@ export default function Header() {
                       className="overflow-hidden"
                     >
                       <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 dark:border-amber-500/20 text-[13px]">
-                        {DEPT_LINKS.map((d) => (
+                        {deptLinks.map((d) => (
                           <Link
                             key={d.path}
                             to={d.path}
@@ -710,7 +787,7 @@ export default function Header() {
                       className="overflow-hidden"
                     >
                       <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 dark:border-amber-500/20 text-[13px]">
-                        {CLUB_LINKS.map((d) => (
+                        {clubLinks.map((d) => (
                           <Link
                             key={d.path}
                             to={d.path}
@@ -751,7 +828,7 @@ export default function Header() {
                       className="overflow-hidden"
                     >
                       <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 dark:border-amber-500/20 text-[13px]">
-                        {RESEARCH_LINKS.map((d) => (
+                        {researchLinks.map((d) => (
                           <Link
                             key={d.path}
                             to={d.path}
@@ -783,7 +860,7 @@ export default function Header() {
                   {mobileAboutOpen && (
                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
                       <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 dark:border-amber-500/20 text-[13px]">
-                        {ABOUT_LINKS.map((a) => a.external ? (
+                        {aboutLinks.map((a) => a.external ? (
                           <a key={a.label} href={a.href} target="_blank" rel="noreferrer"
                             onClick={() => { setMobileMenuOpen(false); setMobileAboutOpen(false); }}
                             className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium">
@@ -815,7 +892,7 @@ export default function Header() {
                   {mobileAlumniOpen && (
                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
                       <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 dark:border-amber-500/20 text-[13px]">
-                        {ALUMNI_LINKS.map((a) => a.external ? (
+                        {alumniLinks.map((a) => a.external ? (
                           <a key={a.label} href={a.href} target="_blank" rel="noreferrer"
                             onClick={() => { setMobileMenuOpen(false); setMobileAlumniOpen(false); }}
                             className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium">
@@ -847,7 +924,7 @@ export default function Header() {
                   {mobileMoreOpen && (
                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
                       <div className="flex flex-col gap-1 pl-4 mt-3 border-l-2 border-[#800000]/20 dark:border-amber-500/20 text-[13px]">
-                        {MORE_LINKS.map((a) => a.external ? (
+                        {moreLinks.map((a) => a.external ? (
                           <a key={a.label} href={a.href} target="_blank" rel="noreferrer"
                             onClick={() => { setMobileMenuOpen(false); setMobileMoreOpen(false); }}
                             className="text-gray-600 dark:text-slate-300 hover:text-[#800000] dark:hover:text-amber-300 py-1.5 font-medium">

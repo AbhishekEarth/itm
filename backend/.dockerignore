@@ -1,0 +1,41 @@
+# Secrets — NEVER bake these into an image
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Python build artifacts
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
+# Dev databases / local uploads
+*.db
+*.sqlite
+*.sqlite3
+uploads/
+chroma_data/
+logs/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.github/
+
+# Docs / scratch files
+*.md
+!README.md
+ADMIN_EDITOR_BACKEND_PLAN.md
+docker-compose.yml

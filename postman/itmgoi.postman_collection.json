@@ -1,0 +1,226 @@
+{
+  "info": {
+    "name": "ITM Gwalior API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Auto-callable subset of the ITM Gwalior FastAPI backend. After importing, set `baseUrl` (default `http://localhost:8000`) and run **Auth → Login (admin)**; the test script writes `token` for you."
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8000" },
+    { "key": "token", "value": "" },
+    { "key": "refreshToken", "value": "" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login (admin)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/login",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "username", "value": "admin" },
+                { "key": "password", "value": "admin123" }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const d = pm.response.json();",
+                  "if (d.access_token) pm.collectionVariables.set('token', d.access_token);",
+                  "if (d.refresh_token) pm.collectionVariables.set('refreshToken', d.refresh_token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Refresh",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/refresh",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"refresh_token\": \"{{refreshToken}}\"\n}" }
+          }
+        },
+        {
+          "name": "Me",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/auth/me" }
+        },
+        {
+          "name": "Change password",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/password",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"current_password\": \"admin123\",\n  \"new_password\": \"new-strong-password-123\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Public — read-only",
+      "item": [
+        { "name": "Settings",       "request": { "method": "GET", "url": "{{baseUrl}}/api/public/settings",        "auth": { "type": "noauth" } } },
+        { "name": "Home",           "request": { "method": "GET", "url": "{{baseUrl}}/api/public/home",            "auth": { "type": "noauth" } } },
+        { "name": "Departments",    "request": { "method": "GET", "url": "{{baseUrl}}/api/public/departments",     "auth": { "type": "noauth" } } },
+        { "name": "Department CSE", "request": { "method": "GET", "url": "{{baseUrl}}/api/public/department/CSE",  "auth": { "type": "noauth" } } },
+        { "name": "Recruiters",     "request": { "method": "GET", "url": "{{baseUrl}}/api/public/recruiters",      "auth": { "type": "noauth" } } },
+        { "name": "TAP",            "request": { "method": "GET", "url": "{{baseUrl}}/api/public/tap",             "auth": { "type": "noauth" } } },
+        { "name": "Events",         "request": { "method": "GET", "url": "{{baseUrl}}/api/public/events?status=upcoming&limit=10", "auth": { "type": "noauth" } } },
+        { "name": "Notices",        "request": { "method": "GET", "url": "{{baseUrl}}/api/public/notices",          "auth": { "type": "noauth" } } },
+        { "name": "Gallery list",   "request": { "method": "GET", "url": "{{baseUrl}}/api/public/gallery",          "auth": { "type": "noauth" } } },
+        { "name": "Gallery category", "request": { "method": "GET", "url": "{{baseUrl}}/api/public/gallery/cultural", "auth": { "type": "noauth" } } },
+        { "name": "Admissions",     "request": { "method": "GET", "url": "{{baseUrl}}/api/public/admissions",       "auth": { "type": "noauth" } } },
+        { "name": "Positions",      "request": { "method": "GET", "url": "{{baseUrl}}/api/public/careers/positions","auth": { "type": "noauth" } } },
+        { "name": "NAAC",           "request": { "method": "GET", "url": "{{baseUrl}}/api/public/compliance/naac",  "auth": { "type": "noauth" } } },
+        { "name": "NIRF",           "request": { "method": "GET", "url": "{{baseUrl}}/api/public/compliance/nirf",  "auth": { "type": "noauth" } } },
+        { "name": "Alumni speaks",  "request": { "method": "GET", "url": "{{baseUrl}}/api/public/alumni/speaks",    "auth": { "type": "noauth" } } },
+        { "name": "Sitemap",        "request": { "method": "GET", "url": "{{baseUrl}}/api/public/sitemap.xml",      "auth": { "type": "noauth" } } },
+        { "name": "Robots",         "request": { "method": "GET", "url": "{{baseUrl}}/api/public/robots.txt",       "auth": { "type": "noauth" } } }
+      ]
+    },
+    {
+      "name": "Public form submissions",
+      "item": [
+        {
+          "name": "Admission lead",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/admissions/leads",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Anjali Sharma\",\n  \"email\": \"anjali@example.com\",\n  \"phone\": \"+91-9876543210\",\n  \"programme_interest\": \"B.Tech CSE\",\n  \"city\": \"Gwalior\",\n  \"message\": \"Want early-bird dates.\"\n}" },
+            "auth": { "type": "noauth" }
+          }
+        },
+        {
+          "name": "Contact / grievance",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/forms/submit",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"kind\": \"general\",\n  \"name\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"subject\": \"Quick question\",\n  \"message\": \"Just testing.\"\n}" },
+            "auth": { "type": "noauth" }
+          }
+        },
+        {
+          "name": "Job application",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/careers/applications",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"position_id\": 1,\n  \"applicant_name\": \"Test User\",\n  \"email\": \"applicant@example.com\",\n  \"cover_letter_md\": \"Hello — I'd love to join.\"\n}" },
+            "auth": { "type": "noauth" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin — Users & Scopes",
+      "item": [
+        { "name": "List scopes",  "request": { "method": "GET",  "url": "{{baseUrl}}/api/scopes" } },
+        { "name": "List users",   "request": { "method": "GET",  "url": "{{baseUrl}}/api/users" } },
+        {
+          "name": "Create CS dept editor",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/users",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"username\": \"cs_editor_new\",\n  \"email\": \"cs-editor-new@itmgoi.in\",\n  \"role\": \"editor\",\n  \"password\": \"cs-editor@123\",\n  \"scopes\": [\"dept.cse\"]\n}" }
+          }
+        },
+        {
+          "name": "Grant scope",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/users/1/scopes",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"add\": [\"placements.tap\"],\n  \"remove\": []\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin — Departments",
+      "item": [
+        { "name": "List",         "request": { "method": "GET", "url": "{{baseUrl}}/api/departments" } },
+        { "name": "Get CSE",      "request": { "method": "GET", "url": "{{baseUrl}}/api/departments/CSE" } },
+        {
+          "name": "Update CSE intro",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/api/departments/CSE",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"intro_md\": \"Updated intro via Postman.\"\n}" }
+          }
+        },
+        {
+          "name": "Upsert HoD",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/departments/CSE/hod",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Dr. Rishi Soni\",\n  \"role\": \"Professor & HoD\",\n  \"qualification\": \"Ph.D · 28+ yrs\",\n  \"message_md\": \"Welcome to CSE at ITM Gwalior.\"\n}" }
+          }
+        },
+        {
+          "name": "Add lab",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/departments/CSE/labs",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Quantum Lab\",\n  \"icon\": \"⚛️\",\n  \"description\": \"Hands-on Qiskit + IBM Q.\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin — Pages & Settings",
+      "item": [
+        { "name": "List pages", "request": { "method": "GET", "url": "{{baseUrl}}/api/pages" } },
+        {
+          "name": "Edit Home hero section",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/api/pages/1/sections/hero",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"payload\": {\n    \"headline\": \"Shape Tomorrow at ITM\",\n    \"subhead\": \"Edited via Postman.\",\n    \"primary_cta\": { \"label\": \"Apply Now\", \"href\": \"/admissions\" }\n  }\n}" }
+          }
+        },
+        {
+          "name": "Upsert brand.tagline",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/settings/brand.tagline",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"value\": \"Think Big. Think Beyond.\",\n  \"group\": \"brand\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin — Audit",
+      "item": [
+        { "name": "All",            "request": { "method": "GET", "url": "{{baseUrl}}/api/audit?limit=20" } },
+        { "name": "By entity_type", "request": { "method": "GET", "url": "{{baseUrl}}/api/audit?entity_type=lab&limit=20" } }
+      ]
+    },
+    {
+      "name": "Health",
+      "item": [
+        { "name": "Live",  "request": { "method": "GET", "url": "{{baseUrl}}/api/health/live",  "auth": { "type": "noauth" } } },
+        { "name": "Ready", "request": { "method": "GET", "url": "{{baseUrl}}/api/health/ready", "auth": { "type": "noauth" } } }
+      ]
+    }
+  ]
+}

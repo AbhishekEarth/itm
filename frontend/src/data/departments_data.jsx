@@ -19,7 +19,6 @@ export const departmentsData = {
         isDropdown: true,
         children: [
           { id: 'data-science', label: 'Data Science', path: '/department/cse/data-science' },
-          { id: 'iot', label: 'Internet of Things', path: '/department/cse/iot' },
           { id: 'aiml', label: 'AI & Machine Learning', path: '/department/cse/aiml' },
           { id: 'cyber-security', label: 'Cyber Security', path: '/department/cse/cyber-security' },
           { id: 'cloud-computing', label: 'Cloud Computing', path: '/department/cse/cloud-computing' },
@@ -64,7 +63,7 @@ export const departmentsData = {
       },
       hod: {
         title: "HoD Desk",
-        name: "Dr. Rishi Soni",
+        name: "Dr. Pradeep Yadav",
         designation: "Professor & Head",
         message: [
           'I warmly welcome you to the Department of Computer Science & Engineering. We pride ourselves on providing pioneering visionaries of tomorrow, conducting cutting-edge research, and leading a wide range of initiatives that affirm the transformative power of computing and informatics.',
@@ -106,8 +105,8 @@ export const departmentsData = {
         ]
       },
       faculty: [
-        { sno: 1,  name: 'Dr. Rishi Soni',               qual: 'Ph.D',   desig: 'Professor',           exp: '28+ Years' },
-        { sno: 2,  name: 'Dr. Pradeep Yadav',             qual: 'Ph.D',   desig: 'Associate Professor', exp: '26+ Years' },
+        { sno: 1,  name: 'Dr. Pradeep Yadav',             qual: 'Ph.D',   desig: 'Professor & HoD',     exp: '26+ Years' },
+        { sno: 2,  name: 'Dr. Rishi Soni',                qual: 'Ph.D',   desig: 'Professor',           exp: '28+ Years' },
         { sno: 3,  name: 'Dr. Deepak Omprakash Gupta',    qual: 'Ph.D',   desig: 'Associate Professor', exp: '2+ Years'  },
       ]
     }
@@ -477,37 +476,6 @@ export const departmentsData = {
           { name: "Data Architect", icon: "🏗️" },
           { name: "Business Intelligence Analyst", icon: "📈" }
         ]
-      }
-    }
-  },
-
-  "iot": {
-    id: "iot",
-    parent: "cse",
-    name: <>Internet<br /><span className="text-red-200">of Things</span></>,
-    title: "Internet of Things",
-    shortName: "IoT",
-    badge: "Specialization under CSE",
-    subtitle: "Connecting the physical world with the digital. Learn embedded systems, sensors, and cloud integration.",
-    chips: [['🌐', 'Smart Systems'], ['📟', 'Embedded'], ['☁️', 'Cloud Sync'], ['⚙️', 'Automation']],
-    menuItems: [
-      { id: 'about', label: 'About Specialization' },
-      { id: 'curriculum', label: 'Curriculum' },
-      { id: 'labs', label: 'Laboratories' },
-      { id: 'careers', label: 'Careers' },
-    ],
-    sections: {
-      about: {
-        title: "About Specialization",
-        description: [
-          "The Internet of Things (IoT) is a rapidly growing field that focuses on connecting physical devices to the internet. This specialization covers everything from sensor networks to cloud-based data analysis."
-        ],
-        features: [
-          { icon: '📟', title: 'Embedded Systems', sub: 'Arduino, Raspberry Pi & More' },
-          { icon: '📡', title: 'Wireless Protocols', sub: 'LoRaWAN, Zigbee, WiFi' },
-        ],
-        vision: "To be a leader in IoT education and research.",
-        mission: ["Empower students with hardware and software skills."]
       }
     }
   },

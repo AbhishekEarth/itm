@@ -1,276 +1,162 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { useAuth } from '../context/AuthContext';
-import { ChevronLeft, Plus, Trash2, Upload, X, GraduationCap } from 'lucide-react';
-
-const DEPARTMENTS = ['CS', 'IT', 'ECE', 'CE', 'ME', 'MBA', 'ESH'];
-const DESIGNATIONS = ['Professor & HOD', 'Professor', 'Associate Professor', 'Assistant Professor'];
-
-const DEPT_COLORS = {
-  CS: 'bg-rose-100 text-[#800000]', IT: 'bg-indigo-100 text-indigo-700',
-  ECE: 'bg-amber-100 text-amber-700', CE: 'bg-emerald-100 text-emerald-700',
-  ME: 'bg-sky-100 text-sky-700', MBA: 'bg-purple-100 text-purple-700', ESH: 'bg-teal-100 text-teal-700',
-};
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { ChevronLeft, Plus, Trash2, GraduationCap, X, Save } from 'lucide-react';
+import { usersApi } from '../api/users';
+import { errorMessage } from '../api/client';
 
 const BLANK = {
-  name: '', designation: DESIGNATIONS[3], department: DEPARTMENTS[0],
-  qualification: '', experience_years: 0, specialization: '', email: '', phone: '', bio: '',
+  username: '',
+  email: '',
+  full_name: '',
+  phone: '',
+  password: 'faculty@123',
+  role: 'faculty',
+  must_change_password: true,
 };
 
-export default function AdminFaculty() {
-  const { token } = useAuth();
-  const headers = { Authorization: `Bearer ${token}` };
-
-  const [tab, setTab] = useState('list');
-  const [faculty, setFaculty] = useState([]);
-  const [filterDept, setFilterDept] = useState('');
+function CreateDrawer({ onClose, onCreated }) {
   const [form, setForm] = useState(BLANK);
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [msg, setMsg] = useState(null);   // { type: 'ok'|'err', text }
-
-  const fetchFaculty = async () => {
-    const params = filterDept ? { department: filterDept } : {};
-    const res = await axios.get('/api/faculty/', { params }).catch(() => ({ data: [] }));
-    setFaculty(res.data);
-  };
-
-  useEffect(() => { fetchFaculty(); }, [filterDept]);
-
-  const handleImage = (e) => {
-    const f = e.target.files[0];
-    if (!f) return;
-    setImage(f);
-    setPreview(URL.createObjectURL(f));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMsg(null);
-    const data = new FormData();
-    Object.entries(form).forEach(([k, v]) => data.append(k, v));
-    if (image) data.append('image', image);
+  const [saving, setSaving] = useState(false);
+  const [err, setErr] = useState('');
+  const submit = async (e) => {
+    e.preventDefault(); setErr(''); setSaving(true);
     try {
-      await axios.post('/api/faculty/', data, { headers });
-      setMsg({ type: 'ok', text: 'Faculty member added successfully.' });
-      setForm(BLANK);
-      setImage(null);
-      setPreview(null);
-      fetchFaculty();
-      setTab('list');
-    } catch {
-      setMsg({ type: 'err', text: 'Failed to add faculty. Make sure you are logged in.' });
-    } finally {
-      setLoading(false);
-    }
+      const u = await usersApi.create(form);
+      onCreated(u); onClose();
+    } catch (e2) { setErr(errorMessage(e2)); }
+    finally { setSaving(false); }
   };
+  return (
+    <div className="fixed inset-0 z-50 flex">
+      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <form onSubmit={submit} className="relative ml-auto w-full max-w-md bg-white dark:bg-gray-900 h-full overflow-y-auto p-6 shadow-2xl">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-lg font-black text-gray-900 dark:text-white">Register faculty</h2>
+          <button type="button" onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"><X size={18} /></button>
+        </div>
+        {err && <div className="mb-4 bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-2 rounded-lg">{err}</div>}
+        <div className="grid gap-3">
+          {[
+            ['username', 'Username / Employee ID *'],
+            ['email', 'Email (used at login) *', 'email'],
+            ['full_name', 'Full name *'],
+            ['phone', 'Phone'],
+            ['password', 'Initial password *'],
+          ].map(([k, label, type]) => (
+            <label key={k} className="block text-xs">
+              <span className="block font-bold text-gray-500 mb-1">{label}</span>
+              <input type={type || 'text'} required={['username', 'email', 'full_name', 'password'].includes(k)}
+                     value={form[k]} onChange={(e) => setForm({ ...form, [k]: e.target.value })}
+                     className="w-full px-3 py-2.5 text-sm border border-gray-200 dark:border-gray-700 rounded-lg dark:bg-gray-800 focus:outline-none focus:border-[#800000]" />
+            </label>
+          ))}
+          <label className="flex items-center gap-2 text-xs">
+            <input type="checkbox" checked={form.must_change_password} onChange={(e) => setForm({ ...form, must_change_password: e.target.checked })} />
+            Force password change on first login
+          </label>
+        </div>
+        <button disabled={saving} className="mt-5 w-full bg-[#800000] text-white font-black text-xs tracking-widest uppercase py-3 rounded-xl flex items-center justify-center gap-2 disabled:opacity-60">
+          <Save size={14} /> {saving ? 'Saving…' : 'Register faculty'}
+        </button>
+      </form>
+    </div>
+  );
+}
 
-  const handleDelete = async (id) => {
-    if (!confirm('Delete this faculty member?')) return;
-    await axios.delete(`/api/faculty/${id}`, { headers }).catch(() => {});
-    setFaculty(prev => prev.filter(f => f.id !== id));
+export default function AdminFaculty() {
+  const qc = useQueryClient();
+  const [q, setQ] = useState('');
+  const [creating, setCreating] = useState(false);
+
+  const { data: faculty = [], isLoading, error } = useQuery({
+    queryKey: ['admin-faculty', q],
+    queryFn: () => usersApi.list({ role: 'faculty', q: q || undefined, limit: 500 }),
+  });
+
+  const remove = async (u) => {
+    if (!confirm(`Deactivate ${u.username}?`)) return;
+    await usersApi.deactivate(u.id);
+    qc.invalidateQueries({ queryKey: ['admin-faculty'] });
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[#020617]">
-
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 shadow-sm sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-4">
-          <Link to="/admin" className="text-gray-400 hover:text-[#800000] transition-colors">
-            <ChevronLeft size={20} />
-          </Link>
-          <div className="flex items-center gap-2">
-            <GraduationCap size={18} className="text-[#800000]" />
-            <h1 className="font-black text-gray-900 dark:text-white">Faculty Management</h1>
+    <div className="min-h-screen bg-gray-50 dark:bg-[#020617] p-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <Link to="/admin" className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+              <ChevronLeft size={18} />
+            </Link>
+            <div>
+              <h1 className="text-2xl font-black text-gray-900 dark:text-white flex items-center gap-2">
+                <GraduationCap size={20} /> Faculty
+              </h1>
+              <p className="text-xs text-gray-500 mt-0.5">
+                Faculty accounts (read-only public + own dashboard). To grant a faculty member admin-style scopes, use <Link to="/admin/users" className="text-[#800000] underline">Users &amp; Scopes</Link>.
+              </p>
+            </div>
           </div>
-          <div className="ml-auto flex gap-2">
-            {['list', 'add'].map(t => (
-              <button key={t} onClick={() => setTab(t)}
-                className={`text-[11px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full transition-all ${
-                  tab === t ? 'bg-[#800000] text-white' : 'text-gray-400 hover:text-gray-600'}`}>
-                {t === 'list' ? `All (${faculty.length})` : '+ Add'}
-              </button>
-            ))}
-          </div>
+          <button onClick={() => setCreating(true)} className="bg-[#800000] hover:bg-[#600000] text-white text-xs font-black uppercase tracking-widest px-4 py-2.5 rounded-xl inline-flex items-center gap-2">
+            <Plus size={14} /> Register faculty
+          </button>
         </div>
-      </header>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Search by username, email or name…"
+          className="w-full mb-4 px-3 py-2.5 text-sm border border-gray-200 dark:border-gray-700 rounded-xl dark:bg-gray-900"
+        />
 
-        {/* ── ADD FORM ── */}
-        {tab === 'add' && (
-          <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm p-8 space-y-6">
-            <h2 className="font-black text-xl text-gray-900 dark:text-white">Add New Faculty Member</h2>
+        {error && <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-lg mb-4">{errorMessage(error)}</div>}
 
-            {msg && (
-              <div className={`text-sm font-semibold px-4 py-3 rounded-xl ${
-                msg.type === 'ok' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
-                {msg.text}
-              </div>
-            )}
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              {/* Name */}
-              <div className="sm:col-span-2">
-                <label className="field-label">Full Name *</label>
-                <input required value={form.name} onChange={e => setForm(f=>({...f,name:e.target.value}))}
-                  className="field" placeholder="Dr. Rajesh Kumar" />
-              </div>
-              {/* Designation */}
-              <div>
-                <label className="field-label">Designation *</label>
-                <select required value={form.designation} onChange={e => setForm(f=>({...f,designation:e.target.value}))} className="field">
-                  {DESIGNATIONS.map(d => <option key={d}>{d}</option>)}
-                </select>
-              </div>
-              {/* Department */}
-              <div>
-                <label className="field-label">Department *</label>
-                <select required value={form.department} onChange={e => setForm(f=>({...f,department:e.target.value}))} className="field">
-                  {DEPARTMENTS.map(d => <option key={d}>{d}</option>)}
-                </select>
-              </div>
-              {/* Qualification */}
-              <div>
-                <label className="field-label">Qualification *</label>
-                <input required value={form.qualification} onChange={e => setForm(f=>({...f,qualification:e.target.value}))}
-                  className="field" placeholder="Ph.D. (Computer Science)" />
-              </div>
-              {/* Experience */}
-              <div>
-                <label className="field-label">Experience (years)</label>
-                <input type="number" min="0" value={form.experience_years} onChange={e => setForm(f=>({...f,experience_years:+e.target.value}))} className="field" />
-              </div>
-              {/* Specialization */}
-              <div>
-                <label className="field-label">Specialization</label>
-                <input value={form.specialization} onChange={e => setForm(f=>({...f,specialization:e.target.value}))}
-                  className="field" placeholder="Machine Learning & AI" />
-              </div>
-              {/* Email */}
-              <div>
-                <label className="field-label">Email</label>
-                <input type="email" value={form.email} onChange={e => setForm(f=>({...f,email:e.target.value}))}
-                  className="field" placeholder="name@itmgoi.in" />
-              </div>
-              {/* Phone */}
-              <div>
-                <label className="field-label">Phone</label>
-                <input value={form.phone} onChange={e => setForm(f=>({...f,phone:e.target.value}))}
-                  className="field" placeholder="+91-9XXXXXXXXX" />
-              </div>
-              {/* Bio */}
-              <div className="sm:col-span-2">
-                <label className="field-label">Bio (optional)</label>
-                <textarea rows={3} value={form.bio} onChange={e => setForm(f=>({...f,bio:e.target.value}))}
-                  className="field resize-none" placeholder="A brief professional biography…" />
-              </div>
-              {/* Photo */}
-              <div className="sm:col-span-2">
-                <label className="field-label">Profile Photo (optional)</label>
-                {preview ? (
-                  <div className="relative inline-block">
-                    <img src={preview} className="w-24 h-24 rounded-xl object-cover border border-gray-200" />
-                    <button type="button" onClick={() => { setImage(null); setPreview(null); }}
-                      className="absolute -top-2 -right-2 bg-white border border-gray-200 rounded-full w-6 h-6 flex items-center justify-center shadow">
-                      <X size={12} />
+        <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-gray-50 dark:bg-gray-800 text-[10px] uppercase tracking-widest text-gray-500">
+              <tr>
+                <th className="text-left px-4 py-3">Username</th>
+                <th className="text-left px-4 py-3">Name</th>
+                <th className="text-left px-4 py-3">Email</th>
+                <th className="text-left px-4 py-3">Status</th>
+                <th className="px-4 py-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+              {isLoading && <tr><td colSpan={5} className="text-center py-8 text-gray-400 text-xs">Loading…</td></tr>}
+              {!isLoading && faculty.length === 0 && <tr><td colSpan={5} className="text-center py-8 text-gray-400 text-xs">No faculty yet. Click <strong>Register faculty</strong> to add one.</td></tr>}
+              {faculty.map((f) => (
+                <tr key={f.id}>
+                  <td className="px-4 py-3 font-mono text-xs text-[#800000]">{f.username}</td>
+                  <td className="px-4 py-3 font-semibold text-gray-800 dark:text-gray-200">{f.full_name || '—'}</td>
+                  <td className="px-4 py-3 text-xs text-gray-500">{f.email}</td>
+                  <td className="px-4 py-3">
+                    <span className={`text-[10px] font-black uppercase px-2 py-1 rounded ${f.is_active ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-200 text-gray-600'}`}>
+                      {f.is_active ? 'Active' : 'Disabled'}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-right">
+                    <button onClick={() => remove(f)} className="text-xs text-gray-400 hover:text-red-600">
+                      <Trash2 size={14} />
                     </button>
-                  </div>
-                ) : (
-                  <label className="flex items-center gap-3 cursor-pointer border-2 border-dashed border-gray-200 hover:border-[#800000] rounded-xl p-5 transition-colors">
-                    <Upload size={18} className="text-gray-400" />
-                    <span className="text-sm text-gray-400 font-medium">Click to upload photo</span>
-                    <input type="file" accept="image/*" className="hidden" onChange={handleImage} />
-                  </label>
-                )}
-              </div>
-            </div>
-
-            <div className="flex gap-3 pt-2">
-              <button type="submit" disabled={loading}
-                className="bg-[#800000] hover:bg-[#6a0000] text-white font-black text-xs tracking-widest uppercase px-6 py-3 rounded-xl flex items-center gap-2 transition-colors disabled:opacity-60">
-                <Plus size={14} /> {loading ? 'Saving…' : 'Add Faculty'}
-              </button>
-              <button type="button" onClick={() => setTab('list')}
-                className="border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 font-bold text-xs tracking-wide px-5 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                Cancel
-              </button>
-            </div>
-          </form>
-        )}
-
-        {/* ── LIST ── */}
-        {tab === 'list' && (
-          <div className="space-y-5">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="text-[11px] font-black uppercase tracking-widest text-gray-400">Filter:</span>
-              {['', ...DEPARTMENTS].map(d => (
-                <button key={d} onClick={() => setFilterDept(d)}
-                  className={`text-[11px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full transition-all ${
-                    filterDept === d ? 'bg-[#800000] text-white' : 'bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-[#800000]'}`}>
-                  {d || 'All'}
-                </button>
+                  </td>
+                </tr>
               ))}
-            </div>
+            </tbody>
+          </table>
+        </div>
 
-            {faculty.length === 0 ? (
-              <div className="bg-white dark:bg-gray-900 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-700 p-12 text-center">
-                <GraduationCap size={40} className="text-gray-200 mx-auto mb-3" />
-                <p className="text-gray-400 font-medium text-sm">No faculty members yet.</p>
-                <button onClick={() => setTab('add')} className="mt-4 bg-[#800000] text-white font-black text-xs tracking-widest uppercase px-5 py-2.5 rounded-xl">
-                  + Add First Faculty
-                </button>
-              </div>
-            ) : (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {faculty.map(f => (
-                  <div key={f.id} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm p-5 hover:shadow-md transition-shadow">
-                    <div className="flex items-start gap-3 mb-3">
-                      {f.image_url ? (
-                        <img src={f.image_url} className="w-12 h-12 rounded-xl object-cover shrink-0" />
-                      ) : (
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-white flex items-center justify-center font-black text-sm shrink-0">
-                          {f.name.split(' ').map(n => n[0]).slice(0, 2).join('')}
-                        </div>
-                      )}
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-black text-sm text-gray-900 dark:text-white tracking-tight truncate">{f.name}</h3>
-                        <p className="text-[10px] text-gray-500 font-medium truncate">{f.designation}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full ${DEPT_COLORS[f.department]}`}>
-                        {f.department}
-                      </span>
-                      {f.experience_years > 0 && (
-                        <span className="text-[10px] text-gray-400 font-medium">{f.experience_years} yrs</span>
-                      )}
-                      <button onClick={() => handleDelete(f.id)}
-                        className="text-gray-300 hover:text-red-500 transition-colors ml-auto">
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
-                    {f.email && <p className="text-[10px] text-gray-400 mt-2 truncate">{f.email}</p>}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-      </main>
+        <p className="mt-4 text-xs text-gray-400">
+          Tip — to bulk-import faculty with profile + photo + department, use <code className="font-mono">POST /api/departments/&lt;code&gt;/faculty</code> from the Departments admin page.
+        </p>
+      </div>
 
-      <style>{`
-        .field-label { display: block; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #6b7280; margin-bottom: 5px; }
-        .field { width: 100%; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 10px; font-size: 14px; font-weight: 500; outline: none; transition: border-color 0.15s; background: #fff; color: #111827; }
-        .field:focus { border-color: #800000; box-shadow: 0 0 0 3px rgba(128,0,0,0.08); }
-        .dark .field-label { color: #9ca3af; }
-        .dark .field { border-color: #374151; background: #1f2937; color: #f9fafb; }
-        .dark .field:focus { border-color: #800000; }
-      `}</style>
+      {creating && (
+        <CreateDrawer
+          onClose={() => setCreating(false)}
+          onCreated={() => qc.invalidateQueries({ queryKey: ['admin-faculty'] })}
+        />
+      )}
     </div>
   );
 }

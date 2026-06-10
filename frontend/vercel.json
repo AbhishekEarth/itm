@@ -1,0 +1,31 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "_comment_rewrites": "Backend = Cloud Run service in asia-south1 (Mumbai). If you redeploy under a new service name, update the URL on lines below.",
+  "rewrites": [
+    { "source": "/sitemap.xml", "destination": "/api/public/sitemap.xml" },
+    { "source": "/robots.txt",  "destination": "/api/public/robots.txt"  },
+    { "source": "/api/:path*",  "destination": "https://itm-production-backend-719701893212.asia-south1.run.app/api/:path*" },
+    { "source": "/uploads/:path*", "destination": "https://itm-production-backend-719701893212.asia-south1.run.app/uploads/:path*" },
+    { "source": "/QSi_gauge/:path*", "destination": "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/QSi_gauge/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "geolocation=(), microphone=(), camera=()" }
+      ]
+    }
+  ]
+}

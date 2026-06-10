@@ -1,12 +1,16 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
+import EditableText from "../components/admin/EditableText";
 
 /** Shared hero + main wrapper used by every internal content page. */
 export default function PageShell({ eyebrow, title, accentTitle, intro, chips = [], children }) {
+  // Hero text is editable in admin edit mode, scoped to the current route.
+  const pageKey = useLocation().pathname;
   return (
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617] transition-colors duration-500">
       {/* HERO */}
-      <section className="relative bg-gradient-to-br from-[#3e0202] via-[#800000] to-[#5a0000] pt-14 pb-20 md:pt-16 md:pb-28 overflow-hidden">
+      <section data-section="shell_hero" className="relative bg-gradient-to-br from-[#3e0202] via-[#800000] to-[#5a0000] pt-8 pb-10 sm:pt-14 sm:pb-20 md:pt-16 md:pb-28 overflow-hidden">
         {/* Decorative ornaments */}
         <div aria-hidden className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute top-8 right-32 w-72 h-72 rounded-full border-2 border-white" />
@@ -19,31 +23,32 @@ export default function PageShell({ eyebrow, title, accentTitle, intro, chips = 
           {eyebrow && (
             <motion.span
               initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 text-[10px] font-black tracking-[0.3em] uppercase text-amber-200 mb-4 px-3 py-1 bg-white/10 backdrop-blur rounded-full border border-amber-300/30">
-              {eyebrow}
+              className="inline-flex items-center gap-2 text-[9px] sm:text-[10px] font-black tracking-[0.3em] uppercase text-amber-200 mb-2 sm:mb-4 px-2 py-0.5 sm:px-3 sm:py-1 bg-white/10 backdrop-blur rounded-full border border-amber-300/30">
+              <EditableText pageKey={pageKey} tkey="shell.eyebrow" value={eyebrow} as="span">{eyebrow}</EditableText>
             </motion.span>
           )}
           <motion.h1
             initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-            className="text-3xl sm:text-4xl md:text-6xl font-black text-white tracking-tighter mb-4 leading-[1.05]">
-            {title}{" "}
+            className="text-2xl sm:text-4xl md:text-6xl font-black text-white tracking-tighter mb-2 sm:mb-4 leading-[1.05]">
+            <EditableText pageKey={pageKey} tkey="shell.title" value={title} as="span">{title}</EditableText>{" "}
             {accentTitle && (
-              <span className="bg-gradient-to-r from-amber-300 to-rose-300 bg-clip-text text-transparent">
+              <EditableText pageKey={pageKey} tkey="shell.accent" value={accentTitle} as="span"
+                className="bg-gradient-to-r from-amber-300 to-rose-300 bg-clip-text text-transparent">
                 {accentTitle}
-              </span>
+              </EditableText>
             )}
           </motion.h1>
           {intro && (
             <motion.p
               initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-              className="text-rose-100/85 max-w-2xl text-sm md:text-base font-medium leading-relaxed">
-              {intro}
+              className="text-rose-100/85 max-w-2xl text-xs sm:text-sm md:text-base font-medium leading-relaxed line-clamp-3 sm:line-clamp-none">
+              <EditableText pageKey={pageKey} tkey="shell.intro" value={intro} as="span" multiline>{intro}</EditableText>
             </motion.p>
           )}
           {chips.length > 0 && (
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-3 sm:mt-6 flex flex-wrap gap-1.5 sm:gap-2">
               {chips.map((c) => (
-                <span key={c} className="bg-white/10 backdrop-blur border border-white/20 text-white px-3 py-1.5 rounded-full text-[11px] font-bold">
+                <span key={c} className="bg-white/10 backdrop-blur border border-white/20 text-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold">
                   {c}
                 </span>
               ))}
@@ -53,30 +58,41 @@ export default function PageShell({ eyebrow, title, accentTitle, intro, chips = 
       </section>
 
       {/* MAIN */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-14 md:py-20 space-y-12 md:space-y-16">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-14 md:py-20 space-y-8 sm:space-y-12 md:space-y-16">
         {children}
       </main>
     </div>
   );
 }
 
-/* Smaller reusable building blocks used across every page. */
-export function SectionTitle({ eyebrow, title, accent }) {
+/* Smaller reusable building blocks used across every page.
+   Pass `tkey` to make a SectionTitle's text editable in admin edit mode. */
+export function SectionTitle({ eyebrow, title, accent, tkey }) {
+  const pageKey = useLocation().pathname;
+  const editable = (key, value, props = {}) =>
+    tkey ? (
+      <EditableText pageKey={pageKey} tkey={`${tkey}.${key}`} value={value} as="span" {...props}>
+        {value}
+      </EditableText>
+    ) : (
+      value
+    );
   return (
-    <div className="mb-8">
+    <div className="mb-5 sm:mb-8">
       {eyebrow && (
         <div className="flex items-center gap-3 mb-3">
           <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full" />
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] dark:text-amber-300">{eyebrow}</span>
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000] dark:text-amber-300">
+            {editable("eyebrow", eyebrow)}
+          </span>
         </div>
       )}
-      <h2 className="text-2xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-tight">
-        {title}{" "}
-        {accent && (
-          <span className="bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent">
-            {accent}
-          </span>
-        )}
+      <h2 className="text-xl sm:text-2xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-tight">
+        {editable("title", title)}{" "}
+        {accent &&
+          editable("accent", accent, {
+            className: "bg-gradient-to-br from-[#800000] to-[#3e0202] bg-clip-text text-transparent",
+          })}
       </h2>
     </div>
   );
@@ -92,7 +108,7 @@ export function Prose({ children }) {
 
 export function Card({ children, className = "" }) {
   return (
-    <div className={`bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm p-6 md:p-7 ${className}`}>
+    <div className={`bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-sm p-3 sm:p-6 md:p-7 ${className}`}>
       {children}
     </div>
   );
@@ -102,8 +118,8 @@ export function FactRow({ items }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
       {items.map((it) => (
-        <div key={it.label} className="bg-white dark:bg-gray-900 rounded-2xl border border-rose-50 dark:border-gray-800 p-4">
-          <div className="text-2xl md:text-3xl font-black bg-gradient-to-r from-[#800000] to-amber-600 bg-clip-text text-transparent leading-none">{it.num}</div>
+        <div key={it.label} className="bg-white dark:bg-gray-900 rounded-2xl border border-rose-50 dark:border-gray-800 p-2.5 sm:p-4">
+          <div className="text-xl sm:text-2xl md:text-3xl font-black bg-gradient-to-r from-[#800000] to-amber-600 bg-clip-text text-transparent leading-none">{it.num}</div>
           <div className="text-[10px] uppercase tracking-widest font-bold text-gray-500 dark:text-gray-400 mt-1">{it.label}</div>
         </div>
       ))}

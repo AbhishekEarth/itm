@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import EditableText from "./admin/EditableText";
 import { motion, AnimatePresence, useMotionValue, useTransform, animate, useInView } from "framer-motion";
 import {
   Home,
@@ -30,6 +31,13 @@ import {
 } from "lucide-react";
 import { DEPT_LIST } from "../data/departments_v2";
 import EmojiToIcon from "./EmojiToIcon";
+import Seo from "./Seo";
+
+// Default profile photo used by every HoD / Faculty tile until the admin
+// uploads a personalised picture via /admin/departments → <Dept> → HoD/Faculty.
+// Inline SVG silhouette — no external network call.
+const DEFAULT_PROFILE_PHOTO =
+  "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f3f4f6'/%3E%3Ccircle cx='100' cy='80' r='32' fill='%239ca3af'/%3E%3Cpath d='M 40 200 C 40 140 70 130 100 130 C 130 130 160 140 160 200 Z' fill='%239ca3af'/%3E%3C/svg%3E";
 
 function BigNumber({ value, suffix = "" }) {
   const ref = useRef(null);
@@ -68,6 +76,7 @@ const SECTION_ICONS = {
 };
 
 export default function DepartmentTemplate({ dept }) {
+  const pageKey = useLocation().pathname;
   if (!dept) return null;
 
   // Build section list dynamically based on what data exists
@@ -101,6 +110,21 @@ export default function DepartmentTemplate({ dept }) {
   return (
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">
 
+      <Seo
+        title={dept?.meta?.title || `${dept?.name} — ITM Gwalior`}
+        description={dept?.meta?.description || dept?.subtitle || dept?.intro}
+        image={dept?.meta?.og_image || dept?.image}
+        canonical={dept?.meta?.canonical_url}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "EducationalOrganization",
+          name: dept?.name,
+          description: dept?.subtitle || dept?.intro,
+          parentOrganization: { "@type": "CollegeOrUniversity", name: "ITM Gwalior" },
+          url: typeof window !== "undefined" ? window.location.href : undefined,
+        }}
+      />
+
       {/* Breadcrumb */}
       <div className="bg-white dark:bg-gray-900 border-b border-rose-100 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
@@ -113,30 +137,36 @@ export default function DepartmentTemplate({ dept }) {
       </div>
 
       {/* Compact Hero */}
-      <section className="relative overflow-hidden">
+      <section data-section="dept_hero" className="relative overflow-hidden">
         <div className="absolute inset-0">
           <img src={dept.image} alt={dept.name} className="w-full h-full object-cover" loading="eager" />
           <div className={`absolute inset-0 bg-gradient-to-br from-[#800000] to-[#3e0202] mix-blend-multiply opacity-90`}></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-16 text-white">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10 md:py-16 text-white">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-5">
             <div>
               <span className="inline-flex items-center gap-2 text-amber-200 font-bold tracking-widest text-[10px] uppercase mb-3 px-3 py-1.5 bg-white/10 backdrop-blur rounded-full border border-white/20">
                 <Sparkles size={12} /> {dept.badge}
               </span>
-              <div className="flex items-center gap-4 mb-3">
+              <div className="flex items-center gap-3 sm:gap-4 mb-3">
                 <span className="text-amber-200 shrink-0">
-                  <EmojiToIcon emoji={dept.icon} size={48} />
+                  <EmojiToIcon emoji={dept.icon} size={32} />
                 </span>
                 <div>
-                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-200 mb-1">Department of</div>
-                  <h1 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.04em] leading-[0.95]">{dept.name}</h1>
+                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-200 mb-1">
+                    <EditableText pageKey={pageKey} tkey="dept.eyebrow" as="span" value="Department of">Department of</EditableText>
+                  </div>
+                  <h1 className="text-xl sm:text-3xl md:text-5xl font-black tracking-[-0.04em] leading-[0.95]">
+                    <EditableText pageKey={pageKey} tkey="dept.name" as="span" value={dept.name}>{dept.name}</EditableText>
+                  </h1>
                 </div>
               </div>
               {dept.subtitle && (
-                <p className="text-sm md:text-base text-white/85 max-w-2xl leading-relaxed font-medium mb-4">{dept.subtitle}</p>
+                <p className="text-xs sm:text-sm md:text-base text-white/85 max-w-2xl leading-relaxed font-medium mb-3 sm:mb-4 line-clamp-3 sm:line-clamp-none">
+                  <EditableText pageKey={pageKey} tkey="dept.subtitle" as="span" multiline value={dept.subtitle}>{dept.subtitle}</EditableText>
+                </p>
               )}
               <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-widest font-black">
                 <span className="px-3 py-1 bg-white/10 backdrop-blur border border-white/20 rounded-full">Est. {dept.established}</span>
@@ -155,10 +185,10 @@ export default function DepartmentTemplate({ dept }) {
             </div>
 
             <div className="flex gap-2">
-              <Link to="/admissions/how-to-apply" className="inline-flex items-center gap-2 bg-white text-[#1a0606] px-5 py-3 rounded-full font-black text-[10px] tracking-widest uppercase hover:scale-[1.02] transition-transform shadow-xl">
+              <Link to="/admissions/how-to-apply" className="inline-flex items-center gap-2 bg-white text-[#1a0606] px-4 py-2 sm:px-5 sm:py-3 rounded-full font-black text-[10px] tracking-widest uppercase hover:scale-[1.02] transition-transform shadow-xl">
                 Apply Now <ArrowRight size={12} />
               </Link>
-              <a href={`tel:${dept.contact.phone.replace(/[^+\d]/g, "")}`} className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/30 px-5 py-3 rounded-full font-black text-[10px] tracking-widest uppercase hover:bg-white/20">
+              <a href={`tel:${dept.contact.phone.replace(/[^+\d]/g, "")}`} className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/30 px-4 py-2 sm:px-5 sm:py-3 rounded-full font-black text-[10px] tracking-widest uppercase hover:bg-white/20">
                 <Phone size={12} /> Call
               </a>
             </div>
@@ -167,28 +197,34 @@ export default function DepartmentTemplate({ dept }) {
       </section>
 
       {/* ─── Main Layout: Sidebar + Content ─── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-10 md:py-12">
+      <section data-section="dept_main" className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10 md:py-12">
 
-        {/* Mobile section bar — horizontal scroll */}
-        <div className="lg:hidden mb-6 overflow-x-auto -mx-4 px-4 pb-2" style={{ scrollbarWidth: "none" }}>
-          <div className="flex gap-2 w-max">
+        {/* Mobile section bar — wraps so every section (incl. HOD Desk) is tappable. */}
+        <div className="lg:hidden mb-4 sm:mb-6">
+          <div className="flex flex-wrap gap-2">
             {sections.map((s) => {
               const Icon = SECTION_ICONS[s.id] || Info;
+              const isActive = active === s.id;
               return (
-                <button key={s.id} onClick={() => setActive(s.id)}
-                  className={`relative shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-colors ${
-                    active === s.id ? "text-white shadow-md" : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-                  }`}>
-                  {active === s.id && <motion.span layoutId="dept-mobile-pill" className={`absolute inset-0 bg-gradient-to-r from-[#800000] to-[#3e0202] rounded-full`} transition={{ type: "spring", stiffness: 300, damping: 30 }}></motion.span>}
-                  <Icon size={11} className="relative" />
-                  <span className="relative">{s.label}</span>
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => setActive(s.id)}
+                  className={`relative inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-colors ${
+                    isActive
+                      ? "bg-[#800000] text-white shadow-md"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  }`}
+                >
+                  <Icon size={11} />
+                  <span>{s.label}</span>
                 </button>
               );
             })}
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-8">
+        <div className="grid lg:grid-cols-12 gap-4 sm:gap-8">
 
           {/* ─── Sidebar (desktop) ─── */}
           <aside className="hidden lg:block lg:col-span-3">
@@ -279,21 +315,21 @@ export default function DepartmentTemplate({ dept }) {
                 className="bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 shadow-xl overflow-hidden"
               >
                 <div className={`h-1.5 bg-gradient-to-r from-[#800000] to-[#3e0202]`}></div>
-                <div className="p-8 md:p-10">
+                <div className="p-4 sm:p-8 md:p-10">
 
                   {/* Section header */}
-                  <div className="flex items-center gap-3 mb-6">
+                  <div className="flex items-center gap-3 mb-4 sm:mb-6">
                     {(() => {
                       const Icon = SECTION_ICONS[active] || Info;
                       return (
-                        <div className={`w-11 h-11 rounded-2xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-white flex items-center justify-center shadow-md`}>
+                        <div className={`w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-white flex items-center justify-center shadow-md`}>
                           <Icon size={18} />
                         </div>
                       );
                     })()}
                     <div>
                       <div className="text-[10px] uppercase tracking-[0.25em] font-black text-[#800000]">Section</div>
-                      <h2 className="text-2xl md:text-3xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-tight">
+                      <h2 className="text-lg sm:text-2xl md:text-3xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-tight">
                         {sections.find((s) => s.id === active)?.label}
                       </h2>
                     </div>
@@ -301,17 +337,19 @@ export default function DepartmentTemplate({ dept }) {
 
                   {/* ── ABOUT ── */}
                   {active === "about" && (
-                    <div className="space-y-6">
-                      <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{dept.intro}</p>
+                    <div className="space-y-4 sm:space-y-6">
+                      <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+                        <EditableText pageKey={pageKey} tkey="dept.intro" as="span" multiline value={dept.intro}>{dept.intro}</EditableText>
+                      </p>
 
                       {/* Feature cards */}
                       {dept.features && (
                         <div className="grid sm:grid-cols-2 gap-3 pt-2">
                           {dept.features.map((f, i) => (
                             <motion.div key={f.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                              className="flex items-start gap-3 p-4 bg-gradient-to-br from-rose-50/60 to-white dark:from-gray-800 dark:to-gray-900 border border-rose-100 dark:border-gray-700 rounded-2xl hover:shadow-md transition-shadow">
+                              className="flex items-start gap-3 p-3 sm:p-4 bg-gradient-to-br from-rose-50/60 to-white dark:from-gray-800 dark:to-gray-900 border border-rose-100 dark:border-gray-700 rounded-2xl hover:shadow-md transition-shadow">
                               <span className="shrink-0 text-[#800000] dark:text-rose-300">
-                                <EmojiToIcon emoji={f.icon} size={28} />
+                                <EmojiToIcon emoji={f.icon} size={24} />
                               </span>
                               <div>
                                 <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{f.title}</h4>
@@ -323,17 +361,17 @@ export default function DepartmentTemplate({ dept }) {
                       )}
 
                       <div className="grid sm:grid-cols-3 gap-3 pt-2">
-                        <div className="bg-rose-50 dark:bg-gray-800 rounded-2xl p-4">
+                        <div className="bg-rose-50 dark:bg-gray-800 rounded-2xl p-3 sm:p-4">
                           <div className="text-[9px] uppercase tracking-widest font-black text-[#800000] mb-1">Established</div>
-                          <div className="text-2xl font-black tracking-[-0.04em] text-[#1a0606] dark:text-white">{dept.established}</div>
+                          <div className="text-xl sm:text-2xl font-black tracking-[-0.04em] text-[#1a0606] dark:text-white">{dept.established}</div>
                         </div>
-                        <div className="bg-rose-50 dark:bg-gray-800 rounded-2xl p-4">
+                        <div className="bg-rose-50 dark:bg-gray-800 rounded-2xl p-3 sm:p-4">
                           <div className="text-[9px] uppercase tracking-widest font-black text-[#800000] mb-1">Programme Duration</div>
-                          <div className="text-2xl font-black tracking-[-0.04em] text-[#1a0606] dark:text-white">{dept.duration}</div>
+                          <div className="text-xl sm:text-2xl font-black tracking-[-0.04em] text-[#1a0606] dark:text-white">{dept.duration}</div>
                         </div>
-                        <div className="bg-rose-50 dark:bg-gray-800 rounded-2xl p-4">
+                        <div className="bg-rose-50 dark:bg-gray-800 rounded-2xl p-3 sm:p-4">
                           <div className="text-[9px] uppercase tracking-widest font-black text-[#800000] mb-1">Annual Intake</div>
-                          <div className="text-2xl font-black tracking-[-0.04em] text-[#1a0606] dark:text-white">{dept.intake > 0 ? dept.intake : "—"}</div>
+                          <div className="text-xl sm:text-2xl font-black tracking-[-0.04em] text-[#1a0606] dark:text-white">{dept.intake > 0 ? dept.intake : "—"}</div>
                         </div>
                       </div>
 
@@ -366,17 +404,22 @@ export default function DepartmentTemplate({ dept }) {
                     <div className="relative">
                       <Quote size={120} className="absolute top-0 right-0 text-rose-50 -scale-x-100 pointer-events-none" />
                       <div className="relative">
-                        <div className="flex items-center gap-4 mb-6">
-                          <div className={`w-20 h-20 rounded-3xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-white flex items-center justify-center font-black text-2xl tracking-tight shadow-xl`}>
-                            {dept.hod.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
+                        <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+                          <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl overflow-hidden ring-2 ring-rose-100 dark:ring-gray-700 shadow-xl">
+                            <img
+                              src={dept.hod.photo || DEFAULT_PROFILE_PHOTO}
+                              alt={dept.hod.name}
+                              className="w-full h-full object-cover"
+                              loading="lazy"
+                            />
                           </div>
                           <div>
-                            <h3 className="font-black text-xl md:text-2xl text-[#1a0606] dark:text-white tracking-tight">{dept.hod.name}</h3>
+                            <h3 className="font-black text-base sm:text-xl md:text-2xl text-[#1a0606] dark:text-white tracking-tight">{dept.hod.name}</h3>
                             <p className="text-[11px] uppercase tracking-widest font-black text-[#800000] mt-1">{dept.hod.role}</p>
                             <p className="text-xs text-gray-500 font-bold mt-0.5">{dept.hod.qualification}</p>
                           </div>
                         </div>
-                        <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic mb-6">
+                        <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic mb-4 sm:mb-6 line-clamp-6 sm:line-clamp-none">
                           &ldquo;{dept.hod.message}&rdquo;
                         </p>
 
@@ -385,9 +428,9 @@ export default function DepartmentTemplate({ dept }) {
                           <div className="grid sm:grid-cols-3 gap-3 mb-6">
                             {dept.hodHighlights.map((h, i) => (
                               <motion.div key={h.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                                className="p-4 bg-gradient-to-br from-rose-50/60 to-white dark:from-gray-800 dark:to-gray-900 border border-rose-100 dark:border-gray-700 rounded-2xl">
+                                className="p-3 sm:p-4 bg-gradient-to-br from-rose-50/60 to-white dark:from-gray-800 dark:to-gray-900 border border-rose-100 dark:border-gray-700 rounded-2xl">
                                 <div className="text-[#800000] dark:text-rose-300 mb-2">
-                                  <EmojiToIcon emoji={h.icon} size={24} />
+                                  <EmojiToIcon emoji={h.icon} size={20} />
                                 </div>
                                 <h5 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{h.title}</h5>
                                 <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{h.sub}</p>
@@ -417,12 +460,12 @@ export default function DepartmentTemplate({ dept }) {
                   {/* ── VISION & MISSION ── */}
                   {active === "vision" && (
                     <div className="space-y-5">
-                      <div className="relative bg-gradient-to-br from-rose-50/40 to-white dark:from-gray-800 dark:to-gray-900 border border-rose-50 dark:border-gray-700 rounded-3xl p-7">
+                      <div className="relative bg-gradient-to-br from-rose-50/40 to-white dark:from-gray-800 dark:to-gray-900 border border-rose-50 dark:border-gray-700 rounded-3xl p-4 sm:p-7">
                         <div className="flex items-center gap-2 mb-3">
                           <Compass size={16} className="text-[#800000]" />
                           <span className="text-[10px] uppercase tracking-widest font-black text-[#800000]">Vision</span>
                         </div>
-                        <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">&ldquo;{dept.vision}&rdquo;</p>
+                        <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">&ldquo;{dept.vision}&rdquo;</p>
                       </div>
                       <div>
                         <div className="flex items-center gap-2 mb-4">
@@ -432,7 +475,7 @@ export default function DepartmentTemplate({ dept }) {
                         <div className="space-y-2.5">
                           {dept.mission.map((m, i) => (
                             <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.07 }}
-                              className="flex items-start gap-3 p-4 bg-amber-50/40 dark:bg-gray-800 border border-amber-100 dark:border-gray-700 rounded-2xl">
+                              className="flex items-start gap-3 p-3 sm:p-4 bg-amber-50/40 dark:bg-gray-800 border border-amber-100 dark:border-gray-700 rounded-2xl">
                               <span className="shrink-0 w-7 h-7 rounded-lg bg-amber-300 text-[#1a0606] flex items-center justify-center font-black text-[10px]">M{i + 1}</span>
                               <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{m}</p>
                             </motion.div>
@@ -454,7 +497,7 @@ export default function DepartmentTemplate({ dept }) {
                           <div className="grid sm:grid-cols-2 gap-3">
                             {dept.peos.map((p, i) => (
                               <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                                className="bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl p-5">
+                                className="bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl p-3 sm:p-5">
                                 <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2">PEO {i + 1}</div>
                                 <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{p}</p>
                               </motion.div>
@@ -471,7 +514,7 @@ export default function DepartmentTemplate({ dept }) {
                           <div className="grid sm:grid-cols-2 gap-3">
                             {dept.psos.map((p, i) => (
                               <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                                className="bg-amber-50/40 dark:bg-gray-800 border border-amber-100 dark:border-gray-700 rounded-2xl p-5">
+                                className="bg-amber-50/40 dark:bg-gray-800 border border-amber-100 dark:border-gray-700 rounded-2xl p-3 sm:p-5">
                                 <div className="text-[10px] uppercase tracking-widest font-black text-amber-700 mb-2">PSO {i + 1}</div>
                                 <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{p}</p>
                               </motion.div>
@@ -485,15 +528,20 @@ export default function DepartmentTemplate({ dept }) {
                   {/* ── FACULTY ── */}
                   {active === "faculty" && dept.facultyHighlights && (
                     <div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-6">
+                      <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-4 sm:mb-6">
                         The department has <span className="font-black text-[#800000]">{dept.facultyCount}</span> faculty members, including senior professors and dynamic young researchers from IITs, NITs and other reputed universities.
                       </p>
                       <div className="grid sm:grid-cols-2 gap-3">
                         {dept.facultyHighlights.map((f, i) => (
                           <motion.div key={f.name} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
-                            className="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl hover:shadow-md transition-shadow">
-                            <div className={`shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-white flex items-center justify-center font-black text-sm tracking-tight shadow`}>
-                              {f.name.split(" ").map((w) => w[0]).join("").slice(0, 2)}
+                            className="flex items-center gap-3 p-3 sm:p-4 bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl hover:shadow-md transition-shadow">
+                            <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden ring-1 ring-rose-100 dark:ring-gray-700 shadow">
+                              <img
+                                src={f.photo || DEFAULT_PROFILE_PHOTO}
+                                alt={f.name}
+                                className="w-full h-full object-cover"
+                                loading="lazy"
+                              />
                             </div>
                             <div className="min-w-0">
                               <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight truncate">{f.name}</h4>
@@ -509,21 +557,44 @@ export default function DepartmentTemplate({ dept }) {
                   {/* ── LABS ── */}
                   {active === "labs" && dept.labs && (
                     <div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-6">
+                      <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium mb-4 sm:mb-6">
                         <span className="font-black text-[#800000]">{dept.labs.length}</span> specialised laboratories with industry-grade equipment and software for hands-on learning.
                       </p>
-                      <div className="grid sm:grid-cols-2 gap-3">
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                         {dept.labs.map((lab, i) => (
-                          <motion.div key={lab.name} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }}
-                            className="bg-gradient-to-br from-white to-rose-50/40 dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl p-5 hover:shadow-md transition-shadow">
-                            <div className="flex items-start gap-3">
-                              <div className="shrink-0 text-[#800000] dark:text-rose-300">
-                                <EmojiToIcon emoji={lab.icon} size={28} />
-                              </div>
-                              <div>
-                                <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{lab.name}</h4>
-                                <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{lab.desc}</p>
-                              </div>
+                          <motion.div
+                            key={lab.name}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.03 }}
+                            className="overflow-hidden bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl hover:shadow-md transition-shadow flex flex-col"
+                          >
+                            {/* Lab image on TOP — full-width banner.
+                                Falls back to a generic lab photo until the
+                                admin uploads a custom one via /admin/departments. */}
+                            <div className="relative h-36 sm:h-40 w-full overflow-hidden bg-gray-100 dark:bg-gray-700">
+                              <img
+                                src={
+                                  lab.photo ||
+                                  "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/assets2/images/CSE_Lab2.jpg"
+                                }
+                                alt={lab.name}
+                                loading="lazy"
+                                className="w-full h-full object-cover"
+                              />
+                              {/* subtle bottom fade so the name below stays
+                                  readable against light images */}
+                              <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black/15 to-transparent pointer-events-none" />
+                            </div>
+
+                            {/* Name + description at the BOTTOM */}
+                            <div className="p-3 sm:p-4 flex-1">
+                              <h4 className="font-black text-sm sm:text-base text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">
+                                {lab.name}
+                              </h4>
+                              <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">
+                                {lab.desc}
+                              </p>
                             </div>
                           </motion.div>
                         ))}
@@ -545,14 +616,14 @@ export default function DepartmentTemplate({ dept }) {
                   {active === "subunits" && dept.subUnits && (
                     <div className="space-y-4">
                       {dept.subUnits.map((u) => (
-                        <div key={u.name} className="bg-gradient-to-br from-white to-rose-50/40 dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl p-6">
-                          <div className="flex items-start gap-4">
+                        <div key={u.name} className="bg-gradient-to-br from-white to-rose-50/40 dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl p-3 sm:p-6">
+                          <div className="flex items-start gap-3 sm:gap-4">
                             <div className="shrink-0 text-[#800000] dark:text-rose-300">
-                              <EmojiToIcon emoji={u.icon} size={44} />
+                              <EmojiToIcon emoji={u.icon} size={32} />
                             </div>
                             <div>
-                              <h3 className="font-black text-lg text-[#1a0606] dark:text-white tracking-tight mb-2">{u.name}</h3>
-                              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium mb-3">{u.desc}</p>
+                              <h3 className="font-black text-base sm:text-lg text-[#1a0606] dark:text-white tracking-tight mb-1 sm:mb-2">{u.name}</h3>
+                              <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium mb-2 sm:mb-3 line-clamp-4 sm:line-clamp-none">{u.desc}</p>
                               {u.research && (
                                 <div className="text-xs text-emerald-700 font-bold italic bg-emerald-50 rounded-xl px-3 py-2 flex items-center gap-1">
                                   <EmojiToIcon emoji="💡" size={13} className="shrink-0" /> {u.research}
@@ -570,7 +641,7 @@ export default function DepartmentTemplate({ dept }) {
                     <div className="grid sm:grid-cols-2 gap-3">
                       {dept.projects.map((p, i) => (
                         <motion.div key={p.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                          className="bg-gradient-to-br from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-800 border border-amber-100 dark:border-gray-700 rounded-2xl p-5">
+                          className="bg-gradient-to-br from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-800 border border-amber-100 dark:border-gray-700 rounded-2xl p-3 sm:p-5">
                           <Trophy size={20} className="text-amber-700 mb-3" />
                           <h4 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight leading-snug mb-2">{p.title}</h4>
                           <p className="text-xs text-amber-800 font-bold leading-relaxed">{p.note}</p>
@@ -584,7 +655,7 @@ export default function DepartmentTemplate({ dept }) {
                     <div className="grid sm:grid-cols-2 gap-3">
                       {dept.studentAchievements.map((s, i) => (
                         <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.05 }}
-                          className="bg-gradient-to-br from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-800 border border-amber-100 dark:border-gray-700 rounded-2xl p-5">
+                          className="bg-gradient-to-br from-amber-50 to-rose-50 dark:from-gray-800 dark:to-gray-800 border border-amber-100 dark:border-gray-700 rounded-2xl p-3 sm:p-5">
                           <Award size={18} className="text-amber-700 mb-3" />
                           <h4 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{s.name}</h4>
                           <p className="text-[10px] uppercase tracking-widest font-bold text-amber-800">{s.award}</p>
@@ -599,7 +670,7 @@ export default function DepartmentTemplate({ dept }) {
                     <div className="space-y-2.5">
                       {dept.achievements.map((a, i) => (
                         <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}
-                          className="flex items-start gap-3 p-4 bg-gradient-to-br from-rose-50/40 to-white dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl">
+                          className="flex items-start gap-3 p-3 sm:p-4 bg-gradient-to-br from-rose-50/40 to-white dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl">
                           <CheckCircle2 size={18} className="text-[#800000] shrink-0 mt-0.5" />
                           <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{a}</p>
                         </motion.div>
@@ -612,9 +683,9 @@ export default function DepartmentTemplate({ dept }) {
                     <div className="grid sm:grid-cols-2 gap-3">
                       {dept.infra.map((i, idx) => (
                         <motion.div key={i.name} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.04 }}
-                          className="flex items-center gap-3 bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl p-4 hover:shadow-md transition-shadow">
+                          className="flex items-center gap-3 bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl p-3 sm:p-4 hover:shadow-md transition-shadow">
                           <span className="text-[#800000] dark:text-rose-300">
-                            <EmojiToIcon emoji={i.icon} size={28} />
+                            <EmojiToIcon emoji={i.icon} size={24} />
                           </span>
                           <span className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight">{i.name}</span>
                         </motion.div>
@@ -701,9 +772,9 @@ export default function DepartmentTemplate({ dept }) {
 
                   {/* ── PLACEMENT ── */}
                   {active === "placement" && dept.placement && (
-                    <div className="space-y-5">
+                    <div className="space-y-4 sm:space-y-5">
                       {dept.placement.desc && (
-                        <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{dept.placement.desc}</p>
+                        <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{dept.placement.desc}</p>
                       )}
 
                       {/* Stats grid */}
@@ -711,8 +782,8 @@ export default function DepartmentTemplate({ dept }) {
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                           {dept.placement.stats.map((s, i) => (
                             <motion.div key={s.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                              className="relative overflow-hidden bg-gradient-to-br from-[#1a0606] via-[#3e0202] to-[#800000] text-white rounded-2xl p-5">
-                              <div className="text-3xl md:text-4xl font-black tracking-[-0.04em] leading-none mb-2">{s.value}</div>
+                              className="relative overflow-hidden bg-gradient-to-br from-[#1a0606] via-[#3e0202] to-[#800000] text-white rounded-2xl p-3 sm:p-5">
+                              <div className="text-2xl sm:text-3xl md:text-4xl font-black tracking-[-0.04em] leading-none mb-2">{s.value}</div>
                               <div className="text-[9px] uppercase tracking-widest font-black text-rose-100/80">{s.label}</div>
                             </motion.div>
                           ))}
@@ -724,9 +795,9 @@ export default function DepartmentTemplate({ dept }) {
                         <div className="grid sm:grid-cols-3 gap-3">
                           {dept.placement.highlights.map((h, i) => (
                             <motion.div key={h.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                              className="p-5 bg-gradient-to-br from-rose-50/60 to-white dark:from-gray-800 dark:to-gray-800 border border-rose-100 dark:border-gray-700 rounded-2xl">
-                              <div className="text-[#800000] dark:text-rose-300 mb-3">
-                                <EmojiToIcon emoji={h.icon} size={28} />
+                              className="p-3 sm:p-5 bg-gradient-to-br from-rose-50/60 to-white dark:from-gray-800 dark:to-gray-800 border border-rose-100 dark:border-gray-700 rounded-2xl">
+                              <div className="text-[#800000] dark:text-rose-300 mb-2 sm:mb-3">
+                                <EmojiToIcon emoji={h.icon} size={24} />
                               </div>
                               <h5 className="font-black text-sm text-[#1a0606] dark:text-white tracking-tight leading-snug mb-1">{h.title}</h5>
                               <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{h.sub}</p>
@@ -753,22 +824,22 @@ export default function DepartmentTemplate({ dept }) {
 
                   {/* ── CONTACT ── */}
                   {active === "contact" && (
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <a href={`tel:${dept.contact.phone.replace(/[^+\d]/g, "")}`} className="flex items-center gap-4 p-5 bg-rose-50 dark:bg-gray-800 rounded-2xl hover:bg-rose-100 dark:hover:bg-gray-700 transition-colors">
-                        <div className="w-14 h-14 rounded-2xl bg-white dark:bg-gray-700 text-[#800000] flex items-center justify-center shadow"><Phone size={20} /></div>
+                    <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
+                      <a href={`tel:${dept.contact.phone.replace(/[^+\d]/g, "")}`} className="flex items-center gap-3 sm:gap-4 p-3 sm:p-5 bg-rose-50 dark:bg-gray-800 rounded-2xl hover:bg-rose-100 dark:hover:bg-gray-700 transition-colors">
+                        <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-2xl bg-white dark:bg-gray-700 text-[#800000] flex items-center justify-center shadow"><Phone size={20} /></div>
                         <div>
                           <div className="text-[10px] uppercase tracking-widest font-black text-gray-500 dark:text-gray-400">Phone</div>
                           <div className="text-base font-black text-[#1a0606] dark:text-white">{dept.contact.phone}</div>
                         </div>
                       </a>
-                      <a href={`mailto:${dept.contact.email}`} className="flex items-center gap-4 p-5 bg-rose-50 dark:bg-gray-800 rounded-2xl hover:bg-rose-100 dark:hover:bg-gray-700 transition-colors">
-                        <div className="w-14 h-14 rounded-2xl bg-white dark:bg-gray-700 text-[#800000] flex items-center justify-center shadow"><Mail size={20} /></div>
+                      <a href={`mailto:${dept.contact.email}`} className="flex items-center gap-3 sm:gap-4 p-3 sm:p-5 bg-rose-50 dark:bg-gray-800 rounded-2xl hover:bg-rose-100 dark:hover:bg-gray-700 transition-colors">
+                        <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-2xl bg-white dark:bg-gray-700 text-[#800000] flex items-center justify-center shadow"><Mail size={20} /></div>
                         <div className="min-w-0">
                           <div className="text-[10px] uppercase tracking-widest font-black text-gray-500 dark:text-gray-400">Email</div>
                           <div className="text-base font-black text-[#1a0606] dark:text-white break-all">{dept.contact.email}</div>
                         </div>
                       </a>
-                      <div className="sm:col-span-2 p-5 bg-gradient-to-br from-rose-50/40 to-white dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl">
+                      <div className="sm:col-span-2 p-3 sm:p-5 bg-gradient-to-br from-rose-50/40 to-white dark:from-gray-800 dark:to-gray-800 border border-rose-50 dark:border-gray-700 rounded-2xl">
                         <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2">Campus Address</div>
                         <p className="text-sm font-bold text-[#1a0606] dark:text-white leading-relaxed">ITM Campus, NH-75 Sithouli, Jhansi Road, Gwalior – 475001, M.P., India</p>
                       </div>
@@ -780,13 +851,13 @@ export default function DepartmentTemplate({ dept }) {
             </AnimatePresence>
 
             {/* Other departments cross-link */}
-            <div className="mt-10">
-              <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-4">Explore other departments</div>
+            <div className="mt-6 sm:mt-10">
+              <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-3 sm:mb-4">Explore other departments</div>
               <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
                 {otherDepts.map((d) => (
-                  <Link key={d.id} to={d.subPath} className="group text-center p-3 bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-xl hover:shadow-lg hover:border-[#800000] transition-all">
+                  <Link key={d.id} to={d.subPath} className="group text-center p-2 sm:p-3 bg-white dark:bg-gray-800 border border-rose-50 dark:border-gray-700 rounded-xl hover:shadow-lg hover:border-[#800000] transition-all">
                     <div className="text-gray-600 dark:text-gray-300 group-hover:text-[#800000] dark:group-hover:text-rose-300 mb-1 group-hover:scale-110 transition-transform flex justify-center">
-                      <EmojiToIcon emoji={d.icon} size={24} />
+                      <EmojiToIcon emoji={d.icon} size={20} />
                     </div>
                     <div className="text-[9px] uppercase tracking-widest font-black text-gray-500 dark:text-gray-400 group-hover:text-[#800000]">{d.code}</div>
                   </Link>

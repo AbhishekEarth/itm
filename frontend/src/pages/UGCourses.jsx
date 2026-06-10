@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import EditableText from "../components/admin/EditableText";
 import { motion, AnimatePresence, useMotionValue, useTransform, animate, useInView } from "framer-motion";
 import {
   Search,
@@ -83,15 +84,15 @@ const OFFICIAL_TABLES = [
     icon: "Award",
     duration: "4 Years",
     rows: [
-      { name: "Computer Science Engineering", seats: 240, elig: ELIG_PCM },
-      { name: "Computer Science Engineering (AI/ML)", seats: 90, elig: ELIG_PCM },
-      { name: "Computer Science Engineering (Data Science)", seats: 90, elig: ELIG_PCM },
-      { name: "Computer Science Engineering (Cyber Security)", seats: 60, elig: ELIG_PCM },
-      { name: "Electronics & Communication Engineering", seats: 60, elig: ELIG_PCM },
+      // Source: Institution Intake 2026-27 (official admission notice)
+      { name: "Computer Science Engineering (CSE)", seats: 240, elig: ELIG_PCM },
+      { name: "Computer Science Engineering (AI & ML)", seats: 180, elig: ELIG_PCM },
+      { name: "Computer Science Engineering (Data Science)", seats: 120, elig: ELIG_PCM },
+      { name: "Computer Science Engineering (Cyber Security)", seats: 30, elig: ELIG_PCM },
+      { name: "Electronics & Communication Engineering (ECE)", seats: 60, elig: ELIG_PCM },
+      { name: "Information Technology (IT)", seats: 60, elig: ELIG_PCM },
       { name: "Mechanical Engineering", seats: 30, elig: ELIG_PCM },
       { name: "Civil Engineering", seats: 30, elig: ELIG_PCM },
-      { name: "Information Technology", seats: 120, elig: ELIG_PCM },
-      { name: "Chemical Engineering", seats: 30, elig: ELIG_PCM },
     ],
   },
   {
@@ -122,7 +123,7 @@ const STREAM_GROUPS = {
   all: { label: "All Programmes", filter: () => true, accent: "from-rose-500 to-[#800000]" },
   computing: {
     label: "Computing & IT",
-    filter: (p) => ["btech-cse", "btech-aiml", "btech-ds", "btech-cy", "btech-iot", "btech-it", "bca"].includes(p.id),
+    filter: (p) => ["btech-cse", "btech-aiml", "btech-ds", "btech-cy", "btech-it", "bca"].includes(p.id),
     accent: "from-indigo-500 to-violet-700",
   },
   core: {
@@ -155,6 +156,7 @@ function BigNumber({ value }) {
 }
 
 export default function UGCourses() {
+  const pageKey = useLocation().pathname;
   const [group, setGroup] = useState("all");
   const [activeId, setActiveId] = useState(UG_PROGRAMS[0].id);
   const [compare, setCompare] = useState([]);
@@ -240,7 +242,7 @@ export default function UGCourses() {
       </div>
 
       {/* ─────────── HERO ─────────── */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#3e0202] via-[#800000] to-[#5a0000] text-white">
+      <section data-section="ug_hero" className="relative overflow-hidden bg-gradient-to-br from-[#3e0202] via-[#800000] to-[#5a0000] text-white">
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute -top-10 right-20 w-72 h-72 rounded-full border-2 border-white"></div>
           <div className="absolute -bottom-20 -left-10 w-80 h-80 rounded-full border border-white/40"></div>
@@ -254,13 +256,16 @@ export default function UGCourses() {
               <span className="inline-flex items-center gap-2 text-red-200 font-bold tracking-widest text-[10px] uppercase mb-4 px-3 py-1.5 bg-white/10 backdrop-blur rounded-full border border-white/20">
                 <Sparkles size={12} /> 12 Undergraduate Programmes · Spotlight Explorer
               </span>
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-[-0.04em] leading-[0.95] mb-3">
-                Spotlight on<br />
-                <span className="text-red-200">your future.</span>
+              <h1 className="text-3xl sm:text-4xl md:text-7xl font-black tracking-[-0.04em] leading-[0.95] mb-3">
+                <EditableText pageKey={pageKey} tkey="ug.title.line1" as="span" value="Spotlight on">Spotlight on</EditableText><br />
+                <EditableText pageKey={pageKey} tkey="ug.title.line2" as="span" value="your future." className="text-red-200">your future.</EditableText>
               </h1>
               <p className="text-red-100/80 text-sm sm:text-base max-w-xl leading-relaxed font-medium">
-                Pick a stream below, explore each programme in full focus.
-                Bookmark favourites, compare side-by-side, then apply.
+                <EditableText pageKey={pageKey} tkey="ug.intro" as="span" multiline
+                  value="Pick a stream below, explore each programme in full focus. Bookmark favourites, compare side-by-side, then apply.">
+                  Pick a stream below, explore each programme in full focus.
+                  Bookmark favourites, compare side-by-side, then apply.
+                </EditableText>
               </p>
             </div>
             <div className="lg:col-span-4 flex flex-wrap gap-4">
@@ -631,7 +636,7 @@ export default function UGCourses() {
             <Table2 size={12} className="text-[#800000]" />
             <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#800000]">Official Intake Tables</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-3">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05] mb-3">
             Undergraduate Courses
           </h2>
           <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-medium leading-relaxed">
@@ -663,18 +668,26 @@ export default function UGCourses() {
                     </h3>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1.5 bg-white/15 backdrop-blur rounded-full border border-white/20">
+                    <span className="hidden sm:inline-flex text-[10px] font-black uppercase tracking-widest px-3 py-1.5 bg-white/15 backdrop-blur rounded-full border border-white/20">
                       {tbl.rows.length} Programme{tbl.rows.length > 1 ? "s" : ""}
                     </span>
                     <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1.5 bg-amber-300 text-[#1a0606] rounded-full">
                       <Clock size={11} className="inline mr-1" /> {tbl.duration}
                     </span>
+                    <Link
+                      to="/admissions/how-to-apply"
+                      title="How to apply"
+                      className="group inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 bg-white text-[#800000] rounded-full hover:bg-amber-300 hover:text-[#1a0606] transition-colors shadow-md"
+                    >
+                      Apply
+                      <ArrowRight size={11} className="group-hover:translate-x-0.5 transition-transform" />
+                    </Link>
                   </div>
                 </div>
               </div>
 
               {/* Table — desktop */}
-              <div className="hidden md:block overflow-x-auto">
+              <div className="hidden md:block overflow-x-auto -mx-4 px-4">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="bg-rose-50/50 dark:bg-gray-800/50">
@@ -823,7 +836,7 @@ export default function UGCourses() {
                 </button>
               </div>
 
-              <div className="overflow-x-auto max-h-[70vh]">
+              <div className="overflow-x-auto -mx-4 px-4 max-h-[70vh]">
                 <table className="w-full">
                   <thead>
                     <tr>

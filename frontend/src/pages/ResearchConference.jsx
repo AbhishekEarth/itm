@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import EditableText from "../components/admin/EditableText";
+import { usePublicConferences } from "../hooks/usePublicResearch";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Home,
@@ -66,12 +68,28 @@ const CONF_GALLERY = [
   "111A8872.JPG", "111A8907.JPG", "111A8914.JPG", "111A8920.JPG",
   "111A8958.JPG", "111A8963.JPG", "111A8974.JPG", "111A9014.JPG",
   "111A9033.JPG", "111A9041.JPG", "111A9049.JPG",
-].map((f) => `https://www.itmgoi.in/include/gallery/Conference_Pics/${f}`);
+].map((f) => `https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/include/gallery/Conference_Pics/${f}`);
 
-const BROCHURE_URL = "https://www.itmgoi.in/IQAC/Conf_FDP/Brochure_International_Conference.pdf";
+const BROCHURE_URL = "https://pub-127dc462e0864e8981d24768d4ba7822.r2.dev/IQAC/Conf_FDP/Brochure_International_Conference.pdf";
 
 export default function ResearchConference() {
+  const pageKey = useLocation().pathname;
   const [tab, setTab] = useState("about");
+  const { data: live } = usePublicConferences();
+  // The API returns multiple conferences — show the most recent one in the
+  // hero. Fall back to the bundled CONF block if nothing seeded yet.
+  const liveConf = live?.conferences?.[0];
+  const CONF_LIVE = liveConf
+    ? {
+        ...CONF,
+        name: liveConf.name || CONF.name,
+        theme: liveConf.theme || CONF.theme,
+        venue: liveConf.location || CONF.venue,
+        // dates aren't a single field on the API; keep bundled "dates" string
+        // until an admin adds start/end fields. Fall through to bundled.
+      }
+    : CONF;
+  const BROCHURE_LIVE = liveConf?.brochure || BROCHURE_URL;
 
   return (
     <div className="min-h-screen bg-[#fbf7f2] dark:bg-[#020617]">
@@ -90,7 +108,7 @@ export default function ResearchConference() {
       {/* Sub-nav */}
       <div className="bg-gradient-to-r from-[#3e0202] via-[#800000] to-[#5a0000] text-white">
         <div className="max-w-7xl mx-auto px-2 sm:px-6">
-          <div className="flex overflow-x-auto" style={{ scrollbarWidth: "none" }}>
+          <div className="flex flex-wrap md:flex-nowrap overflow-x-auto" style={{ scrollbarWidth: "none" }}>
             {RESEARCH_SUBNAV.map((item) => (
               <Link key={item.label} to={item.to}>
                 <span className={`relative shrink-0 px-4 md:px-5 py-3.5 inline-flex items-center gap-2 text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] transition-colors ${item.active ? "text-white" : "text-rose-100/70 hover:text-white"}`}>
@@ -104,36 +122,36 @@ export default function ResearchConference() {
       </div>
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#3e0202] via-[#800000] to-[#5a0000] text-white">
+      <section data-section="conf_hero" className="relative overflow-hidden bg-gradient-to-br from-[#3e0202] via-[#800000] to-[#5a0000] text-white">
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute -top-10 right-20 w-72 h-72 rounded-full border-2 border-white"></div>
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-14 md:py-20">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-14 md:py-20">
           <span className="inline-flex items-center gap-2 text-red-200 font-bold tracking-widest text-[10px] uppercase mb-4 px-3 py-1.5 bg-white/10 backdrop-blur rounded-full border border-white/20">
             <Sparkles size={12} /> Flagship Event · Hybrid Mode
           </span>
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-[-0.04em] leading-[0.95] mb-4">
-            {CONF.name}
+          <h1 className="text-2xl sm:text-5xl md:text-7xl font-black tracking-[-0.04em] leading-[0.95] mb-4">
+            <EditableText pageKey={pageKey} tkey="conf.title" as="span" value={CONF_LIVE.name}>{CONF_LIVE.name}</EditableText>
           </h1>
           <p className="text-base md:text-xl text-rose-100/80 max-w-3xl leading-relaxed font-medium italic mb-6">
-            &ldquo;{CONF.theme}&rdquo;
+            &ldquo;<EditableText pageKey={pageKey} tkey="conf.theme" as="span" multiline value={CONF_LIVE.theme}>{CONF_LIVE.theme}</EditableText>&rdquo;
           </p>
           <div className="flex flex-wrap gap-2">
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur border border-white/20 rounded-full text-xs font-black">
-              <Calendar size={12} /> {CONF.dates}
+              <Calendar size={12} /> {CONF_LIVE.dates}
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-300 text-[#1a0606] rounded-full text-xs font-black">
-              Early Bird · {CONF.earlyBird}
+              Early Bird · {CONF_LIVE.earlyBird}
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur border border-white/20 rounded-full text-xs font-black">
               <MapPin size={12} /> Gwalior, MP
             </span>
           </div>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href={`mailto:${CONF.submissionEmail}`} className="inline-flex items-center gap-2 bg-white text-[#800000] px-6 py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:scale-[1.02] transition-transform shadow-xl">
+            <a href={`mailto:${CONF_LIVE.submissionEmail}`} className="inline-flex items-center gap-2 bg-white text-[#800000] px-4 py-2.5 sm:px-6 sm:py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:scale-[1.02] transition-transform shadow-xl">
               Submit a paper <ArrowRight size={14} />
             </a>
-            <a href="tel:+919977213188" className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/30 px-6 py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:bg-white/20">
+            <a href="tel:+919977213188" className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white border border-white/30 px-4 py-2.5 sm:px-6 sm:py-3 rounded-full font-black text-[11px] tracking-widest uppercase hover:bg-white/20">
               <Phone size={13} /> Call Organising Secretary
             </a>
           </div>
@@ -141,8 +159,8 @@ export default function ResearchConference() {
       </section>
 
       {/* Tabs */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-20">
-        <div className="flex items-center justify-center mb-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-16 md:py-20">
+        <div className="flex items-center justify-center mb-6 sm:mb-10">
           <div className="inline-flex bg-white dark:bg-gray-900 border border-rose-100 dark:border-gray-800 rounded-full p-1.5 shadow-sm">
             {[
               { id: "about", label: "About" },
@@ -162,35 +180,35 @@ export default function ResearchConference() {
         <AnimatePresence mode="wait">
           {tab === "about" && (
             <motion.div key="about" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="grid md:grid-cols-3 gap-4">
-              <div className="md:col-span-2 bg-white dark:bg-gray-900 rounded-3xl p-7 shadow-sm border border-rose-50 dark:border-gray-800">
+              <div className="md:col-span-2 bg-white dark:bg-gray-900 rounded-3xl p-4 sm:p-7 shadow-sm border border-rose-50 dark:border-gray-800">
                 <div className="space-y-5">
                   <div>
                     <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2 flex items-center gap-1.5"><MapPin size={11} /> Venue</div>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 font-medium leading-relaxed">{CONF.venue}</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 font-medium leading-relaxed">{CONF_LIVE.venue}</p>
                   </div>
                   <div>
                     <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2 flex items-center gap-1.5"><Users size={11} /> Organising Department</div>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 font-bold leading-relaxed">{CONF.organisingDept}</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 font-bold leading-relaxed">{CONF_LIVE.organisingDept}</p>
                   </div>
                   <div>
                     <div className="text-[10px] uppercase tracking-widest font-black text-[#800000] mb-2 flex items-center gap-1.5"><Award size={11} /> Associated Bodies</div>
                     <div className="flex flex-wrap gap-2">
-                      {CONF.associatedBodies.map((b) => (
+                      {CONF_LIVE.associatedBodies.map((b) => (
                         <span key={b} className="text-[10px] font-black px-2.5 py-1 bg-rose-50 dark:bg-gray-800 text-[#800000] rounded-full">{b}</span>
                       ))}
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="bg-gradient-to-br from-amber-300 to-amber-500 text-[#1a0606] rounded-3xl p-7 shadow-xl">
+              <div className="bg-gradient-to-br from-amber-300 to-amber-500 text-[#1a0606] rounded-3xl p-4 sm:p-7 shadow-xl">
                 <div className="text-[10px] uppercase tracking-widest font-black mb-2">Paper Submission</div>
-                <a href={`mailto:${CONF.submissionEmail}`} className="text-base font-black break-all hover:underline mb-5 block">{CONF.submissionEmail}</a>
+                <a href={`mailto:${CONF_LIVE.submissionEmail}`} className="text-base font-black break-all hover:underline mb-5 block">{CONF_LIVE.submissionEmail}</a>
                 <div className="border-t border-[#1a0606]/20 pt-4">
                   <div className="text-[10px] uppercase tracking-widest font-black mb-1">Early Bird Deadline</div>
-                  <div className="text-2xl font-black tracking-tight">{CONF.earlyBird}</div>
+                  <div className="text-2xl font-black tracking-tight">{CONF_LIVE.earlyBird}</div>
                 </div>
                 <div className="border-t border-[#1a0606]/20 pt-4 mt-4">
-                  <a href={BROCHURE_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-[#1a0606] text-amber-300 px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-black transition-colors">
+                  <a href={BROCHURE_LIVE} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-[#1a0606] text-amber-300 px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-black transition-colors">
                     <ExternalLink size={11} /> Download Brochure PDF
                   </a>
                 </div>
@@ -202,7 +220,7 @@ export default function ResearchConference() {
             <motion.div key="tracks" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {TRACKS.map((t, i) => (
                 <motion.div key={t.title} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.05 }} whileHover={{ y: -4 }}
-                  className="relative overflow-hidden bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-6 hover:shadow-xl transition-shadow">
+                  className="relative overflow-hidden bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-3 sm:p-6 hover:shadow-xl transition-shadow">
                   <div className="absolute top-3 right-3 text-[10px] font-black uppercase tracking-widest text-[#800000] bg-rose-50 dark:bg-gray-800 px-2 py-1 rounded">Track {String(t.n).padStart(2, "0")}</div>
                   <div className="text-5xl mb-4">{t.icon}</div>
                   <h4 className="font-black text-base text-[#1a0606] dark:text-white tracking-tight leading-snug">{t.title}</h4>
@@ -215,9 +233,9 @@ export default function ResearchConference() {
             <motion.div key="team" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {ORGANISERS.map((o, i) => (
                 <motion.div key={o.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06 }} whileHover={{ y: -4 }}
-                  className="relative overflow-hidden bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-6 hover:shadow-xl transition-shadow">
+                  className="relative overflow-hidden bg-white dark:bg-gray-900 border border-rose-50 dark:border-gray-800 rounded-3xl p-3 sm:p-6 hover:shadow-xl transition-shadow">
                   <div className={`h-1.5 bg-gradient-to-r ${o.accent} -mx-6 -mt-6 mb-5`}></div>
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${o.accent} text-white flex items-center justify-center font-black text-base tracking-tight shadow-lg mb-4`}>
+                  <div className={`w-10 h-10 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br ${o.accent} text-white flex items-center justify-center font-black text-base tracking-tight shadow-lg mb-4`}>
                     {o.name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()}
                   </div>
                   <div className="text-[9px] uppercase tracking-widest font-black text-[#800000] mb-1">{o.role}</div>
@@ -251,15 +269,15 @@ export default function ResearchConference() {
       </section>
 
       {/* Conference Gallery */}
-      <section className="bg-white dark:bg-gray-900 border-y border-rose-100 dark:border-gray-800 py-16 md:py-20">
+      <section className="bg-white dark:bg-gray-900 border-y border-rose-100 dark:border-gray-800 py-8 sm:py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-10">
+          <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10">
             <div className="flex items-center justify-center gap-3 mb-3">
               <div className="w-8 h-1 bg-gradient-to-r from-[#800000] to-amber-500 rounded-full"></div>
               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#800000]">Conference Gallery</span>
               <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-[#800000] rounded-full"></div>
             </div>
-            <h2 className="text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-[-0.03em] text-[#1a0606] dark:text-white leading-[1.05]">
               Moments from the conference.
             </h2>
           </div>
@@ -275,19 +293,19 @@ export default function ResearchConference() {
 
       {/* CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-20">
-        <div className="rounded-3xl overflow-hidden bg-gradient-to-br from-[#1a0606] via-[#3e0202] to-[#800000] text-white p-8 md:p-12 grid md:grid-cols-2 gap-6 items-center">
+        <div className="rounded-3xl overflow-hidden bg-gradient-to-br from-[#1a0606] via-[#3e0202] to-[#800000] text-white p-4 sm:p-8 md:p-12 grid md:grid-cols-2 gap-6 items-center">
           <div>
             <span className="inline-flex items-center gap-2 text-amber-300 font-bold tracking-widest text-[10px] uppercase mb-3 px-3 py-1.5 bg-white/10 rounded-full border border-white/20">
               <BookOpen size={12} /> Register before May 30
             </span>
-            <h3 className="text-3xl md:text-4xl font-black tracking-tighter mb-3">Lock in Early Bird pricing.</h3>
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tighter mb-3">Lock in Early Bird pricing.</h3>
             <p className="text-rose-100/80 text-sm font-medium max-w-md">
               Submit your paper now and benefit from reduced registration before the May 30 deadline.
             </p>
           </div>
           <div className="flex flex-col gap-3">
-            <a href={`mailto:${CONF.submissionEmail}`} className="bg-amber-300 text-[#1a0606] text-center font-black text-xs tracking-widest px-6 py-4 rounded-2xl hover:scale-[1.02] transition-transform inline-flex items-center justify-center gap-2">
-              <Mail size={13} /> Submit Paper · {CONF.submissionEmail}
+            <a href={`mailto:${CONF_LIVE.submissionEmail}`} className="bg-amber-300 text-[#1a0606] text-center font-black text-xs tracking-widest px-6 py-4 rounded-2xl hover:scale-[1.02] transition-transform inline-flex items-center justify-center gap-2">
+              <Mail size={13} /> Submit Paper · {CONF_LIVE.submissionEmail}
             </a>
             <a href="tel:+919977213188" className="bg-black/30 backdrop-blur text-white border border-white/30 text-center font-black text-xs tracking-widest px-6 py-4 rounded-2xl hover:bg-black/50 transition-colors inline-flex items-center justify-center gap-2">
               <Phone size={13} /> Call Dr. Prashant Sharma · +91-9977213188

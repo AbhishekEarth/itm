@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 import {
   Building2, Users2, Award, Target, Eye, ScrollText, GraduationCap, MapPin,
   Trophy, Leaf, Sparkles, BookOpen, FileText, Calendar, BookmarkCheck, Newspaper,
 } from "lucide-react";
 import PageShell, { SectionTitle, Prose, Card, FactRow } from "./_PageShell";
+import { publicComplianceApi } from "../api/compliance";
 
 /* ============================================================
    1.  ABOUT INSTITUTE
@@ -53,7 +55,7 @@ export function AboutInstitutePage() {
         ]} />
       </section>
 
-      <section className="grid md:grid-cols-3 gap-5">
+      <section className="grid md:grid-cols-3 gap-3 sm:gap-5">
         <Card>
           <Target className="text-[#800000] mb-3" size={26} />
           <h3 className="font-black text-lg mb-1 text-[#1a0606] dark:text-white">Approvals</h3>
@@ -101,15 +103,15 @@ export function MissionVisionPage() {
       accentTitle="stand for."
       intro="The institute's purpose, distilled into three statements that have guided every decision since 1997."
     >
-      <section className="grid md:grid-cols-2 gap-6">
+      <section className="grid md:grid-cols-2 gap-3 sm:gap-6">
         <Card className="bg-gradient-to-br from-[#fbf7f2] to-rose-50/40 dark:from-gray-900 dark:to-gray-900 border-rose-100">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 flex items-center justify-center shadow-md">
+          <div className="flex items-center gap-3 mb-3 sm:mb-4">
+            <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 flex items-center justify-center shadow-md">
               <Eye size={22} />
             </div>
-            <h3 className="text-2xl font-black text-[#1a0606] dark:text-white">Vision</h3>
+            <h3 className="text-xl sm:text-2xl font-black text-[#1a0606] dark:text-white">Vision</h3>
           </div>
-          <p className="text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">
+          <p className="text-[14px] sm:text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed font-medium italic">
             "To develop the institute into a centre of excellence in education, research, training
             and consultancy to the extent that it becomes a significant player in the technical
             and overall development of the country."
@@ -117,13 +119,13 @@ export function MissionVisionPage() {
         </Card>
 
         <Card className="bg-gradient-to-br from-amber-50/60 to-white dark:from-gray-900 dark:to-gray-900 border-amber-100">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-700 text-white flex items-center justify-center shadow-md">
+          <div className="flex items-center gap-3 mb-3 sm:mb-4">
+            <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-700 text-white flex items-center justify-center shadow-md">
               <Target size={22} />
             </div>
-            <h3 className="text-2xl font-black text-[#1a0606] dark:text-white">Mission</h3>
+            <h3 className="text-xl sm:text-2xl font-black text-[#1a0606] dark:text-white">Mission</h3>
           </div>
-          <ul className="space-y-3 text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+          <ul className="space-y-2 sm:space-y-3 text-[14px] sm:text-[15px] text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
             <li>· To meet the global need of competent and dedicated professionals.</li>
             <li>· To undertake R&amp;D, consultancy and extension activities of relevance to humankind.</li>
             <li>· To serve the community through technical and developmental outreach.</li>
@@ -133,10 +135,10 @@ export function MissionVisionPage() {
 
       <section>
         <SectionTitle eyebrow="Core Values" title="The non-negotiables" accent="we run on." />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {VALUES.map((v, i) => (
-            <div key={i} className="bg-white dark:bg-gray-900 rounded-2xl border border-rose-50 dark:border-gray-800 p-5">
-              <div className="text-[#800000] dark:text-amber-300 font-black text-3xl mb-2 leading-none">
+            <div key={i} className="bg-white dark:bg-gray-900 rounded-2xl border border-rose-50 dark:border-gray-800 p-3 sm:p-5">
+              <div className="text-[#800000] dark:text-amber-300 font-black text-2xl sm:text-3xl mb-2 leading-none">
                 {String(i + 1).padStart(2, "0")}
               </div>
               <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">{v}</p>
@@ -164,7 +166,8 @@ const OFFICIALS = [
   { name: "Dr. Deepesh Bharadwaj",       role: "Dean Research" },
   { name: "Dr. Rajeev Singh Rathore",    role: "Dean IQAC" },
   { name: "Dr. Manoj Mishra",             role: "Dean Student Welfare" },
-  { name: "Dr. Rishi Soni",               role: "Dean Counselling · HoD CSE" },
+  { name: "Dr. Pradeep Yadav",            role: "HoD Computer Science & Engineering" },
+  { name: "Dr. Rishi Soni",               role: "Professor, CSE · Dean Counselling" },
   { name: "Dr. Preeti Singh",             role: "HoD Management" },
   { name: "Dr. Aditya Vidyarthi",         role: "HoD Information Technology" },
   { name: "Dr. Manoj Kumar Bandil",      role: "HoD Electronics & Communication" },
@@ -174,7 +177,7 @@ const OFFICIALS = [
 
 function PersonGrid({ people, columns = "lg:grid-cols-3" }) {
   return (
-    <div className={`grid grid-cols-1 sm:grid-cols-2 ${columns} gap-4`}>
+    <div className={`grid grid-cols-1 sm:grid-cols-2 ${columns} gap-3 sm:gap-4`}>
       {people.map((p, i) => (
         <motion.div
           key={p.name}
@@ -182,9 +185,9 @@ function PersonGrid({ people, columns = "lg:grid-cols-3" }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-30px" }}
           transition={{ delay: (i % 6) * 0.04 }}
-          className="group bg-white dark:bg-gray-900 rounded-2xl border border-rose-50 dark:border-gray-800 p-5 flex items-center gap-4 hover:shadow-lg transition-shadow"
+          className="group bg-white dark:bg-gray-900 rounded-2xl border border-rose-50 dark:border-gray-800 p-3 sm:p-5 flex items-center gap-3 sm:gap-4 hover:shadow-lg transition-shadow"
         >
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 flex items-center justify-center font-black text-base shrink-0">
+          <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 flex items-center justify-center font-black text-base shrink-0">
             {p.name.split(" ").slice(-1)[0][0]}
           </div>
           <div>
@@ -201,6 +204,10 @@ function PersonGrid({ people, columns = "lg:grid-cols-3" }) {
 }
 
 export function OfficialsPage() {
+  const { data: live } = useQuery({ queryKey: ["public-officials"], queryFn: publicComplianceApi.officials });
+  const people = live && live.length
+    ? live.map((o) => ({ name: o.name, role: o.role, affiliation: o.email || o.department_code || "" }))
+    : OFFICIALS;
   return (
     <PageShell
       eyebrow="ITM Officials"
@@ -210,7 +217,7 @@ export function OfficialsPage() {
     >
       <section>
         <SectionTitle eyebrow="Leadership" title="Trustees &" accent="senior management." />
-        <PersonGrid people={OFFICIALS} />
+        <PersonGrid people={people} />
       </section>
     </PageShell>
   );
@@ -239,6 +246,10 @@ const BOARD = [
 ];
 
 export function BoardOfGovernorsPage() {
+  const { data: live } = useQuery({ queryKey: ["public-board"], queryFn: publicComplianceApi.board });
+  const people = live && live.length
+    ? live.map((b) => ({ name: b.name, role: b.role, affiliation: b.organization || "" }))
+    : BOARD;
   return (
     <PageShell
       eyebrow="Board of Governors"
@@ -246,7 +257,7 @@ export function BoardOfGovernorsPage() {
       accentTitle="trusteeship — together."
       intro="The Board of Governors steers institutional strategy. Members are nominated by the trust, the affiliating universities, peer educationists, industry and the faculty."
     >
-      <PersonGrid people={BOARD} columns="lg:grid-cols-2" />
+      <PersonGrid people={people} columns="lg:grid-cols-2" />
     </PageShell>
   );
 }
@@ -262,9 +273,9 @@ export function DirectorMessagePage() {
       accentTitle="Dr. Meenakshi Mazumdar."
       intro="Director, Institute of Technology and Management, Gwalior."
     >
-      <div className="grid lg:grid-cols-3 gap-8 items-start">
+      <div className="grid lg:grid-cols-3 gap-4 sm:gap-8 items-start">
         <Card className="lg:col-span-1 text-center bg-gradient-to-br from-[#fbf7f2] to-rose-50/40 dark:from-gray-900 dark:to-gray-900 border-rose-100">
-          <div className="w-28 h-28 mx-auto rounded-full bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 flex items-center justify-center text-4xl font-black mb-4">
+          <div className="w-20 h-20 sm:w-28 sm:h-28 mx-auto rounded-full bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 flex items-center justify-center text-2xl sm:text-4xl font-black mb-3 sm:mb-4">
             MM
           </div>
           <div className="font-black text-xl text-[#1a0606] dark:text-white">Dr. Meenakshi Mazumdar</div>
@@ -315,7 +326,6 @@ export function DirectorMessagePage() {
 const UG_PROGRAMMES = [
   { spec: "Computer Science Engineering",           seats: 240, dur: "4 years" },
   { spec: "CSE — AI & Machine Learning",             seats: 90,  dur: "4 years" },
-  { spec: "CSE — IoT",                                seats: 60,  dur: "4 years" },
   { spec: "CSE — Data Science",                       seats: 90,  dur: "4 years" },
   { spec: "CSE — Cyber Security",                    seats: 30,  dur: "4 years" },
   { spec: "Information Technology",                  seats: 120, dur: "4 years" },
@@ -437,17 +447,17 @@ export function InfrastructurePage() {
       intro="42 labs, 45 smart classrooms, 728 computers, a 64K-book library, a 2,500-seat amphitheatre, residential hostels and a sports complex — all on a single connected campus."
       chips={["45 Classrooms", "42 Labs", "728 Computers", "2.5K Amphitheatre", "On-campus Hostel"]}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
         {FACILITIES.map((f) => (
           <motion.div key={f.title}
             initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-30px" }}
-            className="bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 p-6 hover:shadow-xl transition-shadow"
+            className="bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 p-3 sm:p-6 hover:shadow-xl transition-shadow"
           >
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 flex items-center justify-center shadow-md mb-4">
+            <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 flex items-center justify-center shadow-md mb-3 sm:mb-4">
               <f.Icon size={22} strokeWidth={2.1} />
             </div>
-            <h3 className="text-lg font-black tracking-tight text-[#1a0606] dark:text-white mb-2">{f.title}</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{f.body}</p>
+            <h3 className="text-base sm:text-lg font-black tracking-tight text-[#1a0606] dark:text-white mb-1.5 sm:mb-2">{f.title}</h3>
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium line-clamp-3 sm:line-clamp-none">{f.body}</p>
           </motion.div>
         ))}
       </div>
@@ -466,10 +476,10 @@ export function BestPracticesPage() {
       accentTitle="define how we work."
       intro="ITM Gwalior's institutional Best Practices, recognised under NAAC criteria. Built from the bottom up over a decade of trial, refinement and student feedback."
     >
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-3 sm:gap-6">
         <Card>
           <span className="text-[10px] uppercase tracking-widest text-amber-700 dark:text-amber-300 font-black">Best Practice 1</span>
-          <h3 className="text-2xl font-black text-[#1a0606] dark:text-white mt-2 mb-3 leading-tight">
+          <h3 className="text-lg sm:text-2xl font-black text-[#1a0606] dark:text-white mt-2 mb-2 sm:mb-3 leading-tight">
             Activity-Based Continuous Assessment (ABCAS)
           </h3>
           <Prose>
@@ -486,7 +496,7 @@ export function BestPracticesPage() {
         </Card>
         <Card>
           <span className="text-[10px] uppercase tracking-widest text-amber-700 dark:text-amber-300 font-black">Best Practice 2</span>
-          <h3 className="text-2xl font-black text-[#1a0606] dark:text-white mt-2 mb-3 leading-tight">
+          <h3 className="text-lg sm:text-2xl font-black text-[#1a0606] dark:text-white mt-2 mb-2 sm:mb-3 leading-tight">
             Industry-Embedded Project-Based Learning
           </h3>
           <Prose>
@@ -523,10 +533,10 @@ export function MagazinePage() {
       intro="Student-written, faculty-edited, designed in-house. The institute's annual magazine captures the year in essays, photo features, alumni voices and research highlights."
     >
       <Card className="bg-gradient-to-br from-[#1a0606] to-[#3e0202] text-white border-amber-300/30">
-        <div className="grid md:grid-cols-2 gap-6 items-center">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6 items-center">
           <div>
             <Newspaper className="text-amber-300 mb-3" size={40} />
-            <h3 className="text-3xl font-black text-white mb-2">ITM Sandesh</h3>
+            <h3 className="text-2xl sm:text-3xl font-black text-white mb-2">ITM Sandesh</h3>
             <p className="text-rose-100/80 leading-relaxed font-medium mb-4">
               Featuring perspectives from across the institute — student writers, faculty
               columnists, alumni guests and visiting industry leaders. A year-in-review issue
@@ -570,7 +580,7 @@ export function PoliciesPage() {
       accentTitle="transparency, governance."
       intro="The complete set of institutional policies published by ITM Gwalior — academic, administrative, ethical and welfare — together with the reports each one drives."
     >
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
         {POLICIES.map((p) => (
           <Card key={p.title}>
             <ScrollText className="text-[#800000] dark:text-amber-300 mb-3" size={22} />
@@ -639,7 +649,7 @@ export function GwaliorPage() {
       accentTitle="a future-facing campus."
       intro="ITM Gwalior sits in one of India's oldest centres of culture, music, art and education. Here's what life outside the campus gates looks like."
     >
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
         {GWALIOR_HIGHLIGHTS.map((g) => (
           <Card key={g.title}>
             <g.Icon className="text-[#800000] dark:text-amber-300 mb-3" size={26} />

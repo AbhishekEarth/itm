@@ -32,10 +32,10 @@ export function NSSPage() {
         </Prose>
       </section>
 
-      <section className="grid lg:grid-cols-2 gap-5">
+      <section className="grid lg:grid-cols-2 gap-3 sm:gap-5">
         <Card>
           <Sparkles className="text-[#800000] dark:text-amber-300 mb-3" size={22} />
-          <h3 className="font-black text-lg text-[#1a0606] dark:text-white mb-2">Major Initiatives</h3>
+          <h3 className="font-black text-base sm:text-lg text-[#1a0606] dark:text-white mb-2">Major Initiatives</h3>
           <ul className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium space-y-2">
             <li>· Blood Donation Camps — ~500 units collected for JAH Hospital, Gwalior.</li>
             <li>· "One Student One Tree" plantation drives.</li>
@@ -47,7 +47,7 @@ export function NSSPage() {
         </Card>
         <Card>
           <Trophy className="text-[#800000] dark:text-amber-300 mb-3" size={22} />
-          <h3 className="font-black text-lg text-[#1a0606] dark:text-white mb-2">Recognition</h3>
+          <h3 className="font-black text-base sm:text-lg text-[#1a0606] dark:text-white mb-2">Recognition</h3>
           <ul className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium space-y-2">
             <li>· Volunteers selected for the Pre-Republic Day Parade Camp.</li>
             <li>· Volunteers selected for the National Integration Camp.</li>
@@ -61,7 +61,7 @@ export function NSSPage() {
 
       <section>
         <SectionTitle eyebrow="Programme Officers" title="The faculty behind" accent="the cell." />
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
           <Card><div className="font-black text-base text-[#1a0606] dark:text-white">Mr. Narendra Kumar Verma</div><div className="text-sm text-gray-600 dark:text-gray-400 font-medium mt-1">NSS Programme Officer · Assistant Professor, Mechanical Engineering</div></Card>
           <Card><div className="font-black text-base text-[#1a0606] dark:text-white">Mrs. Archana Tomar</div><div className="text-sm text-gray-600 dark:text-gray-400 font-medium mt-1">NSS Girls Unit Programme Officer · Assistant Professor, CSE</div></Card>
         </div>
@@ -96,16 +96,16 @@ export function UBAPage() {
 
       <section>
         <SectionTitle eyebrow="Adopted Villages" title="Five villages in" accent="Block Dabra, Gwalior." />
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
           {["Sarnagat", "Badera", "Belgada", "Bargava", "Chetupada"].map((v) => (
             <Card key={v} className="text-center"><Leaf className="mx-auto text-emerald-600 dark:text-emerald-400 mb-2" size={22} /><div className="font-black text-[#1a0606] dark:text-white">{v}</div></Card>
           ))}
         </div>
       </section>
 
-      <section className="grid md:grid-cols-2 gap-5">
+      <section className="grid md:grid-cols-2 gap-3 sm:gap-5">
         <Card>
-          <h3 className="font-black text-lg text-[#1a0606] dark:text-white mb-3">Active Projects</h3>
+          <h3 className="font-black text-base sm:text-lg text-[#1a0606] dark:text-white mb-2 sm:mb-3">Active Projects</h3>
           <ul className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium space-y-2">
             <li>· <b>Education</b> — school libraries, digital resources, career guidance.</li>
             <li>· <b>Health & Hygiene</b> — medical camps and sanitation awareness.</li>
@@ -115,7 +115,7 @@ export function UBAPage() {
           </ul>
         </Card>
         <Card>
-          <h3 className="font-black text-lg text-[#1a0606] dark:text-white mb-3">Coordinators</h3>
+          <h3 className="font-black text-base sm:text-lg text-[#1a0606] dark:text-white mb-2 sm:mb-3">Coordinators</h3>
           <div className="space-y-3 text-sm font-medium">
             <div>
               <div className="font-black text-[#1a0606] dark:text-white">Dr. Meenakshi Mazumdar</div>
@@ -146,7 +146,7 @@ export function WECPage() {
     >
       <section>
         <SectionTitle eyebrow="Leadership" title="Chairperson &" accent="committee." />
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
           <Card><div className="font-black text-base text-[#1a0606] dark:text-white">Dr. Megha Lahane</div><div className="text-sm text-[#800000] dark:text-amber-300 font-bold mt-1">Chairperson, WEC</div></Card>
           {["Dr. Prabha Dixit", "Ms. Priusha Narwariya", "Ms. Vishakha Yadav"].map((n) => (
             <Card key={n}><div className="font-black text-base text-[#1a0606] dark:text-white">{n}</div><div className="text-sm text-gray-600 dark:text-gray-400 font-medium mt-1">Member · WEC</div></Card>
@@ -157,7 +157,7 @@ export function WECPage() {
 
       <section>
         <SectionTitle eyebrow="Programmes" title="What the cell" accent="actually runs." />
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {[
             { title: "Awareness & Advocacy", items: ["Expert lecture: Challenges in Being a Woman Sculptor (Feb 2024)", "Seminar: Challenges & Opportunities for Sex Workers & Their Children (Nov 2023)", "Workshop: Prevention of Sexual Harassment at Workplace (Nov 2023)", "Expert talk: Stop Violence Against Women (Nov 2022)"] },
             { title: "Community Engagement", items: ["Nukkad Natak on gender equality across adopted villages (Jan 2024)", "International Women's Day celebrations (2022, 2023)", "Sports Day for female faculty, staff and students (Mar 2023)"] },
@@ -190,9 +190,9 @@ export function SportsPage() {
       intro="The Sports Cell promotes fitness, teamwork and sportsmanship — through expert coaching, a sports complex covering 12+ disciplines and a packed inter-college tournament calendar."
       chips={["Hosts RGPV Nodal-level events", "Annual Sports Meet", "State & national reps"]}
     >
-      <section className="grid lg:grid-cols-3 gap-5">
+      <section className="grid lg:grid-cols-3 gap-3 sm:gap-5">
         <Card className="lg:col-span-2">
-          <h3 className="font-black text-lg text-[#1a0606] dark:text-white mb-3">Sports On Campus</h3>
+          <h3 className="font-black text-base sm:text-lg text-[#1a0606] dark:text-white mb-2 sm:mb-3">Sports On Campus</h3>
           <div className="flex flex-wrap gap-2">
             {SPORTS_LIST.map((s) => (
               <span key={s} className="text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 bg-rose-50 dark:bg-gray-800 text-[#800000] dark:text-amber-300 rounded-full">{s}</span>
@@ -204,7 +204,7 @@ export function SportsPage() {
           </p>
         </Card>
         <Card>
-          <h3 className="font-black text-lg text-[#1a0606] dark:text-white mb-3">Achievements</h3>
+          <h3 className="font-black text-base sm:text-lg text-[#1a0606] dark:text-white mb-2 sm:mb-3">Achievements</h3>
           <ul className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium space-y-2">
             <li>· Wins / runner-up at Nodal and State tournaments.</li>
             <li>· Student athletes at state and national championships.</li>
@@ -250,7 +250,7 @@ export function IQACPage() {
 
       <section>
         <SectionTitle eyebrow="Responsibilities" title="What the cell" accent="actually does." />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {[
             "Creating and implementing quality benchmarks for academic & administrative activity.",
             "Fostering an environment that centers student learning and faculty growth.",
@@ -295,16 +295,16 @@ export function AntiRaggingPage() {
     >
       <section>
         <SectionTitle eyebrow="Leadership" title="Chairman &" accent="Secretary." />
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
           <Card>
             <ShieldCheck className="text-[#800000] dark:text-amber-300 mb-2" size={24} />
-            <div className="font-black text-lg text-[#1a0606] dark:text-white">Dr. Manoj Mishra</div>
+            <div className="font-black text-base sm:text-lg text-[#1a0606] dark:text-white">Dr. Manoj Mishra</div>
             <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Chairman · Dean of Student Welfare</div>
             <a href="tel:+919926519510" className="inline-flex items-center gap-2 text-[#800000] dark:text-amber-300 font-black text-sm mt-3"><Phone size={14} /> +91-99265 19510</a>
           </Card>
           <Card>
             <ShieldCheck className="text-[#800000] dark:text-amber-300 mb-2" size={24} />
-            <div className="font-black text-lg text-[#1a0606] dark:text-white">Mr. Nitin Dixit</div>
+            <div className="font-black text-base sm:text-lg text-[#1a0606] dark:text-white">Mr. Nitin Dixit</div>
             <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Secretary · Associate DSW</div>
             <a href="tel:+919098008180" className="inline-flex items-center gap-2 text-[#800000] dark:text-amber-300 font-black text-sm mt-3"><Phone size={14} /> +91-90980 08180</a>
           </Card>
@@ -367,18 +367,18 @@ export function OtherClubsPage() {
       intro="Twelve active student clubs covering technology, arts, sport, civic engagement and community service — every one of them student-led with faculty mentorship."
       chips={["12 active clubs", "Student-led", "Faculty-mentored"]}
     >
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
         {OTHER_CLUBS.map((c, i) => (
           <motion.div key={c.name}
             initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-30px" }}
             transition={{ delay: (i % 6) * 0.04 }}
-            className="bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 p-6 hover:shadow-xl transition-shadow"
+            className="bg-white dark:bg-gray-900 rounded-3xl border border-rose-50 dark:border-gray-800 p-3 sm:p-6 hover:shadow-xl transition-shadow"
           >
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 flex items-center justify-center shadow-md mb-4">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-[#800000] to-[#3e0202] text-amber-200 flex items-center justify-center shadow-md mb-3 sm:mb-4">
               <c.Icon size={20} strokeWidth={2.1} />
             </div>
-            <h3 className="font-black text-base text-[#1a0606] dark:text-white mb-2">{c.name}</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium">{c.body}</p>
+            <h3 className="font-black text-sm sm:text-base text-[#1a0606] dark:text-white mb-1.5 sm:mb-2">{c.name}</h3>
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed font-medium line-clamp-3 sm:line-clamp-none">{c.body}</p>
           </motion.div>
         ))}
       </div>

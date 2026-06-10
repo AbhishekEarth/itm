@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import { Trash2 } from 'lucide-react';
+import EditableText from '../components/admin/EditableText';
 
 // ─── Shared Sub-Components ────────────────────────────────────────────────────
 function SectionHeading({ children }) {
@@ -22,6 +24,7 @@ function Card({ children, className = '' }) {
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function PACPage() {
+  const pageKey = useLocation().pathname;
   const [activeTab, setActiveTab] = useState('Performing Arts Club');
   const [dynamicEvents, setDynamicEvents] = useState([]);
 
@@ -132,10 +135,10 @@ export default function PACPage() {
       : event.images;
 
     return (
-      <div className="border-b border-gray-100 dark:border-gray-800 pb-12 last:border-0 last:pb-0">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+      <div className="border-b border-gray-100 dark:border-gray-800 pb-8 sm:pb-12 last:border-0 last:pb-0">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 sm:mb-6">
           <div className="flex items-center gap-4">
-            <h3 className="text-2xl font-black text-[#800000] dark:text-red-400 tracking-tighter uppercase leading-none">
+            <h3 className="text-lg sm:text-2xl font-black text-[#800000] dark:text-red-400 tracking-tighter uppercase leading-none">
               {event.title}
             </h3>
             {/* {isDynamic && (
@@ -192,12 +195,12 @@ export default function PACPage() {
 
 
           {/* Photo Gallery - Adjusted to 2 images per line as requested, with no cropping */}
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
+          <div className="mt-4 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 items-start">
             {eventImages.map((src, idx) => (
               <div key={idx} className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-gray-100/50 dark:bg-gray-800/30 ring-1 ring-gray-200/50 dark:ring-gray-700/50">
-                <img 
-                  src={src} 
-                  className="w-full h-auto object-contain max-h-[600px] mx-auto group-hover:scale-[1.02] transition-transform duration-500" 
+                <img
+                  src={src}
+                  className="w-full h-auto object-contain max-h-[400px] sm:max-h-[600px] mx-auto group-hover:scale-[1.02] transition-transform duration-500"
                   alt={`${event.title} - Gallary ${idx + 1}`}
                   onError={(e) => { e.target.src = "/images/upload.png"; }} 
                 />
@@ -214,7 +217,7 @@ export default function PACPage() {
     <div className="min-h-screen bg-gray-50 dark:bg-[#020617] transition-colors duration-500">
 
       {/* ── HERO BANNER ─────────────────────────────────────────── */}
-      <div className="relative bg-gradient-to-br from-[#3e0202] via-[#800000] to-[#5a0000] pt-16 pb-24 overflow-hidden">
+      <div data-section="pac_hero" className="relative bg-gradient-to-br from-[#3e0202] via-[#800000] to-[#5a0000] pt-8 pb-12 sm:pt-16 sm:pb-24 overflow-hidden">
         {/* Decorative background shapes */}
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute top-8 right-32 w-72 h-72 rounded-full border-2 border-white"></div>
@@ -222,20 +225,23 @@ export default function PACPage() {
           <div className="absolute top-1/2 left-1/3 w-40 h-40 rounded-full bg-white/20"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
           <span className="inline-block text-red-200 font-bold tracking-widest text-xs uppercase mb-3 px-3 py-1 bg-white/10 rounded-full border border-white/20">
-            Student Life & Activities
+            <EditableText pageKey={pageKey} tkey="pac.eyebrow" as="span" value="Student Life & Activities">Student Life & Activities</EditableText>
           </span>
-          <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-4 leading-tight">
-            Performing Arts <br />
-            <span className="text-white">Club</span>
+          <h1 className="text-2xl sm:text-4xl md:text-6xl font-black text-white tracking-tighter mb-4 leading-tight">
+            <EditableText pageKey={pageKey} tkey="pac.title.line1" as="span" value="Performing Arts">Performing Arts</EditableText> <br />
+            <EditableText pageKey={pageKey} tkey="pac.title.line2" as="span" value="Club" className="text-white">Club</EditableText>
           </h1>
           <p className="text-red-100/80 max-w-xl text-sm leading-relaxed font-medium">
-            Discover your artistic potential, participate in vibrant cultural events, and express yourself through music, dance, and drama.
+            <EditableText pageKey={pageKey} tkey="pac.intro" as="span" multiline
+              value="Discover your artistic potential, participate in vibrant cultural events, and express yourself through music, dance, and drama.">
+              Discover your artistic potential, participate in vibrant cultural events, and express yourself through music, dance, and drama.
+            </EditableText>
           </p>
 
           {/* Quick-stat chips */}
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-4 sm:mt-8 flex flex-wrap gap-2 sm:gap-3">
             {[['🎭', 'Music & Dance'], ['🎬', 'Drama'], ['🎨', 'Creative Arts'], ['🌟', 'Cultural Events']].map(([icon, label]) => (
               <div key={label} className="flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 text-white px-4 py-2 rounded-full text-xs font-bold">
                 <span>{icon}</span> {label}
@@ -309,7 +315,7 @@ export default function PACPage() {
                 {/* ══ PAC ABOUT ════════════════════════════════════ */}
                 {activeTab === 'Performing Arts Club' && (
                   <div className="space-y-8">
-                    <Card className="p-8">
+                    <Card className="p-4 sm:p-8">
                       <SectionHeading>Performing Arts Club (PAC) </SectionHeading>
                       <div className="prose max-w-none text-gray-700 dark:text-gray-300 text-sm leading-relaxed font-medium space-y-6">
                         <p>
@@ -398,19 +404,19 @@ export default function PACPage() {
                 {/* ══ PAC TEAM ═════════════════════════════════════ */}
                 {activeTab === 'PAC Team' && (
                   <div className="space-y-8">
-                    <Card className="p-8">
+                    <Card className="p-4 sm:p-8">
                       <SectionHeading>PAC Team</SectionHeading>
-                      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        <div className="bg-gray-50 dark:bg-white/[0.02] p-5 rounded-3xl border border-gray-100 dark:border-gray-800 text-center hover:shadow-lg transition-all cursor-pointer">
-                          <div className="w-24 h-24 mx-auto rounded-full bg-gray-200 dark:bg-gray-700 mb-4 overflow-hidden border-2 border-white dark:border-gray-600 shadow-md">
+                      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
+                        <div className="bg-gray-50 dark:bg-white/[0.02] p-3 sm:p-5 rounded-3xl border border-gray-100 dark:border-gray-800 text-center hover:shadow-lg transition-all cursor-pointer">
+                          <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full bg-gray-200 dark:bg-gray-700 mb-4 overflow-hidden border-2 border-white dark:border-gray-600 shadow-md">
                             <img src="/images/upload.png" alt="Coordinator" className="w-full h-full object-cover" />
                           </div>
                           <h3 className="font-bold text-[#0b2a4a] dark:text-white mb-1">Dr. Preeti Singh</h3>
                           <p className="text-xs font-medium text-[#800000]">Coordinator</p>
                         </div>
                         
-                        <div className="bg-gray-50 dark:bg-white/[0.02] p-5 rounded-3xl border border-gray-100 dark:border-gray-800 text-center hover:shadow-lg transition-all cursor-pointer">
-                          <div className="w-24 h-24 mx-auto rounded-full bg-gray-200 dark:bg-gray-700 mb-4 overflow-hidden border-2 border-white dark:border-gray-600 shadow-md">
+                        <div className="bg-gray-50 dark:bg-white/[0.02] p-3 sm:p-5 rounded-3xl border border-gray-100 dark:border-gray-800 text-center hover:shadow-lg transition-all cursor-pointer">
+                          <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full bg-gray-200 dark:bg-gray-700 mb-4 overflow-hidden border-2 border-white dark:border-gray-600 shadow-md">
                             <img src="/images/Sanjay Singh jadon.webp" alt="Co-Coordinator" className="w-full h-full object-cover" />
                           </div>
                           <h3 className="font-bold text-[#0b2a4a] dark:text-white mb-1">Mr. Sanjay Singh Jadon</h3>
@@ -424,7 +430,7 @@ export default function PACPage() {
                 {/* ══ EVENTS ══════════════════════════════════════ */}
                 {activeTab === 'Events organized by the club' && (
                   <div className="space-y-8">
-                    <Card className="p-8">
+                    <Card className="p-4 sm:p-8">
                       <SectionHeading>Events organized</SectionHeading>
                       <div className="divide-y divide-gray-100 dark:divide-gray-800">
                         {/* Static Permanent Events */}
@@ -448,17 +454,17 @@ export default function PACPage() {
                 {/* ══ WORKSHOPS ════════════════════════════════════ */}
                 {activeTab === 'Workshops Conducted' && (
                   <div className="space-y-8">
-                    <Card className="p-8">
+                    <Card className="p-4 sm:p-8">
                       <SectionHeading>Workshops Conducted</SectionHeading>
                       <div className="space-y-4 text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
-                        <div className="grid sm:grid-cols-2 gap-4">
+                        <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
                           {[
                             { title: 'Acting 101', date: 'August 2025', desc: 'Introduction to method acting and stage presence.' },
                             { title: 'Vocal Techniques', date: 'September 2025', desc: 'Breathing exercises and vocal range expansion.' },
                             { title: 'Choreography Masterclass', date: 'October 2025', desc: 'Creating dynamic group dance routines.' },
                             { title: 'Scriptwriting Boot Camp', date: 'November 2025', desc: 'From short skits to full length dramas.' }
                           ].map((workshop, idx) => (
-                            <div key={idx} className="bg-gray-50 dark:bg-white/[0.02] p-5 rounded-2xl border border-gray-100 dark:border-gray-800">
+                            <div key={idx} className="bg-gray-50 dark:bg-white/[0.02] p-3 sm:p-5 rounded-2xl border border-gray-100 dark:border-gray-800">
                               <span className="text-xs font-bold text-[#800000] mb-2 inline-block bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded-md">{workshop.date}</span>
                               <h3 className="font-bold text-gray-900 dark:text-white mb-1">{workshop.title}</h3>
                               <p className="text-xs text-gray-500 dark:text-gray-400">{workshop.desc}</p>

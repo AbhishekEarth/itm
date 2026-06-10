@@ -20,7 +20,7 @@ export const UG_PROGRAMS = [
     code: "B.TECH",
     name: "CS Engineering — AI & Machine Learning",
     short: "AI/ML",
-    seats: 90,
+    seats: 180,
     duration: "4 Years",
     semesters: 8,
     eligibility: "10+2 with PCM (Min. 45% Gen / 40% SC/ST/OBC)",
@@ -36,7 +36,7 @@ export const UG_PROGRAMS = [
     code: "B.TECH",
     name: "CS Engineering — Data Science",
     short: "DS",
-    seats: 90,
+    seats: 120,
     duration: "4 Years",
     semesters: 8,
     eligibility: "10+2 with PCM (Min. 45% Gen / 40% SC/ST/OBC)",
@@ -52,7 +52,7 @@ export const UG_PROGRAMS = [
     code: "B.TECH",
     name: "CS Engineering — Cyber Security",
     short: "CY",
-    seats: 60,
+    seats: 30,
     duration: "4 Years",
     semesters: 8,
     eligibility: "10+2 with PCM (Min. 45% Gen / 40% SC/ST/OBC)",
@@ -64,27 +64,11 @@ export const UG_PROGRAMS = [
     deptPath: "/cyber-security",
   },
   {
-    id: "btech-iot",
-    code: "B.TECH",
-    name: "CS Engineering — Internet of Things",
-    short: "IoT",
-    seats: 60,
-    duration: "4 Years",
-    semesters: 8,
-    eligibility: "10+2 with PCM (Min. 45% Gen / 40% SC/ST/OBC)",
-    selection: "JEE Main or 12th merit via DTE Bhopal counselling",
-    accent: "from-teal-500 to-cyan-700",
-    icon: "Globe",
-    tags: ["Emerging Tech", "Embedded + Cloud"],
-    careers: ["IoT Engineer", "Embedded Systems", "Edge Computing", "Robotics"],
-    deptPath: "/department/cse/iot",
-  },
-  {
     id: "btech-it",
     code: "B.TECH",
     name: "Information Technology",
     short: "IT",
-    seats: 120,
+    seats: 60,
     duration: "4 Years",
     semesters: 8,
     eligibility: "10+2 with PCM (Min. 45% Gen / 40% SC/ST/OBC)",
@@ -148,7 +132,7 @@ export const UG_PROGRAMS = [
     code: "B.TECH",
     name: "Chemical Engineering",
     short: "ChE",
-    seats: 30,
+    seats: 15,
     duration: "4 Years",
     semesters: 8,
     eligibility: "10+2 with PCM (Min. 45% Gen / 40% SC/ST/OBC)",
@@ -347,7 +331,7 @@ export const COUNSELLORS = [
     icon: "🔬",
   },
   {
-    programme: "MCA Admissions",
+    programme: "MCA/BCA Admissions",
     name: "Mrs. Archana Tomar",
     phone: "+91-9755285163",
     email: "admission@itmgoi.in",
@@ -361,7 +345,7 @@ export const COUNSELLORS = [
     icon: "📈",
   },
   {
-    programme: "MBA Admissions",
+    programme: "BBA Admissions",
     name: "Dr. Prashant Sharma",
     phone: "+91-9977213188",
     email: "admission@itmgoi.in",
@@ -409,9 +393,8 @@ export const SELECTION_PROCESS = [
 
 // Quota mix (DTE M.P. counselling) — approximations from public DTE info
 export const QUOTAS = [
-  { name: "Madhya Pradesh State", pct: 85, note: "DTE Bhopal counselling on JEE / 12th merit" },
-  { name: "All India Quota (AIQ)", pct: 10, note: "Open to candidates from other states via DTE" },
-  { name: "Management / Institute", pct: 5, note: "Direct admission for vacant seats" },
+  { name: "Madhya Pradesh State", pct: 95, note: "DTE Bhopal counselling on JEE / 12th merit" },
+  { name: "All India Quota (AIQ)", pct: 5, note: "Open to candidates from other states via DTE" },
 ];
 
 // Approximate fee components — student must verify with admission office for final figures
@@ -429,7 +412,7 @@ export const ADMISSION_FAQ = [
   },
   {
     q: "Does ITM Gwalior accept management quota / direct admission?",
-    a: "Yes, a percentage of seats are filled through the institute-level off-campus process for students who did not appear in the state counselling. Contact the admission cell for the current quota and process.",
+    a: "No.",
   },
   {
     q: "Is hostel accommodation available?",
@@ -440,7 +423,7 @@ export const ADMISSION_FAQ = [
     a: "Yes. Merit scholarships, MP state scholarships (post-matric), and category-based scholarships are available. Submit income/category certificates with your application.",
   },
   {
-    q: "What is the average package and top recruiters?",
+    q: "Who is our top recruiters?",
     a: "ITM Gwalior has a 90%+ placement rate with recruiters like TCS, Infosys, Wipro, Capgemini, Cognizant, and many engineering and product companies. Visit the TAP page for full records.",
   },
   {

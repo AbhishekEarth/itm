@@ -1,4 +1,67 @@
+# Editor / IDE
 .claude/
-.venv
-node_modules
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+.eggs/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# Node
+node_modules/
+.pnp
+.pnp.js
+dist/
+.vite/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets / env
 .env
+.env.local
+.env.*.local
+*.pem
+*.key
+backend/.env
+
+# Backend artifacts
+backend/uploads/
+backend/.uploads/
+backend/*.db
+backend/*.sqlite
+backend/*.sqlite3
+backend/logs/
+backend/.alembic_cache/
+
+# Build outputs
+frontend/dist/
+frontend/build_output.txt
+frontend/buildlog.txt
+client/dist/
+
+# Large local-only assets
+*.log
+
+# QSi gauge local staging (large, transient)
+qsi_gauge_staging/
+Qsi_gague_2025-26*.zip
